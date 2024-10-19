@@ -1,0 +1,17 @@
+Desired Features:
+• Menu features: There will be a main menu where the player can change options, start the game, etc.
+• Player features: The player can move, jump, stick to walls, wall jump, shoot a gun, throw a lasso to grab and move blocks, throw a lasso to hookshot
+towards hooks, or throw a lasso and do a momentum jump while
+hookshotting towards the hook.
+• Level features: The levels are of sequences of large rooms with doors that lock upon
+entry. When the player defeats all the enemies in a room, they can
+advance to the next room.
+• Enemy features: Enemies are randomly placed in each level. Enemies may have guns and/or melee weapons but cannot jump except for jumping through the
+environment of the level.
+
+Design Description:
+
+The player is a cowboy wielding a lasso and a gun and is trying to reach the end of each level. Each level is a sequence of rooms with preplaced enemies. When a player enters a room, the doors used to enter and exit the room will shut and will not open until all enemies are defeated. The player can move, shoot, throw a lasso, jump, or wall jump. 
+
+Each level will focus on a mechanic and each room will focus on a progression of that mechanic. For example, for a level focused on the lasso, room 1 could focus on lassoing blocks, room 2 could focus on using a lasso to hookshot onto a hook, and room 3 could focus on jumping off a hook with lasso momentum.
+
