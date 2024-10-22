@@ -1,0 +1,15 @@
+The player has the ability to:
+- move quickly
+- jump, with a fair amount of air control
+- wall jump (see below)
+- slide below objects
+- vault on top of objects
+
+Wall Jumps:
+There are two kinds of wall jumping, sticky wall jumps and perfect wall jumps. When the player jumps towards the wall, they will stick to it, and can look around to decide where to jump to. If the player jumps the moment they hit the wall, they will achieve a perfect wall jump and will bounce back across the normal that they jumped on with a small amount of extra speed.
+
+Sliding:
+The player will have the ability to slide below specific objects, like broken pieces of wall or debris, to run away from enemies or to get to the opposite side of the level.
+
+Vaulting:
+The player can vault over small boxes, to quickly get away from enemies.

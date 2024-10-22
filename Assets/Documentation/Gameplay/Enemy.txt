@@ -1,0 +1,9 @@
+The enemies will have their own guns and AI that target the player. The enemies will start in pre-determined places from level design, and can move around freely afterwards.
+
+Enemy Ideas Include:
+Base Enemy
+	Cannot be lassoed
+	Has gun for player
+Light Enemy
+	Melee
+	Can be lassoed toward player

@@ -1,0 +1,11 @@
+The player will have a lasso, which can be used to move the player across the map, or pull small boxes towards the player.
+
+For the lasso to work, it will have to have a valid "hook" to attach to. For the two main lasso uses, the hooks will be an obvious hook on ceilings/walls, or specific objects that can be hooked.
+
+Lassoing the Player:
+Hooking the lasso on a ceiling or wall will start to pull the player towards the hook point. If the player chooses to keep the lasso out and enabled (by holding right click), then they will get "stuck" on the ceiling or wall, and can freely look around and shoot enemies.
+
+If the player lets go of right click while still being pulled towards the hook point, they will fling in the direction they were being pulled, with extra speed to cross large gaps.
+
+Lassoing Small Objects:
+For specifc objects, the player can use the lasso to pull said objects towards themselves. This can be useful for knocking down enemies from behind.

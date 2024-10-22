@@ -1,0 +1,45 @@
+Main Developers:
+	Patrick Mayer
+	Jacob Paccione
+	Landon Johnson
+
+Assets Used:
+	Modular Building Wild West Cowboy Stylized Low Poly 3D Model
+	by Cornese
+	https://coynese.itch.io/modular-building-wild-west-cowboy-stylized-low-poly-3d-model
+	
+	ASGS Classic Revolver - Trial
+	by A Square Games and Simulation, LLC
+	https://assetstore.unity.com/packages/3d/props/guns/asgs-classic-revolver-trial-288921
+	
+	Lowpoly Cowboy RIO
+	by VertexModeler Team
+	https://assetstore.unity.com/packages/3d/characters/humanoids/lowpoly-cowboy-rio-288965
+	
+	Western Pack
+	by dqurp
+	https://assetstore.unity.com/packages/3d/environments/fantasy/western-pack-3116
+	
+	Beer Barrel Low-poly PBR
+	by HuNtEr_3DdD
+	https://www.turbosquid.com/3d-models/beer-barrel-low-poly-pbr-2094774
+	
+	cactus and skull
+	by Gabriel Bernardes
+	https://www.turbosquid.com/3d-models/cactus-and-skull-1448632
+	
+	Crate
+	by Kamiomi
+	https://www.turbosquid.com/3d-models/crate-333167
+	
+	PBR Grenades, Bombs & Mines pack
+	by ASTRALMESH
+	https://assetstore.unity.com/packages/3d/props/guns/pbr-grenades-bombs-mines-pack-267217
+	
+	Low Poly Tavern Interior
+	by I.We.D
+	https://assetstore.unity.com/packages/3d/props/interior/low-poly-tavern-interior-245229
+	
+	Dynamite
+	by MaX3Dd
+	https://sketchfab.com/3d-models/dynamite-7308cdc679c14e24880b8d05c2f22ffe
