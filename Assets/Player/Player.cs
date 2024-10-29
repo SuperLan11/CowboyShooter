@@ -73,10 +73,10 @@ public class BasicFPCC : MonoBehaviour
     public string axisLookVertical    = "Mouse Y";             // 
     public string axisMoveHorzizontal = "Horizontal";          // WASD to Move
     public string axisMoveVertical    = "Vertical";            // 
-    public KeyCode keyRun             = KeyCode.LeftShift;     // Left Shift to Run
-    public KeyCode keyCrouch          = KeyCode.LeftControl;   // Left Control to Crouch
+    //public KeyCode keyRun             = KeyCode.LeftShift;     // Left Shift to Run
+    //public KeyCode keyCrouch          = KeyCode.LeftControl;   // Left Control to Crouch
     public KeyCode keyJump            = KeyCode.Space;         // Space to Jump
-    public KeyCode keySlide           = KeyCode.F;             // F to Slide (only when running)
+    //public KeyCode keySlide           = KeyCode.F;             // F to Slide (only when running)
     public KeyCode keyToggleCursor    = KeyCode.BackQuote;     // ` to toggle lock cursor (aka [~] console key)
 
     // Input Variables that can be assigned externally
@@ -85,10 +85,10 @@ public class BasicFPCC : MonoBehaviour
     [HideInInspector] public float inputLookY        = 0;      //
     [HideInInspector] public float inputMoveX        = 0;      // range -1f to +1f
     [HideInInspector] public float inputMoveY        = 0;      // range -1f to +1f
-    [HideInInspector] public bool inputKeyRun        = false;  // is key Held
-    [HideInInspector] public bool inputKeyCrouch     = false;  // is key Held
+    //[HideInInspector] public bool inputKeyRun        = false;  // is key Held
+    //[HideInInspector] public bool inputKeyCrouch     = false;  // is key Held
     [HideInInspector] public bool inputKeyDownJump   = false;  // is key Pressed
-    [HideInInspector] public bool inputKeyDownSlide  = false;  // is key Pressed
+    //[HideInInspector] public bool inputKeyDownSlide  = false;  // is key Pressed
     [HideInInspector] public bool inputKeyDownCursor = false;  // is key Pressed
    
     [Header("Look Settings")]
@@ -100,11 +100,11 @@ public class BasicFPCC : MonoBehaviour
     public float clampLookY = 90f;                   // maximum look up/down angle
    
     [Header("Move Settings")]
-    public float crouchSpeed = 3f;                   // crouching movement speed
+    //public float crouchSpeed = 3f;                   // crouching movement speed
     public float walkSpeed = 7f;                     // regular movement speed
-    public float runSpeed = 12f;                     // run movement speed
-    public float slideSpeed = 14f;                   // slide movement speed
-    public float slideDuration = 2.2f;               // duration of slide
+    //public float runSpeed = 12f;                     // run movement speed
+    //public float slideSpeed = 14f;                   // slide movement speed
+    //public float slideDuration = 2.2f;               // duration of slide
     public float gravity = -9.81f;                   // gravity / fall rate
     public float jumpHeight = 2.5f;                  // jump height
 
@@ -147,9 +147,9 @@ public class BasicFPCC : MonoBehaviour
     private float groundOffsetY = 0;                 // calculated offset relative to height
     public bool isSlipping = false;
     [Space(5)]
-    public bool isSliding = false;
-    public float slideTimer = 0;                     // current slide duration
-    public Vector3 slideForward = Vector3.zero;      // direction of the slide
+    //public bool isSliding = false;
+    //public float slideTimer = 0;                     // current slide duration
+    //public Vector3 slideForward = Vector3.zero;      // direction of the slide
     [Space(5)]
     public bool isCeiling = false;
     private float ceilingOffsetY = 0;                // calculated offset relative to height
@@ -197,11 +197,11 @@ public class BasicFPCC : MonoBehaviour
             inputMoveX = Input.GetAxis( axisMoveHorzizontal );
             inputMoveY = Input.GetAxis( axisMoveVertical );
 
-            inputKeyRun        = Input.GetKey( keyRun );
-            inputKeyCrouch     = Input.GetKey( keyCrouch );
+            //inputKeyRun        = Input.GetKey( keyRun );
+            //inputKeyCrouch     = Input.GetKey( keyCrouch );
 
             inputKeyDownJump   = Input.GetKeyDown( keyJump );
-            inputKeyDownSlide  = Input.GetKeyDown( keySlide );
+            //inputKeyDownSlide  = Input.GetKeyDown( keySlide );
             inputKeyDownCursor = Input.GetKeyDown( keyToggleCursor );
         }
 
@@ -220,13 +220,15 @@ public class BasicFPCC : MonoBehaviour
         float mouseY = accMouseY * mouseSensitivityY * 100f * Time.deltaTime;
 
         // rotate camera X
-        xRotation += ( invertLookY == true ? mouseY : -mouseY );
+        xRotation += ( invertLookY == true ? -mouseY : mouseY );
         xRotation = Mathf.Clamp( xRotation, -clampLookY, clampLookY );
 
         cameraTx.localRotation = Quaternion.Euler( xRotation, 0f, 0f );
        
         // rotate player Y
         playerTx.Rotate( Vector3.up * mouseX );
+
+        Debug.Log($"xRotation: {xRotation}, mouseY: {mouseY}, invertLookY: {invertLookY}");
     }
 
     void ProcessMovement()
@@ -251,7 +253,7 @@ public class BasicFPCC : MonoBehaviour
         CeilingCheck();
 
         // - Run and Crouch -
-
+/*
         // if grounded, and not stuck on ceiling
         if ( isGrounded && !isCeiling && inputKeyRun )
         {
@@ -278,9 +280,11 @@ public class BasicFPCC : MonoBehaviour
                 slideForward = ( playerTx.position - lastPos ).normalized;
             }
         }
+    */
         lastPos = playerTx.position; // update reference
 
         // check slider timer and velocity
+        /*
         if ( isSliding )
         {
             nextSpeed = currSpeed; // default to current speed
@@ -300,15 +304,16 @@ public class BasicFPCC : MonoBehaviour
                 nextSpeed = slideSpeed;   // to slide speed
             }
         }
-        else // - Player Move Input -
-        {
-            move = ( playerTx.right * inputMoveX ) + ( playerTx.forward * inputMoveY );
+        */
+        //else // - Player Move Input -
+        //{
+        move = ( playerTx.right * inputMoveX ) + ( playerTx.forward * inputMoveY );
 
-            if ( move.magnitude > 1f )
-            {
-                move = move.normalized;
-            }
+        if ( move.magnitude > 1f )
+        {
+            move = move.normalized;
         }
+        //}
 
         // - Height -
 
@@ -366,11 +371,11 @@ public class BasicFPCC : MonoBehaviour
                 move = slopeRight * ( dot > 0 ? inputMoveX : -inputMoveX );
 
                 // speed
-                nextSpeed = Mathf.Lerp( currSpeed, runSpeed, 5f * Time.deltaTime );
+                nextSpeed = Mathf.Lerp( currSpeed, 14, 5f * Time.deltaTime );
 
                 // increase angular gravity
                 float mag = fauxGravity.magnitude;
-                calc = Vector3.Slerp( fauxGravity, groundSlopeDir * runSpeed, 4f * Time.deltaTime );
+                calc = Vector3.Slerp( fauxGravity, groundSlopeDir /* * runSpeed */, 4f * Time.deltaTime );
                 fauxGravity = calc.normalized * mag;
             }
             else
@@ -387,7 +392,7 @@ public class BasicFPCC : MonoBehaviour
             }
 
             // - Jump -
-            if ( !isSliding && !isCeiling && inputKeyDownJump ) // jump
+            if ( /*!isSliding && */ !isCeiling && inputKeyDownJump ) // jump
             {
                 fauxGravity.y = Mathf.Sqrt( jumpHeight * -2f * gravity );
             }
@@ -407,7 +412,7 @@ public class BasicFPCC : MonoBehaviour
         // prevent floating if jumping into a ceiling
         if ( isCeiling )
         {
-            speed = crouchSpeed; // clamp speed to crouched
+            //speed = crouchSpeed; // clamp speed to crouched
 
             if ( fauxGravity.y > 0 )
             {
