@@ -953,17 +953,29 @@ PrefabInstance:
       propertyPath: m_FOVAxisMode
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4065793961326480041, guid: 622395aff234b414d84eb2a172951fae, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.7
+      objectReference: {fileID: 0}
     - target: {fileID: 4105006175573919547, guid: 622395aff234b414d84eb2a172951fae, type: 3}
       propertyPath: gravity
-      value: -15
+      value: -18
+      objectReference: {fileID: 0}
+    - target: {fileID: 4105006175573919547, guid: 622395aff234b414d84eb2a172951fae, type: 3}
+      propertyPath: walkSpeed
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 4105006175573919547, guid: 622395aff234b414d84eb2a172951fae, type: 3}
       propertyPath: clampLookY
-      value: 180
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4105006175573919547, guid: 622395aff234b414d84eb2a172951fae, type: 3}
+      propertyPath: invertLookY
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4105006175573919547, guid: 622395aff234b414d84eb2a172951fae, type: 3}
       propertyPath: mouseSnappiness
-      value: 350
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4105006175573919547, guid: 622395aff234b414d84eb2a172951fae, type: 3}
       propertyPath: mouseSensitivityX
@@ -983,7 +995,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6823198779326646108, guid: 622395aff234b414d84eb2a172951fae, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.3000002
+      value: 3.3000002
       objectReference: {fileID: 0}
     - target: {fileID: 6823198779326646108, guid: 622395aff234b414d84eb2a172951fae, type: 3}
       propertyPath: m_LocalPosition.z

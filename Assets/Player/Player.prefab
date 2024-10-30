@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 6723023209752316376}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 362607.88, y: -18303.527, z: -270689.03}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -83,30 +83,20 @@ MonoBehaviour:
   axisLookVertical: Mouse Y
   axisMoveHorzizontal: Horizontal
   axisMoveVertical: Vertical
-  keyRun: 304
-  keyCrouch: 306
   keyJump: 32
-  keySlide: 102
   keyToggleCursor: 96
   inputLookX: 0
   inputLookY: 0
   inputMoveX: 0
   inputMoveY: 0
-  inputKeyRun: 0
-  inputKeyCrouch: 0
   inputKeyDownJump: 0
-  inputKeyDownSlide: 0
   inputKeyDownCursor: 0
   mouseSensitivityX: 2
   mouseSensitivityY: 2
   mouseSnappiness: 20
   invertLookY: 0
   clampLookY: 90
-  crouchSpeed: 3
   walkSpeed: 7
-  runSpeed: 12
-  slideSpeed: 14
-  slideDuration: 2.2
   gravity: -9.81
   jumpHeight: 2.5
   groundCheckY: 0.33
@@ -122,9 +112,6 @@ MonoBehaviour:
   groundSlopeAngle: 0
   groundSlopeDir: {x: 0, y: 0, z: 0}
   isSlipping: 0
-  isSliding: 0
-  slideTimer: 0
-  slideForward: {x: 0, y: 0, z: 0}
   isCeiling: 0
   cursorActive: 0
 --- !u!1001 &4056784197832372018
@@ -173,6 +160,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9022227496068507, guid: 682c553aa84b5c447916fae3736789e6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4954522951035217377, guid: 682c553aa84b5c447916fae3736789e6, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7699107583010799245, guid: 682c553aa84b5c447916fae3736789e6, type: 3}
