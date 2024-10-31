@@ -31,12 +31,12 @@ public class Enemy : Character
     void Start()
     {
         destination = startingDestination;
-        Move();
     }
 
     void Update()
     {
         agent.destination = destination.transform.position;
+        Move();
     }
 
     //provided we have a trigger collider for detecting player
