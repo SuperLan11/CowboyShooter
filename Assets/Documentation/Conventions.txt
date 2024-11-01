@@ -1,0 +1,44 @@
+Case Conventions
+• functions are PascalCase
+• classes are PascalCase
+• folders are PascalCase
+• assets are in PascalCase
+• sorting/collision layers are PascalCase
+• non-const class variables are camelCase
+• function parameters are in camelCase
+• const class variables are UPPERCASE or UPPERCASE_UNDERSCORE
+• tags are UPPERCASE or UPPERCASE_UNDERSCORE
+
+Other Coding Conventions
+• do not use the word Script in any script name (for conciseness)
+• new line curly braces
+• keep Start() as first function in class
+• keep Update() as last function in class
+• prefab variables have prefab in the name. ex: lassoPrefab
+• sound effect audio sources have sfx in the name. ex: hookSfx
+
+
+Folder Structure:
+
+Assets/
+	Animation/
+	Audio/
+		Music/
+		SFX/
+	Documentation/
+	InputActions/
+	Materials/
+		PhysicsMaterials/
+		VisualMaterials/
+	Models/
+	Prefabs/
+		PrefabsUI
+		Prefabs3D
+	Scenes/
+		Menu/
+		Levels/
+	Scripts/
+	Sprites/
+	Textures/
+		UI/
+	
