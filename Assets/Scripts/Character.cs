@@ -20,7 +20,8 @@ public abstract class Character : MonoBehaviour
     protected Rigidbody rigidbody;
     
 
-    virtual protected void Shoot(){
+    virtual protected void Shoot()
+    {
         Debug.LogWarning("You better implement the Shoot() method, or you'll be in a heap of trouble, partner.");
     }
 }

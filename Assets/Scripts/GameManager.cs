@@ -14,7 +14,8 @@ public class GameManager : MonoBehaviour
     
     public int currentLevel;
 
-    public void Awake(){
+    public void Awake()
+    {
         //Deletes itself if there's another instance. Basically forces the class to be a singleton
         if (gameManager != null && gameManager != this) 
         { 

@@ -20,11 +20,13 @@ public class Enemy : Character
     [SerializeField] private GameObject playerDestination;
     
     //!Implement this ASAP!
-    protected void Shoot(){
+    protected void Shoot()
+    {
         //shoot logic
     }
 
-    private void Move(){
+    private void Move()
+    {
         //move logic
     } 
 
@@ -42,13 +44,15 @@ public class Enemy : Character
     //provided we have a trigger collider for detecting player
     public void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "PLAYER"){
+        if (other.gameObject.tag == "PLAYER")
+        {
             destination = playerDestination;
         }
     }
     public void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "PLAYER"){
+        if (other.gameObject.tag == "PLAYER")
+        {
             destination = startingDestination;
         }
     }

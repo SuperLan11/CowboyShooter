@@ -46,11 +46,13 @@ public class Player : Character
     }    
 
     //!Implement this ASAP!
-    protected void Shoot(){
+    protected void Shoot()
+    {
         //shoot logic
     } 
 
-    private void Awake() { 
+    private void Awake() 
+    { 
         //Deletes itself if there's another instance. Basically forces the class to be a singleton
         if (player != null && player != this) 
         { 
