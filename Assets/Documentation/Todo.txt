@@ -1,6 +1,6 @@
 Todo:
 
 • learn ProBuilder
-• fix missing textures for gun and other objects
+• fix missing textures
 • get working player controller
 • work on lasso physics

@@ -10,6 +10,7 @@ Case Conventions
 • tags are UPPERCASE or UPPERCASE_UNDERSCORE
 
 Other Coding Conventions
+• always include the access modifier for variables and functions (private, public)
 • do not use the word Script in any script name (for conciseness)
 • new line curly braces
 • keep Start() as first function in class
