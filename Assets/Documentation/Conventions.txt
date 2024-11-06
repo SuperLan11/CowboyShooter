@@ -10,7 +10,8 @@ Case Conventions
 • tags are UPPERCASE or UPPERCASE_UNDERSCORE
 
 Other Coding Conventions
-• always include the access modifier for variables and functions (private, public)
+• always include the access modifier for variables and functions (private, public, etc)
+• group class variables by functionality (ex: group all movement-related variables together, all attack-related variables together, etc.
 • do not use the word Script in any script name (for conciseness)
 • new line curly braces
 • keep Start() as first function in class

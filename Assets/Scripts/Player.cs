@@ -19,13 +19,16 @@ public class Player : Character
     private Vector2 lastMoveInput = Vector2.zero;
     private Vector3 maxSpeed = new Vector3(10f, 10f, 10f);
     private float acceleration = 10f;
+    
     private bool canJump;
     private bool tryingToJump;
+    private float jumpStrength = 7f;
+    private bool grounded = false;
 
     private Camera cam;
     private Vector3 camOffset;
-
-    private Rigidbody myRig;
+    private float horRotSpeed = 6f;
+    private float vertRotSpeed = 6f;
 
     private enum movementState 
     {
@@ -40,9 +43,9 @@ public class Player : Character
 
     void Start()
     {
-        cam = Camera.main;
-        myRig = GetComponent<Rigidbody>();
-        camOffset = cam.transform.position - transform.position;
+        cam = Camera.main;        
+        rigidbody = GetComponent<Rigidbody>();
+        camOffset = cam.transform.position - transform.position;        
     }    
 
     //!Implement this ASAP!
@@ -103,12 +106,45 @@ public class Player : Character
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        for (int i = 0; i < collision.contactCount; i++)
+        {            
+            // if player hits something beneath them, they hit floor
+            if (collision.GetContact(i).point.y < transform.position.y)
+            {
+                grounded = true;                
+                // without break, grounded is determined by last contact
+                break;
+            }
+
+        }
+    }
+
     void Update()
     {
         cam.transform.position = transform.position;
 
-        myRig.velocity = new Vector3(0, myRig.velocity.y, 0);
-        myRig.velocity += new Vector3(lastMoveInput.x, 0, lastMoveInput.y) * speed;
+        // need to assign y velocity first so it is not overriden by next line
+        rigidbody.velocity = new Vector3(0, rigidbody.velocity.y, 0);
         
+        // moves player left/right/forward/backward from direction they're facing
+        rigidbody.velocity += speed * (transform.right * lastMoveInput.x +
+                                       transform.forward * lastMoveInput.y);
+
+        float deltaMouseX = Input.GetAxis("Mouse X");
+        float deltaMouseY = Input.GetAxis("Mouse Y");
+
+        // hide cursor
+
+        rigidbody.angularVelocity = new Vector3(deltaMouseX * vertRotSpeed, deltaMouseX * horRotSpeed, 0);
+
+        if (tryingToJump && grounded)
+        {
+            rigidbody.velocity += new Vector3(0, jumpStrength, 0);
+            tryingToJump = false;
+            grounded = false;
+            Debug.Log("jumping");
+        }
     }
 }
