@@ -1,5 +1,5 @@
 /*
-@Authors - Patrick
+@Authors - Patrick, Landon
 @Description - Player singleton class
 */
 
@@ -156,8 +156,6 @@ public class Player : Character
         rigidbody.velocity += (transform.right * lastMoveInput.x +
                              transform.forward * lastMoveInput.y) * speed;
 
-        Debug.Log("rigidbody.velocity.y: " + rigidbody.velocity.y);
-
         // Input.GetAxis is the change in value since last frame
         float deltaMouseX = Input.GetAxis("Mouse X");
         float deltaMouseY = -Input.GetAxis("Mouse Y");
@@ -165,6 +163,7 @@ public class Player : Character
         // Player will not scroll vertically so that transform.forward doesn't move into the sky
         Vector3 playerRot = transform.rotation.eulerAngles;
         playerRot.y += deltaMouseX * horRotSpeed;
+        // just in case
         playerRot.x = 0;
         playerRot.z = 0;
         transform.eulerAngles = playerRot;
@@ -173,8 +172,7 @@ public class Player : Character
 
         // The camera only scrolls vertically since the player parent object handles horizontal scroll
         Vector3 camRot = cam.transform.rotation.eulerAngles;
-        camRot.x += deltaMouseY * vertRotSpeed;               
-        // make z rotation 0 to avoid barrel roll in case some weird collision happens
+        camRot.x += deltaMouseY * vertRotSpeed;                       
         camRot.z = 0;
         cam.transform.eulerAngles = camRot;
 
