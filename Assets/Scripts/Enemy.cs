@@ -15,10 +15,18 @@ public class Enemy : Character
 {
     //navmesh crap
     [SerializeField] private GameObject destination;
-    [SerializeField] private NavMeshAgent agent;
+    //[SerializeField] private NavMeshAgent agent;
+    private NavMeshAgent agent;
     [SerializeField] private GameObject startingDestination;
     [SerializeField] private GameObject playerDestination;
-    
+
+    void Start()
+    {        
+        agent = GetComponent<NavMeshAgent>();
+        agent.destination = destination.transform.position;
+        //agent.Resume();
+    }
+
     //!Implement this ASAP!
     protected void Shoot()
     {
@@ -28,16 +36,11 @@ public class Enemy : Character
     private void Move()
     {
         //move logic
-    } 
-
-    void Start()
-    {
-        destination = startingDestination;
-    }
+    }     
 
     void Update()
     {
-        agent.destination = destination.transform.position;
+        //agent.destination = destination.transform.position;
         Move();
     }
 

@@ -48,8 +48,7 @@ public class Player : Character
 
     void Start()
     {
-        // this makes the cursor stay insivible in the editor
-        // to make cursor visible, press Escape        
+        // IMPORTANT! to make cursor visible again, press Escape        
         Cursor.visible = false;
 
         cam = Camera.main;
@@ -71,10 +70,10 @@ public class Player : Character
 
     protected void Lasso()
     {
-        Debug.Log("lasso called");
+        /*Debug.Log("lasso called");
         Vector3 newScale = lasso.transform.localScale;
         newScale.y *= 2;
-        lasso.transform.localScale = newScale;
+        lasso.transform.localScale = newScale;*/
     }
 
     private void Awake()
@@ -157,16 +156,17 @@ public class Player : Character
         rigidbody.velocity += (transform.right * lastMoveInput.x +
                              transform.forward * lastMoveInput.y) * speed;
 
+        Debug.Log("rigidbody.velocity.y: " + rigidbody.velocity.y);
+
         // Input.GetAxis is the change in value since last frame
         float deltaMouseX = Input.GetAxis("Mouse X");
         float deltaMouseY = -Input.GetAxis("Mouse Y");
 
-        /*Debug.Log("deltaMouseX: " + deltaMouseX);
-        Debug.Log("deltaMouseY: " + deltaMouseY);*/
-
         // Player will not scroll vertically so that transform.forward doesn't move into the sky
         Vector3 playerRot = transform.rotation.eulerAngles;
-        playerRot.y += deltaMouseX * horRotSpeed;        
+        playerRot.y += deltaMouseX * horRotSpeed;
+        playerRot.x = 0;
+        playerRot.z = 0;
         transform.eulerAngles = playerRot;
 
         // later: make vertical threshold camera cannot scroll past (at feet and in sky)
@@ -180,6 +180,7 @@ public class Player : Character
 
         if (tryingToJump && grounded)
         {
+            Debug.Log("jumping");
             rigidbody.velocity += new Vector3(0, jumpStrength, 0);
             tryingToJump = false;
             grounded = false;
