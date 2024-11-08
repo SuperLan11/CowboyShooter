@@ -26,9 +26,12 @@ public class Player : Character
     private bool grounded = false;
 
     private Camera cam;
-    private Vector3 camOffset;
-    public float horRotSpeed = 2f;
-    public float vertRotSpeed = 3f;
+    private GameObject lasso;
+
+    // IMPORTANT! If you assign these values here, they must be the same as the inspector
+    // Otherwise, movement is reversed
+    [SerializeField] float horRotSpeed;
+    [SerializeField] float vertRotSpeed;
 
     private enum movementState
     {
@@ -48,6 +51,8 @@ public class Player : Character
         //Cursor.visible = false;
 
         cam = Camera.main;
+        // lasso should be the second child of Camera for this to work
+        lasso = transform.GetChild(0).GetChild(1).gameObject;        
         rigidbody = GetComponent<Rigidbody>();        
     }
 
@@ -55,6 +60,13 @@ public class Player : Character
     protected void Shoot()
     {
         //shoot logic
+    }
+
+    protected void Lasso()
+    {
+        Vector3 newScale = lasso.transform.localScale;
+        newScale.y *= 2;
+        lasso.transform.localScale = newScale;
     }
 
     private void Awake()
@@ -84,7 +96,8 @@ public class Player : Character
 
     public void ShootActivated(InputAction.CallbackContext context)
     {
-        if (context.started || context.performed)
+        //if (context.started || context.performed)
+        if (context.started)
         {
             Shoot();
         }
@@ -92,9 +105,11 @@ public class Player : Character
 
     public void LassoActivated(InputAction.CallbackContext context)
     {
-        if (context.started || context.performed)
+        //if (context.started || context.performed)
+        if (context.started)
         {
             //is lasso gonna be a function?
+            Lasso();
         }
     }
 
@@ -138,19 +153,19 @@ public class Player : Character
         float deltaMouseX = Input.GetAxis("Mouse X");
         float deltaMouseY = -Input.GetAxis("Mouse Y");
 
-        Debug.Log("deltaMouseX: " + deltaMouseX);
-        Debug.Log("deltaMouseY: " + deltaMouseY);
+        /*Debug.Log("deltaMouseX: " + deltaMouseX);
+        Debug.Log("deltaMouseY: " + deltaMouseY);*/
 
         // Player will not scroll vertically so that transform.forward doesn't move into the sky
         Vector3 playerRot = transform.rotation.eulerAngles;
-        playerRot.y += deltaMouseX;
+        playerRot.y += deltaMouseX * horRotSpeed;        
         transform.eulerAngles = playerRot;
 
         // later: make vertical threshold camera cannot scroll past (at feet and in sky)
 
         // The camera only scrolls vertically since the player parent object handles horizontal scroll
-        Vector3 camRot = cam.transform.rotation.eulerAngles;        
-        camRot.x += deltaMouseY;        
+        Vector3 camRot = cam.transform.rotation.eulerAngles;
+        camRot.x += deltaMouseY * vertRotSpeed;               
         // make z rotation 0 to avoid barrel roll in case some weird collision happens
         camRot.z = 0;
         cam.transform.eulerAngles = camRot;

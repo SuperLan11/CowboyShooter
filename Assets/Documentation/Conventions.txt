@@ -34,8 +34,9 @@ Assets/
 		VisualMaterials/
 	Models/
 	Prefabs/
-		PrefabsUI
-		Prefabs3D
+		PrefabsUI/
+		Prefabs3D/
+			Decoration/
 	Scenes/
 		Menu/
 		Levels/

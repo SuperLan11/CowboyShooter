@@ -2,5 +2,4 @@ Todo:
 
 • learn ProBuilder
 • fix missing textures
-• get working player controller
 • work on lasso physics
