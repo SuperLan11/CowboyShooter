@@ -17,7 +17,8 @@ public class Enemy : Character
     
     [SerializeField] private Transform destination1;
     [SerializeField] private Transform destination2;    
-    private int curDestination;    
+    private int curDestination;
+    private const int PLAYER_DEST = 3;
 
     [SerializeField] private GameObject player;
     [SerializeField] private float sightRange;
@@ -58,15 +59,18 @@ public class Enemy : Character
 
     public bool PlayerSighted(Vector3 enemyPos)
     {
-        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Ray ray = Camera.main.ScreenPointToRay(enemyPos);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit))
+        //if (Physics.Raycast(ray, out hit))
+        Vector3 direction = (Camera.main.transform.position - transform.position).normalized;
+        if(Physics.Raycast(transform.position, direction, out hit, Mathf.Infinity))
         {
-            Debug.Log("raycast hit");
-            return true;
-        }
+            Debug.Log("hit.name: " + hit.transform.gameObject.name);
+            Debug.Log("hit.name: " + hit.collider.transform.name);
+            if (hit.transform.gameObject.name == "Enemy" || hit.transform.gameObject.name == "Player")                            
+                return true;            
+        }                    
         return false;
     }
 
@@ -79,15 +83,21 @@ public class Enemy : Character
             playerNear = false;
 
         // how to check if enemy can raycast player?
-        PlayerSighted(transform.position);
+        playerSighted = PlayerSighted(transform.position);
 
         if(playerNear && playerSighted)
         {            
             agent.destination = player.transform.position;
-            curDestination = 3;
+            curDestination = PLAYER_DEST;
         }
+        else if(curDestination == PLAYER_DEST)
+        {
+            agent.destination = destination1.position;
+            curDestination = 1;
+        }        
+
         // use mesh width?        
-        else if (curDestination == 1 && agent.remainingDistance <= 0.01)
+        if (curDestination == 1 && agent.remainingDistance <= 0.01)
         {
             curDestination = 2;
             agent.destination = destination2.position;
