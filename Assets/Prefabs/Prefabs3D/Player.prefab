@@ -362,6 +362,14 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 40c3c1e8-8ced-4dd0-af8e-773cfb0172b6
     m_ActionName: Player/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 291dfafb-3016-495e-bbe2-fa97c9786465
+    m_ActionName: Player/Lasso[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8ed75731-9e5c-43cc-9b52-bf00303f261d
+    m_ActionName: Player/Shoot[/Mouse/leftButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

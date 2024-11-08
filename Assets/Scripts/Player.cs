@@ -28,6 +28,8 @@ public class Player : Character
     private Camera cam;
     private GameObject lasso;
 
+    private AudioSource gunSfx;
+
     // IMPORTANT! If you assign these values here, they must be the same as the inspector
     // Otherwise, movement is reversed
     [SerializeField] float horRotSpeed;
@@ -47,8 +49,8 @@ public class Player : Character
     void Start()
     {
         // this makes the cursor stay insivible in the editor
-        // uncomment this when game is done, or find a way to turn off in editor        
-        //Cursor.visible = false;
+        // to make cursor visible, press Escape        
+        Cursor.visible = false;
 
         cam = Camera.main;
         // lasso should be the second child of Camera for this to work
@@ -58,12 +60,18 @@ public class Player : Character
 
     //!Implement this ASAP!
     protected void Shoot()
-    {
-        //shoot logic
+    {        
+        if (gunSfx != null)
+            gunSfx.Play();
+
+        // hitscan logic
+
+        // damage logic
     }
 
     protected void Lasso()
     {
+        Debug.Log("lasso called");
         Vector3 newScale = lasso.transform.localScale;
         newScale.y *= 2;
         lasso.transform.localScale = newScale;
