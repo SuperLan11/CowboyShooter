@@ -37,11 +37,15 @@ public class Enemy : Character
 
         shootCooldown = 0f;
         maxShootCooldown = 1f;
+        // this is only here to give feedback for shooting
+        shootSfx = GetComponent<AudioSource>();
     }
     
-    protected void Shoot(GameObject player)
-    {        
-        player.GetComponent<Player>().TakeDamage(1);        
+    protected override void Shoot(GameObject player)
+    {
+        Debug.Log("SHOOTING");
+        player.GetComponent<Player>().TakeDamage(1);
+        shootSfx.Play();        
     }    
 
     //provided we have a trigger collider for detecting player
@@ -69,9 +73,8 @@ public class Enemy : Character
         Vector3 direction = (Camera.main.transform.position - transform.position).normalized;
         if(Physics.Raycast(transform.position, direction, out hit, Mathf.Infinity))
         {
-            Debug.Log("hit.name: " + hit.transform.gameObject.name);
-            Debug.Log("hit.name: " + hit.collider.transform.name);
-            if (hit.transform.gameObject.name == "Enemy" || hit.transform.gameObject.name == "Player")                            
+            //Debug.Log("hit.name: " + hit.transform.gameObject.name);            
+            if (hit.transform.gameObject.name == "Player")                            
                 return true;            
         }                    
         return false;
@@ -110,12 +113,11 @@ public class Enemy : Character
         if(playerNear && playerSighted)
         {            
             agent.destination = player.transform.position;
-            curDestination = PLAYER_DEST;
-            shootCooldown += Time.deltaTime;
+            curDestination = PLAYER_DEST;            
 
             if (shootCooldown >= maxShootCooldown)
             {
-                Shoot();
+                Shoot(player);
                 shootCooldown = 0f;
             }
         }
@@ -124,7 +126,7 @@ public class Enemy : Character
             SetClosestDest();
         }
 
-        shootCooldown++;
+        shootCooldown += Time.deltaTime;
         
         if (curDestination == 1 && agent.remainingDistance <= 0.01)
         {

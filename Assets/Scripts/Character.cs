@@ -17,11 +17,13 @@ public abstract class Character : MonoBehaviour
     [SerializeField] protected float shootCooldown;
     [SerializeField] protected float speed;
 
+    protected AudioSource shootSfx;
+
     protected Weapon weapon;
     protected Rigidbody rigidbody;
     
 
-    virtual protected void Shoot()
+    virtual protected void Shoot(GameObject obj)
     {
         Debug.LogWarning("You better implement the Shoot() method, or you'll be in a heap of trouble, partner.");
     }

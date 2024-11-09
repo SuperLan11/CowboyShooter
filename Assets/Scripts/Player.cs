@@ -149,6 +149,7 @@ public class Player : Character
     public void TakeDamage(int damage)
     {
         health -= damage;
+        Debug.Log("playerHp: " + health);
     }
 
     void Update()
