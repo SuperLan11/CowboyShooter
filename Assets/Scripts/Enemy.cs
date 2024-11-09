@@ -45,7 +45,7 @@ public class Enemy : Character
     {
         Debug.Log("SHOOTING");
         player.GetComponent<Player>().TakeDamage(1);
-        shootSfx.Play();        
+        shootSfx.Play();
     }    
 
     //provided we have a trigger collider for detecting player
@@ -68,9 +68,9 @@ public class Enemy : Character
     {
         Ray ray = Camera.main.ScreenPointToRay(enemyPos);
         RaycastHit hit;
-
-        //if (Physics.Raycast(ray, out hit))
+        
         Vector3 direction = (Camera.main.transform.position - transform.position).normalized;
+        // draw a raycast from enemy to player to see if player is sighted
         if(Physics.Raycast(transform.position, direction, out hit, Mathf.Infinity))
         {
             //Debug.Log("hit.name: " + hit.transform.gameObject.name);            
@@ -80,13 +80,53 @@ public class Enemy : Character
         return false;
     }
 
-    private void SetClosestDest()
+    Transform GetClosestDest()
     {
-        Transform[] destinations = { destination1, destination2 };
+        OffMeshLink[] links = FindObjectsByType<OffMeshLink>(FindObjectsSortMode.None);
+        List<Transform> destinations = new List<Transform>();        
+
+        foreach (OffMeshLink link in links)
+        {            
+            destinations.Add(link.transform);
+        }
+
         int closestDestIndex = 0;
         float minDist = Mathf.Infinity;
 
-        for(int i = 0; i < destinations.Length; i++)
+        for (int i = 0; i < destinations.Count; i++)
+        {
+            float dist = Vector3.Distance(transform.position, destinations[i].position);
+            if (dist < minDist)
+            {
+                minDist = dist;
+                closestDestIndex = i;
+            }
+        }
+        //curDestination = closestDestIndex + 1;        
+        //agent.destination = destinations[closestDestIndex].position;
+        return destinations[closestDestIndex];
+    }
+
+    private void FindNewDest(Transform destArrived)
+    {
+        OffMeshLink[] links = FindObjectsByType<OffMeshLink>(FindObjectsSortMode.None);
+        List<Transform> destinations = new List<Transform>();
+
+        if(destination1 != destArrived)
+            destinations.Add(destination1);
+        if (destination2 != destArrived)
+            destinations.Add(destination2);
+
+        foreach(OffMeshLink link in links)
+        {
+            if(link.transform != destArrived)
+                destinations.Add(link.transform);
+        }        
+
+        int closestDestIndex = 0;
+        float minDist = Mathf.Infinity;
+
+        for(int i = 0; i < destinations.Count; i++)
         {
             float dist = Vector3.Distance(transform.position, destinations[i].position);
             if (dist < minDist)
@@ -123,12 +163,17 @@ public class Enemy : Character
         }
         else if(curDestination == PLAYER_DEST)
         {
-            SetClosestDest();
+            FindNewDest(player.transform);
         }
 
         shootCooldown += Time.deltaTime;
+
+        if(agent.remainingDistance <= 0.01)
+        {
+            FindNewDest(GetClosestDest());
+        }
         
-        if (curDestination == 1 && agent.remainingDistance <= 0.01)
+        /*if (curDestination == 1 && agent.remainingDistance <= 0.01)
         {
             curDestination = 2;
             agent.destination = destination2.position;
@@ -137,6 +182,6 @@ public class Enemy : Character
         {
             curDestination = 1;
             agent.destination = destination1.position;
-        }
+        }*/
     }
 }
