@@ -34,11 +34,14 @@ public class Enemy : Character
 
         agent.destination = destination1.position;
         curDestination = 1;
+
+        shootCooldown = 0f;
+        maxShootCooldown = 1f;
     }
     
-    protected void Shoot()
-    {
-        //shoot logic
+    protected void Shoot(GameObject player)
+    {        
+        player.GetComponent<Player>().TakeDamage(1);        
     }    
 
     //provided we have a trigger collider for detecting player
@@ -74,6 +77,25 @@ public class Enemy : Character
         return false;
     }
 
+    private void SetClosestDest()
+    {
+        Transform[] destinations = { destination1, destination2 };
+        int closestDestIndex = 0;
+        float minDist = Mathf.Infinity;
+
+        for(int i = 0; i < destinations.Length; i++)
+        {
+            float dist = Vector3.Distance(transform.position, destinations[i].position);
+            if (dist < minDist)
+            {
+                minDist = dist;
+                closestDestIndex = i;
+            }
+        }
+        curDestination = closestDestIndex + 1;
+        agent.destination = destinations[closestDestIndex].position;
+    }
+
 
     void Update()
     {
@@ -89,14 +111,21 @@ public class Enemy : Character
         {            
             agent.destination = player.transform.position;
             curDestination = PLAYER_DEST;
+            shootCooldown += Time.deltaTime;
+
+            if (shootCooldown >= maxShootCooldown)
+            {
+                Shoot();
+                shootCooldown = 0f;
+            }
         }
         else if(curDestination == PLAYER_DEST)
         {
-            agent.destination = destination1.position;
-            curDestination = 1;
-        }        
+            SetClosestDest();
+        }
 
-        // use mesh width?        
+        shootCooldown++;
+        
         if (curDestination == 1 && agent.remainingDistance <= 0.01)
         {
             curDestination = 2;

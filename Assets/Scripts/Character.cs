@@ -1,5 +1,5 @@
 /*
-@Authors - Patrick
+@Authors - Patrick, Landon
 @Description - Character class that defines behavior for all objects that can shoot. Basically an interface but with 
 datafields.
 */
@@ -12,8 +12,9 @@ public abstract class Character : MonoBehaviour
 {
     //serialize needed to customize prefabs
     [SerializeField] protected int health;
-    [SerializeField] protected int maxShootCooldown;
-    [SerializeField] protected int shootCooldown;
+    // in seconds
+    [SerializeField] protected float maxShootCooldown;    
+    [SerializeField] protected float shootCooldown;
     [SerializeField] protected float speed;
 
     protected Weapon weapon;

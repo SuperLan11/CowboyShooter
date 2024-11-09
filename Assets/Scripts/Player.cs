@@ -137,18 +137,24 @@ public class Player : Character
         for (int i = 0; i < collision.contactCount; i++)
         {
             // if player hits something beneath them, they hit floor
-            if (collision.GetContact(i).point.y < transform.position.y)
+            if (collision.GetContact(i).point.y < transform.position.y && (collision.gameObject.tag == "FLOOR" || collision.gameObject.tag == "WALL"))
             {
                 grounded = true;
                 // without break, grounded is determined by last contact
                 break;
             }
-
         }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
     }
 
     void Update()
     {        
+        // wall jumping?
+
         // need to assign y velocity first so it is not overriden
         rigidbody.velocity = new Vector3(0, rigidbody.velocity.y, 0);
 
