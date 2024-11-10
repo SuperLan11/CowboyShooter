@@ -1522,7 +1522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 028cbb77a0a89d241b820667df139dfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  navLinkPrefab: {fileID: 0}
+  navLinkPrefab: {fileID: 2092633861073207576, guid: 35bc8c431a34d1842a2e5778148bd0f4, type: 3}
 --- !u!1 &1874196476
 GameObject:
   m_ObjectHideFlags: 0
