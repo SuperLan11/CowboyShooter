@@ -135,7 +135,27 @@ public class Player : Character
         }
     }
 
+    /*
     private void OnCollisionEnter(Collision collision)
+    {
+        bool hitBeneath, onFloor;
+        for (int i = 0; i < collision.contactCount; i++)
+        {
+            hitBeneath = collision.GetContact(i).point.y < transform.position.y;
+            onFloor = collision.GetContact(i).otherCollider.gameObject.tag == "FLOOR";
+            
+            // if player hits something beneath them, they hit floor
+            if (hitBeneath && onFloor)
+            {
+                currentMovementState = movementState.GROUND;
+                //!without break, movement state is determined by last contact
+                break;
+            }
+        }
+    }
+    */
+
+    private void OnCollisionStay(Collision collision)
     {
         bool hitBeneath, onFloor;
         for (int i = 0; i < collision.contactCount; i++)
