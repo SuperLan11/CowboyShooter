@@ -6,6 +6,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -22,7 +23,10 @@ public class Player : Character
     public float acceleration = 10f;
 
     private bool tryingToJump;
+    private bool inJumpCooldown = false;
     public float jumpStrength = 7f;
+    private int jumpCooldown;
+    private int maxJumpCooldown;
 
     private Camera cam;
     private GameObject lasso;
@@ -55,7 +59,9 @@ public class Player : Character
         cam = Camera.main;
         // lasso should be the second child of Camera for this to work
         lasso = transform.GetChild(0).GetChild(1).gameObject;        
-        rigidbody = GetComponent<Rigidbody>();        
+        rigidbody = GetComponent<Rigidbody>();   
+
+        jumpCooldown = maxJumpCooldown = 2;     
     }
 
     //!Implement this ASAP!
@@ -100,7 +106,8 @@ public class Player : Character
     }
 
     public void ShootActivated(InputAction.CallbackContext context)
-    {        
+    {
+        //if (context.started || context.performed)
         if (context.started)
         {
             Shoot();
@@ -108,28 +115,22 @@ public class Player : Character
     }
 
     public void LassoActivated(InputAction.CallbackContext context)
-    {        
+    {
+        //if (context.started || context.performed)
         if (context.started)
         {
             player.currentMovementState = movementState.SWINGING;
             lasso.GetComponent<Lasso>().StartLasso();
         }
-        else if (context.canceled)
-        {
-            if (player.currentMovementState != movementState.GROUND)
-            {
-                Debug.Log("Prev state: " + player.currentMovementState);
-                player.currentMovementState = movementState.AIR;
-            }
-
+        else if (context.canceled){
+            player.currentMovementState = movementState.AIR;
             lasso.GetComponent<Lasso>().EndLasso();
-            //Debug.Log("STOPPED HOLDING RMB");
+            Debug.Log("STOPPED HOLDING RMB");
         }
     }
 
     public void JumpActivated(InputAction.CallbackContext context)
     {
-        Debug.Log("movementState: " + player.currentMovementState);
         if (context.started)
         {
             tryingToJump = true;
@@ -140,27 +141,8 @@ public class Player : Character
         }
     }
 
-    /*
+    
     private void OnCollisionEnter(Collision collision)
-    {
-        bool hitBeneath, onFloor;
-        for (int i = 0; i < collision.contactCount; i++)
-        {
-            hitBeneath = collision.GetContact(i).point.y < transform.position.y;
-            onFloor = collision.GetContact(i).otherCollider.gameObject.tag == "FLOOR";
-            
-            // if player hits something beneath them, they hit floor
-            if (hitBeneath && onFloor)
-            {
-                currentMovementState = movementState.GROUND;
-                //!without break, movement state is determined by last contact
-                break;
-            }
-        }
-    }
-    */
-
-    private void OnCollisionStay(Collision collision)
     {
         bool hitBeneath, onFloor;
         for (int i = 0; i < collision.contactCount; i++)
@@ -217,9 +199,22 @@ public class Player : Character
 
         if (tryingToJump && isGrounded())
         {
-            //Debug.Log("jumping");
+            //prevents double jumps
+            if (inJumpCooldown){
+                if (jumpCooldown > 0){
+                    jumpCooldown--;
+                }else{
+                    jumpCooldown = maxJumpCooldown;
+                    inJumpCooldown = false;
+                }
+
+                return;
+            }
+
+            Debug.Log("jumping");
             rigidbody.velocity += new Vector3(0, jumpStrength, 0);
             tryingToJump = false;
+            inJumpCooldown = true;
             currentMovementState = movementState.AIR;
         }
     }

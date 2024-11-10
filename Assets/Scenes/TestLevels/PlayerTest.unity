@@ -1656,6 +1656,10 @@ PrefabInstance:
       value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 765097702250112274, guid: 675c419c1fbc55e44bd3d2b98522cc87, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 765097702250112274, guid: 675c419c1fbc55e44bd3d2b98522cc87, type: 3}
       propertyPath: m_Interpolate
       value: 0
       objectReference: {fileID: 0}
