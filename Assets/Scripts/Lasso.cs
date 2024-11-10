@@ -3,8 +3,10 @@
 @Description - Lasso functionality
 */
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 using Vector2 = UnityEngine.Vector2;
@@ -37,12 +39,16 @@ public class Lasso : MonoBehaviour
         }
     }
 
-    public void StartLasso()
+    public bool StartLasso()
     {
         RaycastHit hit;
 
         if (Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, lassoMaxRange)) {
             grapplePoint = hit.point;
+
+            if (!isValidLassoObj(hit.transform.gameObject)){
+                return false;
+            }
             
             joint = Player.player.gameObject.AddComponent<SpringJoint>();
             joint.autoConfigureConnectedAnchor = false;
@@ -58,13 +64,15 @@ public class Lasso : MonoBehaviour
             joint.massScale = 4.5f;
 
             lineRenderer.positionCount = 2;
+
+            return true;
         }
         /*
         Debug.Log("lasso called");
         Vector3 newScale = lasso.transform.localScale;
         newScale.y *= 2;
         lasso.transform.localScale = newScale;*/
-
+        return false;
     }
 
     public void EndLasso()
@@ -87,6 +95,10 @@ public class Lasso : MonoBehaviour
     {
         return (Player.player.currentMovementState == Player.movementState.HANGING ||
             Player.player.currentMovementState == Player.movementState.SWINGING);
+    }
+
+    public bool isValidLassoObj(GameObject obj){
+        return (obj.tag == "HOOK" || obj.tag == "BARREL");
     }
 }
 

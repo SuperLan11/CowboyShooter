@@ -119,13 +119,19 @@ public class Player : Character
         //if (context.started || context.performed)
         if (context.started)
         {
-            player.currentMovementState = movementState.SWINGING;
-            lasso.GetComponent<Lasso>().StartLasso();
+            bool valid = lasso.GetComponent<Lasso>().StartLasso();
+
+            if (valid){
+                player.currentMovementState = movementState.SWINGING;
+            }
         }
         else if (context.canceled){
-            player.currentMovementState = movementState.AIR;
+            //prevents player from being in air state after just tapping RMB
+            if (player.currentMovementState != movementState.GROUND){
+                player.currentMovementState = movementState.AIR;
+            }
+            
             lasso.GetComponent<Lasso>().EndLasso();
-            Debug.Log("STOPPED HOLDING RMB");
         }
     }
 
@@ -167,13 +173,14 @@ public class Player : Character
     }
 
     void FixedUpdate()
-    {
-        // prevents camera from offsetting on scene start
-        if (Time.timeSinceLevelLoad < 0.1f)
-            return;
-
-        Debug.Log(currentMovementState);
+    {        
+        //Debug.Log(currentMovementState);
         // wall jumping?
+
+        //forces camera to look straight as you're opening up scene
+        if (Time.timeSinceLevelLoad < 0.1f){
+            return;
+        }
 
         // need to assign y velocity first so it is not overriden
         rigidbody.velocity = new Vector3(0, rigidbody.velocity.y, 0);
@@ -216,7 +223,6 @@ public class Player : Character
                 return;
             }
 
-            Debug.Log("jumping");
             rigidbody.velocity += new Vector3(0, jumpStrength, 0);
             tryingToJump = false;
             inJumpCooldown = true;
