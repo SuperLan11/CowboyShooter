@@ -40,13 +40,14 @@ public class Enemy : Character
         // this is only here to give feedback for shooting
         shootSfx = GetComponent<AudioSource>();
     }
-    
+    /*
     protected override void Shoot(GameObject player)
     {
         Debug.Log("SHOOTING");
         player.GetComponent<Player>().TakeDamage(1);
         shootSfx.Play();
     }    
+    */
 
     //provided we have a trigger collider for detecting player
     public void OnTriggerEnter(Collider other)
