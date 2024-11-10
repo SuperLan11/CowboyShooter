@@ -35,8 +35,7 @@ public class Enemy : Character
         agent = GetComponent<NavMeshAgent>();
         player = FindObjectOfType<Player>().gameObject;
         playerNear = false;
-        playerSighted = false;
-        //agent.autoTraverseOffMeshLink = true;
+        playerSighted = false;        
         
         destList.Add(destination1);
         destList.Add(destination2);
@@ -74,7 +73,7 @@ public class Enemy : Character
         // draw a raycast from enemy to player to see if player is sighted
         if(Physics.Raycast(transform.position, direction, out hit, Mathf.Infinity))
         {
-            //Debug.Log("hit.name: " + hit.transform.gameObject.name);            
+            //Debug.Log("hit.name: " + hit.transform.gameObject.name);
             if (hit.transform.gameObject.name == "Player")                            
                 return true;            
         }                    
@@ -111,7 +110,7 @@ public class Enemy : Character
                 closestDestIndex = i;
             }
         }        
-        agent.destination = destinations[closestDestIndex];       
+        agent.destination = destinations[closestDestIndex];
     }
 
 
