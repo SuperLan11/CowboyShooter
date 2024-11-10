@@ -20,10 +20,10 @@ public class Enemy : Character
     [SerializeField] private Transform destination1;
     [SerializeField] private Transform destination2;
     private List<Transform> destList = new List<Transform>();
-    
-    [SerializeField] public float destCooldown;
-    [SerializeField] private float maxDestCooldown;
-    [SerializeField] private bool switchingDest;
+
+    private bool switchingDest;
+    private float destCooldown;
+    private float maxDestCooldown;    
 
     [SerializeField] private GameObject player;
     [SerializeField] private float sightRange;
@@ -41,13 +41,19 @@ public class Enemy : Character
         destList.Add(destination1);
         destList.Add(destination2);
         agent.destination = destination1.position;
-        // in seconds
-        destCooldown = 0f;
+
+        // work on offmeshlinks
+
+        // maxDestCooldown changes how frequently NavMesh can change destinations in seconds
+        // this also prevents navmesh from assigning the same destination over and over       
+        destCooldown = 0f;        
         maxDestCooldown = 0.5f;        
         switchingDest = false;
 
+        // in seconds
         shootCooldown = 0f;
         maxShootCooldown = 1f;
+
         // this is only here to give feedback for shooting
         shootSfx = GetComponent<AudioSource>();
     }
@@ -105,15 +111,21 @@ public class Enemy : Character
                 closestDestIndex = i;
             }
         }        
-        agent.destination = destinations[closestDestIndex];                
+        agent.destination = destinations[closestDestIndex];       
     }
 
 
     void Update()
     {
-        if (!switchingDest && agent.remainingDistance <= 0.0001f)
+        /*if (agent.isOnOffMeshLink)
+            Debug.Log("on off mesh link");
+        else
+            Debug.Log("no off mesh");*/
+
+
+        if (!switchingDest && agent.remainingDistance <= 0.01f)
         {                                    
-            Debug.Log("got to dest, find new dest");            
+            //Debug.Log("got to dest, find new dest");            
             switchingDest = true;
             FindNewDest(agent.destination);
             return;
@@ -148,7 +160,7 @@ public class Enemy : Character
         }
         else if(agent.destination == player.transform.position)
         {
-            Debug.Log("Find dest other than player");
+            //Debug.Log("Find dest other than player");
             FindNewDest(agent.destination);
         }
 

@@ -100,8 +100,7 @@ public class Player : Character
     }
 
     public void ShootActivated(InputAction.CallbackContext context)
-    {
-        //if (context.started || context.performed)
+    {        
         if (context.started)
         {
             Shoot();
@@ -109,22 +108,28 @@ public class Player : Character
     }
 
     public void LassoActivated(InputAction.CallbackContext context)
-    {
-        //if (context.started || context.performed)
+    {        
         if (context.started)
         {
             player.currentMovementState = movementState.SWINGING;
             lasso.GetComponent<Lasso>().StartLasso();
         }
-        else if (context.canceled){
-            player.currentMovementState = movementState.AIR;
+        else if (context.canceled)
+        {
+            if (player.currentMovementState != movementState.GROUND)
+            {
+                Debug.Log("Prev state: " + player.currentMovementState);
+                player.currentMovementState = movementState.AIR;
+            }
+
             lasso.GetComponent<Lasso>().EndLasso();
-            Debug.Log("STOPPED HOLDING RMB");
+            //Debug.Log("STOPPED HOLDING RMB");
         }
     }
 
     public void JumpActivated(InputAction.CallbackContext context)
     {
+        Debug.Log("movementState: " + player.currentMovementState);
         if (context.started)
         {
             tryingToJump = true;
@@ -191,7 +196,7 @@ public class Player : Character
 
         if (tryingToJump && isGrounded())
         {
-            Debug.Log("jumping");
+            //Debug.Log("jumping");
             rigidbody.velocity += new Vector3(0, jumpStrength, 0);
             tryingToJump = false;
             currentMovementState = movementState.AIR;
