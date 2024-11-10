@@ -5,6 +5,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI;
 using UnityEngine;
 
 using UnityEngine.AI;
@@ -15,10 +16,14 @@ public class Enemy : Character
 {    
     private NavMeshAgent agent;
     
+    // make these Transform since Vector3 can't be dragged in inspector
     [SerializeField] private Transform destination1;
-    [SerializeField] private Transform destination2;    
-    private int curDestination;
-    private const int PLAYER_DEST = 3;
+    [SerializeField] private Transform destination2;
+    private List<Transform> destList = new List<Transform>();
+    
+    [SerializeField] public float destCooldown;
+    [SerializeField] private float maxDestCooldown;
+    [SerializeField] private bool switchingDest;
 
     [SerializeField] private GameObject player;
     [SerializeField] private float sightRange;
@@ -31,9 +36,15 @@ public class Enemy : Character
         player = FindObjectOfType<Player>().gameObject;
         playerNear = false;
         playerSighted = false;
-
+        //agent.autoTraverseOffMeshLink = true;
+        
+        destList.Add(destination1);
+        destList.Add(destination2);
         agent.destination = destination1.position;
-        curDestination = 1;
+        // in seconds
+        destCooldown = 0f;
+        maxDestCooldown = 0.5f;        
+        switchingDest = false;
 
         shootCooldown = 0f;
         maxShootCooldown = 1f;
@@ -42,27 +53,11 @@ public class Enemy : Character
     }
     
     protected override void Shoot(GameObject player)
-    {
-        Debug.Log("SHOOTING");
+    {        
         player.GetComponent<Player>().TakeDamage(1);
-        shootSfx.Play();
-    }    
-
-    //provided we have a trigger collider for detecting player
-    public void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "PLAYER")
-        {
-            agent.destination = player.transform.position;
-        }
-    }
-    public void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "PLAYER")
-        {
-            agent.destination = destination1.transform.position;
-        }
-    }
+        if(shootSfx != null)
+            shootSfx.Play();
+    }            
 
     public bool PlayerSighted(Vector3 enemyPos)
     {
@@ -80,80 +75,70 @@ public class Enemy : Character
         return false;
     }
 
-    Transform GetClosestDest()
+    private void FindNewDest(Vector3 destArrived)
     {
-        OffMeshLink[] links = FindObjectsByType<OffMeshLink>(FindObjectsSortMode.None);
-        List<Transform> destinations = new List<Transform>();        
+        OffMeshLink[] links = FindObjectsOfType<OffMeshLink>();        
+        List<Vector3> destinations = new List<Vector3>();
+
+        foreach (Transform tr in destList)
+        {
+            bool isDestArrived = (tr.position.x == destArrived.x && tr.position.z == destArrived.z);
+            if (!isDestArrived)
+                destinations.Add(tr.position);
+        }
 
         foreach (OffMeshLink link in links)
         {            
-            destinations.Add(link.transform);
-        }
-
-        int closestDestIndex = 0;
-        float minDist = Mathf.Infinity;
-
-        for (int i = 0; i < destinations.Count; i++)
-        {
-            float dist = Vector3.Distance(transform.position, destinations[i].position);
-            if (dist < minDist)
-            {
-                minDist = dist;
-                closestDestIndex = i;
-            }
-        }
-        //curDestination = closestDestIndex + 1;        
-        //agent.destination = destinations[closestDestIndex].position;
-        return destinations[closestDestIndex];
-    }
-
-    private void FindNewDest(Transform destArrived)
-    {
-        OffMeshLink[] links = FindObjectsByType<OffMeshLink>(FindObjectsSortMode.None);
-        List<Transform> destinations = new List<Transform>();
-
-        if(destination1 != destArrived)
-            destinations.Add(destination1);
-        if (destination2 != destArrived)
-            destinations.Add(destination2);
-
-        foreach(OffMeshLink link in links)
-        {
-            if(link.transform != destArrived)
-                destinations.Add(link.transform);
-        }        
+            if (link.transform.position != destArrived)            
+                destinations.Add(link.transform.position);       
+        }    
 
         int closestDestIndex = 0;
         float minDist = Mathf.Infinity;
 
         for(int i = 0; i < destinations.Count; i++)
         {
-            float dist = Vector3.Distance(transform.position, destinations[i].position);
+            float dist = Vector3.Distance(transform.position, destinations[i]);
             if (dist < minDist)
             {
                 minDist = dist;
                 closestDestIndex = i;
             }
-        }
-        curDestination = closestDestIndex + 1;
-        agent.destination = destinations[closestDestIndex].position;
+        }        
+        agent.destination = destinations[closestDestIndex];                
     }
 
 
     void Update()
     {
+        if (!switchingDest && agent.remainingDistance <= 0.0001f)
+        {                                    
+            Debug.Log("got to dest, find new dest");            
+            switchingDest = true;
+            FindNewDest(agent.destination);
+            return;
+        }            
+        else if(switchingDest)
+        {
+            destCooldown += Time.deltaTime;
+            if(destCooldown >= maxDestCooldown)
+            {
+                switchingDest = false;
+                destCooldown = 0f;
+            }
+            return;
+        }
+
         if (Vector3.Distance(this.transform.position, player.transform.position) < sightRange)
             playerNear = true;
         else
             playerNear = false;
-
-        // how to check if enemy can raycast player?
+        
         playerSighted = PlayerSighted(transform.position);
 
         if(playerNear && playerSighted)
         {            
-            agent.destination = player.transform.position;
-            curDestination = PLAYER_DEST;            
+            agent.destination = player.transform.position;                 
 
             if (shootCooldown >= maxShootCooldown)
             {
@@ -161,27 +146,12 @@ public class Enemy : Character
                 shootCooldown = 0f;
             }
         }
-        else if(curDestination == PLAYER_DEST)
+        else if(agent.destination == player.transform.position)
         {
-            FindNewDest(player.transform);
+            Debug.Log("Find dest other than player");
+            FindNewDest(agent.destination);
         }
 
-        shootCooldown += Time.deltaTime;
-
-        if(agent.remainingDistance <= 0.01)
-        {
-            FindNewDest(GetClosestDest());
-        }
-        
-        /*if (curDestination == 1 && agent.remainingDistance <= 0.01)
-        {
-            curDestination = 2;
-            agent.destination = destination2.position;
-        }
-        else if(curDestination == 2 && agent.remainingDistance <= 0.01)
-        {
-            curDestination = 1;
-            agent.destination = destination1.position;
-        }*/
+        shootCooldown += Time.deltaTime;                
     }
 }

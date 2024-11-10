@@ -149,7 +149,7 @@ public class Player : Character
     public void TakeDamage(int damage)
     {
         health -= damage;
-        Debug.Log("playerHp: " + health);
+        //Debug.Log("playerHp: " + health);
     }
 
     void Update()
@@ -185,7 +185,7 @@ public class Player : Character
 
         if (tryingToJump && grounded)
         {
-            Debug.Log("jumping");
+            //Debug.Log("jumping");
             rigidbody.velocity += new Vector3(0, jumpStrength, 0);
             tryingToJump = false;
             grounded = false;

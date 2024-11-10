@@ -291,79 +291,6 @@ Transform:
   - {fileID: 478403892}
   m_Father: {fileID: 1651123363}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &355781037 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3213481671088487891, guid: b71f0c52185c17b49b182e31758c6b67, type: 3}
-  m_PrefabInstance: {fileID: 6327904601574638326}
-  m_PrefabAsset: {fileID: 0}
---- !u!191 &355781045
-OffMeshLink:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 355781037}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_AreaIndex: 0
-  m_AgentTypeID: 0
-  m_Start: {fileID: 1858396515}
-  m_End: {fileID: 1111225921}
-  m_CostOverride: -1
-  m_BiDirectional: 1
-  m_Activated: 1
-  m_AutoUpdatePositions: 0
---- !u!191 &355781046
-OffMeshLink:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 355781037}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_AreaIndex: 2
-  m_AgentTypeID: 0
-  m_Start: {fileID: 430019067}
-  m_End: {fileID: 1081465766}
-  m_CostOverride: -1
-  m_BiDirectional: 1
-  m_Activated: 1
-  m_AutoUpdatePositions: 0
---- !u!191 &355781047
-OffMeshLink:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 355781037}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_AreaIndex: 2
-  m_AgentTypeID: 0
-  m_Start: {fileID: 198943639}
-  m_End: {fileID: 2092939414}
-  m_CostOverride: -1
-  m_BiDirectional: 1
-  m_Activated: 1
-  m_AutoUpdatePositions: 0
---- !u!191 &355781048
-OffMeshLink:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 355781037}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_AreaIndex: 0
-  m_AgentTypeID: 0
-  m_Start: {fileID: 249127335}
-  m_End: {fileID: 478403892}
-  m_CostOverride: -1
-  m_BiDirectional: 1
-  m_Activated: 1
-  m_AutoUpdatePositions: 0
 --- !u!1 &383373262
 GameObject:
   m_ObjectHideFlags: 0
@@ -1680,8 +1607,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_OverrideArea: 0
   m_Area: 2
-  m_OverrideGenerateLinks: 0
-  m_GenerateLinks: 0
+  m_OverrideGenerateLinks: 1
+  m_GenerateLinks: 1
   m_IgnoreFromBuild: 0
   m_ApplyToChildren: 1
   m_AffectedAgents: ffffffff
@@ -1903,7 +1830,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 551613829873923819, guid: b71f0c52185c17b49b182e31758c6b67, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.85
+      value: 6.23
       objectReference: {fileID: 0}
     - target: {fileID: 551613829873923819, guid: b71f0c52185c17b49b182e31758c6b67, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1911,7 +1838,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 551613829873923819, guid: b71f0c52185c17b49b182e31758c6b67, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.17
+      value: 5.59
       objectReference: {fileID: 0}
     - target: {fileID: 551613829873923819, guid: b71f0c52185c17b49b182e31758c6b67, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1964,19 +1891,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3213481671088487891, guid: b71f0c52185c17b49b182e31758c6b67, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 355781045}
-    - targetCorrespondingSourceObject: {fileID: 3213481671088487891, guid: b71f0c52185c17b49b182e31758c6b67, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 355781046}
-    - targetCorrespondingSourceObject: {fileID: 3213481671088487891, guid: b71f0c52185c17b49b182e31758c6b67, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 355781047}
-    - targetCorrespondingSourceObject: {fileID: 3213481671088487891, guid: b71f0c52185c17b49b182e31758c6b67, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 355781048}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b71f0c52185c17b49b182e31758c6b67, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
