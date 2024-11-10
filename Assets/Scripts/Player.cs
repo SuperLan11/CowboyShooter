@@ -167,7 +167,11 @@ public class Player : Character
     }
 
     void FixedUpdate()
-    {        
+    {
+        // prevents camera from offsetting on scene start
+        if (Time.timeSinceLevelLoad < 0.1f)
+            return;
+
         Debug.Log(currentMovementState);
         // wall jumping?
 
