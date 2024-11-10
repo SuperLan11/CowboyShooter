@@ -12,6 +12,10 @@ public class Floor : MonoBehaviour
     void Start()
     {
         myMesh = GetComponent<MeshRenderer>();                
+
+        // dynamically create OffMeshLinks based on the boundaries of the floor
+        // allows NavMesh to jump on platform from anywhere instead of needing to manually set links
+        // if an OffMeshLink goes into a wall, NavMesh will ignore it, as long as it has been baked
         
         float minLinkX = myMesh.bounds.min.x + 0.5f;
         float maxLinkX = myMesh.bounds.max.x - 0.5f;
