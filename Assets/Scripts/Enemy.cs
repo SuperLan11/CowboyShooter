@@ -1,5 +1,5 @@
 /*
-@Authors - Patrick
+@Authors - Patrick, Landon
 @Description - Enemy class. Different enemy prefabs should be able to use the same script
 */
 
@@ -12,48 +12,176 @@ using UnityEngine.Scripting.APIUpdating;
 using Vector3 = UnityEngine.Vector3;
 
 public class Enemy : Character
-{
-    //navmesh crap
-    [SerializeField] private GameObject destination;
-    [SerializeField] private NavMeshAgent agent;
-    [SerializeField] private GameObject startingDestination;
-    [SerializeField] private GameObject playerDestination;
+{    
+    private NavMeshAgent agent;
     
-    //!Implement this ASAP!
-    protected void Shoot()
-    {
-        //shoot logic
-    }
+    [SerializeField] private Transform destination1;
+    [SerializeField] private Transform destination2;    
+    private int curDestination;
+    private const int PLAYER_DEST = 3;
 
-    private void Move()
-    {
-        //move logic
-    } 
+    [SerializeField] private GameObject player;
+    [SerializeField] private float sightRange;
+    private bool playerNear;
+    private bool playerSighted;
 
     void Start()
-    {
-        destination = startingDestination;
-    }
+    {        
+        agent = GetComponent<NavMeshAgent>();
+        player = FindObjectOfType<Player>().gameObject;
+        playerNear = false;
+        playerSighted = false;
 
-    void Update()
-    {
-        agent.destination = destination.transform.position;
-        Move();
+        agent.destination = destination1.position;
+        curDestination = 1;
+
+        shootCooldown = 0f;
+        maxShootCooldown = 1f;
+        // this is only here to give feedback for shooting
+        shootSfx = GetComponent<AudioSource>();
     }
+    
+    protected override void Shoot(GameObject player)
+    {
+        Debug.Log("SHOOTING");
+        player.GetComponent<Player>().TakeDamage(1);
+        shootSfx.Play();
+    }    
 
     //provided we have a trigger collider for detecting player
     public void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "PLAYER")
         {
-            destination = playerDestination;
+            agent.destination = player.transform.position;
         }
     }
     public void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "PLAYER")
         {
-            destination = startingDestination;
+            agent.destination = destination1.transform.position;
         }
+    }
+
+    public bool PlayerSighted(Vector3 enemyPos)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(enemyPos);
+        RaycastHit hit;
+        
+        Vector3 direction = (Camera.main.transform.position - transform.position).normalized;
+        // draw a raycast from enemy to player to see if player is sighted
+        if(Physics.Raycast(transform.position, direction, out hit, Mathf.Infinity))
+        {
+            //Debug.Log("hit.name: " + hit.transform.gameObject.name);            
+            if (hit.transform.gameObject.name == "Player")                            
+                return true;            
+        }                    
+        return false;
+    }
+
+    Transform GetClosestDest()
+    {
+        OffMeshLink[] links = FindObjectsByType<OffMeshLink>(FindObjectsSortMode.None);
+        List<Transform> destinations = new List<Transform>();        
+
+        foreach (OffMeshLink link in links)
+        {            
+            destinations.Add(link.transform);
+        }
+
+        int closestDestIndex = 0;
+        float minDist = Mathf.Infinity;
+
+        for (int i = 0; i < destinations.Count; i++)
+        {
+            float dist = Vector3.Distance(transform.position, destinations[i].position);
+            if (dist < minDist)
+            {
+                minDist = dist;
+                closestDestIndex = i;
+            }
+        }
+        //curDestination = closestDestIndex + 1;        
+        //agent.destination = destinations[closestDestIndex].position;
+        return destinations[closestDestIndex];
+    }
+
+    private void FindNewDest(Transform destArrived)
+    {
+        OffMeshLink[] links = FindObjectsByType<OffMeshLink>(FindObjectsSortMode.None);
+        List<Transform> destinations = new List<Transform>();
+
+        if(destination1 != destArrived)
+            destinations.Add(destination1);
+        if (destination2 != destArrived)
+            destinations.Add(destination2);
+
+        foreach(OffMeshLink link in links)
+        {
+            if(link.transform != destArrived)
+                destinations.Add(link.transform);
+        }        
+
+        int closestDestIndex = 0;
+        float minDist = Mathf.Infinity;
+
+        for(int i = 0; i < destinations.Count; i++)
+        {
+            float dist = Vector3.Distance(transform.position, destinations[i].position);
+            if (dist < minDist)
+            {
+                minDist = dist;
+                closestDestIndex = i;
+            }
+        }
+        curDestination = closestDestIndex + 1;
+        agent.destination = destinations[closestDestIndex].position;
+    }
+
+
+    void Update()
+    {
+        if (Vector3.Distance(this.transform.position, player.transform.position) < sightRange)
+            playerNear = true;
+        else
+            playerNear = false;
+
+        // how to check if enemy can raycast player?
+        playerSighted = PlayerSighted(transform.position);
+
+        if(playerNear && playerSighted)
+        {            
+            agent.destination = player.transform.position;
+            curDestination = PLAYER_DEST;            
+
+            if (shootCooldown >= maxShootCooldown)
+            {
+                Shoot(player);
+                shootCooldown = 0f;
+            }
+        }
+        else if(curDestination == PLAYER_DEST)
+        {
+            FindNewDest(player.transform);
+        }
+
+        shootCooldown += Time.deltaTime;
+
+        if(agent.remainingDistance <= 0.01)
+        {
+            FindNewDest(GetClosestDest());
+        }
+        
+        /*if (curDestination == 1 && agent.remainingDistance <= 0.01)
+        {
+            curDestination = 2;
+            agent.destination = destination2.position;
+        }
+        else if(curDestination == 2 && agent.remainingDistance <= 0.01)
+        {
+            curDestination = 1;
+            agent.destination = destination1.position;
+        }*/
     }
 }

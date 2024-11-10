@@ -1,5 +1,6 @@
 /*
 @Authors - Patrick, Landon
+@Authors - Patrick, Landon
 @Description - Player singleton class
 */
 
@@ -149,12 +150,13 @@ public class Player : Character
                 //!without break, movement state is determined by last contact
                 break;
             }
-
         }
     }
 
     void FixedUpdate()
     {        
+        // wall jumping?
+
         // need to assign y velocity first so it is not overriden
         rigidbody.velocity = new Vector3(0, rigidbody.velocity.y, 0);
 
@@ -166,25 +168,25 @@ public class Player : Character
         float deltaMouseX = Input.GetAxis("Mouse X");
         float deltaMouseY = -Input.GetAxis("Mouse Y");
 
-        /*Debug.Log("deltaMouseX: " + deltaMouseX);
-        Debug.Log("deltaMouseY: " + deltaMouseY);*/
-
         // Player will not scroll vertically so that transform.forward doesn't move into the sky
         Vector3 playerRot = transform.rotation.eulerAngles;
-        playerRot.y += deltaMouseX * horRotSpeed;        
+        playerRot.y += deltaMouseX * horRotSpeed;
+        // just in case
+        playerRot.x = 0;
+        playerRot.z = 0;
         transform.eulerAngles = playerRot;
 
         // later: make vertical threshold camera cannot scroll past (at feet and in sky)
 
         // The camera only scrolls vertically since the player parent object handles horizontal scroll
         Vector3 camRot = cam.transform.rotation.eulerAngles;
-        camRot.x += deltaMouseY * vertRotSpeed;               
-        // make z rotation 0 to avoid barrel roll in case some weird collision happens
+        camRot.x += deltaMouseY * vertRotSpeed;                       
         camRot.z = 0;
         cam.transform.eulerAngles = camRot;
 
         if (tryingToJump && isGrounded())
         {
+            Debug.Log("jumping");
             rigidbody.velocity += new Vector3(0, jumpStrength, 0);
             tryingToJump = false;
             currentMovementState = movementState.AIR;

@@ -14,6 +14,7 @@ Other Coding Conventions
 • group class variables by functionality (ex: group all movement-related variables together, all attack-related variables together, etc.
 • do not use the word Script in any script name (for conciseness)
 • new line curly braces
+• always include f for float values. Ex: var = 12f;
 • keep Start() as first function in class
 • keep Update() as last function in class
 • prefab variables have prefab in the name. ex: lassoPrefab
