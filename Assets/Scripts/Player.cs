@@ -1,5 +1,6 @@
 /*
 @Authors - Patrick, Landon
+@Authors - Patrick, Landon
 @Description - Player singleton class
 */
 
@@ -20,10 +21,8 @@ public class Player : Character
     private Vector3 maxSpeed = new Vector3(10f, 10f, 10f);
     public float acceleration = 10f;
 
-    private bool canJump;
     private bool tryingToJump;
     public float jumpStrength = 7f;
-    private bool grounded = false;
 
     private Camera cam;
     private GameObject lasso;
@@ -35,7 +34,7 @@ public class Player : Character
     [SerializeField] float horRotSpeed;
     [SerializeField] float vertRotSpeed;
 
-    private enum movementState
+    public enum movementState
     {
         GROUND,
         AIR,
@@ -44,11 +43,13 @@ public class Player : Character
         WALL
     };
 
-    private movementState currentMovementState;
+    public movementState currentMovementState;
 
     void Start()
     {
-        // IMPORTANT! to make cursor visible again, press Escape        
+        // this makes the cursor stay insivible in the editor
+        // to make cursor visible, press Escape  
+        Cursor.lockState = CursorLockMode.Locked;      
         Cursor.visible = false;
 
         cam = Camera.main;
@@ -70,10 +71,7 @@ public class Player : Character
 
     protected void Lasso()
     {
-        /*Debug.Log("lasso called");
-        Vector3 newScale = lasso.transform.localScale;
-        newScale.y *= 2;
-        lasso.transform.localScale = newScale;*/
+        
     }
 
     private void Awake()
@@ -115,8 +113,13 @@ public class Player : Character
         //if (context.started || context.performed)
         if (context.started)
         {
-            //is lasso gonna be a function?
-            Lasso();
+            player.currentMovementState = movementState.SWINGING;
+            lasso.GetComponent<Lasso>().StartLasso();
+        }
+        else if (context.canceled){
+            player.currentMovementState = movementState.AIR;
+            lasso.GetComponent<Lasso>().EndLasso();
+            Debug.Log("STOPPED HOLDING RMB");
         }
     }
 
@@ -134,25 +137,23 @@ public class Player : Character
 
     private void OnCollisionEnter(Collision collision)
     {
+        bool hitBeneath, onFloor;
         for (int i = 0; i < collision.contactCount; i++)
         {
+            hitBeneath = collision.GetContact(i).point.y < transform.position.y;
+            onFloor = collision.GetContact(i).otherCollider.gameObject.tag == "FLOOR";
+            
             // if player hits something beneath them, they hit floor
-            if (collision.GetContact(i).point.y < transform.position.y && (collision.gameObject.tag == "FLOOR" || collision.gameObject.tag == "WALL"))
+            if (hitBeneath && onFloor)
             {
-                grounded = true;
-                // without break, grounded is determined by last contact
+                currentMovementState = movementState.GROUND;
+                //!without break, movement state is determined by last contact
                 break;
             }
         }
     }
 
-    public void TakeDamage(int damage)
-    {
-        health -= damage;
-        //Debug.Log("playerHp: " + health);
-    }
-
-    void Update()
+    void FixedUpdate()
     {        
         // wall jumping?
 
@@ -183,12 +184,16 @@ public class Player : Character
         camRot.z = 0;
         cam.transform.eulerAngles = camRot;
 
-        if (tryingToJump && grounded)
+        if (tryingToJump && isGrounded())
         {
-            //Debug.Log("jumping");
+            Debug.Log("jumping");
             rigidbody.velocity += new Vector3(0, jumpStrength, 0);
             tryingToJump = false;
-            grounded = false;
+            currentMovementState = movementState.AIR;
         }
+    }
+
+    public bool isGrounded(){
+        return (currentMovementState == movementState.GROUND);
     }
 }
