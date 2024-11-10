@@ -19,9 +19,9 @@ public class Lasso : MonoBehaviour
 
     private float ropePull = 10f/*4.5f*/, ropeReduceForce = 7f;
 
-    [SerializeField] GameObject hook, barrel;
-    [SerializeField] Transform lassoTip;
-    [SerializeField] Camera camera;
+    [SerializeField] private GameObject hook, barrel;
+    [SerializeField] private Transform lassoTip;
+    [SerializeField] private Camera camera;
 
     void Awake(){
         lineRenderer = GetComponent<LineRenderer>();

@@ -160,6 +160,7 @@ public class Player : Character
 
     void FixedUpdate()
     {        
+        Debug.Log(currentMovementState);
         // wall jumping?
 
         // need to assign y velocity first so it is not overriden
