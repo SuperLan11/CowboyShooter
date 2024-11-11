@@ -179,12 +179,12 @@ public class Player : Character
     }
 
     void FixedUpdate()
-    {        
+    {
         //Debug.Log(currentMovementState);
         // wall jumping?
 
         //forces camera to look straight as you're opening up scene
-        if (Time.timeSinceLevelLoad < 0.1f){
+        if (Time.timeSinceLevelLoad < 0.1f) {
             return;
         }
 
@@ -196,10 +196,9 @@ public class Player : Character
                              transform.forward * lastMoveInput.y) * speed;
 
         // Input.GetAxis is the change in value since last frame
+        // MouseY is flipped since xRot is negative upwards
         float deltaMouseX = Input.GetAxis("Mouse X");
         float deltaMouseY = -Input.GetAxis("Mouse Y");
-
-        //Debug.Log("deltaMouseY: " + deltaMouseY);
 
         // Player will not scroll vertically so that transform.forward doesn't move into the sky
         Vector3 playerRot = transform.rotation.eulerAngles;
@@ -214,25 +213,12 @@ public class Player : Character
         // The camera only scrolls vertically since the player parent object handles horizontal scroll
         Vector3 camRot = cam.transform.rotation.eulerAngles;
         
-        // how to check between 
-        //if(camRot.x < 80f)
-            camRot.x += deltaMouseY * vertRotSpeed;
-        //else if ( (camRot.x <= -80f && deltaMouseY < -0.001f) || (camRot.x >= 80f && deltaMouseY > 0.001f) )
-            camRot.x += deltaMouseY * vertRotSpeed;
+        bool inNormalRange = (camRot.x > 280f || camRot.x < 80f);
+        bool inLowerRange = (camRot.x >= 80f && camRot.x <= 90f && deltaMouseY < -0.001f);
+        bool inRaiseRange = (camRot.x <= 280f && camRot.x >= 270f && deltaMouseY > 0.001f);
 
-        Debug.Log("camRot.x: " + camRot.x);
-        
-        if(!(camRot.x > -80f && (camRot.x < 80f || camRot.x < 360f)))
-        {
-            //Debug.Log("camera outside range");
-            //Debug.Log("invalid camera rot is: " + camRot.x);
-        }
-        else if((camRot.x <= -80f && deltaMouseY < -0.001f) || (camRot.x >= 80f && deltaMouseY > 0.001f))
-        {
-            //Debug.Log("scroll other way");
-        }
-
-
+        if (inNormalRange || inLowerRange | inRaiseRange)      
+            camRot.x += deltaMouseY * vertRotSpeed;                
         camRot.z = 0;
         cam.transform.eulerAngles = camRot;
 
