@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
@@ -159,11 +160,14 @@ public class Player : Character
             }
         }
     }
-
     
     public void TakeDamage(int damage)
     {
         health -= damage;
+        if (health <= 0)
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+        //Debug.Log("player hp: " + health);
     }
 
     void FixedUpdate()
@@ -186,6 +190,8 @@ public class Player : Character
         float deltaMouseX = Input.GetAxis("Mouse X");
         float deltaMouseY = -Input.GetAxis("Mouse Y");
 
+        Debug.Log("deltaMouseY: " + deltaMouseY);
+
         // Player will not scroll vertically so that transform.forward doesn't move into the sky
         Vector3 playerRot = transform.rotation.eulerAngles;
         playerRot.y += deltaMouseX * horRotSpeed;
@@ -198,7 +204,10 @@ public class Player : Character
 
         // The camera only scrolls vertically since the player parent object handles horizontal scroll
         Vector3 camRot = cam.transform.rotation.eulerAngles;
-        camRot.x += deltaMouseY * vertRotSpeed;                       
+
+        //if((camRot.x > -80 && deltaMouseY < 0) || (camRot.x < 80 && deltaMouseY > 0))
+            camRot.x += deltaMouseY * vertRotSpeed;                       
+
         camRot.z = 0;
         cam.transform.eulerAngles = camRot;
 

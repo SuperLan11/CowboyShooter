@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 6647866222807115422}
   - component: {fileID: 5755817000584113186}
   - component: {fileID: -4816960815084372348}
+  - component: {fileID: 3740036000147011649}
   m_Layer: 0
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: FLOOR
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31,7 +32,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -21.778, y: -129.06, z: 2068}
   m_LocalScale: {x: 5, y: 0.1209673, z: 4.4267383}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -133,3 +134,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3740036000147011649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4552974566261828508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 028cbb77a0a89d241b820667df139dfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  navLinkPrefab: {fileID: 2092633861073207576, guid: 35bc8c431a34d1842a2e5778148bd0f4, type: 3}
