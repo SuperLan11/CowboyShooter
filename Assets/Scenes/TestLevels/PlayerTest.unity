@@ -1206,10 +1206,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: hook
       objectReference: {fileID: 0}
-    - target: {fileID: 6489869593848531115, guid: 2d48aa3bb2fd9fa438f672dfea308705, type: 3}
-      propertyPath: m_TagString
-      value: HOOK
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
