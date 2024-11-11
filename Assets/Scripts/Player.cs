@@ -32,6 +32,7 @@ public class Player : Character
     private GameObject lasso;
 
     private AudioSource gunSfx;
+    [SerializeField] private AudioSource lassoSfx;
 
     // IMPORTANT! If you assign these values here, they must be the same as the inspector
     // Otherwise, movement is reversed
@@ -123,6 +124,7 @@ public class Player : Character
 
             if (valid){
                 player.currentMovementState = movementState.SWINGING;
+                lassoSfx.Play();
             }
         }
         else if (context.canceled){
