@@ -27,4 +27,17 @@ public abstract class Character : MonoBehaviour
     {
         Debug.LogWarning("You better implement the Shoot() method, or you'll be in a heap of trouble, partner.");
     }
+
+    virtual protected void Death()
+    {
+        Debug.LogWarning("You better implement the Death() method, or you'll be in a heap of trouble, partner.");
+    }
+
+    virtual public void TakeDamage(int damage)
+    {
+        health -= damage;
+        Debug.Log("health: " + health);
+        if (health <= 0)
+            Death();        
+    }
 }

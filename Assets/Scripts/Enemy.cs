@@ -98,6 +98,11 @@ public class Enemy : Character
         agent.destination = possibleDests[closestDestIndex];
     }
 
+    protected override void Death()
+    {
+        Destroy(this.gameObject);
+    }
+
 
     void Update()
     {

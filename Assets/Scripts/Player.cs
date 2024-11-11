@@ -65,18 +65,7 @@ public class Player : Character
         rigidbody = GetComponent<Rigidbody>();   
 
         jumpCooldown = maxJumpCooldown = 2;     
-    }
-
-    //!Implement this ASAP!
-    protected void Shoot()
-    {        
-        if (gunSfx != null)
-            gunSfx.Play();
-
-        // hitscan logic
-
-        // damage logic
-    }
+    }    
 
     protected void Lasso()
     {
@@ -107,19 +96,38 @@ public class Player : Character
             lastMoveInput = Vector2.zero;
         }
     }
+   
+    protected void Shoot(GameObject enemy)
+    {
+        if (gunSfx != null)
+            gunSfx.Play();
+
+        enemy.GetComponent<Enemy>().TakeDamage(1);
+    }
+
+    GameObject ObjAimedAt()
+    {
+        RaycastHit hit;
+        //Vector3 direction = (Camera.main.transform.position - transform.position).normalized;        
+        if (Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity))
+        {                    
+            return hit.transform.gameObject;
+        }
+        return null;
+    }
 
     public void ShootActivated(InputAction.CallbackContext context)
     {
-        //if (context.started || context.performed)
-        if (context.started)
+        GameObject objAimed = ObjAimedAt();
+        Debug.Log("objAimed: " + objAimed.name);
+        if (context.started && objAimed.GetComponent<Enemy>() != null)
         {
-            Shoot();
+            Shoot(objAimed);
         }
     }
 
     public void LassoActivated(InputAction.CallbackContext context)
-    {
-        //if (context.started || context.performed)
+    {        
         if (context.started)
         {
             bool valid = lasso.GetComponent<Lasso>().StartLasso();
@@ -168,14 +176,16 @@ public class Player : Character
                 break;
             }
         }
-    }
-    
-    public void TakeDamage(int damage)
+    }   
+
+    public bool isGrounded()
     {
-        health -= damage;
-        if (health <= 0)
-            playerDeath();
-        //Debug.Log("player hp: " + health);
+        return (currentMovementState == movementState.GROUND);
+    }
+
+    protected override void Death()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     void FixedUpdate()
@@ -208,11 +218,11 @@ public class Player : Character
         playerRot.z = 0;
         transform.eulerAngles = playerRot;
 
-        // later: make vertical threshold camera cannot scroll past (at feet and in sky)
-
         // The camera only scrolls vertically since the player parent object handles horizontal scroll
         Vector3 camRot = cam.transform.rotation.eulerAngles;
-        
+
+        // camRot.x goes starts decreasing from 360 when you look up and is positive downwards
+        // because deltaMouseY is flipped, positive means moving down and vice versa
         bool inNormalRange = (camRot.x > 280f || camRot.x < 80f);
         bool inLowerRange = (camRot.x >= 80f && camRot.x <= 90f && deltaMouseY < -0.001f);
         bool inRaiseRange = (camRot.x <= 280f && camRot.x >= 270f && deltaMouseY > 0.001f);
@@ -241,13 +251,5 @@ public class Player : Character
             inJumpCooldown = true;
             currentMovementState = movementState.AIR;
         }
-    }
-
-    public bool isGrounded(){
-        return (currentMovementState == movementState.GROUND);
-    }
-
-    void playerDeath(){
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
+    }   
 }

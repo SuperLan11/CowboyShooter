@@ -16,6 +16,7 @@ public class Floor : MonoBehaviour
         // dynamically create OffMeshLinks based on the size of the floor
         // allows NavMesh to jump on platform from anywhere instead of needing to manually set links
         // if an OffMeshLink goes into a wall, NavMesh will ignore it as long as it has been baked
+        // these OffMeshLinks may not be shown accurately in scene view since the start and end are modified
         
         float minLinkX = myMesh.bounds.min.x + 0.5f;
         float maxLinkX = myMesh.bounds.max.x - 0.5f;
