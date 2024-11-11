@@ -25,7 +25,7 @@ public class Enemy : Character
     [SerializeField] private float maxDestCooldown;
     [SerializeField] private bool switchingDest;
 
-    [SerializeField] private GameObject player;
+    private GameObject player;
     [SerializeField] private float sightRange;
     private bool playerNear;
     private bool playerSighted;
@@ -98,6 +98,7 @@ public class Enemy : Character
         agent.destination = possibleDests[closestDestIndex];
     }
 
+    // called from inherited TakeDamage function
     protected override void Death()
     {
         Destroy(this.gameObject);
@@ -108,7 +109,7 @@ public class Enemy : Character
     {
         if (!switchingDest && agent.remainingDistance <= 0.01f)
         {
-            //Debug.Log("got to dest, find new dest");
+            Debug.Log("got to dest, find new dest");
             switchingDest = true;
             FindNewDest(agent.destination);
             return;
@@ -133,7 +134,7 @@ public class Enemy : Character
 
         if (playerNear && playerSighted)
         {
-            //Debug.Log("going to player");
+            Debug.Log("going to player");
             agent.destination = player.transform.position;
 
             if (shootCooldown >= maxShootCooldown)
@@ -144,7 +145,7 @@ public class Enemy : Character
         }
         else if (agent.destination == player.transform.position)
         {
-            //Debug.Log("Find dest other than player");
+            Debug.Log("Find dest other than player");
             FindNewDest(agent.destination);
         }
 

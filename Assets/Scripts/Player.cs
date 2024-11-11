@@ -33,7 +33,7 @@ public class Player : Character
     private Camera cam;
     private GameObject lasso;
 
-    private AudioSource gunSfx;
+    [SerializeField] private AudioSource gunSfx;
     [SerializeField] private AudioSource lassoSfx;
 
     // IMPORTANT! If you assign these values here, they must be the same as the inspector
@@ -108,8 +108,8 @@ public class Player : Character
     GameObject ObjAimedAt()
     {
         RaycastHit hit;
-        //Vector3 direction = (Camera.main.transform.position - transform.position).normalized;        
-        if (Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity))
+        // use cam forward instead of player since player can't rotate vertically
+        if (Physics.Raycast(transform.position, cam.transform.forward, out hit, Mathf.Infinity))
         {                    
             return hit.transform.gameObject;
         }
@@ -118,11 +118,19 @@ public class Player : Character
 
     public void ShootActivated(InputAction.CallbackContext context)
     {
-        GameObject objAimed = ObjAimedAt();
-        Debug.Log("objAimed: " + objAimed.name);
-        if (context.started && objAimed.GetComponent<Enemy>() != null)
+        if (context.started)
         {
-            Shoot(objAimed);
+            try
+            {
+                GameObject objAimed = ObjAimedAt();
+                Debug.Log("objAimed: " + objAimed.name);
+                if (objAimed.GetComponent<Enemy>() != null)
+                    Shoot(objAimed);
+            }
+            catch
+            {
+                Debug.Log("Did not shoot at enemy!");
+            }
         }
     }
 
@@ -132,14 +140,17 @@ public class Player : Character
         {
             bool valid = lasso.GetComponent<Lasso>().StartLasso();
 
-            if (valid){
+            if (valid)
+            {
                 player.currentMovementState = movementState.SWINGING;
                 lassoSfx.Play();
             }
         }
-        else if (context.canceled){
+        else if (context.canceled)
+        {
             //prevents player from being in air state after just tapping RMB
-            if (player.currentMovementState != movementState.GROUND){
+            if (player.currentMovementState != movementState.GROUND)
+            {
                 player.currentMovementState = movementState.AIR;
             }
             
@@ -194,9 +205,8 @@ public class Player : Character
         // wall jumping?
 
         //forces camera to look straight as you're opening up scene
-        if (Time.timeSinceLevelLoad < 0.1f) {
-            return;
-        }
+        if (Time.timeSinceLevelLoad < 0.1f)
+            return;        
 
         // need to assign y velocity first so it is not overriden
         rigidbody.velocity = new Vector3(0, rigidbody.velocity.y, 0);
@@ -221,24 +231,28 @@ public class Player : Character
         // The camera only scrolls vertically since the player parent object handles horizontal scroll
         Vector3 camRot = cam.transform.rotation.eulerAngles;
 
-        // camRot.x goes starts decreasing from 360 when you look up and is positive downwards
-        // because deltaMouseY is flipped, positive means moving down and vice versa
-        bool inNormalRange = (camRot.x > 280f || camRot.x < 80f);
-        bool inLowerRange = (camRot.x >= 80f && camRot.x <= 90f && deltaMouseY < -0.001f);
-        bool inRaiseRange = (camRot.x <= 280f && camRot.x >= 270f && deltaMouseY > 0.001f);
+        // camRot.x starts decreasing from 360 when you look up and is positive downwards
+        // Because deltaMouseY is flipped, positive means moving down and vice versa
+        bool inNormalRange = (camRot.x > 280f || camRot.x < 80f);        
+        bool inLowerRange = (camRot.x <= 280f && camRot.x >= 270f && deltaMouseY > 0.001f);
+        bool inRaiseRange = (camRot.x >= 80f && camRot.x <= 90f && deltaMouseY < -0.001f);
 
         if (inNormalRange || inLowerRange | inRaiseRange)      
-            camRot.x += deltaMouseY * vertRotSpeed;                
+            camRot.x += deltaMouseY * vertRotSpeed;
         camRot.z = 0;
         cam.transform.eulerAngles = camRot;
 
         if (tryingToJump && isGrounded())
         {
             //prevents double jumps
-            if (inJumpCooldown){
-                if (jumpCooldown > 0){
+            if (inJumpCooldown)
+            {
+                if (jumpCooldown > 0)
+                {
                     jumpCooldown--;
-                }else{
+                }
+                else
+                {
                     jumpCooldown = maxJumpCooldown;
                     inJumpCooldown = false;
                 }
