@@ -120,13 +120,19 @@ public class Player : Character
         //if (context.started || context.performed)
         if (context.started)
         {
-            player.currentMovementState = movementState.SWINGING;
-            lasso.GetComponent<Lasso>().StartLasso();
+            bool valid = lasso.GetComponent<Lasso>().StartLasso();
+
+            if (valid){
+                player.currentMovementState = movementState.SWINGING;
+            }
         }
         else if (context.canceled){
-            player.currentMovementState = movementState.AIR;
+            //prevents player from being in air state after just tapping RMB
+            if (player.currentMovementState != movementState.GROUND){
+                player.currentMovementState = movementState.AIR;
+            }
+            
             lasso.GetComponent<Lasso>().EndLasso();
-            Debug.Log("STOPPED HOLDING RMB");
         }
     }
 
@@ -171,13 +177,14 @@ public class Player : Character
     }
 
     void FixedUpdate()
-    {
-        // prevents camera from offsetting on scene start
-        if (Time.timeSinceLevelLoad < 0.1f)
-            return;
-
-        Debug.Log(currentMovementState);
+    {        
+        //Debug.Log(currentMovementState);
         // wall jumping?
+
+        //forces camera to look straight as you're opening up scene
+        if (Time.timeSinceLevelLoad < 0.1f){
+            return;
+        }
 
         // need to assign y velocity first so it is not overriden
         rigidbody.velocity = new Vector3(0, rigidbody.velocity.y, 0);
@@ -190,7 +197,7 @@ public class Player : Character
         float deltaMouseX = Input.GetAxis("Mouse X");
         float deltaMouseY = -Input.GetAxis("Mouse Y");
 
-        Debug.Log("deltaMouseY: " + deltaMouseY);
+        //Debug.Log("deltaMouseY: " + deltaMouseY);
 
         // Player will not scroll vertically so that transform.forward doesn't move into the sky
         Vector3 playerRot = transform.rotation.eulerAngles;
@@ -204,9 +211,25 @@ public class Player : Character
 
         // The camera only scrolls vertically since the player parent object handles horizontal scroll
         Vector3 camRot = cam.transform.rotation.eulerAngles;
+        
+        // how to check between 
+        //if(camRot.x < 80f)
+            camRot.x += deltaMouseY * vertRotSpeed;
+        //else if ( (camRot.x <= -80f && deltaMouseY < -0.001f) || (camRot.x >= 80f && deltaMouseY > 0.001f) )
+            camRot.x += deltaMouseY * vertRotSpeed;
 
-        //if((camRot.x > -80 && deltaMouseY < 0) || (camRot.x < 80 && deltaMouseY > 0))
-            camRot.x += deltaMouseY * vertRotSpeed;                       
+        Debug.Log("camRot.x: " + camRot.x);
+        
+        if(!(camRot.x > -80f && (camRot.x < 80f || camRot.x < 360f)))
+        {
+            //Debug.Log("camera outside range");
+            //Debug.Log("invalid camera rot is: " + camRot.x);
+        }
+        else if((camRot.x <= -80f && deltaMouseY < -0.001f) || (camRot.x >= 80f && deltaMouseY > 0.001f))
+        {
+            //Debug.Log("scroll other way");
+        }
+
 
         camRot.z = 0;
         cam.transform.eulerAngles = camRot;
@@ -225,7 +248,6 @@ public class Player : Character
                 return;
             }
 
-            Debug.Log("jumping");
             rigidbody.velocity += new Vector3(0, jumpStrength, 0);
             tryingToJump = false;
             inJumpCooldown = true;
