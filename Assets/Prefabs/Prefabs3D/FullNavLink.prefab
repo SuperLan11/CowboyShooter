@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4078367545274347277}
   - component: {fileID: 7702155331011218199}
   m_Layer: 0
-  m_Name: OffMeshLink
+  m_Name: FullNavLink
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
