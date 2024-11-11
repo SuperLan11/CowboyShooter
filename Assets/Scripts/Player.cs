@@ -6,6 +6,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -173,8 +174,7 @@ public class Player : Character
     {
         health -= damage;
         if (health <= 0)
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
+            playerDeath();
         //Debug.Log("player hp: " + health);
     }
 
@@ -259,5 +259,9 @@ public class Player : Character
 
     public bool isGrounded(){
         return (currentMovementState == movementState.GROUND);
+    }
+
+    void playerDeath(){
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
