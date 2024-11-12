@@ -200,7 +200,9 @@ public class Player : Character
 
     protected override void Death()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);        
+        // reset floorsInitialized so floors can reset offmeshlinks
+        Floor.floorsInitialized = 0;
     }
 
     void FixedUpdate()

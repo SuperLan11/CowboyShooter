@@ -13,7 +13,7 @@ public class Floor : MonoBehaviour
     public MeshRenderer myMesh;
     private List<GameObject> perimiterLinks = new List<GameObject>();
 
-    private static int floorsInitialized = 0;
+    public static int floorsInitialized = 0;
     private int numFloorLinks = 0;
 
     private static List<Vector3> floorLinks = new List<Vector3>();

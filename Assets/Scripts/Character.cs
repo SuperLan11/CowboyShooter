@@ -7,6 +7,7 @@ datafields.
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class Character : MonoBehaviour
 {
@@ -36,7 +37,21 @@ public abstract class Character : MonoBehaviour
     virtual public void TakeDamage(int damage)
     {
         health -= damage;
-        Debug.Log("health: " + health);
+        //Debug.Log("health: " + health);
+        if (this.name == "Player")
+        {
+            // this should get the hearts in the hierarchy order so you don't need to sort
+            Image[] images = FindObjectsOfType<Image>();
+            List<Image> hearts = new List<Image>();
+            foreach(Image img in images)
+            {
+                if (img.gameObject.name.Contains("Heart"))
+                    hearts.Add(img);
+
+            }            
+            Destroy(hearts[hearts.Count - 1].gameObject);
+        }
+
         if (health <= 0)
             Death();        
     }
