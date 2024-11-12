@@ -29,6 +29,7 @@ public class Player : Character
     public float jumpStrength = 7f;
     private int jumpCooldown;
     private int maxJumpCooldown;
+    private float slideSpeed = -0.5f;
 
     private Camera cam;
     private GameObject lasso;
@@ -64,7 +65,7 @@ public class Player : Character
         lasso = transform.GetChild(0).GetChild(1).gameObject;        
         rigidbody = GetComponent<Rigidbody>();   
 
-        jumpCooldown = maxJumpCooldown = 2;     
+        jumpCooldown = maxJumpCooldown = 2;
     }    
 
     protected void Lasso()
@@ -123,13 +124,13 @@ public class Player : Character
             try
             {
                 GameObject objAimed = ObjAimedAt();
-                Debug.Log("objAimed: " + objAimed.name);
+                //Debug.Log("objAimed: " + objAimed.name);
                 if (objAimed.GetComponent<Enemy>() != null)
                     Shoot(objAimed);
             }
             catch
             {
-                Debug.Log("Did not shoot at enemy!");
+                Debug.Log("Did not shoot at anything!");
             }
         }
     }
@@ -173,29 +174,68 @@ public class Player : Character
     
     private void OnCollisionEnter(Collision collision)
     {
-        bool hitBeneath, onFloor, hitWall;
+        bool hitFeet, onFloor, hitWall;
         for (int i = 0; i < collision.contactCount; i++)
         {
-            hitBeneath = collision.GetContact(i).point.y < transform.position.y;
+            //hitBeneath = collision.GetContact(i).point.y < transform.position.y;
+            hitFeet = collision.GetContact(i).point.y < GetComponent<BoxCollider>().bounds.min.y+0.05f;
             onFloor = collision.GetContact(i).otherCollider.gameObject.tag == "FLOOR";
             hitWall = collision.GetContact(i).otherCollider.gameObject.tag == "WALL";
-            
-            if(hitWall)
-            {
-                currentMovementState = movementState.WALL;
-            }
-            else if (hitBeneath && onFloor)
+                                   
+            // allow jumping on top of walls. this takes precedence over wall jump checking
+            if (hitFeet && (onFloor || hitWall))
             {
                 currentMovementState = movementState.GROUND;
                 //!without break, movement state is determined by last contact
                 break;
             }
+            if (hitWall && rigidbody.velocity.y < 2f)
+            {
+                currentMovementState = movementState.WALL;
+                break;
+            }
         }
     }   
+
+    private void OnCollisionExit(Collision collision)
+    {
+        // if you slide off a wall or jump over a wall, return to air state
+        if(collision.gameObject.tag == "WALL")
+        {
+            Debug.Log("exited wall");
+            currentMovementState = movementState.AIR;
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        for (int i = 0; i < collision.contactCount; i++)
+        {
+            bool touchingWall = collision.GetContact(i).otherCollider.gameObject.tag == "WALL";
+            bool hitFeet = collision.collider.bounds.max.y < GetComponent<BoxCollider>().bounds.min.y+0.05f;
+            if(touchingWall && hitFeet)
+            {
+                currentMovementState = movementState.GROUND;
+            }
+            else if (touchingWall && rigidbody.velocity.y < 2f)
+            {
+                currentMovementState = movementState.WALL;
+                Vector3 newVel = rigidbody.velocity;                
+                newVel.y = slideSpeed;
+                rigidbody.velocity = newVel;
+                break;
+            }            
+        }
+    }
 
     public bool isGrounded()
     {
         return (currentMovementState == movementState.GROUND);
+    }
+
+    public bool isOnWall()
+    {
+        return (currentMovementState == movementState.WALL);
     }
 
     protected override void Death()
@@ -213,20 +253,19 @@ public class Player : Character
         if (Time.timeSinceLevelLoad < 0.1f)
             return;
 
-        /*if (currentMovementState == movementState.WALL)
-        {
-            float slideSpeed = -0.3f;
-            rigidbody.velocity = new Vector3(0, slideSpeed, 0);
+        if (currentMovementState == movementState.WALL)
+        {            
+            rigidbody.velocity = new Vector3(0, slideSpeed, 0);            
         }
         else
-        {*/
+        {
             // need to assign y velocity first so it is not overriden
             rigidbody.velocity = new Vector3(0, rigidbody.velocity.y, 0);
 
             // moves player left/right/forward/backward from direction they're facing
             rigidbody.velocity += (transform.right * lastMoveInput.x +
                                  transform.forward * lastMoveInput.y) * speed;
-        //}
+        }
 
         // Input.GetAxis is the change in value since last frame        
         float deltaMouseX = Input.GetAxis("Mouse X");
@@ -256,6 +295,7 @@ public class Player : Character
 
         if (tryingToJump && isGrounded())
         {
+            Debug.Log("trying to jump");
             //prevents double jumps
             if (inJumpCooldown)
             {
@@ -270,12 +310,18 @@ public class Player : Character
                 }
 
                 return;
-            }
+            }            
 
             rigidbody.velocity += new Vector3(0, jumpStrength, 0);
             tryingToJump = false;
             inJumpCooldown = true;
             currentMovementState = movementState.AIR;
         }        
+        else if(tryingToJump && isOnWall())
+        {
+            // cancels y velocity
+            currentMovementState = movementState.AIR;
+            rigidbody.velocity += new Vector3(0, jumpStrength, 0);            
+        }
     }   
 }
