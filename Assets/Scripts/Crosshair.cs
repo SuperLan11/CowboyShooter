@@ -15,7 +15,8 @@ public class HUD : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (crosshair == null){
+        if (crosshair == null)
+        {
             Debug.LogError("I reckon you don't have a crosshair, partner!");
             return;
         }
@@ -26,12 +27,29 @@ public class HUD : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Player.player.ObjAimedAt() == null){
+        bool pointedAtObj = Player.player.ObjAimedAt() != null;            
+        
+        //!needs to be two separate if-statement blocks so that it doesn't try to access null obj
+        if (!pointedAtObj)
+        {
             crosshairImage.color = Color.white;
             return;
-        }else if (Player.player.ObjAimedAt().GetComponent<Enemy>() != null){
+        }
+
+        bool pointedAtEnemy = Player.player.ObjAimedAt().GetComponent<Enemy>() != null;
+        bool pointedAtHook = Player.player.ObjAimedAt().tag == "HOOK";
+        bool pointedAtEnemyOrHook = (pointedAtEnemy || pointedAtHook);
+
+        if (!pointedAtEnemyOrHook)
+        {
+            crosshairImage.color = Color.white;            
+        }
+        else if (pointedAtEnemy)
+        {
             crosshairImage.color = Color.red;
-        }else if (Player.player.ObjAimedAt().tag == "HOOK"){
+        }
+        else if (pointedAtHook)
+        {
             crosshairImage.color = orange;
         }
     }

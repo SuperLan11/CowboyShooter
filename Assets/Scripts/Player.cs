@@ -189,21 +189,11 @@ public class Player : Character
                 //!without break, movement state is determined by last contact
                 break;
             }
-            if (hitWall && rigidbody.velocity.y < 2f)
+            if (hitWall && rigidbody.velocity.y < 2f && !isGrounded())
             {
                 currentMovementState = movementState.WALL;
                 break;
             }
-        }
-    }   
-
-    private void OnCollisionExit(Collision collision)
-    {
-        // if you slide off a wall or jump over a wall, return to air state
-        if(collision.gameObject.tag == "WALL")
-        {
-            Debug.Log("exited wall");
-            currentMovementState = movementState.AIR;
         }
     }
 
@@ -212,21 +202,33 @@ public class Player : Character
         for (int i = 0; i < collision.contactCount; i++)
         {
             bool touchingWall = collision.GetContact(i).otherCollider.gameObject.tag == "WALL";
-            bool hitFeet = collision.collider.bounds.max.y < GetComponent<BoxCollider>().bounds.min.y+0.05f;
-            if(touchingWall && hitFeet)
+            bool hitFeet = collision.collider.bounds.max.y < GetComponent<BoxCollider>().bounds.min.y + 0.05f;
+            if (touchingWall && hitFeet)
             {
                 currentMovementState = movementState.GROUND;
             }
-            else if (touchingWall && rigidbody.velocity.y < 2f)
+            else if (touchingWall && rigidbody.velocity.y < 2f && !isGrounded())
             {
                 currentMovementState = movementState.WALL;
-                Vector3 newVel = rigidbody.velocity;                
+                Vector3 newVel = rigidbody.velocity;
                 newVel.y = slideSpeed;
                 rigidbody.velocity = newVel;
                 break;
-            }            
+            }
         }
     }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        // if you slide off a wall or jump over a wall, return to air state
+
+        bool aboveFloor = GetComponent<BoxCollider>().bounds.min.y > collision.gameObject.GetComponent<MeshRenderer>().bounds.min.y; 
+        if (collision.gameObject.tag == "WALL" && aboveFloor)
+        {
+            Debug.Log("exited wall");
+            currentMovementState = movementState.AIR;
+        }
+    } 
 
     public bool isGrounded()
     {
