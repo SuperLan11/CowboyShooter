@@ -20,6 +20,7 @@ public class Enemy : Character
     [SerializeField] private Transform destination1;
     [SerializeField] private Transform destination2;
     private List<Vector3> destList = new List<Vector3>();
+    public static float maxJumpDist = 7f;
 
     [SerializeField] public float destCooldown;
     [SerializeField] private float maxDestCooldown;
