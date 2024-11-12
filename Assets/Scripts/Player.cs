@@ -215,10 +215,9 @@ public class Player : Character
         rigidbody.velocity += (transform.right * lastMoveInput.x +
                              transform.forward * lastMoveInput.y) * speed;
 
-        // Input.GetAxis is the change in value since last frame
-        // MouseY is flipped since xRot is negative upwards
+        // Input.GetAxis is the change in value since last frame        
         float deltaMouseX = Input.GetAxis("Mouse X");
-        float deltaMouseY = -Input.GetAxis("Mouse Y");
+        float deltaMouseY = Input.GetAxis("Mouse Y");
 
         // Player will not scroll vertically so that transform.forward doesn't move into the sky
         Vector3 playerRot = transform.rotation.eulerAngles;
@@ -231,14 +230,13 @@ public class Player : Character
         // The camera only scrolls vertically since the player parent object handles horizontal scroll
         Vector3 camRot = cam.transform.rotation.eulerAngles;
 
-        // camRot.x starts decreasing from 360 when you look up and is positive downwards
-        // Because deltaMouseY is flipped, positive means moving down and vice versa
+        // camRot.x starts decreasing from 360 when you look up and is positive downwards        
         bool inNormalRange = (camRot.x > 280f || camRot.x < 80f);        
-        bool inLowerRange = (camRot.x <= 280f && camRot.x >= 270f && deltaMouseY > 0.001f);
-        bool inRaiseRange = (camRot.x >= 80f && camRot.x <= 90f && deltaMouseY < -0.001f);
+        bool inLowerRange = (camRot.x <= 280f && camRot.x >= 270f && deltaMouseY < -0.001f);
+        bool inRaiseRange = (camRot.x >= 80f && camRot.x <= 90f && deltaMouseY > 0.001f);
 
         if (inNormalRange || inLowerRange | inRaiseRange)      
-            camRot.x += deltaMouseY * vertRotSpeed;
+            camRot.x -= deltaMouseY * vertRotSpeed;
         camRot.z = 0;
         cam.transform.eulerAngles = camRot;
 
