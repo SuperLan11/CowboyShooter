@@ -106,7 +106,7 @@ public class Player : Character
         enemy.GetComponent<Enemy>().TakeDamage(1);
     }
 
-    GameObject ObjAimedAt()
+    public GameObject ObjAimedAt()
     {
         RaycastHit hit;
         // use cam forward instead of player since player can't rotate vertically
