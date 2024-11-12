@@ -149,3 +149,6 @@ MonoBehaviour:
   singleNavLink: {fileID: 2092633861073207576, guid: f9ca0696e2270bc44b4345ad67134da9, type: 3}
   maxJumpDist: 0
   myMesh: {fileID: 0}
+  useUniqueLinks: 0
+  xSpacePerLink: 0
+  zSpacePerLink: 0

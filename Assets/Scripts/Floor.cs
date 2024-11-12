@@ -12,9 +12,14 @@ public class Floor : MonoBehaviour
     [SerializeField] private float maxJumpDist;
     public MeshRenderer myMesh;
     private List<GameObject> perimiterLinks = new List<GameObject>();
+
     private static int floorsInitialized = 0;
     private int numFloorLinks = 0;
+
     private static List<Vector3> floorLinks = new List<Vector3>();
+
+    private List<Vector3> completedLinks = new List<Vector3>();
+    [SerializeField] private bool useUniqueLinks = true;
 
     // incrasing space per link decreases the density of offmeshlinks, which helps performance
     [SerializeField] private float xSpacePerLink;
@@ -36,8 +41,7 @@ public class Floor : MonoBehaviour
 
         xSpacePerLink = 0.8f;
         zSpacePerLink = 0.8f;
-
-        // leave corners unfilled for z to fill
+        
         float minLinkX = myMesh.bounds.min.x + xSpacePerLink;
         float maxLinkX = myMesh.bounds.max.x - xSpacePerLink;
 
@@ -180,37 +184,20 @@ public class Floor : MonoBehaviour
     {
         // gets the closest link game object (excluding floor links)
         GameObject closestLink = ClosestLink(perimeterLink);
-        MeshRenderer closestFloor = GetClosestFloor(closestLink.transform.position);        
+        MeshRenderer closestFloor = GetClosestFloor(closestLink.transform.position);                
 
-        // to prevent jumping onto a floor from directly beneath the floor
-        // check if floor is to left and closest edge is on right or vice versa                
-        bool validLeftFloor = (closestLink.transform.position.x < perimeterLink.transform.position.x &&
-            closestLink.transform.position.x > closestFloor.bounds.center.x);
+        float distToLink = Vector3.Distance(perimeterLink.transform.position, closestLink.transform.position);
+        bool uniqueIfDesired = !completedLinks.Contains(perimeterLink.transform.position) && !completedLinks.Contains(closestLink.transform.position);
+        if (!useUniqueLinks)
+            uniqueIfDesired = true;
 
-        bool validRightFloor = (closestLink.transform.position.x > perimeterLink.transform.position.x &&
-            closestLink.transform.position.x < closestFloor.bounds.center.x);
-
-        // may need to change bounds checks here
-        bool validForwardFloor = (closestLink.transform.position.z > perimeterLink.transform.position.z &&
-            closestLink.transform.position.z < closestFloor.bounds.center.z);
-
-        bool validBackwardFloor = (closestLink.transform.position.z < perimeterLink.transform.position.z &&
-            closestLink.transform.position.z > closestFloor.bounds.center.z);
-
-        bool validFloor = (validLeftFloor || validRightFloor || validForwardFloor || validBackwardFloor);
-
-
-        float distToLink = Vector3.Distance(perimeterLink.transform.position, closestLink.transform.position);                
-
-        if (distToLink < maxJumpDist)
+        if (distToLink < maxJumpDist && uniqueIfDesired)
         {
-            perimeterLink.GetComponent<OffMeshLink>().endTransform = closestLink.transform;                        
+            perimeterLink.GetComponent<OffMeshLink>().endTransform = closestLink.transform;
+            completedLinks.Add(perimeterLink.transform.position);
+            completedLinks.Add(closestLink.transform.position);
             return true;
-        }
-        /*else if (!validFloor)
-        {
-            //Debug.Log("destroying " + perimeterLink.name + " at " + perimeterLink.transform.position + " because invalid floor compared to closestLink: " + closestLink.transform.position);
-        }*/
+        }        
         return false;
     }
 
@@ -222,12 +209,9 @@ public class Floor : MonoBehaviour
         foreach (OffMeshLink link in links)
         {
             // don't connect offmeshlinks on the same floor!
-            bool diffFloor = !(perimiterLinks.Contains(link.gameObject));
-            //Debug.Log(link.gameObject.name + " is not on " + this.gameObject.name);
-            
+            bool diffFloor = !(perimiterLinks.Contains(link.gameObject));                        
             bool isFloorLink = Floor.floorLinks.Contains(link.startTransform.position);
-
-            //Debug.Log("added " + link.gameObject.name + " as non-floor");
+            
             if (diffFloor && !isFloorLink)                            
                 possibleLinks.Add(link);            
         }
