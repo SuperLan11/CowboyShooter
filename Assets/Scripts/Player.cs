@@ -162,7 +162,7 @@ public class Player : Character
     {
         if (context.started)
         {
-            tryingToJump = true;
+            tryingToJump = true;            
         }
         else if (context.canceled)
         {
@@ -173,14 +173,18 @@ public class Player : Character
     
     private void OnCollisionEnter(Collision collision)
     {
-        bool hitBeneath, onFloor;
+        bool hitBeneath, onFloor, hitWall;
         for (int i = 0; i < collision.contactCount; i++)
         {
             hitBeneath = collision.GetContact(i).point.y < transform.position.y;
             onFloor = collision.GetContact(i).otherCollider.gameObject.tag == "FLOOR";
+            hitWall = collision.GetContact(i).otherCollider.gameObject.tag == "WALL";
             
-            // if player hits something beneath them, they hit floor
-            if (hitBeneath && onFloor)
+            if(hitWall)
+            {
+                currentMovementState = movementState.WALL;
+            }
+            else if (hitBeneath && onFloor)
             {
                 currentMovementState = movementState.GROUND;
                 //!without break, movement state is determined by last contact
@@ -201,19 +205,26 @@ public class Player : Character
 
     void FixedUpdate()
     {
-        //Debug.Log(currentMovementState);
-        // wall jumping?
+        //Debug.Log(currentMovementState);        
 
         //forces camera to look straight as you're opening up scene
         if (Time.timeSinceLevelLoad < 0.1f)
-            return;        
+            return;
 
-        // need to assign y velocity first so it is not overriden
-        rigidbody.velocity = new Vector3(0, rigidbody.velocity.y, 0);
+        /*if (currentMovementState == movementState.WALL)
+        {
+            float slideSpeed = -0.3f;
+            rigidbody.velocity = new Vector3(0, slideSpeed, 0);
+        }
+        else
+        {*/
+            // need to assign y velocity first so it is not overriden
+            rigidbody.velocity = new Vector3(0, rigidbody.velocity.y, 0);
 
-        // moves player left/right/forward/backward from direction they're facing
-        rigidbody.velocity += (transform.right * lastMoveInput.x +
-                             transform.forward * lastMoveInput.y) * speed;
+            // moves player left/right/forward/backward from direction they're facing
+            rigidbody.velocity += (transform.right * lastMoveInput.x +
+                                 transform.forward * lastMoveInput.y) * speed;
+        //}
 
         // Input.GetAxis is the change in value since last frame        
         float deltaMouseX = Input.GetAxis("Mouse X");
@@ -235,6 +246,7 @@ public class Player : Character
         bool inLowerRange = (camRot.x <= 280f && camRot.x >= 270f && deltaMouseY < -0.001f);
         bool inRaiseRange = (camRot.x >= 80f && camRot.x <= 90f && deltaMouseY > 0.001f);
 
+        // -= because xRot is negative upwards
         if (inNormalRange || inLowerRange | inRaiseRange)      
             camRot.x -= deltaMouseY * vertRotSpeed;
         camRot.z = 0;
@@ -262,6 +274,6 @@ public class Player : Character
             tryingToJump = false;
             inJumpCooldown = true;
             currentMovementState = movementState.AIR;
-        }
+        }        
     }   
 }
