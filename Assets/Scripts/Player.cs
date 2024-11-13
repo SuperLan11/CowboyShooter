@@ -198,17 +198,17 @@ public class Player : Character
             hitWall = collision.GetContact(i).otherCollider.gameObject.tag == "WALL";
 
             //Debug.Log("time since jump: " + timeSinceJump);
-            // ignore wall collision during kick and kick lerp
+            // ignore wall collision during kick and kick lerp            
             if (hitWall && timeSinceJump > 0f && timeSinceJump < perfectJumpWindow)
             {
                 kickStarted = true;
-                Vector3 curRot = transform.eulerAngles;
+                Vector3 curRot = transform.eulerAngles;                
                 float wallRotY = collision.GetContact(i).otherCollider.transform.eulerAngles.y;
                 yRotNormal = curRot.y + 2 * (wallRotY + 90 - curRot.y);
                 if (yRotNormal < 0)
                     yRotNormal += 360f;
                 return;
-            }           
+            }
             if (kickLerping)
                 return;
                                    
@@ -265,7 +265,7 @@ public class Player : Character
         if (isFloor || standingOnWall)
             currentMovementState = movementState.AIR;
         else if (isWall && !isGrounded() && !lockedToWall)        
-            currentMovementState = movementState.AIR;        
+            currentMovementState = movementState.AIR;
     } 
 
     public bool isGrounded()
@@ -350,22 +350,14 @@ public class Player : Character
 
         if (kickStarted)
         {
-            perfectWallJumpSfx.Play();
-            Debug.Log("kicking");
-
-            //Vector3 curRot = transform.eulerAngles;
-            //yRotNormal = curRot.y + 2*(90 - curRot.y);
-            //yRotNormal = curRot.y + 2 * (90 - curRot.y);
-
-            // in case of negative rotation            
-            //Debug.Log("normal of " + curRot.y + " is " + yRotNormal);
+            perfectWallJumpSfx.Play();            
 
             rigidbody.velocity += new Vector3(0, 1.2f * jumpStrength, 0);                                    
 
             kickStarted = false;
             tryingToJump = false;
             kickLerping = true;
-            timeSinceJump = 0f;            
+            timeSinceJump = 0f;
         }
         else if (tryingToJump && isGrounded())
         {            
