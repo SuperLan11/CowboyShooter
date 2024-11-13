@@ -202,6 +202,11 @@ public class Player : Character
             if (hitWall && timeSinceJump > 0f && timeSinceJump < perfectJumpWindow)
             {
                 kickStarted = true;
+                Vector3 curRot = transform.eulerAngles;
+                float wallRotY = collision.GetContact(i).otherCollider.transform.eulerAngles.y;
+                yRotNormal = curRot.y + 2 * (wallRotY + 90 - curRot.y);
+                if (yRotNormal < 0)
+                    yRotNormal += 360f;
                 return;
             }           
             if (kickLerping)
@@ -348,12 +353,11 @@ public class Player : Character
             perfectWallJumpSfx.Play();
             Debug.Log("kicking");
 
-            Vector3 curRot = transform.eulerAngles;           
-            yRotNormal = curRot.y + 2*(90 - curRot.y);
-            
-            // in case of negative rotation
-            if (yRotNormal < 0)
-                yRotNormal += 360f;
+            //Vector3 curRot = transform.eulerAngles;
+            //yRotNormal = curRot.y + 2*(90 - curRot.y);
+            //yRotNormal = curRot.y + 2 * (90 - curRot.y);
+
+            // in case of negative rotation            
             //Debug.Log("normal of " + curRot.y + " is " + yRotNormal);
 
             rigidbody.velocity += new Vector3(0, 1.2f * jumpStrength, 0);                                    
@@ -364,8 +368,7 @@ public class Player : Character
             timeSinceJump = 0f;            
         }
         else if (tryingToJump && isGrounded())
-        {
-            //Debug.Log("trying to jump");
+        {            
             //prevents double jumps
             if (inJumpCooldown)
             {
