@@ -29,7 +29,10 @@ public class Player : Character
     public float jumpStrength = 7f;
     private int jumpCooldown;
     private int maxJumpCooldown;
-    private float slideSpeed = -0.5f;
+
+    [SerializeField] private float slideSpeed = -0.5f;
+    [SerializeField] private float wallSlideThreshold = 2f;
+    private bool lockedToWall = false;
 
     private Camera cam;
     private GameObject lasso;
@@ -176,23 +179,23 @@ public class Player : Character
     {
         bool hitFeet, onFloor, hitWall;
         for (int i = 0; i < collision.contactCount; i++)
-        {
-            //hitBeneath = collision.GetContact(i).point.y < transform.position.y;
+        {            
             hitFeet = collision.GetContact(i).otherCollider.bounds.max.y < GetComponent<BoxCollider>().bounds.min.y + 0.05f;
             onFloor = collision.GetContact(i).otherCollider.gameObject.tag == "FLOOR";
             hitWall = collision.GetContact(i).otherCollider.gameObject.tag == "WALL";
                                    
             // allow jumping on top of walls. this takes precedence over wall jump checking
             if (hitFeet && (onFloor || hitWall))
-            {
-                Debug.Log("SET GROUND STATE IN enter");
+            {                
+                lockedToWall = false;
                 currentMovementState = movementState.GROUND;
-                //!without break, movement state is determined by last contact
+                // without break, movement state is determined by last contact
                 break;
             }
-            if (hitWall && rigidbody.velocity.y < 2f && !isGrounded())
+            if (hitWall && rigidbody.velocity.y < wallSlideThreshold && !isGrounded())
             {
                 currentMovementState = movementState.WALL;
+                lockedToWall = true;
                 break;
             }
         }
@@ -209,15 +212,14 @@ public class Player : Character
             if (touchingFloor || (touchingWall && hitFeet))
             {                  
                 currentMovementState = movementState.GROUND;
+                lockedToWall = false;
                 break;
-            }
-            // hitting a wall from the slide does not activate this
-            else if (touchingWall && rigidbody.velocity.y < 2f && !isGrounded())
+            }            
+            else if (touchingWall && rigidbody.velocity.y < wallSlideThreshold && !isGrounded())
             {
-                //Debug.Log("set slide vel");
                 currentMovementState = movementState.WALL;
-                Vector3 newVel = new Vector3(0, slideSpeed, 0);                
-                rigidbody.velocity = newVel;
+                lockedToWall = true;                
+                rigidbody.velocity = new Vector3(0, slideSpeed, 0);
                 break;
             }
         }
@@ -225,15 +227,14 @@ public class Player : Character
 
     private void OnCollisionExit(Collision collision)
     {
-        // if you slide off a wall or jump over a wall, return to air state
-        
+        // if you slide off a wall or jump over a wall, return to air state        
         bool isWall = collision.gameObject.tag == "WALL";
         bool isFloor = collision.gameObject.tag == "FLOOR";
         bool standingOnWall = isWall && GetComponent<BoxCollider>().bounds.min.y + 0.1f > collision.gameObject.GetComponent<MeshRenderer>().bounds.max.y;
-        
+
         if (isFloor || standingOnWall)
-            currentMovementState = movementState.AIR;                
-        else if (isWall && !isGrounded())
+            currentMovementState = movementState.AIR;
+        else if (isWall && !isGrounded() && !lockedToWall)
             currentMovementState = movementState.AIR;
     } 
 
@@ -327,8 +328,8 @@ public class Player : Character
             currentMovementState = movementState.AIR;
         }        
         else if(tryingToJump && isOnWall())
-        {
-            // cancels y velocity
+        {            
+            lockedToWall = false;
             currentMovementState = movementState.AIR;
             rigidbody.velocity += new Vector3(0, jumpStrength, 0);            
         }
