@@ -33,14 +33,25 @@ public class Player : Character
     [SerializeField] private float slideSpeed = -0.5f;
     [SerializeField] private float wallSlideThreshold = 2f;
     private bool lockedToWall = false;
+    
+    private float timeSinceJump = 0f;
+    private float perfectJumpWindow = 0.15f;
+    private bool kickStarted = false;
+    private bool kickLerping = false;
+    private float yRotNormal;
+    // the higher this value, the sooner the player regains camera control after the kick
+    private float kickStopThreshold = 5f;
+    // from 0 to 1, how fast camera rotates horizontally during kick
+    private float kickLerpSpeed = 0.1f;
 
     private Camera cam;
     private GameObject lasso;
 
     [SerializeField] private AudioSource gunSfx;
     [SerializeField] private AudioSource lassoSfx;
+    [SerializeField] private AudioSource perfectWallJumpSfx;
 
-    // IMPORTANT! If you assign these values here, they must be the same as the inspector
+    // IMPORTANT! If you assign these values here, they must be the same as the inspector (i think)
     // Otherwise, movement is reversed
     [SerializeField] float horRotSpeed;
     [SerializeField] float vertRotSpeed;
@@ -61,7 +72,7 @@ public class Player : Character
         // this makes the cursor stay insivible in the editor
         // to make cursor visible, press Escape  
         Cursor.lockState = CursorLockMode.Locked;      
-        Cursor.visible = false;
+        Cursor.visible = false;        
 
         cam = Camera.main;
         // lasso should be the second child of Camera for this to work
@@ -101,7 +112,7 @@ public class Player : Character
         }
     }
    
-    protected void Shoot(GameObject enemy)
+    protected override void Shoot(GameObject enemy)
     {
         if (gunSfx != null)
             gunSfx.Play();
@@ -166,7 +177,8 @@ public class Player : Character
     {
         if (context.started)
         {
-            tryingToJump = true;            
+            tryingToJump = true;
+            timeSinceJump = 0f;
         }
         else if (context.canceled)
         {
@@ -179,14 +191,25 @@ public class Player : Character
     {
         bool hitFeet, onFloor, hitWall;
         for (int i = 0; i < collision.contactCount; i++)
-        {            
+        {
             hitFeet = collision.GetContact(i).otherCollider.bounds.max.y < GetComponent<BoxCollider>().bounds.min.y + 0.05f;
             onFloor = collision.GetContact(i).otherCollider.gameObject.tag == "FLOOR";
             hitWall = collision.GetContact(i).otherCollider.gameObject.tag == "WALL";
+
+            //Debug.Log("time since jump: " + timeSinceJump);
+            // ignore wall collision during kick and kick lerp
+            if (hitWall && timeSinceJump > 0f && timeSinceJump < perfectJumpWindow)
+            {
+                kickStarted = true;
+                return;
+            }           
+            if (kickLerping)
+                return;
                                    
             // allow jumping on top of walls. this takes precedence over wall jump checking
             if (hitFeet && (onFloor || hitWall))
-            {                
+            {
+                Debug.Log("set to GROUND state");
                 lockedToWall = false;
                 currentMovementState = movementState.GROUND;
                 // without break, movement state is determined by last contact
@@ -194,6 +217,7 @@ public class Player : Character
             }
             if (hitWall && rigidbody.velocity.y < wallSlideThreshold && !isGrounded())
             {
+                Debug.Log("set to WALL state");
                 currentMovementState = movementState.WALL;
                 lockedToWall = true;
                 break;
@@ -208,17 +232,17 @@ public class Player : Character
             bool touchingWall = collision.GetContact(i).otherCollider.gameObject.tag == "WALL";
             bool touchingFloor = collision.GetContact(i).otherCollider.gameObject.tag == "FLOOR";
             bool hitFeet = collision.collider.bounds.max.y < GetComponent<BoxCollider>().bounds.min.y + 0.01f;
-            
+
             if (touchingFloor || (touchingWall && hitFeet))
-            {                  
+            {
                 currentMovementState = movementState.GROUND;
                 lockedToWall = false;
                 break;
-            }            
+            }
             else if (touchingWall && rigidbody.velocity.y < wallSlideThreshold && !isGrounded())
             {
                 currentMovementState = movementState.WALL;
-                lockedToWall = true;                
+                lockedToWall = true;
                 rigidbody.velocity = new Vector3(0, slideSpeed, 0);
                 break;
             }
@@ -234,8 +258,8 @@ public class Player : Character
 
         if (isFloor || standingOnWall)
             currentMovementState = movementState.AIR;
-        else if (isWall && !isGrounded() && !lockedToWall)
-            currentMovementState = movementState.AIR;
+        else if (isWall && !isGrounded() && !lockedToWall)        
+            currentMovementState = movementState.AIR;        
     } 
 
     public bool isGrounded()
@@ -257,11 +281,11 @@ public class Player : Character
 
     void FixedUpdate()
     {
-        Debug.Log("State: " + currentMovementState);
+        //Debug.Log("State: " + currentMovementState);        
 
         //forces camera to look straight as you're opening up scene
         if (Time.timeSinceLevelLoad < 0.1f)
-            return;
+            return;               
 
         if (currentMovementState == movementState.WALL)
         {            
@@ -280,30 +304,65 @@ public class Player : Character
         // Input.GetAxis is the change in value since last frame        
         float deltaMouseX = Input.GetAxis("Mouse X");
         float deltaMouseY = Input.GetAxis("Mouse Y");
+                     
+        // kick rotation momentarily overrides normal rotation
+        if (kickLerping)
+        {            
+            Vector3 newRot = transform.eulerAngles;            
+            newRot.y = yRotNormal;            
+            transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, newRot, kickLerpSpeed);
 
-        // Player will not scroll vertically so that transform.forward doesn't move into the sky
-        Vector3 playerRot = transform.rotation.eulerAngles;
-        playerRot.y += deltaMouseX * horRotSpeed;
-        // just in case
-        playerRot.x = 0;
-        playerRot.z = 0;
-        transform.eulerAngles = playerRot;
+            if (yRotNormal < transform.eulerAngles.y && transform.eulerAngles.y < yRotNormal + kickStopThreshold)            
+                kickLerping = false;
+            else if (yRotNormal > transform.eulerAngles.y && transform.eulerAngles.y > yRotNormal - kickStopThreshold)            
+                kickLerping = false;            
+        }
+        else
+        {
+            // Player will not scroll vertically so that transform.forward doesn't move into the sky
+            Vector3 playerRot = transform.rotation.eulerAngles;
+            playerRot.y += deltaMouseX * horRotSpeed;
+            // just in case
+            playerRot.x = 0;
+            playerRot.z = 0;
+            transform.eulerAngles = playerRot;
 
-        // The camera only scrolls vertically since the player parent object handles horizontal scroll
-        Vector3 camRot = cam.transform.rotation.eulerAngles;
+            // The camera only scrolls vertically since the player parent object handles horizontal scroll
+            Vector3 camRot = cam.transform.rotation.eulerAngles;
 
-        // camRot.x starts decreasing from 360 when you look up and is positive downwards        
-        bool inNormalRange = (camRot.x > 280f || camRot.x < 80f);        
-        bool inLowerRange = (camRot.x <= 280f && camRot.x >= 270f && deltaMouseY < -0.001f);
-        bool inRaiseRange = (camRot.x >= 80f && camRot.x <= 90f && deltaMouseY > 0.001f);
+            // camRot.x starts decreasing from 360 when you look up and is positive downwards        
+            bool inNormalRange = (camRot.x > 280f || camRot.x < 80f);
+            bool inLowerRange = (camRot.x <= 280f && camRot.x >= 270f && deltaMouseY < -0.001f);
+            bool inRaiseRange = (camRot.x >= 80f && camRot.x <= 90f && deltaMouseY > 0.001f);
 
-        // -= because xRot is negative upwards
-        if (inNormalRange || inLowerRange | inRaiseRange)      
-            camRot.x -= deltaMouseY * vertRotSpeed;
-        camRot.z = 0;
-        cam.transform.eulerAngles = camRot;
+            // -= because xRot is negative upwards
+            if (inNormalRange || inLowerRange | inRaiseRange)
+                camRot.x -= deltaMouseY * vertRotSpeed;
+            camRot.z = 0;
+            cam.transform.eulerAngles = camRot;
+        }
 
-        if (tryingToJump && isGrounded())
+        if (kickStarted)
+        {
+            perfectWallJumpSfx.Play();
+            Debug.Log("kicking");
+
+            Vector3 curRot = transform.eulerAngles;           
+            yRotNormal = curRot.y + 2*(90 - curRot.y);
+            
+            // in case of negative rotation
+            if (yRotNormal < 0)
+                yRotNormal += 360f;
+            //Debug.Log("normal of " + curRot.y + " is " + yRotNormal);
+
+            rigidbody.velocity += new Vector3(0, 1.2f * jumpStrength, 0);                                    
+
+            kickStarted = false;
+            tryingToJump = false;
+            kickLerping = true;
+            timeSinceJump = 0f;            
+        }
+        else if (tryingToJump && isGrounded())
         {
             //Debug.Log("trying to jump");
             //prevents double jumps
@@ -320,18 +379,22 @@ public class Player : Character
                 }
 
                 return;
-            }            
+            }
 
             rigidbody.velocity += new Vector3(0, jumpStrength, 0);
             tryingToJump = false;
             inJumpCooldown = true;
             currentMovementState = movementState.AIR;
-        }        
-        else if(tryingToJump && isOnWall())
-        {            
+        }
+        else if (tryingToJump && isOnWall())
+        {
             lockedToWall = false;
             currentMovementState = movementState.AIR;
-            rigidbody.velocity += new Vector3(0, jumpStrength, 0);            
+            rigidbody.velocity += new Vector3(0, jumpStrength, 0);
         }
+        else if (tryingToJump)
+        {
+            timeSinceJump += Time.deltaTime;
+        }         
     }   
 }
