@@ -178,13 +178,14 @@ public class Player : Character
         for (int i = 0; i < collision.contactCount; i++)
         {
             //hitBeneath = collision.GetContact(i).point.y < transform.position.y;
-            hitFeet = collision.GetContact(i).point.y < GetComponent<BoxCollider>().bounds.min.y+0.05f;
+            hitFeet = collision.GetContact(i).otherCollider.bounds.max.y < GetComponent<BoxCollider>().bounds.min.y + 0.05f;
             onFloor = collision.GetContact(i).otherCollider.gameObject.tag == "FLOOR";
             hitWall = collision.GetContact(i).otherCollider.gameObject.tag == "WALL";
                                    
             // allow jumping on top of walls. this takes precedence over wall jump checking
             if (hitFeet && (onFloor || hitWall))
             {
+                Debug.Log("SET GROUND STATE IN enter");
                 currentMovementState = movementState.GROUND;
                 //!without break, movement state is determined by last contact
                 break;
@@ -202,16 +203,20 @@ public class Player : Character
         for (int i = 0; i < collision.contactCount; i++)
         {
             bool touchingWall = collision.GetContact(i).otherCollider.gameObject.tag == "WALL";
-            bool hitFeet = collision.collider.bounds.max.y < GetComponent<BoxCollider>().bounds.min.y + 0.05f;
-            if (touchingWall && hitFeet)
-            {
+            bool touchingFloor = collision.GetContact(i).otherCollider.gameObject.tag == "FLOOR";
+            bool hitFeet = collision.collider.bounds.max.y < GetComponent<BoxCollider>().bounds.min.y + 0.01f;
+            
+            if (touchingFloor || (touchingWall && hitFeet))
+            {                  
                 currentMovementState = movementState.GROUND;
+                break;
             }
+            // hitting a wall from the slide does not activate this
             else if (touchingWall && rigidbody.velocity.y < 2f && !isGrounded())
             {
+                //Debug.Log("set slide vel");
                 currentMovementState = movementState.WALL;
-                Vector3 newVel = rigidbody.velocity;
-                newVel.y = slideSpeed;
+                Vector3 newVel = new Vector3(0, slideSpeed, 0);                
                 rigidbody.velocity = newVel;
                 break;
             }
@@ -221,13 +226,15 @@ public class Player : Character
     private void OnCollisionExit(Collision collision)
     {
         // if you slide off a wall or jump over a wall, return to air state
-
-        bool aboveFloor = GetComponent<BoxCollider>().bounds.min.y > collision.gameObject.GetComponent<MeshRenderer>().bounds.min.y; 
-        if (collision.gameObject.tag == "WALL" && aboveFloor)
-        {
-            Debug.Log("exited wall");
+        
+        bool isWall = collision.gameObject.tag == "WALL";
+        bool isFloor = collision.gameObject.tag == "FLOOR";
+        bool standingOnWall = isWall && GetComponent<BoxCollider>().bounds.min.y + 0.1f > collision.gameObject.GetComponent<MeshRenderer>().bounds.max.y;
+        
+        if (isFloor || standingOnWall)
+            currentMovementState = movementState.AIR;                
+        else if (isWall && !isGrounded())
             currentMovementState = movementState.AIR;
-        }
     } 
 
     public bool isGrounded()
@@ -242,14 +249,14 @@ public class Player : Character
 
     protected override void Death()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);        
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         // reset floorsInitialized so floors can reset offmeshlinks
         Floor.floorsInitialized = 0;
     }
 
     void FixedUpdate()
     {
-        //Debug.Log(currentMovementState);        
+        Debug.Log("State: " + currentMovementState);
 
         //forces camera to look straight as you're opening up scene
         if (Time.timeSinceLevelLoad < 0.1f)
@@ -297,7 +304,7 @@ public class Player : Character
 
         if (tryingToJump && isGrounded())
         {
-            Debug.Log("trying to jump");
+            //Debug.Log("trying to jump");
             //prevents double jumps
             if (inJumpCooldown)
             {
