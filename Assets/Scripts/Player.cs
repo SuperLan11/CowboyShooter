@@ -30,19 +30,20 @@ public class Player : Character
     private int jumpCooldown;
     private int maxJumpCooldown;
 
-    [SerializeField] private float slideSpeed = -0.5f;
+    [SerializeField] private float slideVel = -0.5f;
+    // the max y velocity the player can have and still stick to a wall
     [SerializeField] private float wallSlideThreshold = 2f;
     private bool lockedToWall = false;
-    
-    private float timeSinceJump = 0f;
-    private float perfectJumpWindow = 0.15f;
+
+    [SerializeField] private float timeSinceJump = 0f;
+    [SerializeField] private float perfectJumpWindow = 0.15f;
     private bool kickStarted = false;
     private bool kickLerping = false;
     private float yRotNormal;
     // the higher this value, the sooner the player regains camera control after the kick
-    private float kickStopThreshold = 5f;
-    // from 0 to 1, how fast camera rotates horizontally during kick
-    private float kickLerpSpeed = 0.1f;
+    [SerializeField] private float kickStopThreshold = 8f;
+    // from 0 to 1, how fast camera rotates horizontally during kick. increasing this lets player regains camera control sooner
+    [SerializeField] private float kickLerpSpeed = 0.1f;
 
     private Camera cam;
     private GameObject lasso;
@@ -62,7 +63,7 @@ public class Player : Character
         AIR,
         SWINGING,
         HANGING,
-        WALL
+        SLIDING
     };
 
     public movementState currentMovementState;
@@ -218,7 +219,7 @@ public class Player : Character
             if (hitWall && rigidbody.velocity.y < wallSlideThreshold && !isGrounded())
             {
                 Debug.Log("set to WALL state");
-                currentMovementState = movementState.WALL;
+                currentMovementState = movementState.SLIDING;
                 lockedToWall = true;
                 break;
             }
@@ -241,9 +242,9 @@ public class Player : Character
             }
             else if (touchingWall && rigidbody.velocity.y < wallSlideThreshold && !isGrounded())
             {
-                currentMovementState = movementState.WALL;
+                currentMovementState = movementState.SLIDING;
                 lockedToWall = true;
-                rigidbody.velocity = new Vector3(0, slideSpeed, 0);
+                rigidbody.velocity = new Vector3(0, slideVel, 0);
                 break;
             }
         }
@@ -269,7 +270,7 @@ public class Player : Character
 
     public bool isOnWall()
     {
-        return (currentMovementState == movementState.WALL);
+        return (currentMovementState == movementState.SLIDING);
     }
 
     protected override void Death()
@@ -287,9 +288,9 @@ public class Player : Character
         if (Time.timeSinceLevelLoad < 0.1f)
             return;               
 
-        if (currentMovementState == movementState.WALL)
+        if (currentMovementState == movementState.SLIDING)
         {            
-            rigidbody.velocity = new Vector3(0, slideSpeed, 0);            
+            rigidbody.velocity = new Vector3(0, slideVel, 0);            
         }
         else
         {
