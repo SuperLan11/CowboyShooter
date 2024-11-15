@@ -74,8 +74,9 @@ public class Player : Character
         // to make cursor visible, press Escape  
         Cursor.lockState = CursorLockMode.Locked;      
         Cursor.visible = false;
-
+        
         maxShootCooldown = 0.5f;
+        shootCooldown = maxShootCooldown;
 
         cam = Camera.main;
         // lasso should be the second child of Camera for this to work
@@ -288,6 +289,7 @@ public class Player : Character
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         // reset floorsInitialized so floors can reset offmeshlinks
         Floor.floorsInitialized = 0;
+        Enemy.enemiesInitialized = 0;
     }
 
     void FixedUpdate()

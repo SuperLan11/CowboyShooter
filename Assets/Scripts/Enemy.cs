@@ -11,6 +11,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Scripting.APIUpdating;
 using Vector3 = UnityEngine.Vector3;
+using TMPro;
 
 public class Enemy : Character
 {
@@ -21,6 +22,9 @@ public class Enemy : Character
     [SerializeField] private Transform destination2;
     private List<Vector3> destList = new List<Vector3>();
     public static float maxJumpDist = 7f;
+
+    public static int enemiesInitialized = 0;
+    private static int enemiesAlive = 0;
 
     [SerializeField] public float destCooldown;
     [SerializeField] private float maxDestCooldown;
@@ -37,7 +41,7 @@ public class Enemy : Character
         player = FindObjectOfType<Player>().gameObject;
         playerNear = false;
         playerSighted = false;
-        sightRange = 5f;
+        sightRange = 5f;        
 
         destList.Add(destination1.position);
         destList.Add(destination2.position);
@@ -51,6 +55,25 @@ public class Enemy : Character
         maxShootCooldown = 1f;
         // this is only here to give feedback for shooting
         shootSfx = GetComponent<AudioSource>();
+
+        // change to find enemies in a certain room?
+        int numEnemies = FindObjectsOfType<Enemy>().Length;
+
+        enemiesInitialized++;
+        enemiesAlive++;
+        if (enemiesInitialized >= numEnemies)
+        {
+            UpdateDoorCounter();
+        }
+    }
+
+    private void UpdateDoorCounter()
+    {
+        GameObject[] doors = GameObject.FindGameObjectsWithTag("DOOR");
+        foreach (GameObject door in doors)
+        {
+            door.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = enemiesAlive.ToString();
+        }
     }
 
     protected override void Shoot(GameObject player)
@@ -103,8 +126,11 @@ public class Enemy : Character
     protected override void Death()
     {
         Destroy(this.gameObject);
+        enemiesAlive--;
+        UpdateDoorCounter();
+        if (enemiesAlive < 0)
+            Door.RaiseDoors();
     }
-
 
     void Update()
     {

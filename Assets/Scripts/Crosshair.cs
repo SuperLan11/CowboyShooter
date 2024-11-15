@@ -54,9 +54,16 @@ public class HUD : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player.shootCooldown < player.maxShootCooldown && !pointedAtHook())
+        if (player.shootCooldown < player.maxShootCooldown)
         {
-            crosshairImage.color = Color.grey;
+            if (pointedAtObj() && pointedAtHook())
+            {
+                crosshairImage.color = orange;
+            }
+            else
+            { 
+                crosshairImage.color = Color.grey;
+            }
             return;
         }
 
