@@ -14,8 +14,23 @@ using Image = UnityEngine.UI.Image;
 public class HUD : MonoBehaviour
 {
     [SerializeField] private GameObject crosshair;
+    private Player player;
     private Image crosshairImage;
     private Color32 orange = new Color32(255, 165, 0, 255);
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        if (crosshair == null)
+        {
+            Debug.LogError("I reckon you don't have a crosshair, partner!");
+            return;
+        }
+        player = FindObjectOfType<Player>();
+
+        crosshairImage = crosshair.GetComponent<Image>();
+    }
 
     private bool pointedAtObj(){
         return Player.player.ObjAimedAt() != null;    
@@ -35,22 +50,16 @@ public class HUD : MonoBehaviour
     {
         return pointedAtEnemy() || pointedAtHook();
     }
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        if (crosshair == null)
-        {
-            Debug.LogError("I reckon you don't have a crosshair, partner!");
-            return;
-        }
-
-        crosshairImage = crosshair.GetComponent<Image>();
-    }
 
     // Update is called once per frame
     void Update()
-    {      
+    {
+        if (player.shootCooldown < player.maxShootCooldown && !pointedAtHook())
+        {
+            crosshairImage.color = Color.grey;
+            return;
+        }
+
         //!needs to be two separate if-statement blocks so that it doesn't try to access null obj
         if (!pointedAtObj())
         {

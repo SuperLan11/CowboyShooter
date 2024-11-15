@@ -73,7 +73,9 @@ public class Player : Character
         // this makes the cursor stay insivible in the editor
         // to make cursor visible, press Escape  
         Cursor.lockState = CursorLockMode.Locked;      
-        Cursor.visible = false;        
+        Cursor.visible = false;
+
+        maxShootCooldown = 0.5f;
 
         cam = Camera.main;
         // lasso should be the second child of Camera for this to work
@@ -118,6 +120,7 @@ public class Player : Character
         if (gunSfx != null)
             gunSfx.Play();
 
+        Debug.Log("shot enemy");
         enemy.GetComponent<Enemy>().TakeDamage(1);
     }
 
@@ -140,8 +143,11 @@ public class Player : Character
             {
                 GameObject objAimed = ObjAimedAt();
                 //Debug.Log("objAimed: " + objAimed.name);
-                if (objAimed.GetComponent<Enemy>() != null)
+                if (objAimed.GetComponent<Enemy>() != null && shootCooldown >= maxShootCooldown)
+                {
                     Shoot(objAimed);
+                    shootCooldown = 0f;
+                }
             }
             catch
             {
@@ -186,7 +192,6 @@ public class Player : Character
             tryingToJump = false;
         }
     }
-
     
     private void OnCollisionEnter(Collision collision)
     {
@@ -347,7 +352,7 @@ public class Player : Character
             camRot.z = 0;
             cam.transform.eulerAngles = camRot;
         }
-
+        
         if (kickStarted)
         {
             perfectWallJumpSfx.Play();            
@@ -391,6 +396,8 @@ public class Player : Character
         else if (tryingToJump)
         {
             timeSinceJump += Time.deltaTime;
-        }         
+        }
+
+        shootCooldown += Time.deltaTime;
     }   
 }

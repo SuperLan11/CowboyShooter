@@ -14,8 +14,8 @@ public abstract class Character : MonoBehaviour
     //serialize needed to customize prefabs
     [SerializeField] protected int health;
     // in seconds
-    [SerializeField] protected float maxShootCooldown;    
-    [SerializeField] protected float shootCooldown;
+    [SerializeField] public float maxShootCooldown;    
+    [SerializeField] public float shootCooldown;
     [SerializeField] protected float speed;
 
     protected AudioSource shootSfx;
@@ -38,6 +38,7 @@ public abstract class Character : MonoBehaviour
     {
         health -= damage;
         //Debug.Log("health: " + health);
+        // override this later
         if (this.name == "Player")
         {
             // this should get the hearts in the hierarchy order so you don't need to sort

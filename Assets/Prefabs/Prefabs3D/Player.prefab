@@ -504,13 +504,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 5
-  maxShootCooldown: 0
+  maxShootCooldown: 0.5
   shootCooldown: 0
   speed: 6
   acceleration: 10
   jumpStrength: 7
-  slideSpeed: -0.5
+  slideVel: -0.5
   wallSlideThreshold: 2
+  timeSinceJump: 0
+  perfectJumpWindow: 0.15
+  kickStopThreshold: 8
+  kickLerpSpeed: 0.1
   gunSfx: {fileID: 2084219441191770436}
   lassoSfx: {fileID: 4077167196803429224}
   perfectWallJumpSfx: {fileID: 7205744336693387779}
