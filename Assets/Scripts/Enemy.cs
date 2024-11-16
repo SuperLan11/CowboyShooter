@@ -24,7 +24,7 @@ public class Enemy : Character
     public static float maxJumpDist = 7f;
 
     public static int enemiesInitialized = 0;
-    private static int enemiesAlive = 0;
+    public static int enemiesAlive = 0;
 
     [SerializeField] public float destCooldown;
     [SerializeField] private float maxDestCooldown;
@@ -59,22 +59,14 @@ public class Enemy : Character
         // change to find enemies in a certain room?
         int numEnemies = FindObjectsOfType<Enemy>().Length;
 
+        Debug.Log("initialized: " + enemiesInitialized + ", numEnemies: " + numEnemies);
         enemiesInitialized++;
         enemiesAlive++;
         if (enemiesInitialized >= numEnemies)
         {
-            UpdateDoorCounter();
+            Door.UpdateDoorCounter(enemiesAlive);
         }
-    }
-
-    private void UpdateDoorCounter()
-    {
-        GameObject[] doors = GameObject.FindGameObjectsWithTag("DOOR");
-        foreach (GameObject door in doors)
-        {
-            door.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = enemiesAlive.ToString();
-        }
-    }
+    }    
 
     protected override void Shoot(GameObject player)
     {
@@ -127,9 +119,16 @@ public class Enemy : Character
     {
         Destroy(this.gameObject);
         enemiesAlive--;
-        UpdateDoorCounter();
-        if (enemiesAlive < 0)
+        Door.UpdateDoorCounter(enemiesAlive);
+        if (enemiesAlive <= 0)
             Door.RaiseDoors();
+    }
+
+    public override void TakeDamage(int damage)
+    {
+        health -= damage;
+        if (health == 0)
+            Death();
     }
 
     void Update()

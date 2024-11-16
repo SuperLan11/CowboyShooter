@@ -14,6 +14,7 @@ using UnityEngine.SceneManagement;
 
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
+using UnityEngine.UI;
 
 public class Player : Character
 {
@@ -23,12 +24,15 @@ public class Player : Character
     private Vector2 lastMoveInput = Vector2.zero;
     private Vector3 maxSpeed = new Vector3(10f, 10f, 10f);
     public float acceleration = 10f;
+    private float moveAccel = 0.4f;
 
     private bool tryingToJump;
     private bool inJumpCooldown = false;
     public float jumpStrength = 7f;
     private int jumpCooldown;
     private int maxJumpCooldown;
+
+    public int roomNum;
 
     [SerializeField] private float slideVel = -0.5f;
     // the max y velocity the player can have and still stick to a wall
@@ -77,6 +81,8 @@ public class Player : Character
         
         maxShootCooldown = 0.5f;
         shootCooldown = maxShootCooldown;
+
+        roomNum = 1;
 
         cam = Camera.main;
         // lasso should be the second child of Camera for this to work
@@ -196,14 +202,14 @@ public class Player : Character
     
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("player hit " + collision.gameObject.name);
         bool hitFeet, onFloor, hitWall;
         for (int i = 0; i < collision.contactCount; i++)
         {
             hitFeet = collision.GetContact(i).otherCollider.bounds.max.y < GetComponent<BoxCollider>().bounds.min.y + 0.05f;
             onFloor = collision.GetContact(i).otherCollider.gameObject.tag == "FLOOR";
             hitWall = collision.GetContact(i).otherCollider.gameObject.tag == "WALL";
-
-            //Debug.Log("time since jump: " + timeSinceJump);
+            
             // ignore wall collision during kick and kick lerp            
             if (hitWall && timeSinceJump > 0f && timeSinceJump < perfectJumpWindow)
             {
@@ -290,6 +296,24 @@ public class Player : Character
         // reset floorsInitialized so floors can reset offmeshlinks
         Floor.floorsInitialized = 0;
         Enemy.enemiesInitialized = 0;
+        Enemy.enemiesAlive = 0;
+    }
+
+    public override void TakeDamage(int damage)
+    {
+        health -= damage;
+        // this should get the hearts in the hierarchy order so you don't need to sort
+        Image[] images = FindObjectsOfType<Image>();
+        List<Image> hearts = new List<Image>();
+        foreach (Image img in images)
+        {
+            if (img.gameObject.name.Contains("Heart"))
+                hearts.Add(img);
+        }
+        Destroy(hearts[hearts.Count - 1].gameObject);
+
+        if (health <= 0)
+            Death();
     }
 
     void FixedUpdate()
@@ -307,11 +331,11 @@ public class Player : Character
         else
         {
             // need to assign y velocity first so it is not overriden
-            rigidbody.velocity = new Vector3(0, rigidbody.velocity.y, 0);
+            Vector3 newVel = new Vector3(0, rigidbody.velocity.y, 0);
+            newVel += (transform.right * lastMoveInput.x +
+                       transform.forward * lastMoveInput.y) * speed;
 
-            // moves player left/right/forward/backward from direction they're facing
-            rigidbody.velocity += (transform.right * lastMoveInput.x +
-                                 transform.forward * lastMoveInput.y) * speed;
+            rigidbody.velocity = Vector3.Lerp(rigidbody.velocity, newVel, moveAccel);
         }
 
         // Input.GetAxis is the change in value since last frame        

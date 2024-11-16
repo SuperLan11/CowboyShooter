@@ -51,3 +51,15 @@ Assets Used:
 	Whip#2 SFX
 	by Universefield
 	https://pixabay.com/sound-effects/whip-2-242215/
+
+	Door Slam SFX
+	by kreckie123
+	https://pixabay.com/sound-effects/door-slam-79889/
+
+	Gun Shot 1
+	by Audiosto
+	https://pixabay.com/sound-effects/gun-shot-1-176892/
+
+	New Kick 01
+	by u_0incawl5vi
+	https://pixabay.com/sound-effects/new-kick-01-238978/
