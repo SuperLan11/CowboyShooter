@@ -31,6 +31,7 @@ public class Player : Character
     public float jumpStrength = 7f;
     private int jumpCooldown;
     private int maxJumpCooldown;
+    private float gravityAccel = -13f;
 
     // these need to be static so the values persist when scene reloads
     public static int roomNum;    
@@ -82,11 +83,14 @@ public class Player : Character
     void Start()
     {
         // when player dies and scene reloads
-        // when more scenes are used, if scene about to load is different from current scene, set hasCheckpoint to false
+        // when more scenes are used, if scene loading is different from current scene, set hasCheckpoint to false
         if (hasCheckpoint)
             transform.position = respawnPos;
 
         roomNum = 1;
+
+        // override default gravity (-9.81) to desired gravity
+        Physics.gravity = new Vector3(0, gravityAccel, 0);
 
         // this makes the cursor stay insivible in the editor
         // to make cursor visible, press Escape  
@@ -223,13 +227,14 @@ public class Player : Character
             hitWall = collision.GetContact(i).otherCollider.gameObject.tag == "WALL";
             gotTiming = timeSinceJump > 0f && timeSinceJump < perfectJumpWindow;
 
-            // ignore wall collision during kick and kick lerp            
+            // ignore wall collision during kick and kick lerp
             if (hitWall && gotTiming && !hitFeet)
             {
                 kickStarted = true;
                 Vector3 curRot = transform.eulerAngles;                
                 float wallRotY = collision.GetContact(i).otherCollider.transform.eulerAngles.y;
                 yRotNormal = curRot.y + 2 * (wallRotY + 90 - curRot.y);
+                Debug.Log("normal: " + yRotNormal);                
                 if (yRotNormal < 0)
                     yRotNormal += 360f;
                 return;
