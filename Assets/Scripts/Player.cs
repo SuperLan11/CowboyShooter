@@ -32,7 +32,10 @@ public class Player : Character
     private int jumpCooldown;
     private int maxJumpCooldown;
 
-    public int roomNum;
+    // these need to be static so the values persist when scene reloads
+    public static int roomNum;    
+    public static Vector3 respawnPos;
+    public static bool hasCheckpoint = false;
 
     [SerializeField] private float slideVel = -0.5f;
     // the max y velocity the player can have and still stick to a wall
@@ -55,6 +58,10 @@ public class Player : Character
     [SerializeField] private AudioSource gunSfx;
     [SerializeField] private AudioSource lassoSfx;
     [SerializeField] private AudioSource perfectWallJumpSfx;
+    [SerializeField] private AudioSource gunReloadSfx;
+    [SerializeField] private AudioSource wallSlideSfx;
+
+    private bool reloadPlayed = false;
 
     // IMPORTANT! If you assign these values here, they must be the same as the inspector (i think)
     // Otherwise, movement is reversed
@@ -74,15 +81,20 @@ public class Player : Character
 
     void Start()
     {
+        // when player dies and scene reloads
+        // when more scenes are used, if scene about to load is different from current scene, set hasCheckpoint to false
+        if (hasCheckpoint)
+            transform.position = respawnPos;
+
+        roomNum = 1;
+
         // this makes the cursor stay insivible in the editor
         // to make cursor visible, press Escape  
-        Cursor.lockState = CursorLockMode.Locked;      
+        Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         
         maxShootCooldown = 0.5f;
-        shootCooldown = maxShootCooldown;
-
-        roomNum = 1;
+        shootCooldown = maxShootCooldown;        
 
         cam = Camera.main;
         // lasso should be the second child of Camera for this to work
@@ -154,6 +166,7 @@ public class Player : Character
                 {
                     Shoot(objAimed);
                     shootCooldown = 0f;
+                    reloadPlayed = false;
                 }
             }
             catch
@@ -201,17 +214,17 @@ public class Player : Character
     }
     
     private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("player hit " + collision.gameObject.name);
-        bool hitFeet, onFloor, hitWall;
+    {       
+        bool hitFeet, onFloor, hitWall, gotTiming;
         for (int i = 0; i < collision.contactCount; i++)
         {
             hitFeet = collision.GetContact(i).otherCollider.bounds.max.y < GetComponent<BoxCollider>().bounds.min.y + 0.05f;
             onFloor = collision.GetContact(i).otherCollider.gameObject.tag == "FLOOR";
             hitWall = collision.GetContact(i).otherCollider.gameObject.tag == "WALL";
-            
+            gotTiming = timeSinceJump > 0f && timeSinceJump < perfectJumpWindow;
+
             // ignore wall collision during kick and kick lerp            
-            if (hitWall && timeSinceJump > 0f && timeSinceJump < perfectJumpWindow)
+            if (hitWall && gotTiming && !hitFeet)
             {
                 kickStarted = true;
                 Vector3 curRot = transform.eulerAngles;                
@@ -325,8 +338,10 @@ public class Player : Character
             return;               
 
         if (currentMovementState == movementState.SLIDING)
-        {            
-            rigidbody.velocity = new Vector3(0, slideVel, 0);            
+        {
+            if(wallSlideSfx != null && !wallSlideSfx.isPlaying)
+                wallSlideSfx.Play();
+            rigidbody.velocity = new Vector3(0, slideVel, 0);
         }
         else
         {
@@ -418,6 +433,8 @@ public class Player : Character
             lockedToWall = false;
             currentMovementState = movementState.AIR;
             rigidbody.velocity += new Vector3(0, jumpStrength, 0);
+            if (wallSlideSfx != null && wallSlideSfx.isPlaying)
+                wallSlideSfx.Stop();
         }
         else if (tryingToJump)
         {
@@ -425,5 +442,11 @@ public class Player : Character
         }
 
         shootCooldown += Time.deltaTime;
+
+        if(shootCooldown > maxShootCooldown && !reloadPlayed && gunReloadSfx != null)
+        {
+            gunReloadSfx.Play();
+            reloadPlayed = true;
+        }
     }   
 }

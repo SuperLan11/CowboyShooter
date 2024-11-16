@@ -63,3 +63,15 @@ Assets Used:
 	New Kick 01
 	by u_0incawl5vi
 	https://pixabay.com/sound-effects/new-kick-01-238978/
+
+	mag in (GunReload)
+	by nettimato (Freesound)
+	https://pixabay.com/sound-effects/mag-in-82094/
+
+	Sliding Sound
+	by cbenci (Freesound)
+	https://pixabay.com/sound-effects/sliding-sound-103631/
+
+	Metal Door Slam
+	SoundReality
+	https://pixabay.com/sound-effects/metal-door-slam-172172/

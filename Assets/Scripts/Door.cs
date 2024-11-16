@@ -5,8 +5,9 @@ using TMPro;
 
 public class Door : MonoBehaviour
 {
-    public bool movingUp = false;
-    public bool movingDown = false;
+    public static bool movingUp = false;
+    public static bool prevMovingUp = false;
+    public static bool movingDown = false;
 
     private Vector3 raisedPos;    
     private Vector3 loweredPos;
@@ -15,7 +16,8 @@ public class Door : MonoBehaviour
     // rigidbody needed for collisions to work
     private Rigidbody doorRig;
     private AudioSource doorSlamSfx;
-    private bool soundPlayed = false;
+    // static so multiple door sounds don't play at once
+    private static bool soundPlayed = false;
     
     // serialized values override script values unless script values are set in Start()
     [SerializeField] private float raiseHeight;
@@ -33,24 +35,17 @@ public class Door : MonoBehaviour
         raisedPos.y += raiseHeight;        
     }
 
+    // a function isn't required to access these variables, but it is more readable
     public static void RaiseDoors()
-    {
-        Door[] doors = FindObjectsOfType<Door>();        
-        foreach(Door door in doors)
-        {
-            door.movingDown = false;
-            door.movingUp = true;            
-        }
+    {        
+        movingDown = false;
+        movingUp = true;                    
     }
 
     public static void LowerDoors()
-    {
-        Door[] doors = FindObjectsOfType<Door>();
-        foreach (Door door in doors)
-        {
-            door.movingUp = false;
-            door.movingDown = true;            
-        }
+    {        
+        movingUp = false;
+        movingDown = true;                    
     }
 
     public static void UpdateDoorCounter(int enemiesAlive)
@@ -64,18 +59,21 @@ public class Door : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {        
+    {                
         if (movingUp)
-        {            
+        {
+            movingDown = false;
             transform.position = Vector3.Lerp(transform.position, raisedPos, raiseAccel);
             // door trigger is child, don't let parent move it from ground
             transform.GetChild(0).position = triggerPos;
             soundPlayed = false;
         }
+        // wasMovingUp
         else if (movingDown)
         {
+            movingUp = false;
             if (!soundPlayed)
-            {
+            {                
                 doorSlamSfx.Play();
                 soundPlayed = true;
             }

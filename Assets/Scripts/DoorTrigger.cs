@@ -2,8 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// door trigger also acts as a checkpoint / respawn point
 public class DoorTrigger : MonoBehaviour
 {
+    // the room number starting at 1 that represents the room the player will respawn in
+    [SerializeField] private int roomNum;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,11 +18,15 @@ public class DoorTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.name == "Player")
-        {
-            int roomNum = FindObjectsOfType<Door>().Length;
-            Player.player.roomNum = roomNum;
-            Door.LowerDoors();
+        {            
+            Player.roomNum = roomNum;
+            // shouldn't happen in actual level, if player touches door trigger without raising door first, don't lower again
+            if(!Door.movingDown)
+                Door.LowerDoors();
+            // fix this later
             Door.UpdateDoorCounter(Enemy.enemiesInitialized);
+            Player.respawnPos = transform.position;
+            Player.hasCheckpoint = true;            
         }
     }
 

@@ -58,8 +58,7 @@ public class Enemy : Character
 
         // change to find enemies in a certain room?
         int numEnemies = FindObjectsOfType<Enemy>().Length;
-
-        Debug.Log("initialized: " + enemiesInitialized + ", numEnemies: " + numEnemies);
+        
         enemiesInitialized++;
         enemiesAlive++;
         if (enemiesInitialized >= numEnemies)
