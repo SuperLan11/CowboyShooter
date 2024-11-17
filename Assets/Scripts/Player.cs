@@ -27,14 +27,15 @@ public class Player : Character
     private float moveAccel = 0.4f;
 
     private bool tryingToJump;
-    private bool inJumpCooldown = false;
-    private bool inLassoLock = false;
+    private bool inJumpCooldown = false;    
     public float jumpStrength = 7f;
+    [SerializeField] private float gravityAccel = -13f;
     private int jumpCooldown;
     private int maxJumpCooldown;
+
+    private bool inLassoLock = false;
     private int lassoLockCooldown;
-    private int maxLassoLockCooldown;
-    private float gravityAccel = -13f;
+    private int maxLassoLockCooldown;    
     private float lassoForceMultiplier = 1.3f;
 
     // these need to be static so the values persist when scene reloads
@@ -224,21 +225,22 @@ public class Player : Character
     
     private void OnCollisionEnter(Collision collision)
     {       
-        bool hitFeet, onFloor, hitWall, hitJacobsWall, gotTiming;
+        bool hitFeet, hitFloor, hitWall, hitJacobsWall, gotTiming;
         for (int i = 0; i < collision.contactCount; i++)
         {
             hitFeet = collision.GetContact(i).otherCollider.bounds.max.y < playerFeetPosition();
-            onFloor = collision.GetContact(i).otherCollider.gameObject.tag == "FLOOR";
+            hitFloor = collision.GetContact(i).otherCollider.gameObject.tag == "FLOOR";
+            // add jacobWall tag here when that gets in
             hitWall = collision.GetContact(i).otherCollider.gameObject.tag == "WALL";
             hitJacobsWall = collision.GetContact(i).otherCollider.gameObject.tag == "WALL" && 
                 collision.GetContact(i).otherCollider.gameObject.name.Contains("Model");
             gotTiming = timeSinceJump > 0f && timeSinceJump < perfectJumpWindow;
-
-            // ignore wall collision during kick and kick lerp
-            // perfect wall jump counts towards wall jump counter
-            if (hitWall && gotTiming && !hitFeet && wallJumpsLeft > 0)
+            
+            // perfect wall jump counts towards wall jump counter            
+            if (hitWall && gotTiming && !hitFeet && wallJumpsLeft > 0 && !isGrounded())
             {
-                kickStarted = true;
+                Debug.Log("got kick in enter");
+                kickStarted = true;                
                 wallJumpsLeft--;                
                 Vector3 curRot = transform.eulerAngles;                
                 float wallRotY = collision.GetContact(i).otherCollider.transform.eulerAngles.y;
@@ -249,30 +251,30 @@ public class Player : Character
                     if(wallRotY >= 360)
                         wallRotY -= 180;
                 }
-
+                                              
                 yRotNormal = curRot.y + 2 * (wallRotY + 90 - curRot.y);
-                // account for if y normal is out of bounds for eulerAngles
+                // account for if y normal being out of bounds for eulerAngles
                 if (yRotNormal < 0f)
                     yRotNormal += 360f;
 
                 if (yRotNormal >= 360f)
-                    yRotNormal -= 360f;                
+                    yRotNormal -= 360f;
                 return;
             }
+            // ignore wall collision during kick and kick lerp
             if (kickLerping)
                 return;
                                    
             // allow jumping on top of walls. this takes precedence over wall jump checking
-            if (hitFeet && (onFloor || hitWall))
-            {                
-                lockedToWall = false;
-                currentMovementState = movementState.GROUND;                
+            if (hitFeet && (hitFloor || hitWall))
+            {                                
+                currentMovementState = movementState.GROUND;
+                lockedToWall = false;                
                 wallJumpsLeft = maxWallJumps;
                 break;
             }
             if (hitWall && rigidbody.velocity.y < wallSlideThreshold && !isGrounded() && wallJumpsLeft > 0)
-            {
-                //Debug.Log("slide state");
+            {                
                 currentMovementState = movementState.SLIDING;
                 lockedToWall = true;
                 break;
@@ -288,10 +290,11 @@ public class Player : Character
             bool touchingFloor = collision.GetContact(i).otherCollider.gameObject.tag == "FLOOR";
             bool hitFeet = collision.collider.bounds.max.y < GetComponent<BoxCollider>().bounds.min.y + 0.01f;
 
-            if (touchingFloor || (touchingWall && hitFeet))
+            // this causes standing on wall issue. should be fixed when colliders are realigned
+            if (hitFeet && (touchingFloor || touchingWall))
             {
                 currentMovementState = movementState.GROUND;
-                lockedToWall = false;
+                lockedToWall = false;                
                 wallJumpsLeft = maxWallJumps;
                 break;
             }
@@ -299,7 +302,6 @@ public class Player : Character
             {                
                 currentMovementState = movementState.SLIDING;
                 lockedToWall = true;
-                rigidbody.velocity = new Vector3(0, slideVel, 0);
                 break;
             }
         }
@@ -390,7 +392,7 @@ public class Player : Character
 
     void FixedUpdate()
     {
-        //Debug.Log("State: " + currentMovementState);        
+        Debug.Log("State: " + currentMovementState);        
 
         //forces camera to look straight as you're opening up scene
         if (Time.timeSinceLevelLoad < 0.1f)

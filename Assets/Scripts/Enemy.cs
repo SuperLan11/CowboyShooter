@@ -63,11 +63,8 @@ public class Enemy : Character
 
         int numEnemies = FindObjectsOfType<Enemy>().Length;
         enemiesInitialized++;
-        if (enemiesInitialized >= numEnemies)
-        {
-            Debug.Log("set door");
+        if (enemiesInitialized >= numEnemies)                    
             Door.ResetDoorCounter();
-        }
     }    
     
 
