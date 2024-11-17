@@ -35,7 +35,7 @@ public class Player : Character
     private int lassoLockCooldown;
     private int maxLassoLockCooldown;
     private float gravityAccel = -13f;
-    private float lassoForceMultiplier = 1.3f;
+    private float lassoForceMultiplier = 25f;
 
     // these need to be static so the values persist when scene reloads
     public static int roomNum;    
@@ -354,7 +354,8 @@ public class Player : Character
         Vector3 velocity = velocityY + velocityXZ;
 
         //Debug.Log(velocity);
-        return velocity;
+        //normalize it if you want force to be independent of distance
+        return velocity.normalized;
     }
 
     public void lassoLaunch(Vector3 targetPosition, float height){

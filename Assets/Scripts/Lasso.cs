@@ -55,12 +55,12 @@ public class Lasso : MonoBehaviour
             float grapplePointRelativeYPosition = grapplePoint.y - Player.player.playerFeetPosition();
             float highestPointOnArcTrajectory = grapplePointRelativeYPosition + lassoYOffset;
 
-            /*
+            
             if(grapplePointRelativeYPosition < 0)
             {
                 highestPointOnArcTrajectory = overshootYAxis;
             }
-            */
+            
 
             Player.player.lassoLaunch(grapplePoint, highestPointOnArcTrajectory);
             lineRenderer.positionCount = 2;
