@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+// all functions and many variables will be static as all doors move in sync
 public class Door : MonoBehaviour
 {
     public static bool movingUp = false;
@@ -33,7 +34,7 @@ public class Door : MonoBehaviour
         loweredPos = transform.position;
         raisedPos = transform.position;
         raisedPos.y += raiseHeight;        
-    }
+    }    
 
     // a function isn't required to access these variables, but it is more readable
     public static void RaiseDoors()
@@ -48,17 +49,31 @@ public class Door : MonoBehaviour
         movingDown = true;                    
     }
 
-    public static void UpdateDoorCounter(int enemiesAlive)
+    // reset door counter is used for starting/entering a room    
+    public static void ResetDoorCounter()
+    {
+        // enemiesInRoom should already be 0, but just in case
+        Enemy.enemiesInRoom = 0;
+        foreach (Enemy enemy in FindObjectsOfType<Enemy>())
+        {
+            if (enemy.roomNum == Player.roomNum)
+                Enemy.enemiesInRoom++;            
+        }
+        Door.SetDoorCounter(Enemy.enemiesInRoom);
+    }
+    
+    // set door counter is for directly setting counter
+    public static void SetDoorCounter(int enemiesInRoom)
     {        
         GameObject[] doors = GameObject.FindGameObjectsWithTag("DOOR");
         foreach (GameObject door in doors)
         {
-            door.transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = enemiesAlive.ToString();
+            door.transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = enemiesInRoom.ToString();
         }     
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {                
         if (movingUp)
         {

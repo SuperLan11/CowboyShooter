@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3941096742970405672}
   - component: {fileID: 7949107735722179822}
   m_Layer: 0
-  m_Name: EnemyConter
+  m_Name: EnemyCounter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -455,8 +455,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raiseHeight: 4
-  raiseAccel: 0.005
-  lowerAccel: 0.1
+  raiseAccel: 0.02
+  lowerAccel: 0.3
 --- !u!54 &2340883792459835414
 Rigidbody:
   m_ObjectHideFlags: 0
