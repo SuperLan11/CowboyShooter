@@ -11,14 +11,16 @@ public class EndDoor : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collider)
     {
-        if (collision.gameObject.tag == "PLAYER")
+        if (collider.gameObject.name == "Player")
         {
             int curSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            Debug.Log("curSceneIndex: " + curSceneIndex);
+            Debug.Log("num build scenes: " + SceneManager.sceneCountInBuildSettings);
             string nextLevel = SceneManager.GetSceneByBuildIndex(curSceneIndex + 1).name;
-            Debug.Log("loading scene");
-            SceneManager.LoadScene(nextLevel);            
+            Debug.Log("nextLevel: " + nextLevel);
+            SceneManager.LoadScene(nextLevel);
         }
 
     }
