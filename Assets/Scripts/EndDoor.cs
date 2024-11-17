@@ -16,10 +16,12 @@ public class EndDoor : MonoBehaviour
         if (collider.gameObject.name == "Player")
         {
             int curSceneIndex = SceneManager.GetActiveScene().buildIndex;
-            Debug.Log("curSceneIndex: " + curSceneIndex);
+            /*Debug.Log("curSceneIndex: " + curSceneIndex);
             Debug.Log("num build scenes: " + SceneManager.sceneCountInBuildSettings);
             Scene nextLevel = SceneManager.GetSceneByBuildIndex(curSceneIndex + 1);                        
-            SceneManager.SetActiveScene(nextLevel);
+            SceneManager.SetActiveScene(nextLevel);*/
+
+            SceneManager.LoadScene(curSceneIndex + 1);
         }
 
     }

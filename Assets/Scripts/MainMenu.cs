@@ -12,6 +12,12 @@ public class MainMenu : MonoBehaviour
 {
     public GameObject mainPanel, creditsPanel, directionsPanel;
 
+    private void Start()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
     public void startGamePressed(){
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentSceneIndex + 1);
