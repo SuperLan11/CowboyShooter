@@ -28,13 +28,17 @@ public class Player : Character
 
     private bool tryingToJump;
     private bool inJumpCooldown = false;
+    private bool inLassoLock = false;
     public float jumpStrength = 7f;
     private int jumpCooldown;
     private int maxJumpCooldown;
+    private int lassoLockCooldown;
+    private int maxLassoLockCooldown;
     private float gravityAccel = -13f;
+    private float lassoForceMultiplier = 1.3f;
 
     // these need to be static so the values persist when scene reloads
-    public static int roomNum = 1;
+    public static int roomNum;    
     public static Vector3 respawnPos;
     public static bool hasCheckpoint = false;
 
@@ -85,7 +89,9 @@ public class Player : Character
         // when player dies and scene reloads
         // when more scenes are used, if scene loading is different from current scene, set hasCheckpoint to false
         if (hasCheckpoint)
-            transform.position = respawnPos;        
+            transform.position = respawnPos;
+
+        roomNum = 1;
 
         // override default gravity (-9.81) to desired gravity
         Physics.gravity = new Vector3(0, gravityAccel, 0);
@@ -104,12 +110,8 @@ public class Player : Character
         rigidbody = GetComponent<Rigidbody>();   
 
         jumpCooldown = maxJumpCooldown = 2;
+        lassoLockCooldown = maxLassoLockCooldown = 5;
     }    
-
-    protected void Lasso()
-    {
-        
-    }
 
     private void Awake()
     {
@@ -141,7 +143,7 @@ public class Player : Character
         if (gunSfx != null)
             gunSfx.Play();
 
-        Debug.Log("shot enemy");
+        //Debug.Log("shot enemy");
         enemy.GetComponent<Enemy>().TakeDamage(1);
     }
 
@@ -173,7 +175,7 @@ public class Player : Character
             }
             catch
             {
-                Debug.Log("Did not shoot at anything!");
+                //Debug.Log("Did not shoot at anything!");
             }
         }
     }
@@ -187,11 +189,14 @@ public class Player : Character
             if (valid)
             {
                 player.currentMovementState = movementState.SWINGING;
+                lassoLockCooldown = maxLassoLockCooldown;
+                inLassoLock = true;
                 lassoSfx.Play();
             }
         }
         else if (context.canceled)
         {
+            //Debug.Log("lasso is being canceled");
             //prevents player from being in air state after just tapping RMB
             if (player.currentMovementState != movementState.GROUND)
             {
@@ -220,7 +225,7 @@ public class Player : Character
         bool hitFeet, onFloor, hitWall, gotTiming;
         for (int i = 0; i < collision.contactCount; i++)
         {
-            hitFeet = collision.GetContact(i).otherCollider.bounds.max.y < GetComponent<BoxCollider>().bounds.min.y + 0.05f;
+            hitFeet = collision.GetContact(i).otherCollider.bounds.max.y < playerFeetPosition();
             onFloor = collision.GetContact(i).otherCollider.gameObject.tag == "FLOOR";
             hitWall = collision.GetContact(i).otherCollider.gameObject.tag == "WALL";
             gotTiming = timeSinceJump > 0f && timeSinceJump < perfectJumpWindow;
@@ -232,7 +237,7 @@ public class Player : Character
                 Vector3 curRot = transform.eulerAngles;                
                 float wallRotY = collision.GetContact(i).otherCollider.transform.eulerAngles.y;
                 yRotNormal = curRot.y + 2 * (wallRotY + 90 - curRot.y);
-                Debug.Log("normal: " + yRotNormal);                
+                //Debug.Log("normal: " + yRotNormal);                
                 if (yRotNormal < 0)
                     yRotNormal += 360f;
                 return;
@@ -243,7 +248,7 @@ public class Player : Character
             // allow jumping on top of walls. this takes precedence over wall jump checking
             if (hitFeet && (onFloor || hitWall))
             {
-                Debug.Log("set to GROUND state");
+                //Debug.Log("set to GROUND state");
                 lockedToWall = false;
                 currentMovementState = movementState.GROUND;
                 // without break, movement state is determined by last contact
@@ -251,7 +256,7 @@ public class Player : Character
             }
             if (hitWall && rigidbody.velocity.y < wallSlideThreshold && !isGrounded())
             {
-                Debug.Log("set to WALL state");
+                //Debug.Log("set to WALL state");
                 currentMovementState = movementState.SLIDING;
                 lockedToWall = true;
                 break;
@@ -259,6 +264,7 @@ public class Player : Character
         }
     }
 
+    
     private void OnCollisionStay(Collision collision)
     {
         for (int i = 0; i < collision.contactCount; i++)
@@ -282,6 +288,7 @@ public class Player : Character
             }
         }
     }
+    
 
     private void OnCollisionExit(Collision collision)
     {
@@ -332,19 +339,77 @@ public class Player : Character
             Death();
     }
 
+    //courtesy of internet physics/game dev guru. Calculates force needed to launch player towards hook
+    //if needed, we can tweak this so that distance is not a factor or is less of a factor
+    public Vector3 calculateLassoForce(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight)
+    {
+        float gravity = Physics.gravity.y;
+        float displacementY = endPoint.y - startPoint.y;
+        Vector3 displacementXZ = new Vector3(endPoint.x - startPoint.x, 0f, endPoint.z - startPoint.z);
+
+        Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * trajectoryHeight);
+        Vector3 velocityXZ = displacementXZ / (Mathf.Sqrt(-2 * trajectoryHeight / gravity) 
+            + Mathf.Sqrt(2 * (displacementY - trajectoryHeight) / gravity));
+
+        Vector3 velocity = velocityY + velocityXZ;
+
+        //Debug.Log(velocity);
+        return velocity;
+    }
+
+    public void lassoLaunch(Vector3 targetPosition, float height){
+        rigidbody.velocity = calculateLassoForce(transform.position, targetPosition, height) * lassoForceMultiplier;
+    }
+
+    public float playerFeetPosition(){
+        return GetComponent<BoxCollider>().bounds.min.y + 0.05f;
+    }
+
     void FixedUpdate()
     {
-        //Debug.Log("State: " + currentMovementState);        
+        Debug.Log("State: " + currentMovementState);        
 
         //forces camera to look straight as you're opening up scene
         if (Time.timeSinceLevelLoad < 0.1f)
-            return;               
+            return;        
+
+        //guarantees lasso state won't be overwritten
+        if (inLassoLock)
+        {
+            currentMovementState = movementState.SWINGING;
+
+            if (lassoLockCooldown > 0)
+            {
+                lassoLockCooldown--;
+            }
+            else
+            {
+                lassoLockCooldown = maxLassoLockCooldown;
+                inLassoLock = false;
+            }
+        }       
 
         if (currentMovementState == movementState.SLIDING)
         {
             if(wallSlideSfx != null && !wallSlideSfx.isPlaying)
                 wallSlideSfx.Play();
             rigidbody.velocity = new Vector3(0, slideVel, 0);
+        }
+        else if (currentMovementState == movementState.SWINGING)
+        {
+            //You cannot move normally when you're swinging.
+            lastMoveInput = Vector2.zero;
+            //return;
+            /*
+            // need to assign y velocity first so it is not overriden
+            Vector3 newVel = new Vector3(0, rigidbody.velocity.y, 0);
+
+
+            newVel += (transform.right * lastMoveInput.x +
+                       transform.forward * lastMoveInput.y) * speed;
+
+            rigidbody.velocity = Vector3.Lerp(rigidbody.velocity, newVel, moveAccel);
+            */
         }
         else
         {

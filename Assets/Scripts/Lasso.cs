@@ -1,6 +1,6 @@
 /*
 @Authors - Patrick
-@Description - Lasso functionality
+@Description - Lasso functionality. New version with grapple hook functionality rather than rope funcitonality.
 */
 
 using System;
@@ -16,10 +16,11 @@ public class Lasso : MonoBehaviour
 {
     private LineRenderer lineRenderer;
     private Vector3 grapplePoint;
-    private SpringJoint joint;
+    //private SpringJoint joint;
     private float lassoMaxRange = 100f;
-
-    private float ropePull = 10f/*4.5f*/, ropeReduceForce = 7f;
+    //currently 0, but if we want the player to grapple OVER an obj we can increase the value
+    float lassoYOffset = 0;
+    float overshootYAxis = 5f;
 
     [SerializeField] private GameObject hook, barrel;
     [SerializeField] private Transform lassoTip;
@@ -46,46 +47,43 @@ public class Lasso : MonoBehaviour
         if (Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, lassoMaxRange)) {
             grapplePoint = hit.point;
 
-            if (!isValidLassoObj(hit.transform.gameObject)){
+            if (!isValidLassoObj(hit.transform.gameObject))
+            {
                 return false;
             }
-            
-            joint = Player.player.gameObject.AddComponent<SpringJoint>();
-            joint.autoConfigureConnectedAnchor = false;
-            joint.connectedAnchor = grapplePoint;
 
-            float lassoDistance = Vector3.Distance(Player.player.transform.position, grapplePoint);
-            joint.maxDistance = lassoDistance * 0.8f;
-            joint.minDistance = lassoDistance * 0.25f;
+            float grapplePointRelativeYPosition = grapplePoint.y - Player.player.playerFeetPosition();
+            float highestPointOnArcTrajectory = grapplePointRelativeYPosition + lassoYOffset;
 
-            joint.spring = ropePull;
-            joint.damper = ropeReduceForce;
-            //!idk that much about rope physics, so we should probably just avoid changing this
-            joint.massScale = 4.5f;
+            /*
+            if(grapplePointRelativeYPosition < 0)
+            {
+                highestPointOnArcTrajectory = overshootYAxis;
+            }
+            */
 
+            Player.player.lassoLaunch(grapplePoint, highestPointOnArcTrajectory);
             lineRenderer.positionCount = 2;
 
             return true;
         }
-        /*
-        Debug.Log("lasso called");
-        Vector3 newScale = lasso.transform.localScale;
-        newScale.y *= 2;
-        lasso.transform.localScale = newScale;*/
+      
         return false;
     }
 
     public void EndLasso()
     {
         lineRenderer.positionCount = 0;
-        Destroy(joint);
+        //Destroy(joint);
     }
 
     public void DrawRope()
     {
+        /*
         if (joint == null){
             return;
         }
+        */
 
         lineRenderer.SetPosition(0, lassoTip.position);
         lineRenderer.SetPosition(1, grapplePoint);
