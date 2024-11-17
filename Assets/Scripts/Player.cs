@@ -34,7 +34,7 @@ public class Player : Character
     private float gravityAccel = -13f;
 
     // these need to be static so the values persist when scene reloads
-    public static int roomNum;    
+    public static int roomNum = 1;
     public static Vector3 respawnPos;
     public static bool hasCheckpoint = false;
 
@@ -85,9 +85,7 @@ public class Player : Character
         // when player dies and scene reloads
         // when more scenes are used, if scene loading is different from current scene, set hasCheckpoint to false
         if (hasCheckpoint)
-            transform.position = respawnPos;
-
-        roomNum = 1;
+            transform.position = respawnPos;        
 
         // override default gravity (-9.81) to desired gravity
         Physics.gravity = new Vector3(0, gravityAccel, 0);
@@ -314,7 +312,7 @@ public class Player : Character
         // reset floorsInitialized so floors can reset offmeshlinks
         Floor.floorsInitialized = 0;
         Enemy.enemiesInitialized = 0;
-        Enemy.enemiesAlive = 0;
+        Enemy.enemiesInRoom = 0;
     }
 
     public override void TakeDamage(int damage)

@@ -731,7 +731,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717967430258306866, guid: b15770ef5d525bf4480576ecb05ead73, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.12
+      value: -0.45
       objectReference: {fileID: 0}
     - target: {fileID: 5717967430258306866, guid: b15770ef5d525bf4480576ecb05ead73, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1873,7 +1873,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 551613829873923819, guid: b71f0c52185c17b49b182e31758c6b67, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.43
+      value: -16.55
       objectReference: {fileID: 0}
     - target: {fileID: 551613829873923819, guid: b71f0c52185c17b49b182e31758c6b67, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1902,6 +1902,10 @@ PrefabInstance:
     - target: {fileID: 551613829873923819, guid: b71f0c52185c17b49b182e31758c6b67, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137613388454942420, guid: b71f0c52185c17b49b182e31758c6b67, type: 3}
+      propertyPath: roomNum
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1137613388454942420, guid: b71f0c52185c17b49b182e31758c6b67, type: 3}
       propertyPath: destination1
@@ -2500,6 +2504,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1137613388454942420, guid: b71f0c52185c17b49b182e31758c6b67, type: 3}
+      propertyPath: roomNum
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137613388454942420, guid: b71f0c52185c17b49b182e31758c6b67, type: 3}
       propertyPath: destination1
       value: 
       objectReference: {fileID: 2139519684}
@@ -2869,6 +2877,7 @@ SceneRoots:
   - {fileID: 445388629}
   - {fileID: 443655149}
   - {fileID: 191412301}
+  - {fileID: 8515018340545713672}
   - {fileID: 499945462}
   - {fileID: 1740342627}
   - {fileID: 545829437}
@@ -2879,6 +2888,5 @@ SceneRoots:
   - {fileID: 1786442804}
   - {fileID: 1794678908}
   - {fileID: 22702509}
-  - {fileID: 8515018340545713672}
   - {fileID: 1268302717}
   - {fileID: 2002567558}

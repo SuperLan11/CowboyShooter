@@ -3,15 +3,11 @@
 @Description - Enemy class. Different enemy prefabs should be able to use the same script
 */
 
-using System.Collections;
 using System.Collections.Generic;
-using Unity.AI;
 using UnityEngine;
 
 using UnityEngine.AI;
-using UnityEngine.Scripting.APIUpdating;
 using Vector3 = UnityEngine.Vector3;
-using TMPro;
 
 public class Enemy : Character
 {
@@ -24,7 +20,12 @@ public class Enemy : Character
     public static float maxJumpDist = 7f;
 
     public static int enemiesInitialized = 0;
-    public static int enemiesAlive = 0;
+    public static int enemiesInRoom = 0;
+    public bool enemyCounted = false;
+
+    // room number is found automatically based on hierarchy, but
+    // it can be manually set if we decide that's better
+    /*[SerializeField] */public int roomNum;
 
     [SerializeField] public float destCooldown;
     [SerializeField] private float maxDestCooldown;
@@ -37,6 +38,11 @@ public class Enemy : Character
 
     void Start()
     {
+        SetRoomNum();
+        // name enemies by their room number.
+        // 0 is here in case of more than 10 rooms and to prevent Contains() errors
+        gameObject.name = "Enemy0" + roomNum;
+
         agent = GetComponent<NavMeshAgent>();
         player = FindObjectOfType<Player>().gameObject;
         playerNear = false;
@@ -52,20 +58,31 @@ public class Enemy : Character
         switchingDest = false;
 
         shootCooldown = 0f;
-        maxShootCooldown = 1f;
-        // this is only here to give feedback for shooting
+        maxShootCooldown = 1f;        
         shootSfx = GetComponent<AudioSource>();
 
-        // change to find enemies in a certain room?
         int numEnemies = FindObjectsOfType<Enemy>().Length;
-        
         enemiesInitialized++;
-        enemiesAlive++;
         if (enemiesInitialized >= numEnemies)
-        {
-            Door.UpdateDoorCounter(enemiesAlive);
-        }
+            Door.ResetDoorCounter();
     }    
+    
+
+    private void SetRoomNum()
+    {
+        roomNum = 1;
+        // GetRootGameObjects returns the objects in scene in the order of the hierarchy
+        // use the order of the hierarchy to determine which room an enemy is in
+        // checkpoints and enemies in the hierarchy should be ordered based on when the player encounters them
+        foreach (GameObject obj in gameObject.scene.GetRootGameObjects())
+        {
+            if (obj.GetComponent<Checkpoint>() != null)
+                roomNum++;
+            else if (obj == this.gameObject)
+                break;
+        }
+        Debug.Log(gameObject.name + " room num is " + roomNum);
+    }
 
     protected override void Shoot(GameObject player)
     {
@@ -117,9 +134,9 @@ public class Enemy : Character
     protected override void Death()
     {
         Destroy(this.gameObject);
-        enemiesAlive--;
-        Door.UpdateDoorCounter(enemiesAlive);
-        if (enemiesAlive <= 0)
+        enemiesInRoom--;
+        Door.SetDoorCounter(enemiesInRoom);
+        if (enemiesInRoom <= 0)
             Door.RaiseDoors();
     }
 
