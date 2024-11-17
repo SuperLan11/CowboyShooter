@@ -489,7 +489,7 @@ MonoBehaviour:
   lassoSfx: {fileID: 4077167196803429224}
   perfectWallJumpSfx: {fileID: 7205744336693387779}
   gunReloadSfx: {fileID: 3357556871480406274}
-  wallSlideSfx: {fileID: 6946099836117882698}
+  wallSlideSfx: {fileID: 0}
   horRotSpeed: 4
   vertRotSpeed: 4
   currentMovementState: 0

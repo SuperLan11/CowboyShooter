@@ -35,7 +35,7 @@ public class Player : Character
     private int lassoLockCooldown;
     private int maxLassoLockCooldown;
     private float gravityAccel = -13f;
-    private float lassoForceMultiplier = 25f;
+    private float lassoForceMultiplier = 1.3f;
 
     // these need to be static so the values persist when scene reloads
     public static int roomNum;    
@@ -235,11 +235,10 @@ public class Player : Character
             {
                 kickStarted = true;
                 Vector3 curRot = transform.eulerAngles;                
-                float wallRotY = collision.GetContact(i).otherCollider.transform.eulerAngles.y;
+                float wallRotY = collision.GetContact(i).otherCollider.transform.eulerAngles.y;                
                 yRotNormal = curRot.y + 2 * (wallRotY + 90 - curRot.y);
-                //Debug.Log("normal: " + yRotNormal);                
-                if (yRotNormal < 0)
-                    yRotNormal += 360f;
+                if (yRotNormal < 0f)
+                    yRotNormal += 360f;                                                             
                 return;
             }
             if (kickLerping)
@@ -354,15 +353,16 @@ public class Player : Character
         Vector3 velocity = velocityY + velocityXZ;
 
         //Debug.Log(velocity);
-        //normalize it if you want force to be independent of distance
-        return velocity.normalized;
+        return velocity;
     }
 
-    public void lassoLaunch(Vector3 targetPosition, float height){
+    public void lassoLaunch(Vector3 targetPosition, float height)
+    {
         rigidbody.velocity = calculateLassoForce(transform.position, targetPosition, height) * lassoForceMultiplier;
     }
 
-    public float playerFeetPosition(){
+    public float playerFeetPosition()
+    {
         return GetComponent<BoxCollider>().bounds.min.y + 0.05f;
     }
 
@@ -427,11 +427,13 @@ public class Player : Character
         float deltaMouseY = Input.GetAxis("Mouse Y");
                      
         // kick rotation momentarily overrides normal rotation
+        // consider using a time variable to unstuck for emergencies
         if (kickLerping)
         {            
             Vector3 newRot = transform.eulerAngles;            
-            newRot.y = yRotNormal;            
-            transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, newRot, kickLerpSpeed);
+            // LerpAngle handles the wrap around from 360 -> 0 degrees
+            newRot.y = Mathf.LerpAngle(newRot.y, yRotNormal, kickLerpSpeed);
+            transform.eulerAngles = newRot;
 
             if (yRotNormal < transform.eulerAngles.y && transform.eulerAngles.y < yRotNormal + kickStopThreshold)            
                 kickLerping = false;
@@ -467,7 +469,7 @@ public class Player : Character
         {
             perfectWallJumpSfx.Play();            
 
-            rigidbody.velocity += new Vector3(0, 1.2f * jumpStrength, 0);                                    
+            rigidbody.velocity += new Vector3(0, 1.2f * jumpStrength, 0);
 
             kickStarted = false;
             tryingToJump = false;

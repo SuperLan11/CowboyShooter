@@ -48,7 +48,7 @@ public class Door : MonoBehaviour
         movingDown = true;                    
     }
 
-    // reset door counter is used for starting/entering a room    
+    // reset door counter is used for starting/entering a room
     public static void ResetDoorCounter()
     {
         // enemiesInRoom should already be 0, but just in case
