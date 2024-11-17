@@ -18,13 +18,16 @@ public class MainMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
     }
 
-    public void startGamePressed(){
+    public void startGamePressed()
+    {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentSceneIndex + 1);
     }
 
-    public void switchMenus(int menuState){
-        switch(menuState){
+    public void switchMenus(int menuState)
+    {
+        switch(menuState)
+        {
             case 0:
                 mainPanel.SetActive(true);
                 creditsPanel.SetActive(false);
