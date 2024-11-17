@@ -80,8 +80,7 @@ public class Enemy : Character
                 roomNum++;
             else if (obj == this.gameObject)
                 break;
-        }
-        Debug.Log(gameObject.name + " room num is " + roomNum);
+        }        
     }
 
     protected override void Shoot(GameObject player)
