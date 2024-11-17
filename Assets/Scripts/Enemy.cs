@@ -142,6 +142,11 @@ public class Enemy : Character
             Door.RaiseDoors();
     }
 
+    public int GetHealth()
+    {
+        return health;
+    }
+
     public override void TakeDamage(int damage)
     {
         health -= damage;

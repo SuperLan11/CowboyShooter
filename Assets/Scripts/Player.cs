@@ -224,12 +224,14 @@ public class Player : Character
     
     private void OnCollisionEnter(Collision collision)
     {       
-        bool hitFeet, onFloor, hitWall, gotTiming;
+        bool hitFeet, onFloor, hitWall, hitJacobsWall, gotTiming;
         for (int i = 0; i < collision.contactCount; i++)
         {
             hitFeet = collision.GetContact(i).otherCollider.bounds.max.y < playerFeetPosition();
             onFloor = collision.GetContact(i).otherCollider.gameObject.tag == "FLOOR";
             hitWall = collision.GetContact(i).otherCollider.gameObject.tag == "WALL";
+            hitJacobsWall = collision.GetContact(i).otherCollider.gameObject.tag == "WALL" && 
+                collision.GetContact(i).otherCollider.gameObject.name.Contains("Model");
             gotTiming = timeSinceJump > 0f && timeSinceJump < perfectJumpWindow;
 
             // ignore wall collision during kick and kick lerp
@@ -237,13 +239,24 @@ public class Player : Character
             if (hitWall && gotTiming && !hitFeet && wallJumpsLeft > 0)
             {
                 kickStarted = true;
-                wallJumpsLeft--;
-                Debug.Log("kick started");
+                wallJumpsLeft--;                
                 Vector3 curRot = transform.eulerAngles;                
-                float wallRotY = collision.GetContact(i).otherCollider.transform.eulerAngles.y;                
+                float wallRotY = collision.GetContact(i).otherCollider.transform.eulerAngles.y;
+                
+                if (hitJacobsWall)
+                {
+                    wallRotY += 90;
+                    if(wallRotY >= 360)
+                        wallRotY -= 180;
+                }
+
                 yRotNormal = curRot.y + 2 * (wallRotY + 90 - curRot.y);
+                // account for if y normal is out of bounds for eulerAngles
                 if (yRotNormal < 0f)
                     yRotNormal += 360f;
+
+                if (yRotNormal >= 360f)
+                    yRotNormal -= 360f;                
                 return;
             }
             if (kickLerping)
@@ -439,11 +452,13 @@ public class Player : Character
         // consider using a time variable to unstuck for emergencies
         if (kickLerping)
         {            
-            Vector3 newRot = transform.eulerAngles;            
+            Vector3 newRot = transform.eulerAngles;
             // LerpAngle handles the wrap around from 360 -> 0 degrees
             newRot.y = Mathf.LerpAngle(newRot.y, yRotNormal, kickLerpSpeed);
-            transform.eulerAngles = newRot;
+            transform.eulerAngles = newRot;            
 
+            // what about 360?
+            //if(transform.eulerAngles.y > )
             if (yRotNormal < transform.eulerAngles.y && transform.eulerAngles.y < yRotNormal + kickStopThreshold)            
                 kickLerping = false;
             else if (yRotNormal > transform.eulerAngles.y && transform.eulerAngles.y > yRotNormal - kickStopThreshold)            
@@ -520,9 +535,7 @@ public class Player : Character
         else if (tryingToJump)
         {
             timeSinceJump += Time.deltaTime;
-        }
-
-        Debug.Log("wall jumps left: " + wallJumpsLeft);
+        }        
 
         shootCooldown += Time.deltaTime;
 

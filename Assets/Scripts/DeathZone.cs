@@ -21,6 +21,12 @@ public class DeathZone : MonoBehaviour
             int playerHp = Player.player.GetHealth();
             Player.player.TakeDamage(playerHp);
         }
+        // in case enemy somehow falls off edge (idk how)
+        else if(other.gameObject.name.Contains("Enemy"))
+        {
+            int enemyHp = other.GetComponent<Enemy>().GetHealth();
+            other.GetComponent<Enemy>().TakeDamage(enemyHp);
+        }
     }
 
     // Update is called once per frame
