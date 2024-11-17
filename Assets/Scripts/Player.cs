@@ -238,6 +238,7 @@ public class Player : Character
             {
                 kickStarted = true;
                 wallJumpsLeft--;
+                Debug.Log("kick started");
                 Vector3 curRot = transform.eulerAngles;                
                 float wallRotY = collision.GetContact(i).otherCollider.transform.eulerAngles.y;                
                 yRotNormal = curRot.y + 2 * (wallRotY + 90 - curRot.y);
@@ -265,7 +266,6 @@ public class Player : Character
             }
         }
     }
-
     
     private void OnCollisionStay(Collision collision)
     {
@@ -314,6 +314,11 @@ public class Player : Character
     public bool isOnWall()
     {
         return (currentMovementState == movementState.SLIDING);
+    }
+
+    public int GetHealth()
+    {
+        return health;
     }
 
     protected override void Death()
