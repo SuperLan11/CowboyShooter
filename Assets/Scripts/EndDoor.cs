@@ -21,15 +21,15 @@ public class EndDoor : MonoBehaviour
         }
     }
 
+    // while fadeTime is customizable, the fade animation length will not change unless you change it manually
     private IEnumerator FadeToNewScene(int buildIndex, float fadeTime)
-    {
-        fadeAnim.SetTrigger("Fade");
-        //fadeAnim.Play("FadeOut");
+    {        
+        fadeAnim.Play("FadeOut");
         yield return new WaitForSecondsRealtime(fadeTime);
         SceneManager.LoadScene(buildIndex);
         // The animator will automatically play a fade in animation when the scene loads
         // as long as the HUD prefab is in that scene.
-        // To adjust the fade in animation timing, change the FadeIn clip
+        // To adjust the fade in/out animation timing, change the FadeIn/FadeOut clips
     }
 
     // Update is called once per frame
