@@ -18,9 +18,8 @@ public class EndDoor : MonoBehaviour
             int curSceneIndex = SceneManager.GetActiveScene().buildIndex;
             Debug.Log("curSceneIndex: " + curSceneIndex);
             Debug.Log("num build scenes: " + SceneManager.sceneCountInBuildSettings);
-            string nextLevel = SceneManager.GetSceneByBuildIndex(curSceneIndex + 1).name;
-            Debug.Log("nextLevel: " + nextLevel);
-            SceneManager.LoadScene(nextLevel);
+            Scene nextLevel = SceneManager.GetSceneByBuildIndex(curSceneIndex + 1);                        
+            SceneManager.SetActiveScene(nextLevel);
         }
 
     }
