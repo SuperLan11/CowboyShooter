@@ -46,6 +46,8 @@ public class Player : Character
     // the max y velocity the player can have and still stick to a wall
     [SerializeField] private float wallSlideThreshold = 2f;
     private bool lockedToWall = false;
+    private int wallJumpsLeft = 1;
+    private int maxWallJumps = 1;
 
     [SerializeField] private float timeSinceJump = 0f;
     [SerializeField] private float perfectJumpWindow = 0.15f;
@@ -231,14 +233,16 @@ public class Player : Character
             gotTiming = timeSinceJump > 0f && timeSinceJump < perfectJumpWindow;
 
             // ignore wall collision during kick and kick lerp
-            if (hitWall && gotTiming && !hitFeet)
+            // perfect wall jump counts towards wall jump counter
+            if (hitWall && gotTiming && !hitFeet && wallJumpsLeft > 0)
             {
                 kickStarted = true;
+                wallJumpsLeft--;
                 Vector3 curRot = transform.eulerAngles;                
                 float wallRotY = collision.GetContact(i).otherCollider.transform.eulerAngles.y;                
                 yRotNormal = curRot.y + 2 * (wallRotY + 90 - curRot.y);
                 if (yRotNormal < 0f)
-                    yRotNormal += 360f;                                                             
+                    yRotNormal += 360f;
                 return;
             }
             if (kickLerping)
@@ -246,16 +250,15 @@ public class Player : Character
                                    
             // allow jumping on top of walls. this takes precedence over wall jump checking
             if (hitFeet && (onFloor || hitWall))
-            {
-                //Debug.Log("set to GROUND state");
+            {                
                 lockedToWall = false;
-                currentMovementState = movementState.GROUND;
-                // without break, movement state is determined by last contact
+                currentMovementState = movementState.GROUND;                
+                wallJumpsLeft = maxWallJumps;
                 break;
             }
-            if (hitWall && rigidbody.velocity.y < wallSlideThreshold && !isGrounded())
+            if (hitWall && rigidbody.velocity.y < wallSlideThreshold && !isGrounded() && wallJumpsLeft > 0)
             {
-                //Debug.Log("set to WALL state");
+                //Debug.Log("slide state");
                 currentMovementState = movementState.SLIDING;
                 lockedToWall = true;
                 break;
@@ -276,10 +279,11 @@ public class Player : Character
             {
                 currentMovementState = movementState.GROUND;
                 lockedToWall = false;
+                wallJumpsLeft = maxWallJumps;
                 break;
             }
-            else if (touchingWall && rigidbody.velocity.y < wallSlideThreshold && !isGrounded())
-            {
+            else if (touchingWall && rigidbody.velocity.y < wallSlideThreshold && !isGrounded() && wallJumpsLeft > 0)
+            {                
                 currentMovementState = movementState.SLIDING;
                 lockedToWall = true;
                 rigidbody.velocity = new Vector3(0, slideVel, 0);
@@ -298,7 +302,7 @@ public class Player : Character
 
         if (isFloor || standingOnWall)
             currentMovementState = movementState.AIR;
-        else if (isWall && !isGrounded() && !lockedToWall)        
+        else if (isWall && !isGrounded() && !lockedToWall)
             currentMovementState = movementState.AIR;
     } 
 
@@ -368,7 +372,7 @@ public class Player : Character
 
     void FixedUpdate()
     {
-        Debug.Log("State: " + currentMovementState);        
+        //Debug.Log("State: " + currentMovementState);        
 
         //forces camera to look straight as you're opening up scene
         if (Time.timeSinceLevelLoad < 0.1f)
@@ -504,6 +508,7 @@ public class Player : Character
             lockedToWall = false;
             currentMovementState = movementState.AIR;
             rigidbody.velocity += new Vector3(0, jumpStrength, 0);
+            wallJumpsLeft--;
             if (wallSlideSfx != null && wallSlideSfx.isPlaying)
                 wallSlideSfx.Stop();
         }
@@ -511,6 +516,8 @@ public class Player : Character
         {
             timeSinceJump += Time.deltaTime;
         }
+
+        Debug.Log("wall jumps left: " + wallJumpsLeft);
 
         shootCooldown += Time.deltaTime;
 
