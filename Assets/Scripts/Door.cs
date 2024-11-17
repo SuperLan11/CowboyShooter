@@ -6,8 +6,7 @@ using TMPro;
 // all functions and many variables will be static as all doors move in sync
 public class Door : MonoBehaviour
 {
-    public static bool movingUp = false;
-    public static bool prevMovingUp = false;
+    public static bool movingUp = false;    
     public static bool movingDown = false;
 
     private Vector3 raisedPos;    
@@ -55,10 +54,10 @@ public class Door : MonoBehaviour
         // enemiesInRoom should already be 0, but just in case
         Enemy.enemiesInRoom = 0;
         foreach (Enemy enemy in FindObjectsOfType<Enemy>())
-        {
+        {            
             if (enemy.roomNum == Player.roomNum)
                 Enemy.enemiesInRoom++;            
-        }
+        }        
         Door.SetDoorCounter(Enemy.enemiesInRoom);
     }
     
