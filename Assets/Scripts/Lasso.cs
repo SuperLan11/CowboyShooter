@@ -18,8 +18,9 @@ public class Lasso : MonoBehaviour
     private Vector3 grapplePoint;
     //private SpringJoint joint;
     private float lassoMaxRange = 100f;
-    //currently 0, but if we want the player to grapple OVER an obj we can increase the value
-    float lassoYOffset = 0;
+    
+    //!Make sure you keep track of this cause it's in the editor;
+    [SerializeField] private float lassoYOffset = 0.25f;
     float overshootYAxis = 5f;
 
     [SerializeField] private GameObject hook, barrel;
@@ -53,7 +54,7 @@ public class Lasso : MonoBehaviour
             }
 
             float grapplePointRelativeYPosition = grapplePoint.y - Player.player.playerFeetPosition();
-            float highestPointOnArcTrajectory = grapplePointRelativeYPosition + lassoYOffset;
+            float highestPointOnArcTrajectory = grapplePointRelativeYPosition - lassoYOffset;
 
             
             if(grapplePointRelativeYPosition < 0)
