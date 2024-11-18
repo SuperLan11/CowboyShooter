@@ -15,6 +15,7 @@ using UnityEngine.SceneManagement;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 using UnityEngine.UI;
+using JetBrains.Rider.Unity.Editor;
 
 public class Player : Character
 {
@@ -22,8 +23,7 @@ public class Player : Character
     public static Player player;
 
     private Vector2 lastMoveInput = Vector2.zero;
-    private Vector3 maxSpeed = new Vector3(10f, 10f, 10f);
-    public float acceleration = 10f;
+    //!Must be between 0 and 1f. Determines how fast player accelerates towards max speed
     private float moveAccel = 0.4f;
 
     private bool tryingToJump;
@@ -36,7 +36,7 @@ public class Player : Character
     private bool inLassoLock = false;
     private int lassoLockCooldown;
     private int maxLassoLockCooldown;    
-    private float lassoForceMultiplier = 1.3f;
+    private float lassoForceMultiplier = 15f;
 
     // these need to be static so the values persist when scene reloads
     public static int roomNum;    
@@ -82,7 +82,8 @@ public class Player : Character
         AIR,
         SWINGING,
         HANGING,
-        SLIDING
+        SLIDING,
+        FLYING,
     };
 
     public movementState currentMovementState;
@@ -185,7 +186,7 @@ public class Player : Character
 
     public void LassoActivated(InputAction.CallbackContext context)
     {        
-        if (context.started)
+        if (context.started || context.performed)
         {
             bool valid = lasso.GetComponent<Lasso>().StartLasso();
 
@@ -203,7 +204,7 @@ public class Player : Character
             //prevents player from being in air state after just tapping RMB
             if (player.currentMovementState != movementState.GROUND)
             {
-                player.currentMovementState = movementState.AIR;
+                player.currentMovementState = movementState.FLYING;
             }
             
             lasso.GetComponent<Lasso>().EndLasso();
@@ -275,6 +276,7 @@ public class Player : Character
             }
             if (hitWall && rigidbody.velocity.y < wallSlideThreshold && !isGrounded() && wallJumpsLeft > 0)
             {                
+                //Debug.Log("Sliding on wall");
                 currentMovementState = movementState.SLIDING;
                 lockedToWall = true;
                 break;
@@ -300,6 +302,7 @@ public class Player : Character
             }
             else if (touchingWall && rigidbody.velocity.y < wallSlideThreshold && !isGrounded() && wallJumpsLeft > 0)
             {                
+                //Debug.Log("Continuing to slide on wall");
                 currentMovementState = movementState.SLIDING;
                 lockedToWall = true;
                 break;
@@ -376,8 +379,8 @@ public class Player : Character
 
         Vector3 velocity = velocityY + velocityXZ;
 
-        //Debug.Log(velocity);
-        return velocity;
+        // Debug.Log(velocity);
+        return velocity.normalized;
     }
 
     public void lassoLaunch(Vector3 targetPosition, float height)
@@ -390,9 +393,12 @@ public class Player : Character
         return GetComponent<BoxCollider>().bounds.min.y + 0.05f;
     }
 
+    //Dragon's Den of the Movement Code
     void FixedUpdate()
     {
-        Debug.Log("State: " + currentMovementState);        
+        //Debug.Log("State: " + currentMovementState);
+        //Debug.Log(rigidbody.velocity.magnitude);
+        //Debug.Log(wallJumpsLeft);        
 
         //forces camera to look straight as you're opening up scene
         if (Time.timeSinceLevelLoad < 0.1f)
@@ -420,24 +426,11 @@ public class Player : Character
                 wallSlideSfx.Play();
             rigidbody.velocity = new Vector3(0, slideVel, 0);
         }
-        else if (currentMovementState == movementState.SWINGING)
+        else if (currentMovementState == movementState.GROUND || currentMovementState == movementState.AIR)
         {
-            //You cannot move normally when you're swinging.
-            lastMoveInput = Vector2.zero;
-            //return;
-            /*
-            // need to assign y velocity first so it is not overriden
-            Vector3 newVel = new Vector3(0, rigidbody.velocity.y, 0);
+            //!Acceleration based movement. The only things you should change if you want to change movement are
+            //!speed and moveAccel 
 
-
-            newVel += (transform.right * lastMoveInput.x +
-                       transform.forward * lastMoveInput.y) * speed;
-
-            rigidbody.velocity = Vector3.Lerp(rigidbody.velocity, newVel, moveAccel);
-            */
-        }
-        else
-        {
             // need to assign y velocity first so it is not overriden
             Vector3 newVel = new Vector3(0, rigidbody.velocity.y, 0);
             newVel += (transform.right * lastMoveInput.x +
