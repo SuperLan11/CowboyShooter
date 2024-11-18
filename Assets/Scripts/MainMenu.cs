@@ -11,11 +11,14 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public GameObject mainPanel, creditsPanel, directionsPanel;
+    private Animator fadeAnim;
 
     private void Start()
     {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+
+        fadeAnim = GameObject.Find("FadePanel").GetComponent<Animator>();
     }
 
     public void startGamePressed()

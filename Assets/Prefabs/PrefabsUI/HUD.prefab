@@ -354,6 +354,7 @@ GameObject:
   - component: {fileID: 4998209829971879214}
   - component: {fileID: 7748985498820567224}
   - component: {fileID: 8539230980867458366}
+  - component: {fileID: 2987591564544961038}
   m_Layer: 0
   m_Name: FadePanel
   m_TagString: Untagged
@@ -451,6 +452,18 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!114 &2987591564544961038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3358132439376337856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e01e753c0dc0354e8d31479ffe486cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6006501281774347785
 GameObject:
   m_ObjectHideFlags: 0
