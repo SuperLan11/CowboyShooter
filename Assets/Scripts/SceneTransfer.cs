@@ -9,13 +9,13 @@ public class SceneTransfer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        fadeAnim = GetComponent<Animator>();
+        fadeAnim = GetComponent<Animator>();        
     }
 
     // while fadeTime is customizable, the fade animation length will not change unless you change it manually
     public IEnumerator FadeToNewScene(int buildIndex, float fadeTime)
-    {
-        fadeAnim.Play("FadeOut");                    
+    {        
+        fadeAnim.Play("FadeOut");        
         yield return new WaitForSecondsRealtime(fadeTime);        
         SceneManager.LoadScene(buildIndex);
         // The animator will automatically play a fade in animation when the scene loads
