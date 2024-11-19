@@ -21,6 +21,7 @@ public class Player : Character
     //singleton obj that's accessible to all objects
     public static Player player;
 
+    [SerializeField] protected float speed;
     private Vector2 lastMoveInput = Vector2.zero;
     private Vector3 maxSpeed = new Vector3(10f, 10f, 10f);
     public float acceleration = 10f;
@@ -32,6 +33,9 @@ public class Player : Character
     [SerializeField] private float gravityAccel = -13f;
     private int jumpCooldown;
     private int maxJumpCooldown;
+
+    [SerializeField] public float maxShootCooldown;
+    [SerializeField] public float shootCooldown;
 
     private bool inLassoLock = false;
     private int lassoLockCooldown;
@@ -141,7 +145,7 @@ public class Player : Character
         }
     }
    
-    protected override void Shoot(GameObject enemy)
+    protected void Shoot(GameObject enemy)
     {
         if (gunSfx != null)
             gunSfx.Play();
@@ -396,7 +400,7 @@ public class Player : Character
 
         //forces camera to look straight as you're opening up scene
         if (Time.timeSinceLevelLoad < 0.1f)
-            return;        
+            return;
 
         //guarantees lasso state won't be overwritten
         if (inLassoLock)
@@ -490,7 +494,7 @@ public class Player : Character
             camRot.z = 0;
             cam.transform.eulerAngles = camRot;
         }
-        
+                
         if (kickStarted)
         {
             perfectWallJumpSfx.Play();            

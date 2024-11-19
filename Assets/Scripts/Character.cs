@@ -12,22 +12,11 @@ using UnityEngine.UI;
 public abstract class Character : MonoBehaviour
 {
     //serialize needed to customize prefabs
-    [SerializeField] protected int health;
-    // in seconds
-    [SerializeField] public float maxShootCooldown;    
-    [SerializeField] public float shootCooldown;
-    [SerializeField] protected float speed;
-
+    [SerializeField] protected int health;            
     protected AudioSource shootSfx;
 
     protected Weapon weapon;
-    protected Rigidbody rigidbody;
-    
-
-    virtual protected void Shoot(GameObject obj)
-    {
-        Debug.LogWarning("You better implement the Shoot() method, or you'll be in a heap of trouble, partner.");
-    }
+    protected Rigidbody rigidbody;    
 
     virtual protected void Death()
     {

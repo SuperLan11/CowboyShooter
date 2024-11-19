@@ -9,33 +9,39 @@ using UnityEngine;
 using UnityEngine.AI;
 using Vector3 = UnityEngine.Vector3;
 
-public class Enemy : Character
+public abstract class Enemy : Character
 {
-    private NavMeshAgent agent;
+    protected NavMeshAgent agent;
 
     // make these Transform since Vector3 can't be dragged in inspector
-    [SerializeField] private Transform destination1;
-    [SerializeField] private Transform destination2;
-    private List<Vector3> destList = new List<Vector3>();
-    public static float maxJumpDist = 7f;
+    [SerializeField] protected Transform destination1;
+    [SerializeField] protected Transform destination2;
+    protected List<Vector3> destList = new List<Vector3>();
+    // assuming all enemies can jump the same distance
+    [SerializeField] public static float maxJumpDist = 7f;
 
     public static int enemiesInitialized = 0;
-    public static int enemiesInRoom = 0;
-    public bool enemyCounted = false;
+    public static int enemiesInRoom = 0;    
+
+    protected float attackCooldown;
+    [SerializeField] protected float maxAttackCooldown;
+    [SerializeField] protected int attackDamage;
 
     // room number is found automatically based on hierarchy, but
     // it can be manually set if we decide that's better
-    /*[SerializeField] */public int roomNum;
+    /*[SerializeField] */
+    public int roomNum;
 
-    [SerializeField] public float destCooldown;
-    [SerializeField] private float maxDestCooldown;
-    [SerializeField] private bool switchingDest;
+    protected float destCooldown;
+    protected float maxDestCooldown;
+    protected bool switchingDest;
 
-    private GameObject player;
-    [SerializeField] private float sightRange;
-    private bool playerNear;
-    private bool playerSighted;
+    protected GameObject player;
+    [SerializeField] protected float sightRange;
+    protected bool playerNear;
+    protected bool playerSighted;
 
+    // all enemies have the same start function
     void Start()
     {
         SetRoomNum();
@@ -46,8 +52,7 @@ public class Enemy : Character
         agent = GetComponent<NavMeshAgent>();
         player = FindObjectOfType<Player>().gameObject;
         playerNear = false;
-        playerSighted = false;
-        sightRange = 5f;        
+        playerSighted = false;             
 
         destList.Add(destination1.position);
         destList.Add(destination2.position);
@@ -57,18 +62,45 @@ public class Enemy : Character
         maxDestCooldown = 0.5f;
         switchingDest = false;
 
-        shootCooldown = 0f;
-        maxShootCooldown = 1f;        
+        attackCooldown = maxAttackCooldown;        
         shootSfx = GetComponent<AudioSource>();
 
         int numEnemies = FindObjectsOfType<Enemy>().Length;
         enemiesInitialized++;
         if (enemiesInitialized >= numEnemies)                    
             Door.ResetDoorCounter();
-    }    
-    
 
-    private void SetRoomNum()
+        PrintAnyNulls();
+    }    
+
+    private void PrintAnyNulls()
+    {
+        // check if any important serialized variables are unset
+        if(health == 0)
+            Debug.LogWarning("health was not set for " + gameObject.name);
+        if (sightRange == 0)
+            Debug.LogWarning("sightRange was not set for " + gameObject.name);
+        if (maxAttackCooldown == 0)
+            Debug.LogWarning("maxAttackCooldown was not set for " + gameObject.name);
+        if (maxJumpDist == 0)
+            Debug.LogWarning("maxJumpDist was not set for " + gameObject.name);
+        if (attackDamage == 0)
+            Debug.LogWarning("attackDamage was not set for " + gameObject.name);
+        if (destination1 == null)
+            Debug.LogWarning("destination1 was not set for " + gameObject.name);
+        if (destination2 == null)
+            Debug.LogWarning("destination2 was not set " + gameObject.name);
+    }    
+
+    protected bool PlayerIsNearby()
+    {
+        if (Vector3.Distance(this.transform.position, player.transform.position) < sightRange)
+            return true;
+        else
+            return false;
+    }    
+
+    protected void SetRoomNum()
     {
         roomNum = 1;
         // GetRootGameObjects returns the objects in scene in the order of the hierarchy
@@ -83,13 +115,7 @@ public class Enemy : Character
         }        
     }
 
-    protected override void Shoot(GameObject player)
-    {
-        player.GetComponent<Player>().TakeDamage(1);
-        shootSfx.Play();
-    }
-
-    public bool PlayerSighted(Vector3 enemyPos)
+    public bool PlayerIsSighted(Vector3 enemyPos)
     {
         RaycastHit hit;
         Vector3 direction = (Camera.main.transform.position - transform.position).normalized;
@@ -103,7 +129,7 @@ public class Enemy : Character
         return false;
     }
 
-    private void FindNewDest(Vector3 destArrived)
+    protected void FindNewDest(Vector3 destArrived)
     {
         List<Vector3> possibleDests = new List<Vector3>();
 
@@ -149,52 +175,5 @@ public class Enemy : Character
         health -= damage;
         if (health == 0)
             Death();
-    }
-
-    void Update()
-    {
-        if (!switchingDest && agent.remainingDistance <= 0.01f)
-        {
-            //Debug.Log("got to dest, find new dest");
-            switchingDest = true;
-            FindNewDest(agent.destination);
-            return;
-        }
-        else if (switchingDest)
-        {
-            destCooldown += Time.deltaTime;
-            if (destCooldown >= maxDestCooldown)
-            {
-                switchingDest = false;
-                destCooldown = 0f;
-            }
-            return;
-        }
-
-        if (Vector3.Distance(this.transform.position, player.transform.position) < sightRange)
-            playerNear = true;
-        else
-            playerNear = false;
-
-        playerSighted = PlayerSighted(transform.position);
-
-        if (playerNear && playerSighted)
-        {
-            //Debug.Log("going to player");
-            agent.destination = player.transform.position;
-
-            if (shootCooldown >= maxShootCooldown)
-            {
-                Shoot(player);
-                shootCooldown = 0f;
-            }
-        }
-        else if (agent.destination == player.transform.position)
-        {
-            //Debug.Log("Find dest other than player");
-            FindNewDest(agent.destination);
-        }
-
-        shootCooldown += Time.deltaTime;
     }
 }
