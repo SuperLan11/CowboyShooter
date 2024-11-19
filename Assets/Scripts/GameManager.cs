@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public static GameManager gameManager;
     
     public int currentLevel;
+    public bool debugMode;
 
     public void Awake()
     {
@@ -25,5 +26,23 @@ public class GameManager : MonoBehaviour
         { 
             gameManager = this; 
         } 
+    }
+
+    //!You MUST change game manager variables here!
+    public void Start()
+    {
+        debugMode = false;
+    }
+
+    public void Update()
+    {
+        if (debugMode)
+        {
+            Enemy[] enemies = GameObject.FindObjectsOfType<Enemy>();
+            foreach (Enemy enemy in enemies)
+            {
+                Destroy(enemy.gameObject);
+            }
+        }
     }
 }
