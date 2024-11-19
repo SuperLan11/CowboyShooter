@@ -28,6 +28,7 @@ public class Player : Character
     private float moveAccel = 0.4f;
 
     private bool tryingToJump;
+    private bool holdingRMB;
     private bool inJumpCooldown = false;    
     public float jumpStrength = 7f;
     [SerializeField] private float gravityAccel = -13f;
@@ -119,6 +120,8 @@ public class Player : Character
 
         jumpCooldown = maxJumpCooldown = 2;
         lassoLockCooldown = maxLassoLockCooldown = 5;
+
+        holdingRMB = false;
     }    
 
     private void Awake()
@@ -190,7 +193,7 @@ public class Player : Character
 
     public void LassoActivated(InputAction.CallbackContext context)
     {        
-        if (context.started || context.performed)
+        if (context.started)
         {
             bool valid = lasso.GetComponent<Lasso>().StartLasso();
 
@@ -202,13 +205,32 @@ public class Player : Character
                 lassoSfx.Play();
             }
         }
+        else if (context.performed){
+            holdingRMB = true;
+
+            if (currentMovementState == movementState.SWINGING){
+               bool valid = lasso.GetComponent<Lasso>().StartLasso();
+
+                if (valid)
+                {
+                    player.currentMovementState = movementState.SWINGING;
+                    lassoLockCooldown = maxLassoLockCooldown;
+                    inLassoLock = true;
+                    lassoSfx.Play();
+                } 
+            }
+        }
         else if (context.canceled)
         {
-            //Debug.Log("lasso is being canceled");
+            holdingRMB = false;
+            
             //prevents player from being in air state after just tapping RMB
-            if (player.currentMovementState != movementState.GROUND)
+            if (!isGrounded() && player.currentMovementState == movementState.SWINGING)
             {
                 player.currentMovementState = movementState.FLYING;
+            }
+            else if (!isGrounded() && player.currentMovementState == movementState.HANGING){
+                player.currentMovementState = movementState.AIR;
             }
             
             lasso.GetComponent<Lasso>().EndLasso();
@@ -280,7 +302,6 @@ public class Player : Character
             }
             if (hitWall && rigidbody.velocity.y < wallSlideThreshold && !isGrounded() && wallJumpsLeft > 0)
             {                
-                //Debug.Log("Sliding on wall");
                 currentMovementState = movementState.SLIDING;
                 lockedToWall = true;
                 break;
@@ -306,7 +327,6 @@ public class Player : Character
             }
             else if (touchingWall && rigidbody.velocity.y < wallSlideThreshold && !isGrounded() && wallJumpsLeft > 0)
             {                
-                //Debug.Log("Continuing to slide on wall");
                 currentMovementState = movementState.SLIDING;
                 lockedToWall = true;
                 break;
@@ -327,6 +347,13 @@ public class Player : Character
         else if (isWall && !isGrounded() && !lockedToWall)
             currentMovementState = movementState.AIR;
     } 
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.tag == "HOOK" && holdingRMB){
+            currentMovementState = movementState.HANGING;
+        }
+    }
 
     public bool isGrounded()
     {
@@ -383,7 +410,6 @@ public class Player : Character
 
         Vector3 velocity = velocityY + velocityXZ;
 
-        // Debug.Log(velocity);
         return velocity.normalized;
     }
 
@@ -406,7 +432,7 @@ public class Player : Character
 
         //forces camera to look straight as you're opening up scene
         if (Time.timeSinceLevelLoad < 0.1f)
-            return;
+            return;        
 
         //guarantees lasso state won't be overwritten
         if (inLassoLock)
@@ -429,6 +455,10 @@ public class Player : Character
             if(wallSlideSfx != null && !wallSlideSfx.isPlaying)
                 wallSlideSfx.Play();
             rigidbody.velocity = new Vector3(0, slideVel, 0);
+        }
+        else if (currentMovementState == movementState.HANGING){
+            int hangModifier = 5;
+            rigidbody.velocity = new Vector3(0, gravityAccel / hangModifier, 0);
         }
         else if (currentMovementState == movementState.GROUND || currentMovementState == movementState.AIR)
         {
@@ -487,7 +517,7 @@ public class Player : Character
             camRot.z = 0;
             cam.transform.eulerAngles = camRot;
         }
-                
+        
         if (kickStarted)
         {
             perfectWallJumpSfx.Play();            
