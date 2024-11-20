@@ -122,8 +122,8 @@ public class Player : Character
 
         lassoLockCooldown = maxLassoLockCooldown = 5;
         
-        //frames per second * second
-        restartCooldown = maxRestartCooldown = 60 * 1;      
+        //remember it's not in terms of frames, so a value of 60 does not mean it'll wait 1 second.
+        restartCooldown = maxRestartCooldown = 40;      
 
         //come back here
 
