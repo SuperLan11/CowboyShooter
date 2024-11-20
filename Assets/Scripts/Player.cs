@@ -102,7 +102,7 @@ public class Player : Character
 
         roomNum = 1;
 
-        // override default gravity (-9.81) to desired gravity
+        // Important: this affects gravity for everything!
         Physics.gravity = new Vector3(0, gravityAccel, 0);
 
         // this makes the cursor stay insivible in the editor
