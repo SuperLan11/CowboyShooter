@@ -65,7 +65,7 @@ public class MeleeEnemy : Enemy
         }
         
         playerNear = PlayerIsNearby();
-        playerSighted = PlayerIsSighted(transform.position);
+        playerSighted = PlayerIsSighted();
 
         if (playerNear && playerSighted)
         {

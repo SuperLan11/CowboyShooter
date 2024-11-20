@@ -59,7 +59,7 @@ public abstract class Enemy : Character
         agent.destination = destination1.position;
         // in seconds
         destCooldown = 0f;
-        maxDestCooldown = 0.5f;
+        maxDestCooldown = 0.2f;
         switchingDest = false;
 
         attackCooldown = maxAttackCooldown;        
@@ -119,10 +119,10 @@ public abstract class Enemy : Character
         return false;
     }
 
-    public bool PlayerIsSighted(Vector3 enemyPos)
+    public bool PlayerIsSighted()
     {
         RaycastHit hit;
-        Vector3 direction = (Camera.main.transform.position - transform.position).normalized;
+        Vector3 direction = (Player.player.transform.position - transform.position).normalized;
         // draw a raycast from enemy to player to see if player is sighted
         if (Physics.Raycast(transform.position, direction, out hit, Mathf.Infinity))
         {

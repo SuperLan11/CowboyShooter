@@ -5,32 +5,50 @@ using UnityEngine;
 public class ThrowEnemy : Enemy
 {
     [SerializeField] private GameObject tntPrefab;    
-    [SerializeField] private Transform tntSpawn;    
-
-    [SerializeField] private float yThrowVel = 6f;
+    [SerializeField] private Transform tntSpawn;
     [SerializeField] private float maxThrowSpeed = 7f;
+    [SerializeField] private float shootDist;
+    private Vector3 shootPos;
 
     [SerializeField] private GameObject tntChild;
-
     [SerializeField] public AudioSource boomSfx;
 
-    [SerializeField] private float wallHeightInc;
-
     private void ThrowTNT()
-    {
+    {        
         // tntChild is not a TNT prefab. 
         // This prevents weird link issues and makes the tnt the enemy holds stay in place
-        // The tnt held is hidden and a new tnt object is created to appear to be throwing a tnt        
+        // When throwing, the tnt held is hidden and a new tnt is created to appear to be throwing a tnt        
         tntChild.GetComponent<MeshRenderer>().enabled = false;
 
         float distToPlayer = DistToPlayer();
         float distMult = distToPlayer / sightRange;
+
+        //if(PlayerIsSighted())
         
-        GameObject newTnt = Instantiate(tntPrefab, tntSpawn.position, Quaternion.identity);
-        //float yVel = VelToClearWall();
+        GameObject newTnt = Instantiate(tntPrefab, tntSpawn.position, Quaternion.identity);        
         Vector3 tntVel = VelToClearWall();
         newTnt.GetComponent<Rigidbody>().velocity = tntVel;
-        //Debug.Log("newTnt vel is: " + newTnt.GetComponent<Rigidbody>().velocity);                
+        //Debug.Log("newTnt vel is: " + newTnt.GetComponent<Rigidbody>().velocity);        
+
+        /*
+         * if player in range, get tnt a certain distance from wall on way to player
+         */
+    }
+
+    private Vector3 ShootPos()
+    {        
+        RaycastHit hit;
+        Vector3 playerDirection = (player.transform.position - tntSpawn.position).normalized;
+        bool hitWall = (Physics.Raycast(tntSpawn.position, playerDirection, out hit, sightRange));
+        float distToWall = hit.distance;
+        float distToPlayer = DistToPlayer();
+
+        // less dist to player means furhter shootPos
+        Vector3 shootPos = tntSpawn.position + playerDirection * -(sightRange-1-distToPlayer);
+        GameObject temp = Instantiate(new GameObject(), shootPos, Quaternion.identity);
+        temp.name = "shootPos";
+        Debug.Log("shoot pos: " + shootPos);
+        return shootPos;
     }
 
     private Vector3 VelToClearWall()
@@ -47,7 +65,6 @@ public class ThrowEnemy : Enemy
         bool isValidThrow = false;
         // consider non-wall objects laters
         bool hitWall = (Physics.Raycast(tntSpawn.position, playerDirection, out hit, sightRange));
-
         bool hitStraightToWall = (Physics.Raycast(tntSpawn.position, tntSpawn.forward, out straightHit, sightRange));
         float distStraightToWall = Vector3.Distance(tntSpawn.position, straightHit.point);
 
@@ -123,12 +140,14 @@ public class ThrowEnemy : Enemy
         }
 
         playerNear = PlayerIsNearby();
-        playerSighted = PlayerIsSighted(transform.position);
+        playerSighted = PlayerIsSighted();
 
         if (playerNear)
         {
             //Debug.Log("going to player");
-            agent.destination = player.transform.position;
+            //agent.destination = player.transform.position;
+            agent.destination = ShootPos();
+            shootPos = agent.destination;
 
             if (attackCooldown >= maxAttackCooldown)
             {
@@ -136,7 +155,7 @@ public class ThrowEnemy : Enemy
                 attackCooldown = 0f;
             }
         }
-        else if (agent.destination == player.transform.position)
+        else if (agent.destination == shootPos)
         {
             //Debug.Log("Find dest other than player");
             FindNewDest(agent.destination);
