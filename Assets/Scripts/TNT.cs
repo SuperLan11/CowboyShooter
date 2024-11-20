@@ -8,6 +8,7 @@ public class TNT : MonoBehaviour
     [SerializeField] private AudioSource sizzleSfx;
     [SerializeField] private int explodeDamage = 1;
     [SerializeField] private float explodeRadius = 5f;
+    [SerializeField] private GameObject explosionPrefab;
 
     private AudioSource boomSfx;    
 
@@ -39,11 +40,10 @@ public class TNT : MonoBehaviour
         if (boomSfx != null)
             boomSfx.Play();
 
-        if (Vector3.Distance(transform.position, Player.player.transform.position) < explodeRadius)
-        {
-            Debug.Log("player took damage");
-            Player.player.TakeDamage(explodeDamage);
-        }
+        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+
+        if (Vector3.Distance(transform.position, Player.player.transform.position) < explodeRadius)                    
+            Player.player.TakeDamage(explodeDamage);        
         
         Destroy(this.gameObject);
     }

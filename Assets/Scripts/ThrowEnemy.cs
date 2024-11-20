@@ -6,7 +6,7 @@ public class ThrowEnemy : Enemy
 {
     [SerializeField] private GameObject tntPrefab;    
     [SerializeField] private Transform tntSpawn;    
-    [SerializeField] private float defaultThrowHeight = 3f;
+    [SerializeField] private float defaultThrowHeight = 2f;
     private Vector3 shootPos;    
 
     [SerializeField] private GameObject tntChild;
@@ -21,7 +21,7 @@ public class ThrowEnemy : Enemy
 
         Vector3 tntVel;
         if(PlayerIsSighted())        
-            tntVel = PlayerSightedVel(2f);        
+            tntVel = PlayerSightedVel(defaultThrowHeight);
         else        
             tntVel = VelToClearWall();        
         
@@ -37,12 +37,8 @@ public class ThrowEnemy : Enemy
         bool hitWall = (Physics.Raycast(tntSpawn.position, playerDirection, out hit, sightRange));
         float distToWall = hit.distance;
         float distToPlayer = DistToPlayer();
-
-        // less dist to player means furhter shootPos
-        Vector3 shootPos = tntSpawn.position + playerDirection * -(sightRange-1-distToPlayer);
-        GameObject temp = Instantiate(new GameObject(), shootPos, Quaternion.identity);
-        temp.name = "shootPos";
-        Debug.Log("shoot pos: " + shootPos);
+        
+        Vector3 shootPos = tntSpawn.position + playerDirection * -(sightRange-1-distToPlayer);        
         return shootPos;
     }
 
@@ -157,8 +153,7 @@ public class ThrowEnemy : Enemy
 
         if (playerNear)
         {
-            //Debug.Log("going to player");
-            //agent.destination = player.transform.position;
+            //Debug.Log("going to player");            
             agent.destination = ShootPos();
             shootPos = agent.destination;
 

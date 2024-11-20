@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class MeleeEnemy : Enemy
 {
     [SerializeField] private AudioSource daggerSfx;
+    [SerializeField] private float recoilTime = 0.5f;
 
     private void OnCollisionEnter(Collision collision)
     {        
@@ -16,9 +17,8 @@ public class MeleeEnemy : Enemy
             if (hitPlayer && attackCooldown >= maxAttackCooldown)
             {
                 Strike(Player.player);
-                attackCooldown = 0f;   
-
-                StartCoroutine(StopForTime(0.5f));        
+                attackCooldown = 0f;
+                StartCoroutine(StopForTime(recoilTime));
             }
         }
     }
@@ -27,7 +27,7 @@ public class MeleeEnemy : Enemy
     {
         float prevSpeed = GetComponent<NavMeshAgent>().speed;
         GetComponent<NavMeshAgent>().speed = 0f;
-        RecoilBack();
+        //RecoilBack();
         yield return new WaitForSecondsRealtime(seconds);
         GetComponent<NavMeshAgent>().speed = prevSpeed;
     }
