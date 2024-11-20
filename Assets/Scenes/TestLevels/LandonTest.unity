@@ -818,14 +818,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowEnemy
       objectReference: {fileID: 0}
-    - target: {fileID: 4614608102298876308, guid: f10286db6a30bf8458934fa1064c00d3, type: 3}
-      propertyPath: m_Speed
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4689496993661325201, guid: f10286db6a30bf8458934fa1064c00d3, type: 3}
-      propertyPath: sightRange
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 4689496993661325201, guid: f10286db6a30bf8458934fa1064c00d3, type: 3}
       propertyPath: destination1
       value: 
@@ -834,9 +826,9 @@ PrefabInstance:
       propertyPath: destination2
       value: 
       objectReference: {fileID: 596011167}
-    - target: {fileID: 7109175680677295899, guid: f10286db6a30bf8458934fa1064c00d3, type: 3}
-      propertyPath: m_Enabled
-      value: 0
+    - target: {fileID: 4689496993661325201, guid: f10286db6a30bf8458934fa1064c00d3, type: 3}
+      propertyPath: defaultThrowHeight
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

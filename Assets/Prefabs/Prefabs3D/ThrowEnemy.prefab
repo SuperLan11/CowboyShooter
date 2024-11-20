@@ -123,7 +123,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5000001
-  m_Speed: 0
+  m_Speed: 3
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -249,14 +249,13 @@ MonoBehaviour:
   maxAttackCooldown: 2
   attackDamage: 2
   roomNum: 0
-  sightRange: 6
+  sightRange: 8
   tntPrefab: {fileID: 6165991136970091572, guid: 9e55919bab26ecb41b2c77ba8bb2ce07, type: 3}
   tntSpawn: {fileID: 8337465913492797655}
-  yThrowVel: 6
-  maxThrowSpeed: 7
+  shootDist: 0
+  defaultThrowHeight: 3
   tntChild: {fileID: 9110062379386791031}
   boomSfx: {fileID: 2820707565410132836}
-  wallHeightInc: 3
 --- !u!82 &2820707565410132836
 AudioSource:
   m_ObjectHideFlags: 0

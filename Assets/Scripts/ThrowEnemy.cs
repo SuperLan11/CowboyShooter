@@ -5,10 +5,9 @@ using UnityEngine;
 public class ThrowEnemy : Enemy
 {
     [SerializeField] private GameObject tntPrefab;    
-    [SerializeField] private Transform tntSpawn;
-    [SerializeField] private float maxThrowSpeed = 7f;
-    [SerializeField] private float shootDist;
-    private Vector3 shootPos;
+    [SerializeField] private Transform tntSpawn;    
+    [SerializeField] private float defaultThrowHeight = 3f;
+    private Vector3 shootPos;    
 
     [SerializeField] private GameObject tntChild;
     [SerializeField] public AudioSource boomSfx;
@@ -18,21 +17,17 @@ public class ThrowEnemy : Enemy
         // tntChild is not a TNT prefab. 
         // This prevents weird link issues and makes the tnt the enemy holds stay in place
         // When throwing, the tnt held is hidden and a new tnt is created to appear to be throwing a tnt        
-        tntChild.GetComponent<MeshRenderer>().enabled = false;
+        tntChild.GetComponent<MeshRenderer>().enabled = false;                
 
-        float distToPlayer = DistToPlayer();
-        float distMult = distToPlayer / sightRange;
-
-        //if(PlayerIsSighted())
+        Vector3 tntVel;
+        if(PlayerIsSighted())        
+            tntVel = PlayerSightedVel(2f);        
+        else        
+            tntVel = VelToClearWall();        
         
-        GameObject newTnt = Instantiate(tntPrefab, tntSpawn.position, Quaternion.identity);        
-        Vector3 tntVel = VelToClearWall();
+        GameObject newTnt = Instantiate(tntPrefab, tntSpawn.position, Quaternion.identity);                
         newTnt.GetComponent<Rigidbody>().velocity = tntVel;
         //Debug.Log("newTnt vel is: " + newTnt.GetComponent<Rigidbody>().velocity);        
-
-        /*
-         * if player in range, get tnt a certain distance from wall on way to player
-         */
     }
 
     private Vector3 ShootPos()
@@ -49,6 +44,24 @@ public class ThrowEnemy : Enemy
         temp.name = "shootPos";
         Debug.Log("shoot pos: " + shootPos);
         return shootPos;
+    }
+
+    private Vector3 PlayerSightedVel(float height)
+    {        
+        Vector3 playerDirection = (player.transform.position - tntSpawn.position).normalized;
+
+        Vector3 levelPlayerPos = player.transform.position;
+        levelPlayerPos.y = tntSpawn.position.y;        
+        float distToPlayer = Vector3.Distance(tntSpawn.position, player.transform.position);                                
+
+        float halfTntHeight = tntPrefab.transform.localScale.z * tntPrefab.GetComponent<CapsuleCollider>().height / 2;
+        
+        float landTime = 2f * Mathf.Sqrt(height / (-Physics.gravity.y / 2));
+        float yV0 = -Physics.gravity.y * Mathf.Sqrt(height / (-Physics.gravity.y / 2));
+        float xV0 = (distToPlayer / landTime) * playerDirection.x;
+        float zV0 = (distToPlayer / landTime) * playerDirection.z;        
+
+        return new Vector3(xV0, yV0, zV0);
     }
 
     private Vector3 VelToClearWall()
