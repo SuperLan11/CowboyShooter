@@ -149,8 +149,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0238992b222b17545a9fde75d8fd112e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToExplode: 1.5
+  TtlOnHit: 0.5
   sizzleSfx: {fileID: 8103946175110038214}
+  explodeDamage: 1
+  explodeRadius: 4
 --- !u!82 &8103946175110038214
 AudioSource:
   m_ObjectHideFlags: 0

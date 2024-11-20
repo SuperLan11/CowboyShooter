@@ -47,7 +47,7 @@ public abstract class Enemy : Character
         SetRoomNum();
         // name enemies by their room number.
         // 0 is here in case of more than 10 rooms and to prevent Contains() errors
-        gameObject.name = "Enemy0" + roomNum;
+        gameObject.name += "R" + roomNum;
 
         agent = GetComponent<NavMeshAgent>();
         player = FindObjectOfType<Player>().gameObject;
@@ -90,15 +90,7 @@ public abstract class Enemy : Character
             Debug.LogWarning("destination1 was not set for " + gameObject.name);
         if (destination2 == null)
             Debug.LogWarning("destination2 was not set " + gameObject.name);
-    }    
-
-    protected bool PlayerIsNearby()
-    {
-        if (Vector3.Distance(this.transform.position, player.transform.position) < sightRange)
-            return true;
-        else
-            return false;
-    }    
+    }       
 
     protected void SetRoomNum()
     {
@@ -113,6 +105,18 @@ public abstract class Enemy : Character
             else if (obj == this.gameObject)
                 break;
         }        
+    }
+
+    protected float DistToPlayer()
+    {
+        return Vector3.Distance(this.transform.position, player.transform.position);
+    }
+
+    protected bool PlayerIsNearby()
+    {
+        if (DistToPlayer() < sightRange)
+            return true;
+        return false;
     }
 
     public bool PlayerIsSighted(Vector3 enemyPos)

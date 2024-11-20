@@ -9,7 +9,9 @@ public class EndDoor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        fadeAnim = GameObject.Find("FadePanel").GetComponent<SceneTransfer>();                
+        fadeAnim = GameObject.Find("FadePanel").GetComponent<SceneTransfer>();
+        // assuming we want the level end to be an invisible trigger
+        GetComponent<MeshRenderer>().enabled = false;
     }
 
     private void OnTriggerEnter(Collider collider)
