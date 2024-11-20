@@ -7,6 +7,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 using Vector2 = UnityEngine.Vector2;
@@ -38,6 +39,21 @@ public class Lasso : MonoBehaviour
     void LateUpdate(){
         if (usingLasso()){
             DrawRope();
+        }
+
+        //jank that prevents stupid visual bug where rope is suspended in the air after going from hanging to ground
+        if (Player.player.currentMovementState == Player.movementState.HANGING){
+            RaycastHit hit;
+
+            if (Physics.Raycast(camera.transform.position, camera.transform.up * -1, out hit, 0.6f)) 
+            {
+                Vector3 downwardPoint = hit.point;
+
+                if (hit.transform.gameObject.tag == "FLOOR")
+                {
+                    EndLasso();
+                }
+            }
         }
     }
 
@@ -75,16 +91,14 @@ public class Lasso : MonoBehaviour
     public void EndLasso()
     {
         lineRenderer.positionCount = 0;
-        //Destroy(joint);
     }
 
     public void DrawRope()
     {
-        /*
-        if (joint == null){
+        if (lineRenderer.positionCount < 2)
+        {
             return;
         }
-        */
 
         lineRenderer.SetPosition(0, lassoTip.position);
         lineRenderer.SetPosition(1, grapplePoint);
