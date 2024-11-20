@@ -154,6 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fabdba5260705cd4f9edfdb97c060706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lassoYOffset: 0.25
   hook: {fileID: 0}
   barrel: {fileID: 0}
   lassoTip: {fileID: 819314125773286768}
@@ -274,6 +275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fabdba5260705cd4f9edfdb97c060706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lassoYOffset: 0.25
   hook: {fileID: 0}
   barrel: {fileID: 0}
   lassoTip: {fileID: 819314125773286768}
@@ -474,11 +476,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 5
+  speed: 6
+  jumpStrength: 7
+  gravityAccel: -13
   maxShootCooldown: 0.5
   shootCooldown: 0
-  speed: 6
-  acceleration: 10
-  jumpStrength: 7
   slideVel: -0.5
   wallSlideThreshold: 2
   timeSinceJump: 0
@@ -582,6 +584,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 8ed75731-9e5c-43cc-9b52-bf00303f261d
     m_ActionName: Player/Shoot[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8509015516763741730}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: RestartLevelActivated
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b6c707d9-04f1-4eae-86e2-faaa1c728a0d
+    m_ActionName: Player/RestartLevel[/Keyboard/r]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

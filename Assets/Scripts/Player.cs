@@ -29,6 +29,7 @@ public class Player : Character
 
     private bool tryingToJump;
     private bool holdingRMB;
+    private bool holdingRestart;
     private bool inJumpCooldown = false;    
     public float jumpStrength = 7f;
     [SerializeField] private float gravityAccel = -13f;
@@ -37,6 +38,9 @@ public class Player : Character
 
     [SerializeField] public float maxShootCooldown;
     [SerializeField] public float shootCooldown;
+
+    private int maxRestartCooldown;
+    private int restartCooldown;
 
     private bool inLassoLock = false;
     private int lassoLockCooldown;
@@ -110,18 +114,28 @@ public class Player : Character
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         
+
         maxShootCooldown = 0.5f;
-        shootCooldown = maxShootCooldown;        
+        shootCooldown = maxShootCooldown;  
+
+        jumpCooldown = maxJumpCooldown = 2;
+
+        lassoLockCooldown = maxLassoLockCooldown = 5;
+        
+        //frames per second * second
+        restartCooldown = maxRestartCooldown = 60 * 1;      
+
+        //come back here
 
         cam = Camera.main;
         // lasso should be the second child of Camera for this to work
         lasso = transform.GetChild(0).GetChild(1).gameObject;        
         rigidbody = GetComponent<Rigidbody>();   
 
-        jumpCooldown = maxJumpCooldown = 2;
-        lassoLockCooldown = maxLassoLockCooldown = 5;
+        
 
         holdingRMB = false;
+        holdingRestart = false;
     }    
 
     private void Awake()
@@ -248,6 +262,21 @@ public class Player : Character
         {
             tryingToJump = false;
         }
+    }
+
+    public void RestartLevelActivated(InputAction.CallbackContext context)
+    {
+        bool firstPressingR = context.started && !holdingRestart;
+        bool holdingR = context.performed;
+
+        if (firstPressingR || holdingR){
+            holdingRestart = true;
+        }
+        else{
+            holdingRestart = false;
+            restartCooldown = maxRestartCooldown;
+        }
+
     }
     
     private void OnCollisionEnter(Collision collision)
@@ -447,6 +476,16 @@ public class Player : Character
             {
                 lassoLockCooldown = maxLassoLockCooldown;
                 inLassoLock = false;
+            }
+        }
+
+        if (holdingRestart){
+            if (restartCooldown > 0){
+                restartCooldown--;
+            }else{
+                restartCooldown = maxRestartCooldown;
+                holdingRMB = false;
+                Death();
             }
         }       
 
