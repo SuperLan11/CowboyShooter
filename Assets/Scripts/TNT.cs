@@ -25,10 +25,16 @@ public class TNT : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        bool hitFloor, hitPlayer;
         for (int i = 0; i < collision.contactCount; i++)
         {
-            if (collision.GetContact(i).otherCollider.tag == "FLOOR")            
-                StartCoroutine(TTL(TtlOnHit));            
+            hitFloor = collision.GetContact(i).otherCollider.tag == "FLOOR";
+            hitPlayer = collision.GetContact(i).otherCollider.gameObject.name == "Player";
+            if (hitPlayer || hitFloor)
+            {
+                StartCoroutine(TTL(TtlOnHit));
+                break;
+            }
         }        
     }
 
@@ -57,8 +63,8 @@ public class TNT : MonoBehaviour
         GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
         if (Vector3.Distance(transform.position, Player.player.transform.position) < explodeRadius &&
-            PlayerExposed())
-            Player.player.TakeDamage(explodeDamage);        
+            PlayerExposed())        
+            Player.player.TakeDamage(explodeDamage);                    
         
         Destroy(this.gameObject);
     }

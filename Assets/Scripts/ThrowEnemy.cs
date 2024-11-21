@@ -7,6 +7,7 @@ public class ThrowEnemy : Enemy
     [SerializeField] private GameObject tntPrefab;    
     [SerializeField] private Transform tntSpawn;    
     [SerializeField] private float defaultThrowHeight = 2f;
+    [SerializeField] private float minDistFromWall = 0.5f;
     private Vector3 shootPos;    
 
     [SerializeField] private GameObject tntChild;
@@ -41,7 +42,7 @@ public class ThrowEnemy : Enemy
         float distToPlayer = DistToPlayer();
         
         Vector3 shootPos = tntSpawn.position + playerDirection * -(sightRange-1-distToPlayer);
-        if (distToWall < 1f)
+        if (distToWall < minDistFromWall)
             canThrow = false;
         else
             canThrow = true;
@@ -135,8 +136,6 @@ public class ThrowEnemy : Enemy
     // Update is called once per frame
     void Update()
     {
-        //VelToClearWall();
-
         if (!switchingDest && agent.remainingDistance <= 0.01f)
         {
             //Debug.Log("got to dest, find new dest");

@@ -16,7 +16,7 @@ public class MeleeEnemy : Enemy
             // change to attack cooldown later
             if (hitPlayer && attackCooldown >= maxAttackCooldown)
             {
-                Strike(Player.player);
+                Strike(Player.player);                
                 attackCooldown = 0f;
                 StartCoroutine(StopForTime(recoilTime));
             }
@@ -39,9 +39,10 @@ public class MeleeEnemy : Enemy
 
     private void Strike(Player player)
     {
-        player.TakeDamage(attackDamage);
         if (daggerSfx != null)
             daggerSfx.Play();
+
+        player.TakeDamage(attackDamage);                
     }
 
     void Update()

@@ -95,3 +95,7 @@ Assets Used:
 	Snake Hiss
 	xoiziox (Freesound)
 	https://pixabay.com/sound-effects/snake-hiss-95241/
+
+	Hurt_C_08
+	cabled_mess (Freesound)	
+	https://pixabay.com/sound-effects/hurt-c-08-102842/

@@ -75,7 +75,8 @@ public class Player : Character
     [SerializeField] private AudioSource lassoSfx;
     [SerializeField] private AudioSource perfectWallJumpSfx;
     [SerializeField] private AudioSource gunReloadSfx;
-    [SerializeField] private AudioSource wallSlideSfx;
+    [SerializeField] private AudioSource wallSlideSfx;    
+    [SerializeField] private AudioSource takeDamageSfx;
 
     private bool reloadPlayed = false;
 
@@ -378,7 +379,8 @@ public class Player : Character
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.tag == "HOOK" && holdingRMB){
+        if (collision.tag == "HOOK" && holdingRMB)
+        {
             currentMovementState = movementState.HANGING;
         }
     }
@@ -410,6 +412,8 @@ public class Player : Character
     public override void TakeDamage(int damage)
     {
         health -= damage;
+        if(takeDamageSfx != null)
+            takeDamageSfx.Play();
         // this should get the hearts in the hierarchy order so you don't need to sort
         Image[] images = FindObjectsOfType<Image>();
         List<Image> hearts = new List<Image>();

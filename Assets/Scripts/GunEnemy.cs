@@ -8,7 +8,7 @@ public class GunEnemy : Enemy
     {       
         player.GetComponent<Player>().TakeDamage(attackDamage);        
         if (shootSfx != null)
-            shootSfx.Play();
+            shootSfx.Play();        
     }
 
     // Update is called once per frame
