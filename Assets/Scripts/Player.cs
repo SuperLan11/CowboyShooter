@@ -1,6 +1,5 @@
 /*
 @Authors - Patrick, Landon
-@Authors - Patrick, Landon
 @Description - Player singleton class
 */
 
@@ -165,9 +164,6 @@ public class Player : Character
    
     protected void Shoot(GameObject enemy)
     {
-        if (gunSfx != null)
-            gunSfx.Play();
-
         //Debug.Log("shot enemy");
         enemy.GetComponent<Enemy>().TakeDamage(1);
     }
@@ -187,6 +183,9 @@ public class Player : Character
     {
         if (context.started)
         {
+            if (gunSfx != null)
+                gunSfx.Play();
+                
             try
             {
                 GameObject objAimed = ObjAimedAt();
