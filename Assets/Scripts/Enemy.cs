@@ -42,11 +42,9 @@ public abstract class Enemy : Character
     [SerializeField] protected float sightRange;
     protected bool playerNear;
     protected bool playerSighted;
-<<<<<<< HEAD
     public bool gotShot = false;
-=======
+
     [SerializeField] protected AudioSource deathSfx;
->>>>>>> d1901a1043f47a10f251811f5520f68b267f1ced
 
     // all enemies have the same start function
     void Start()
@@ -177,7 +175,9 @@ public abstract class Enemy : Character
     // called from inherited TakeDamage function
     protected override void Death()
     {
-        deathSfx.Play();
+        if(deathSfx != null)
+            deathSfx.Play();
+
         enemiesInRoom--;
         Door.SetDoorCounter(enemiesInRoom);
         if (enemiesInRoom <= 0)
@@ -186,7 +186,8 @@ public abstract class Enemy : Character
         Invoke("DeathCleanup", 1);
     }
 
-    protected void DeathCleanup(){
+    protected void DeathCleanup()
+    {
         Destroy(this.gameObject);
     }
 

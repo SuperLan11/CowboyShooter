@@ -15,29 +15,9 @@ public class GunEnemy : Enemy
 
     private Vector3 ShootPos()
     {
-        RaycastHit hitFront;
-        RaycastHit hitBack;
-        bool hitForward = false, hitBackward = false;
-        bool hitWallForward = false, hitWallBackward = false;
-
-        Vector3 playerDirection = (player.transform.position - transform.position).normalized;
-        hitForward = Physics.Raycast(transform.position, playerDirection, out hitFront, sightRange);
-        if (hitForward && hitFront.transform.tag == "WALL")
-            hitWallForward = true;
-
-        hitBackward = Physics.Raycast(transform.position, -1*transform.forward, out hitBack, sightRange);
-        if (hitBackward && hitBack.transform.tag == "WALL")
-            hitWallBackward = true;
-        
-        float distToPlayer = DistToPlayer();
-
-        // if a wall is between enemy and player, follow player until wall stops obstructing
-        if (hitWallForward)
-            return player.transform.position;
-        else if (hitWallBackward)
-            return transform.position;
-        else
-            return transform.position + playerDirection * -(sightRange - 1 - distToPlayer);        
+        Vector3 playerDirection = (player.transform.position - transform.position).normalized;        
+        float distToPlayer = DistToPlayer();        
+        return transform.position + playerDirection * -(sightRange - 1 - distToPlayer);        
     }
 
     // Update is called once per frame
@@ -75,20 +55,15 @@ public class GunEnemy : Enemy
             if (attackCooldownDone && playerNear)
             {                
                 Shoot(player);
+                attackCooldownDone = false;
                 StartCoroutine(AttackCooldown());
-                attackCooldownDone = false;         
             }            
         }
         else if (agent.destination == shootPos)
         {
-            //Debug.Log("Find dest other than player");            
-            FindNewDest();
-        }
-
-        if (!playerSighted)
-        {
+            //Debug.Log("Find dest other than player");
             gotShot = false;
             FindNewDest();
-        }        
+        }
     }
 }
