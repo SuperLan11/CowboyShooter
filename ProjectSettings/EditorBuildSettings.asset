@@ -9,9 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu/MainMenu.unity
     guid: 158472fd2d1474d4c9c721532f9f4eb5
   - enabled: 1
-    path: Assets/Scenes/TestLevels/LandonTest.unity
-    guid: c43674bafd41d9941ad913a13e67b8bd
-  - enabled: 1
     path: Assets/Scenes/Levels/Level1.unity
     guid: 5aa9de385967b3542b92a43d31be8bc6
   m_configObjects: {}

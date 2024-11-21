@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: FLOOR
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5024303262982104baf1519ae0565170, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -140,8 +144,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   singleNavLink: {fileID: 2092633861073207576, guid: f9ca0696e2270bc44b4345ad67134da9, type: 3}
-  maxJumpDist: 0
-  myMesh: {fileID: 0}
   useUniqueLinks: 0
   xSpacePerLink: 0
   zSpacePerLink: 0

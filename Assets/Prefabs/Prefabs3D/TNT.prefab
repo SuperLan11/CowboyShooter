@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 6165991136970091572}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -11.100269, y: 0.0499, z: -57.706127}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -152,7 +152,6 @@ MonoBehaviour:
   TtlOnHit: 0.5
   sizzleSfx: {fileID: 8103946175110038214}
   explodeDamage: 1
-  explodeRadius: 4
   explosionPrefab: {fileID: 7725463351204526251, guid: 4c4921d4eb322ec49ae68f2b69192a26, type: 3}
 --- !u!82 &8103946175110038214
 AudioSource:

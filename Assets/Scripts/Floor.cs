@@ -9,8 +9,8 @@ using UnityEngine.AI;
 public class Floor : MonoBehaviour
 {
     [SerializeField] private GameObject singleNavLink;
-    [SerializeField] private float maxJumpDist;
-    public MeshRenderer myMesh;
+    private float maxJumpDist;
+    private MeshRenderer myMesh;
     private List<GameObject> perimiterLinks = new List<GameObject>();
 
     public static int floorsInitialized = 0;
@@ -180,11 +180,11 @@ public class Floor : MonoBehaviour
     }
 
     // returns whether the endLink was set successfully. if not, the link will be destroyed
+    // assumes more than one floor has been created
     private bool SetEnd(GameObject perimeterLink)
     {
         // gets the closest link game object (excluding floor links)
-        GameObject closestLink = ClosestLink(perimeterLink);
-        MeshRenderer closestFloor = GetClosestFloor(closestLink.transform.position);                
+        GameObject closestLink = ClosestLink(perimeterLink);         
 
         float distToLink = Vector3.Distance(perimeterLink.transform.position, closestLink.transform.position);
         bool uniqueIfDesired = !completedLinks.Contains(perimeterLink.transform.position) && !completedLinks.Contains(closestLink.transform.position);
