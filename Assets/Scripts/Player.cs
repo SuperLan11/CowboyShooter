@@ -167,6 +167,8 @@ public class Player : Character
     {
         //Debug.Log("shot enemy");
         enemy.GetComponent<Enemy>().TakeDamage(1);
+        if (enemy.GetComponent<GunEnemy>() != null)
+            enemy.GetComponent<GunEnemy>().gotShot = true;
     }
 
     public GameObject ObjAimedAt()

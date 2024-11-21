@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GunEnemy : Enemy
-{         
+{
+    public bool gotShot = false;
     protected void Shoot(GameObject player)
     {       
         player.GetComponent<Player>().TakeDamage(attackDamage);        
@@ -36,7 +37,7 @@ public class GunEnemy : Enemy
         playerNear = PlayerIsNearby();
         playerSighted = PlayerIsSighted();
 
-        if (playerNear && playerSighted)
+        if (playerSighted && (playerNear || gotShot))
         {
             //Debug.Log("going to player");
             agent.destination = player.transform.position;
@@ -45,11 +46,17 @@ public class GunEnemy : Enemy
             {                
                 Shoot(player);
                 attackCooldown = 0f;
-            }
+            }            
         }
         else if (agent.destination == player.transform.position)
         {
-            //Debug.Log("Find dest other than player");
+            //Debug.Log("Find dest other than player");            
+            FindNewDest(agent.destination);
+        }
+
+        if (!playerSighted)
+        {
+            gotShot = false;
             FindNewDest(agent.destination);
         }
 

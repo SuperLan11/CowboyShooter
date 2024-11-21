@@ -28,9 +28,8 @@ public class ThrowEnemy : Enemy
         else        
             tntVel = VelToClearWall();        
         
-        GameObject newTnt = Instantiate(tntPrefab, tntSpawn.position, Quaternion.identity);                
+        GameObject newTnt = Instantiate(tntPrefab, tntSpawn.position, Quaternion.identity);
         newTnt.GetComponent<Rigidbody>().velocity = tntVel;
-        //Debug.Log("newTnt vel is: " + newTnt.GetComponent<Rigidbody>().velocity);        
     }
 
     private Vector3 ShootPos()
