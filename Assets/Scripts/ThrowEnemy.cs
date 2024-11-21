@@ -17,6 +17,10 @@ public class ThrowEnemy : Enemy
 
     private void ThrowTNT()
     {        
+        if (isDead){
+            return;
+        }
+        
         // tntChild is not a TNT prefab. 
         // This prevents weird link issues and makes the tnt the enemy holds stay in place
         // When throwing, the tnt held is hidden and a new tnt is created to appear to be throwing a tnt        
