@@ -4,32 +4,31 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class MeleeEnemy : Enemy
-{
-    [SerializeField] private AudioSource daggerSfx;
-    [SerializeField] private float recoilTime = 0.5f;
+{    
+    [SerializeField] private float recoilTime = 0.75f;
+    [SerializeField] private AudioSource daggerSfx;    
 
     private void OnCollisionEnter(Collision collision)
-    {        
+    {                
         for(int i = 0; i < collision.contactCount; i++)
         {
-            bool hitPlayer = collision.GetContact(i).otherCollider.gameObject.name == "Player";
-            // change to attack cooldown later
-            if (hitPlayer && attackCooldown >= maxAttackCooldown)
-            {
-                Strike(Player.player);                
-                attackCooldown = 0f;
+            bool hitPlayer = collision.GetContact(i).otherCollider.gameObject.name == "Player";            
+            if (hitPlayer && attackCooldownDone)
+            {                
+                Strike(Player.player);
+                attackCooldownDone = false;
+                StartCoroutine(AttackCooldown());
                 StartCoroutine(StopForTime(recoilTime));
             }
         }
     }
 
     private IEnumerator StopForTime(float seconds)
-    {
-        float prevSpeed = GetComponent<NavMeshAgent>().speed;
-        GetComponent<NavMeshAgent>().speed = 0f;
-        //RecoilBack();
-        yield return new WaitForSecondsRealtime(seconds);
-        GetComponent<NavMeshAgent>().speed = prevSpeed;
+    {        
+        // how to immediately stop NavMesh? this has some ease out
+        GetComponent<NavMeshAgent>().speed = 0f;        
+        yield return new WaitForSecondsRealtime(seconds);        
+        GetComponent<NavMeshAgent>().speed = speed;
     }
 
     private void RecoilBack()
@@ -51,7 +50,7 @@ public class MeleeEnemy : Enemy
         {
             //Debug.Log("got to dest, find new dest");
             switchingDest = true;
-            FindNewDest(agent.destination);
+            FindNewDest();
             return;
         }
         else if (switchingDest)
@@ -68,17 +67,20 @@ public class MeleeEnemy : Enemy
         playerNear = PlayerIsNearby();
         playerSighted = PlayerIsSighted();
 
-        if (playerNear && playerSighted)
-        {
-            Debug.Log("going to player");
+        if (playerSighted && (playerNear || gotShot))
+        {            
             agent.destination = player.transform.position;
         }
         else if (agent.destination == player.transform.position)
         {
             //Debug.Log("Find dest other than player");
-            FindNewDest(agent.destination);
+            FindNewDest();
         }
 
-        attackCooldown += Time.deltaTime;
+        if (!playerSighted)
+        {
+            gotShot = false;
+            FindNewDest();
+        }
     }
 }

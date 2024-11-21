@@ -19,11 +19,13 @@ public abstract class Enemy : Character
     protected List<Vector3> destList = new List<Vector3>();
     // assuming all enemies can jump the same distance
     [SerializeField] public static float maxJumpDist = 7f;
+    protected float speed;
 
     public static int enemiesInitialized = 0;
-    public static int enemiesInRoom = 0;    
+    public static int enemiesInRoom = 0;
 
-    protected float attackCooldown;
+    // attackCooldown var not needed as coroutines are used
+    protected bool attackCooldownDone;    
     [SerializeField] protected float maxAttackCooldown;
     [SerializeField] protected int attackDamage;
 
@@ -40,13 +42,12 @@ public abstract class Enemy : Character
     [SerializeField] protected float sightRange;
     protected bool playerNear;
     protected bool playerSighted;
+    public bool gotShot = false;
 
     // all enemies have the same start function
     void Start()
     {
-        SetRoomNum();
-        // name enemies by their room number.
-        // 0 is here in case of more than 10 rooms and to prevent Contains() errors
+        SetRoomNum();                
         gameObject.name += "R" + roomNum;
 
         agent = GetComponent<NavMeshAgent>();
@@ -61,9 +62,10 @@ public abstract class Enemy : Character
         destCooldown = 0f;
         maxDestCooldown = 0.2f;
         switchingDest = false;
-
-        attackCooldown = maxAttackCooldown;        
+        speed = GetComponent<NavMeshAgent>().speed;
+            
         shootSfx = GetComponent<AudioSource>();
+        StartCoroutine(AttackCooldown());
 
         int numEnemies = FindObjectsOfType<Enemy>().Length;
         enemiesInitialized++;
@@ -107,6 +109,12 @@ public abstract class Enemy : Character
         }        
     }
 
+    protected IEnumerator<WaitForSecondsRealtime> AttackCooldown()
+    {
+        yield return new WaitForSecondsRealtime(maxAttackCooldown);
+        attackCooldownDone = true;
+    }
+
     protected float DistToPlayer()
     {
         return Vector3.Distance(this.transform.position, player.transform.position);
@@ -133,13 +141,16 @@ public abstract class Enemy : Character
         return false;
     }
 
-    protected void FindNewDest(Vector3 destArrived)
+    protected void FindNewDest()
     {
         List<Vector3> possibleDests = new List<Vector3>();
 
         foreach (Vector3 destPos in destList)
         {
-            bool isDestArrived = (destPos.x == destArrived.x && destPos.z == destArrived.z);
+            if (destPos == null)
+                continue;
+
+            bool isDestArrived = (destPos.x == agent.destination.x && destPos.z == agent.destination.z);
             if (!isDestArrived)
                 possibleDests.Add(destPos);
         }

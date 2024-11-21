@@ -8,12 +8,12 @@ public class ThrowEnemy : Enemy
     [SerializeField] private Transform tntSpawn;    
     [SerializeField] private float defaultThrowHeight = 2f;
     [SerializeField] private float minDistFromWall = 0.5f;
-    private Vector3 shootPos;    
+    private Vector3 throwPos;    
 
     [SerializeField] private GameObject tntChild;
     [SerializeField] public AudioSource boomSfx;
 
-    private bool canThrow = true;
+    private bool canThrow = true;    
 
     private void ThrowTNT()
     {        
@@ -24,15 +24,15 @@ public class ThrowEnemy : Enemy
 
         Vector3 tntVel;
         if(PlayerIsSighted())        
-            tntVel = PlayerSightedVel(defaultThrowHeight);
+            tntVel = DefaultThrowVel(defaultThrowHeight);
         else        
             tntVel = VelToClearWall();        
         
         GameObject newTnt = Instantiate(tntPrefab, tntSpawn.position, Quaternion.identity);
         newTnt.GetComponent<Rigidbody>().velocity = tntVel;
-    }
+    }    
 
-    private Vector3 ShootPos()
+    private Vector3 ThrowPos()
     {        
         RaycastHit hit;
         Vector3 playerDirection = (player.transform.position - tntSpawn.position).normalized;
@@ -40,24 +40,19 @@ public class ThrowEnemy : Enemy
         float distToWall = hit.distance;
         float distToPlayer = DistToPlayer();
         
-        Vector3 shootPos = tntSpawn.position + playerDirection * -(sightRange-1-distToPlayer);
-        if (distToWall < minDistFromWall)
-            canThrow = false;
-        else
+        Vector3 throwPos = transform.position + playerDirection * -(sightRange-1-distToPlayer);
+        if (distToWall > minDistFromWall)
             canThrow = true;
+        else
+            canThrow = false;
 
-        return shootPos;
+        return throwPos;
     }
 
-    private Vector3 PlayerSightedVel(float height)
+    private Vector3 DefaultThrowVel(float height)
     {        
-        Vector3 playerDirection = (player.transform.position - tntSpawn.position).normalized;
-
-        Vector3 levelPlayerPos = player.transform.position;
-        levelPlayerPos.y = tntSpawn.position.y;        
-        float distToPlayer = Vector3.Distance(tntSpawn.position, player.transform.position);                                
-
-        float halfTntHeight = tntPrefab.transform.localScale.z * tntPrefab.GetComponent<CapsuleCollider>().height / 2;
+        Vector3 playerDirection = (player.transform.position - tntSpawn.position).normalized;        
+        float distToPlayer = Vector3.Distance(tntSpawn.position, player.transform.position);                                        
         
         float landTime = 2f * Mathf.Sqrt(height / (-Physics.gravity.y / 2));
         float yV0 = -Physics.gravity.y * Mathf.Sqrt(height / (-Physics.gravity.y / 2));
@@ -132,6 +127,12 @@ public class ThrowEnemy : Enemy
         return new Vector3(xV0, yV0, zV0);                
     }
 
+    private IEnumerator WaitToReplaceTNT()
+    {
+        yield return new WaitForSeconds(maxAttackCooldown / 2);
+        tntChild.GetComponent<MeshRenderer>().enabled = true;
+    }    
+
     // Update is called once per frame
     void Update()
     {
@@ -139,7 +140,7 @@ public class ThrowEnemy : Enemy
         {
             //Debug.Log("got to dest, find new dest");
             switchingDest = true;
-            FindNewDest(agent.destination);
+            FindNewDest();
             return;
         }
         else if (switchingDest)
@@ -158,24 +159,22 @@ public class ThrowEnemy : Enemy
 
         if (playerNear)
         {                     
-            shootPos = ShootPos();
-            if (canThrow)
-                agent.destination = shootPos;
+            throwPos = ThrowPos();
+            transform.LookAt(player.transform);
+            if (canThrow)            
+                agent.destination = throwPos;            
 
-            if (attackCooldown >= maxAttackCooldown && canThrow)
-            {
+            if (attackCooldownDone && canThrow)
+            {                
                 ThrowTNT();                
-                attackCooldown = 0f;
+                StartCoroutine(WaitToReplaceTNT());
+                attackCooldownDone = false;
+                StartCoroutine(AttackCooldown());                
             }
         }
-        else if (agent.destination == shootPos)
+        else if (agent.destination == throwPos)
         {            
-            FindNewDest(agent.destination);
+            FindNewDest();
         }
-
-        if (attackCooldown >= maxAttackCooldown / 2)
-            tntChild.GetComponent<MeshRenderer>().enabled = true;
-
-        attackCooldown += Time.deltaTime;
     }
 }

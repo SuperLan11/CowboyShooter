@@ -248,6 +248,8 @@ MonoBehaviour:
   attackDamage: 1
   roomNum: 0
   sightRange: 7
+  gotShot: 0
+  recoilTime: 1
   daggerSfx: {fileID: 3962084463372493288}
 --- !u!1 &7755438614422806565
 GameObject:

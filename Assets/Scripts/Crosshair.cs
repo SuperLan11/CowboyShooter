@@ -54,6 +54,11 @@ public class HUD : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(pointedAtObj())
+        {
+            Debug.Log("objAimedAt: " + Player.player.ObjAimedAt().name);
+        }
+
         if (player.shootCooldown < player.maxShootCooldown)
         {
             if (pointedAtObj() && pointedAtHook())

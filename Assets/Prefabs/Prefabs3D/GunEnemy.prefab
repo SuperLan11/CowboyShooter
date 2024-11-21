@@ -244,10 +244,12 @@ MonoBehaviour:
   health: 3
   destination1: {fileID: 0}
   destination2: {fileID: 0}
+  attackCooldown: 0
   maxAttackCooldown: 1
   attackDamage: 1
   roomNum: 0
   sightRange: 5
+  gotShot: 0
 --- !u!1001 &1666576197647647875
 PrefabInstance:
   m_ObjectHideFlags: 0
