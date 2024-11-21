@@ -26,9 +26,12 @@ public class MeleeEnemy : Enemy
     private IEnumerator StopForTime(float seconds)
     {        
         // how to immediately stop NavMesh? this has some ease out
-        GetComponent<NavMeshAgent>().speed = 0f;        
-        yield return new WaitForSecondsRealtime(seconds);        
-        GetComponent<NavMeshAgent>().speed = speed;
+        //GetComponent<NavMeshAgent>().speed = 0f;
+        GetComponent<NavMeshAgent>().velocity = Vector3.zero;
+        GetComponent<NavMeshAgent>().isStopped = true;
+        yield return new WaitForSecondsRealtime(seconds);
+        GetComponent<NavMeshAgent>().isStopped = false;
+        //GetComponent<NavMeshAgent>().speed = speed;
     }
 
     private void RecoilBack()
@@ -74,11 +77,6 @@ public class MeleeEnemy : Enemy
         else if (agent.destination == player.transform.position)
         {
             //Debug.Log("Find dest other than player");
-            FindNewDest();
-        }
-
-        if (!playerSighted)
-        {
             gotShot = false;
             FindNewDest();
         }

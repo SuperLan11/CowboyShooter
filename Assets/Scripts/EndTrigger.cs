@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class EndDoor : MonoBehaviour
+public class EndTrigger : MonoBehaviour
 {
     private SceneTransfer fadeAnim;
     // Start is called before the first frame update

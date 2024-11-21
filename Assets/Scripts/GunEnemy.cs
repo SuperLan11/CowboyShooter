@@ -21,7 +21,6 @@ public class GunEnemy : Enemy
     }
 
     // Update is called once per frame
-
     void Update()
     {
         if (!switchingDest && agent.remainingDistance <= 0.01f)

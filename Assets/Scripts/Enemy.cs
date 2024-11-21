@@ -32,7 +32,7 @@ public abstract class Enemy : Character
     // room number is found automatically based on hierarchy, but
     // it can be manually set if we decide that's better
     /*[SerializeField] */
-    public int roomNum;
+    protected int roomNum;
 
     protected float destCooldown;
     protected float maxDestCooldown;
@@ -42,7 +42,7 @@ public abstract class Enemy : Character
     [SerializeField] protected float sightRange;
     protected bool playerNear;
     protected bool playerSighted;
-    public bool gotShot = false;
+    protected bool gotShot = false;
 
     [SerializeField] protected AudioSource deathSfx;
 
@@ -109,6 +109,16 @@ public abstract class Enemy : Character
             else if (obj == this.gameObject)
                 break;
         }        
+    }
+
+    public int GetRoomNum()
+    {
+        return roomNum;
+    }
+
+    public void SetGotShot(bool wasShot)
+    {
+        gotShot = wasShot;
     }
 
     protected IEnumerator<WaitForSecondsRealtime> AttackCooldown()

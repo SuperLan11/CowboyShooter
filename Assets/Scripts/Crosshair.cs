@@ -32,36 +32,31 @@ public class HUD : MonoBehaviour
         crosshairImage = crosshair.GetComponent<Image>();
     }
 
-    private bool pointedAtObj(){
-        return Player.player.ObjAimedAt() != null;    
+    private bool PointedAtObj(){
+        return Player.player.ObjAimedAt() != null;
     }
 
-    private bool pointedAtEnemy()
+    private bool PointedAtEnemy()
     {
         return Player.player.ObjAimedAt().GetComponent<Enemy>() != null;
     }
 
-    private bool pointedAtHook()
+    private bool PointedAtHook()
     {
         return Player.player.ObjAimedAt().tag == "HOOK";
     }
 
-    private bool pointedAtEnemyOrHook()
+    private bool PointedAtEnemyOrHook()
     {
-        return pointedAtEnemy() || pointedAtHook();
+        return PointedAtEnemy() || PointedAtHook();
     }
 
     // Update is called once per frame
     void Update()
-    {
-        if(pointedAtObj())
-        {
-            Debug.Log("objAimedAt: " + Player.player.ObjAimedAt().name);
-        }
-
+    {        
         if (player.shootCooldown < player.maxShootCooldown)
         {
-            if (pointedAtObj() && pointedAtHook())
+            if (PointedAtObj() && PointedAtHook())
             {
                 crosshairImage.color = orange;
             }
@@ -73,21 +68,21 @@ public class HUD : MonoBehaviour
         }
 
         //!needs to be two separate if-statement blocks so that it doesn't try to access null obj
-        if (!pointedAtObj())
+        if (!PointedAtObj())
         {
             crosshairImage.color = Color.white;
             return;
         }
 
-        if (!pointedAtEnemyOrHook())
+        if (!PointedAtEnemyOrHook())
         {
             crosshairImage.color = Color.white;            
         }
-        else if (pointedAtEnemy())
+        else if (PointedAtEnemy())
         {
             crosshairImage.color = Color.red;
         }
-        else if (pointedAtHook())
+        else if (PointedAtHook())
         {
             crosshairImage.color = orange;
         }

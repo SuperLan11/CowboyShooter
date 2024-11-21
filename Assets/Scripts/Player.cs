@@ -49,6 +49,7 @@ public class Player : Character
     // these need to be static so the values persist when scene reloads
     public static int roomNum;    
     public static Vector3 respawnPos;
+    public static Vector3 respawnRot;
     public static bool hasCheckpoint = false;
 
     [SerializeField] private float slideVel = -0.5f;
@@ -58,7 +59,7 @@ public class Player : Character
     private int wallJumpsLeft = 1;
     private int maxWallJumps = 1;
 
-    [SerializeField] private float timeSinceJump = 0f;
+    private float timeSinceJump = 0f;
     [SerializeField] private float perfectJumpWindow = 0.15f;
     private bool kickStarted = false;
     private bool kickLerping = false;
@@ -102,11 +103,14 @@ public class Player : Character
         if (gunSfx == null){
             Debug.LogError("You ain't got a gun sound, partner!");
         }
-        
+
         // when player dies and scene reloads
         // when more scenes are used, if scene loading is different from current scene, set hasCheckpoint to false
         if (hasCheckpoint)
+        {
             transform.position = respawnPos;
+            transform.eulerAngles = respawnRot;
+        }
 
         roomNum = 1;
 
@@ -171,7 +175,7 @@ public class Player : Character
     {
         //Debug.Log("shot enemy");
         enemy.GetComponent<Enemy>().TakeDamage(1);
-        enemy.GetComponent<Enemy>().gotShot = true;            
+        enemy.GetComponent<Enemy>().SetGotShot(true);
     }
 
     public GameObject ObjAimedAt()

@@ -484,7 +484,6 @@ MonoBehaviour:
   shootCooldown: 0
   slideVel: -0.5
   wallSlideThreshold: 2
-  timeSinceJump: 0
   perfectJumpWindow: 0.15
   kickStopThreshold: 8
   kickLerpSpeed: 0.1
