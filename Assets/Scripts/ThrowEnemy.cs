@@ -12,6 +12,8 @@ public class ThrowEnemy : Enemy
     [SerializeField] private GameObject tntChild;
     [SerializeField] public AudioSource boomSfx;
 
+    private bool canThrow = true;
+
     private void ThrowTNT()
     {        
         // tntChild is not a TNT prefab. 
@@ -38,7 +40,12 @@ public class ThrowEnemy : Enemy
         float distToWall = hit.distance;
         float distToPlayer = DistToPlayer();
         
-        Vector3 shootPos = tntSpawn.position + playerDirection * -(sightRange-1-distToPlayer);        
+        Vector3 shootPos = tntSpawn.position + playerDirection * -(sightRange-1-distToPlayer);
+        if (distToWall < 1f)
+            canThrow = false;
+        else
+            canThrow = true;
+
         return shootPos;
     }
 
@@ -152,20 +159,19 @@ public class ThrowEnemy : Enemy
         playerSighted = PlayerIsSighted();
 
         if (playerNear)
-        {
-            //Debug.Log("going to player");            
-            agent.destination = ShootPos();
-            shootPos = agent.destination;
+        {                     
+            shootPos = ShootPos();
+            if (canThrow)
+                agent.destination = shootPos;
 
-            if (attackCooldown >= maxAttackCooldown)
+            if (attackCooldown >= maxAttackCooldown && canThrow)
             {
                 ThrowTNT();                
                 attackCooldown = 0f;
             }
         }
         else if (agent.destination == shootPos)
-        {
-            //Debug.Log("Find dest other than player");
+        {            
             FindNewDest(agent.destination);
         }
 
