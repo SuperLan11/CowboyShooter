@@ -1,6 +1,5 @@
 /*
 @Authors - Patrick, Landon
-@Authors - Patrick, Landon
 @Description - Player singleton class
 */
 
@@ -122,8 +121,8 @@ public class Player : Character
 
         lassoLockCooldown = maxLassoLockCooldown = 5;
         
-        //frames per second * second
-        restartCooldown = maxRestartCooldown = 60 * 1;      
+        //remember it's not in terms of frames, so a value of 60 does not mean it'll wait 1 second.
+        restartCooldown = maxRestartCooldown = 40;      
 
         //come back here
 
@@ -165,9 +164,6 @@ public class Player : Character
    
     protected void Shoot(GameObject enemy)
     {
-        if (gunSfx != null)
-            gunSfx.Play();
-
         //Debug.Log("shot enemy");
         enemy.GetComponent<Enemy>().TakeDamage(1);
     }
@@ -187,6 +183,9 @@ public class Player : Character
     {
         if (context.started)
         {
+            if (gunSfx != null)
+                gunSfx.Play();
+                
             try
             {
                 GameObject objAimed = ObjAimedAt();
