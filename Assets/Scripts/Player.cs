@@ -99,6 +99,10 @@ public class Player : Character
 
     void Start()
     {
+        if (gunSfx == null){
+            Debug.LogError("You ain't got a gun sound, partner!");
+        }
+        
         // when player dies and scene reloads
         // when more scenes are used, if scene loading is different from current scene, set hasCheckpoint to false
         if (hasCheckpoint)
@@ -185,19 +189,21 @@ public class Player : Character
     public void ShootActivated(InputAction.CallbackContext context)
     {
         if (context.started)
-        {
-            if (gunSfx != null)
-                gunSfx.Play();
-                
+        { 
             try
             {
                 GameObject objAimed = ObjAimedAt();
                 //Debug.Log("objAimed: " + objAimed.name);
-                if (objAimed.GetComponent<Enemy>() != null && shootCooldown >= maxShootCooldown)
+                if (shootCooldown >= maxShootCooldown)
                 {
-                    Shoot(objAimed);
+                    gunSfx.Play();
                     shootCooldown = 0f;
                     reloadPlayed = false;
+
+                    if(objAimed.GetComponent<Enemy>() != null)
+                    {
+                        Shoot(objAimed);
+                    }
                 }
             }
             catch

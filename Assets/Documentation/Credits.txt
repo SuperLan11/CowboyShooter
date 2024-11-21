@@ -99,3 +99,7 @@ Assets Used:
 	Hurt_C_08
 	cabled_mess (Freesound)	
 	https://pixabay.com/sound-effects/hurt-c-08-102842/
+
+	Enemy Death Shout
+	ZapSplat
+	https://www.zapsplat.com/music/angry-man-shouts-scream-3/
