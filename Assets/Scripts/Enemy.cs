@@ -79,8 +79,8 @@ public abstract class Enemy : Character
         StartCoroutine(AttackCooldown());
 
         int numEnemies = FindObjectsOfType<Enemy>().Length;
-        if (enemiesInitialized >= numEnemies)        
-            Door.ResetDoorCounter();                    
+        if (enemiesInitialized >= numEnemies)
+            Door.ResetDoorCounter();           
 
         //PrintAnyNulls();
     }
@@ -167,7 +167,16 @@ public abstract class Enemy : Character
                 closestDestIndex = i;
             }
         }
-        agent.destination = possibleDests[closestDestIndex];
+        
+        Vector3 newDest = possibleDests[closestDestIndex];
+
+        RaycastHit hit;
+        Vector3 beneathDest = new Vector3(newDest.x, newDest.y - 1, newDest.z);
+        Vector3 downDirection = (beneathDest - newDest).normalized;
+        if (Physics.Raycast(newDest, downDirection, out hit, Mathf.Infinity))
+            agent.destination = hit.point;
+        else
+            agent.destination = newDest;
     }
 
     // called from inherited TakeDamage function
@@ -203,7 +212,7 @@ public abstract class Enemy : Character
     public override void TakeDamage(int damage)
     {
         health -= damage;
-        if (health == 0)
+        if (health <= 0)
             Death();
     }
 
