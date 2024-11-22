@@ -2631,14 +2631,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2084219441191770436, guid: 675c419c1fbc55e44bd3d2b98522cc87, type: 3}
-      propertyPath: m_Volume
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2084219441191770436, guid: 675c419c1fbc55e44bd3d2b98522cc87, type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2490301241578895247, guid: 675c419c1fbc55e44bd3d2b98522cc87, type: 3}
       propertyPath: hook
       value: 
@@ -2686,10 +2678,6 @@ PrefabInstance:
     - target: {fileID: 8014982413098539183, guid: 675c419c1fbc55e44bd3d2b98522cc87, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 8509015516763741730, guid: 675c419c1fbc55e44bd3d2b98522cc87, type: 3}
-      propertyPath: health
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
