@@ -105,7 +105,6 @@ public class Player : Character
     };
 
     [System.NonSerialized] public movementState currentMovementState;
-    private int dumbFrameCounter = 0;
 
     void Start()
     {
@@ -458,7 +457,7 @@ public class Player : Character
     {
         Vector3 initialLassoForce = calculateLassoForce(transform.position, targetPosition, height) * lassoForceMultiplier;
         rigidbody.velocity = (initialLassoForce.magnitude <= maxLassoSpeed ? initialLassoForce : initialLassoForce.normalized * maxLassoSpeed);
-        Debug.Log(rigidbody.velocity.magnitude);
+        //Debug.Log(rigidbody.velocity.magnitude);
     }
 
     public float playerFeetPosition()
