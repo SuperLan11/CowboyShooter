@@ -61,9 +61,9 @@ public class Door : MonoBehaviour
         // enemiesInRoom should already be 0, but just in case
         Enemy.enemiesInRoom = 0;
         foreach (Enemy enemy in FindObjectsOfType<Enemy>())
-        {            
-            if (enemy.GetRoomNum() == Player.roomNum)
-                Enemy.enemiesInRoom++;
+        {
+            if (enemy.roomNum == Player.roomNum)                            
+                Enemy.enemiesInRoom++;            
         }        
         Door.SetDoorCounter(Enemy.enemiesInRoom);
     }

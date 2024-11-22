@@ -1,9 +1,7 @@
 /*
 @Authors - Patrick, Landon
 @Description - Enemy class. Different enemy prefabs should be able to use the same script
-!There should be be NO PRIVATE METHODS in this class! Only protected and public.
 */
-
 
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,7 +18,7 @@ public abstract class Enemy : Character
     [SerializeField] protected Transform destination2;
     protected List<Vector3> destList = new List<Vector3>();
     // assuming all enemies can jump the same distance
-    public static float maxJumpDist = 7f;
+    [SerializeField] public static float maxJumpDist = 7f;
     protected float speed;
 
     public static int enemiesInitialized = 0;
@@ -30,8 +28,8 @@ public abstract class Enemy : Character
     protected bool attackCooldownDone;    
     [SerializeField] protected float maxAttackCooldown;
     [SerializeField] protected int attackDamage;
-
-    [SerializeField] protected int roomNum;
+    
+    public int roomNum;
 
     protected float destCooldown;
     protected float maxDestCooldown;
@@ -41,9 +39,7 @@ public abstract class Enemy : Character
     [SerializeField] protected float sightRange;
     protected bool playerNear;
     protected bool playerSighted;
-    protected bool gotShot = false;
-    protected bool isDead = false;
-
+    [System.NonSerialized] public bool gotShot = false;
     [SerializeField] protected AudioSource deathSfx;
 
     // all enemies have the same start function
@@ -51,16 +47,15 @@ public abstract class Enemy : Character
     {
         //SetRoomNum();                
         gameObject.name += "R" + roomNum;
-        
-        agent = GetComponent<NavMeshAgent>();        
+
+        agent = GetComponent<NavMeshAgent>();
         player = FindObjectOfType<Player>().gameObject;
         playerNear = false;
-        playerSighted = false;        
+        playerSighted = false;             
 
         destList.Add(destination1.position);
         destList.Add(destination2.position);
         agent.destination = destination1.position;
-        
         // in seconds
         destCooldown = 0f;
         maxDestCooldown = 0.2f;
@@ -72,11 +67,15 @@ public abstract class Enemy : Character
 
         int numEnemies = FindObjectsOfType<Enemy>().Length;
         enemiesInitialized++;
-        if (enemiesInitialized >= numEnemies)        
-            Door.ResetDoorCounter();                    
+        if (enemiesInitialized >= numEnemies)
+            Door.ResetDoorCounter();
 
         PrintAnyNulls();
-    }    
+
+        // destroy enemies in completed rooms, but not enemies in future rooms
+        if (roomNum < Player.roomNum)
+            Destroy(this.gameObject);
+    }   
 
     private void PrintAnyNulls()
     {
@@ -112,20 +111,15 @@ public abstract class Enemy : Character
         }        
     }
 
-    public int GetRoomNum()
+    protected IEnumerator<WaitForSecondsRealtime> AttackCooldown()
     {
-        return roomNum;
+        yield return new WaitForSecondsRealtime(maxAttackCooldown);
+        attackCooldownDone = true;
     }
 
     public void SetGotShot(bool wasShot)
     {
         gotShot = wasShot;
-    }
-
-    protected IEnumerator<WaitForSecondsRealtime> AttackCooldown()
-    {
-        yield return new WaitForSecondsRealtime(maxAttackCooldown);
-        attackCooldownDone = true;
     }
 
     protected float DistToPlayer()
@@ -186,25 +180,16 @@ public abstract class Enemy : Character
     // called from inherited TakeDamage function
     protected override void Death()
     {
-        isDead = true;
-        //disables all components and re-enables death SFX
-        disableAllComponents();
-        deathSfx.enabled = true;
-        
-        if(deathSfx != null)
-            deathSfx.Play();
-
+        deathSfx.Play();
         enemiesInRoom--;
         Door.SetDoorCounter(enemiesInRoom);
         if (enemiesInRoom <= 0)
             Door.RaiseDoors();
-        
         //waits 1 second and then calls DeathCleanup()
         Invoke("DeathCleanup", 1);
     }
 
-    protected void DeathCleanup()
-    {
+    protected void DeathCleanup(){
         Destroy(this.gameObject);
     }
 
@@ -218,68 +203,5 @@ public abstract class Enemy : Character
         health -= damage;
         if (health == 0)
             Death();
-    }
-
-    protected void disableAllComponents()
-    {
-        MonoBehaviour[] components = GetComponents<MonoBehaviour>();
-        foreach (MonoBehaviour c in components)
-        {
-            if (c != null && c != deathSfx)
-            {
-                c.enabled = false;
-            }
-        }
-
-        NavMeshAgent navMeshAgent = GetComponent<NavMeshAgent>();
-        if (navMeshAgent != null)
-        {
-            navMeshAgent.enabled = false;
-        }
-
-        Rigidbody rb = GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            rb.isKinematic = true;
-        }
-
-        MeshRenderer meshRenderer= GetComponent<MeshRenderer>();
-        if (meshRenderer != null)
-        {
-            meshRenderer.enabled = false;
-        }
-
-        CapsuleCollider capsuleColldier= GetComponent<CapsuleCollider>();
-        if (capsuleColldier != null)
-        {
-            capsuleColldier.enabled = false;
-        }
-
-        GameObject[] childObjects = GetAllChildren(gameObject);
-        foreach (GameObject child in childObjects)
-        {
-            MeshRenderer childMeshRenderer = child.GetComponent<MeshRenderer>();
-            if (childMeshRenderer != null)
-            {
-                childMeshRenderer.enabled = false;
-            }
-        }
-    }
-
-    protected GameObject[] GetAllChildren(GameObject parent)
-    {
-        Transform[] childTransforms = parent.GetComponentsInChildren<Transform>();
-        GameObject[] children = new GameObject[childTransforms.Length - 1];
-        int index = 0;
-
-        foreach (Transform child in childTransforms)
-        {
-            if (child.gameObject != parent)
-            {
-                children[index] = child.gameObject;
-                index++;
-            }
-        }
-        return children;
     }
 }
