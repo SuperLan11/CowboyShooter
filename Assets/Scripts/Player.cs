@@ -36,7 +36,7 @@ public class Player : Character
     private int maxJumpCooldown;
 
     [SerializeField] public float maxShootCooldown;
-    [SerializeField] public float shootCooldown;
+    [System.NonSerialized] public float shootCooldown;
 
     private int maxRestartCooldown;
     private int restartCooldown;
@@ -81,10 +81,14 @@ public class Player : Character
 
     private bool reloadPlayed = false;
 
-    // IMPORTANT! If you assign these values here, they must be the same as the inspector (i think)
-    // Otherwise, movement is reversed
-    [SerializeField] float horRotSpeed;
-    [SerializeField] float vertRotSpeed;
+    // Snap is how closely the camera stays to the actual mouse value
+    // Sensitivity changes how much magnitude moving the mouse has
+    [SerializeField] private float horCamSnap = 10f;
+    [SerializeField] private float vertCamSnap = 10f;
+    [SerializeField] private float mouseSensitivityX = 10f;
+    [SerializeField] private float mouseSensitivityY = 10f;
+    private float curMouseX = 0f;
+    private float curMouseY = 0f;
 
     public enum movementState
     {
@@ -96,11 +100,12 @@ public class Player : Character
         FLYING,
     };
 
-    public movementState currentMovementState;
+    [System.NonSerialized] public movementState currentMovementState;
 
     void Start()
     {
-        if (gunSfx == null){
+        if (gunSfx == null)
+        {
             Debug.LogError("You ain't got a gun sound, partner!");
         }
 
@@ -230,10 +235,12 @@ public class Player : Character
                 lassoSfx.Play();
             }
         }
-        else if (context.performed){
+        else if (context.performed)
+        {
             holdingRMB = true;
 
-            if (currentMovementState == movementState.SWINGING){
+            if (currentMovementState == movementState.SWINGING)
+            {
                bool valid = lasso.GetComponent<Lasso>().StartLasso();
 
                 if (valid)
@@ -280,7 +287,8 @@ public class Player : Character
         bool firstPressingR = context.started && !holdingRestart;
         bool holdingR = context.performed;
 
-        if (firstPressingR || holdingR){
+        if (firstPressingR || holdingR)
+        {
             holdingRestart = true;
         }
         else{
@@ -433,9 +441,10 @@ public class Player : Character
             if (img.gameObject.name.Contains("Heart"))
                 hearts.Add(img);
         }
-        Destroy(hearts[hearts.Count - 1].gameObject);
+        if(hearts.Count > 0)
+            Destroy(hearts[hearts.Count - 1].gameObject);
 
-        if (health <= 0)
+        if (health == 0)
             Death();
     }
 
@@ -470,8 +479,7 @@ public class Player : Character
     void FixedUpdate()
     {
         //Debug.Log("State: " + currentMovementState);
-        //Debug.Log(rigidbody.velocity.magnitude);
-        //Debug.Log(wallJumpsLeft);        
+        //Debug.Log(rigidbody.velocity.magnitude);        
 
         //forces camera to look straight as you're opening up scene
         if (Time.timeSinceLevelLoad < 0.1f)
@@ -493,10 +501,14 @@ public class Player : Character
             }
         }
 
-        if (holdingRestart){
-            if (restartCooldown > 0){
+        if (holdingRestart)
+        {
+            if (restartCooldown > 0)
+            {
                 restartCooldown--;
-            }else{
+            }
+            else
+            {
                 restartCooldown = maxRestartCooldown;
                 holdingRMB = false;
                 Death();
@@ -509,7 +521,8 @@ public class Player : Character
                 wallSlideSfx.Play();
             rigidbody.velocity = new Vector3(0, slideVel, 0);
         }
-        else if (currentMovementState == movementState.HANGING){
+        else if (currentMovementState == movementState.HANGING)
+        {
             int hangModifier = 5;
             rigidbody.velocity = new Vector3(0, gravityAccel / hangModifier, 0);
         }
@@ -526,10 +539,10 @@ public class Player : Character
             rigidbody.velocity = Vector3.Lerp(rigidbody.velocity, newVel, moveAccel);
         }
 
-        // Input.GetAxis is the change in value since last frame        
-        float deltaMouseX = Input.GetAxis("Mouse X");
-        float deltaMouseY = Input.GetAxis("Mouse Y");
-                     
+        // Input.GetAxis is the change in value since last frame                
+        curMouseX = Mathf.Lerp(curMouseX, Input.GetAxis("Mouse X"), horCamSnap * Time.deltaTime);
+        curMouseY = Mathf.Lerp(curMouseY, Input.GetAxis("Mouse Y"), vertCamSnap * Time.deltaTime); 
+
         // kick rotation momentarily overrides normal rotation
         // consider using a time variable to unstuck for emergencies
         if (kickLerping)
@@ -538,9 +551,7 @@ public class Player : Character
             // LerpAngle handles the wrap around from 360 -> 0 degrees
             newRot.y = Mathf.LerpAngle(newRot.y, yRotNormal, kickLerpSpeed);
             transform.eulerAngles = newRot;            
-
-            // what about 360?
-            //if(transform.eulerAngles.y > )
+            
             if (yRotNormal < transform.eulerAngles.y && transform.eulerAngles.y < yRotNormal + kickStopThreshold)            
                 kickLerping = false;
             else if (yRotNormal > transform.eulerAngles.y && transform.eulerAngles.y > yRotNormal - kickStopThreshold)            
@@ -548,27 +559,38 @@ public class Player : Character
         }
         else
         {
+            float mouseX = curMouseX * mouseSensitivityX * 100f * Time.deltaTime;
+            float mouseY = curMouseY * mouseSensitivityY * 100f * Time.deltaTime;
+
             // Player will not scroll vertically so that transform.forward doesn't move into the sky
-            Vector3 playerRot = transform.rotation.eulerAngles;
-            playerRot.y += deltaMouseX * horRotSpeed;
+            Vector3 playerRot = transform.eulerAngles;
+            Vector3 newPlayerRot = Vector3.zero;
+            newPlayerRot.y = playerRot.y + mouseX;
             // just in case
-            playerRot.x = 0;
-            playerRot.z = 0;
-            transform.eulerAngles = playerRot;
+            newPlayerRot.x = playerRot.x;
+            newPlayerRot.z = 0;
+            transform.eulerAngles = Vector3.Lerp(playerRot, newPlayerRot, horCamSnap);
 
             // The camera only scrolls vertically since the player parent object handles horizontal scroll
             Vector3 camRot = cam.transform.rotation.eulerAngles;
+            Vector3 newCamRot = Vector3.zero;
 
-            // camRot.x starts decreasing from 360 when you look up and is positive downwards        
+            float deltaMouseX = Input.GetAxis("Mouse X");
+            float deltaMouseY = Input.GetAxis("Mouse Y");
+
+            // camRot.x starts decreasing from 360 when you look up and is positive downwards   
             bool inNormalRange = (camRot.x > 280f || camRot.x < 80f);
             bool inLowerRange = (camRot.x <= 280f && camRot.x >= 270f && deltaMouseY < -0.001f);
             bool inRaiseRange = (camRot.x >= 80f && camRot.x <= 90f && deltaMouseY > 0.001f);
-
+            
+            newCamRot.z = 0;
+            newCamRot.y = camRot.y;
             // -= because xRot is negative upwards
             if (inNormalRange || inLowerRange | inRaiseRange)
-                camRot.x -= deltaMouseY * vertRotSpeed;
-            camRot.z = 0;
-            cam.transform.eulerAngles = camRot;
+            {                
+                newCamRot.x = camRot.x - mouseY;
+                cam.transform.eulerAngles = Vector3.Lerp(camRot, newCamRot, vertCamSnap);
+            }            
         }
         
         if (kickStarted)

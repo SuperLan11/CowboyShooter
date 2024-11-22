@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 367f61dd8825b9b439de0689b6b3d755, type: 2}
+  - {fileID: 2100000, guid: e35a16565768255458689085ff2950b7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -147,8 +147,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   singleNavLink: {fileID: 2092633861073207576, guid: f9ca0696e2270bc44b4345ad67134da9, type: 3}
-  maxJumpDist: 0
-  myMesh: {fileID: 0}
   useUniqueLinks: 0
   xSpacePerLink: 0
   zSpacePerLink: 0

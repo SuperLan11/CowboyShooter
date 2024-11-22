@@ -482,7 +482,7 @@ MonoBehaviour:
   gravityAccel: -13
   maxShootCooldown: 0.5
   shootCooldown: 0
-  slideVel: -0.5
+  slideVel: -1
   wallSlideThreshold: 2
   perfectJumpWindow: 0.15
   kickStopThreshold: 8
@@ -493,8 +493,10 @@ MonoBehaviour:
   gunReloadSfx: {fileID: 3357556871480406274}
   wallSlideSfx: {fileID: 0}
   takeDamageSfx: {fileID: 4959015502900481118}
-  horRotSpeed: 4
-  vertRotSpeed: 4
+  horRotSpeed: 10
+  vertRotSpeed: 10
+  horCamAccel: 20
+  vertCamAccel: 20
   currentMovementState: 0
 --- !u!114 &2539925554298584340
 MonoBehaviour:

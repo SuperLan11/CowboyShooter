@@ -29,10 +29,7 @@ public abstract class Enemy : Character
     [SerializeField] protected float maxAttackCooldown;
     [SerializeField] protected int attackDamage;
 
-    // room number is found automatically based on hierarchy, but
-    // it can be manually set if we decide that's better
-    /*[SerializeField] */
-    protected int roomNum;
+    [SerializeField] protected int roomNum;
 
     protected float destCooldown;
     protected float maxDestCooldown;
@@ -49,17 +46,18 @@ public abstract class Enemy : Character
     // all enemies have the same start function
     void Start()
     {
-        SetRoomNum();                
+        //SetRoomNum();                
         gameObject.name += "R" + roomNum;
-
-        agent = GetComponent<NavMeshAgent>();
+        
+        agent = GetComponent<NavMeshAgent>();        
         player = FindObjectOfType<Player>().gameObject;
         playerNear = false;
-        playerSighted = false;             
+        playerSighted = false;        
 
         destList.Add(destination1.position);
         destList.Add(destination2.position);
         agent.destination = destination1.position;
+        
         // in seconds
         destCooldown = 0f;
         maxDestCooldown = 0.2f;

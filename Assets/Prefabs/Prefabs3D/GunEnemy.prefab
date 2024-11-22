@@ -247,7 +247,8 @@ MonoBehaviour:
   destination2: {fileID: 0}
   maxAttackCooldown: 1
   attackDamage: 1
-  sightRange: 5
+  roomNum: 0
+  sightRange: 7
   deathSfx: {fileID: 3693498155660872604}
 --- !u!82 &3693498155660872604
 AudioSource:

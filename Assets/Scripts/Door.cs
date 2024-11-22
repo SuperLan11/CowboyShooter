@@ -16,9 +16,11 @@ public class Door : MonoBehaviour
     // rigidbody needed for collisions to work
     private Rigidbody doorRig;
     private AudioSource doorSlamSfx;
+    private AudioSource doorOpenSfx;
     // static so multiple door sounds don't play at once
-    private static bool soundPlayed = false;
-    
+    private static bool slamSoundPlayed = false;
+    private static bool openSoundPlayed = false;
+
     // serialized values override script values unless script values are set in Start()
     [SerializeField] private float raiseHeight;
     [SerializeField] private float raiseAccel;
@@ -27,7 +29,12 @@ public class Door : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        doorSlamSfx = GetComponent<AudioSource>();
+        if (gameObject.name == "FirstDoorOfGame")
+            movingUp = true;
+
+        doorSlamSfx = GetComponents<AudioSource>()[0];
+        doorOpenSfx = GetComponents<AudioSource>()[1];
+
         triggerPos = transform.GetChild(0).position;
 
         loweredPos = transform.position;
@@ -79,17 +86,23 @@ public class Door : MonoBehaviour
             movingDown = false;
             transform.position = Vector3.Lerp(transform.position, raisedPos, raiseAccel);
             // door trigger is child, don't let parent move it from ground
-            transform.GetChild(0).position = triggerPos;
-            soundPlayed = false;
+            transform.GetChild(0).position = triggerPos;            
+            slamSoundPlayed = false;
+            if(!openSoundPlayed && doorOpenSfx != null)
+            {
+                doorOpenSfx.Play();
+                openSoundPlayed = true;
+            }
         }
         // wasMovingUp
         else if (movingDown)
         {
             movingUp = false;
-            if (!soundPlayed)
+            openSoundPlayed = false;
+            if (!slamSoundPlayed && doorSlamSfx != null)
             {                
                 doorSlamSfx.Play();
-                soundPlayed = true;
+                slamSoundPlayed = true;
             }
             transform.position = Vector3.Lerp(transform.position, loweredPos, lowerAccel);
             transform.GetChild(0).position = triggerPos;
