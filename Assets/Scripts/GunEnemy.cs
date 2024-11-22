@@ -21,8 +21,15 @@ public class GunEnemy : Enemy
     private Vector3 ShootPos()
     {
         Vector3 playerDirection = (player.transform.position - transform.position).normalized;        
-        float distToPlayer = DistToPlayer();        
-        return transform.position + playerDirection * -(sightRange - 1 - distToPlayer);        
+        float distToPlayer = DistToPlayer();
+        
+        RaycastHit hit;
+        // raycast backward to see if navmesh would move within 0.5 of wall
+        // prevents enemies from moving into walls
+        bool hitObjBackward = Physics.Raycast(transform.position, -1*playerDirection, out hit, minDistFromWall);
+        if (hitObjBackward && hit.transform.tag == "WALL")        
+            return transform.position;        
+        return transform.position + playerDirection * -(sightRange - 1 - distToPlayer);
     }
 
     // Update is called once per frame

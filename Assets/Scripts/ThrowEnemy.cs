@@ -6,8 +6,7 @@ public class ThrowEnemy : Enemy
 {
     [SerializeField] private GameObject tntPrefab;    
     [SerializeField] private Transform tntSpawn;    
-    [SerializeField] private float defaultThrowHeight = 2f;
-    [SerializeField] private float minDistFromWall = 0.5f;
+    [SerializeField] private float defaultThrowHeight = 2f;    
     private Vector3 throwPos;    
 
     [SerializeField] private GameObject tntChild;
@@ -39,18 +38,25 @@ public class ThrowEnemy : Enemy
 
     private Vector3 ThrowPos()
     {        
-        RaycastHit hit;
+        RaycastHit frontHit;
         Vector3 playerDirection = (player.transform.position - tntSpawn.position).normalized;
-        bool hitWall = (Physics.Raycast(tntSpawn.position, playerDirection, out hit, sightRange));
-        float distToWall = hit.distance;
+        bool hitWall = (Physics.Raycast(tntSpawn.position, playerDirection, out frontHit, sightRange));
+        float distToWall = frontHit.distance;
         float distToPlayer = DistToPlayer();
+
+        RaycastHit backHit;
+        // raycast backward to see if navmesh would move within 0.5 of wall
+        // prevents enemies from moving into walls
+        bool hitObjBackward = Physics.Raycast(transform.position, -1 * playerDirection, out backHit, minDistFromWall);
+        if (hitObjBackward && backHit.transform.tag == "WALL")
+            return transform.position;
         
-        Vector3 throwPos = transform.position + playerDirection * -(sightRange-1-distToPlayer);
         if (distToWall > minDistFromWall)
             canThrow = true;
         else
             canThrow = false;
 
+        Vector3 throwPos = transform.position + playerDirection * -(sightRange - 1 - distToPlayer);
         return throwPos;
     }
 

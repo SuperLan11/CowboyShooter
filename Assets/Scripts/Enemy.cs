@@ -30,7 +30,9 @@ public abstract class Enemy : Character
     protected bool attackCooldownDone;    
     [SerializeField] protected float maxAttackCooldown;
     [SerializeField] protected int attackDamage;
-    
+    // the closest distance an enemy can stay from a wall while being pushed into corner by player
+    [SerializeField] protected float minDistFromWall = 0.5f;
+
     public int roomNum;
 
     protected float destCooldown;
@@ -51,10 +53,11 @@ public abstract class Enemy : Character
     {               
         enemiesInitialized++;
         // destroy enemies in completed rooms, but not enemies in future rooms
+        // doing this at the start of Start() makes scene reloading much faster
         if (roomNum < Player.roomNum)
         {
             Destroy(this.gameObject);
-            Debug.Log("print after destroy");
+            // the script still runs even after the gameObject is destroyed            
             return;
         }
 
