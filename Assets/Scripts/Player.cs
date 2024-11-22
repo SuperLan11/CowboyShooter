@@ -105,7 +105,6 @@ public class Player : Character
     };
 
     [System.NonSerialized] public movementState currentMovementState;
-    private int dumbFrameCounter = 0;
 
     void Start()
     {
