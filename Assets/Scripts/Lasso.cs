@@ -18,7 +18,7 @@ public class Lasso : MonoBehaviour
     private LineRenderer lineRenderer;
     private Vector3 grapplePoint;
     //private SpringJoint joint;
-    private float lassoMaxRange = 100f;
+    private float lassoMaxRange = 25f;
     
     //!Make sure you keep track of this cause it's in the editor;
     [SerializeField] private float lassoYOffset = 0.25f;
@@ -69,23 +69,29 @@ public class Lasso : MonoBehaviour
                 return false;
             }
 
-            float grapplePointRelativeYPosition = grapplePoint.y - Player.player.playerFeetPosition();
-            float highestPointOnArcTrajectory = grapplePointRelativeYPosition - lassoYOffset;
-
-            
-            if(grapplePointRelativeYPosition < 0)
-            {
-                highestPointOnArcTrajectory = overshootYAxis;
-            }
-            
-
-            Player.player.lassoLaunch(grapplePoint, highestPointOnArcTrajectory);
+            LassoPhysics();
             lineRenderer.positionCount = 2;
 
             return true;
         }
       
         return false;
+    }
+
+    public void ContinueLasso(){
+        LassoPhysics();   
+    }
+
+    private void LassoPhysics(){
+        float grapplePointRelativeYPosition = grapplePoint.y - Player.player.playerFeetPosition();
+        float highestPointOnArcTrajectory = grapplePointRelativeYPosition - lassoYOffset;
+        
+        if(grapplePointRelativeYPosition < 0)
+        {
+            highestPointOnArcTrajectory = overshootYAxis;
+        }
+
+        Player.player.lassoLaunch(grapplePoint, highestPointOnArcTrajectory);
     }
 
     public void EndLasso()

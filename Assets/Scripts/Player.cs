@@ -15,6 +15,7 @@ using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 using UnityEngine.UI;
 using JetBrains.Rider.Unity.Editor;
+using System.Runtime.ConstrainedExecution;
 
 public class Player : Character
 {
@@ -29,7 +30,7 @@ public class Player : Character
     private bool tryingToJump;
     private bool holdingRMB;
     private bool holdingRestart;
-    private bool inJumpCooldown = false;    
+    private bool inJumpCooldown = false;
     public float jumpStrength = 7f;
     [SerializeField] private float gravityAccel = -13f;
     private int jumpCooldown;
@@ -44,7 +45,10 @@ public class Player : Character
     private bool inLassoLock = false;
     private int lassoLockCooldown;
     private int maxLassoLockCooldown;    
-    private float lassoForceMultiplier = 15f;
+    private const float startingLassoForceMultiplier = 10f;  //originally 15f
+    private const float lassoForceIncrease = 0.1f;
+    private float maxLassoSpeed = 30f;
+    private float lassoForceMultiplier;
 
     // these need to be static so the values persist when scene reloads
     public static int roomNum = 1;
@@ -101,6 +105,7 @@ public class Player : Character
     };
 
     [System.NonSerialized] public movementState currentMovementState;
+    private int dumbFrameCounter = 0;
 
     void Start()
     {
@@ -124,8 +129,9 @@ public class Player : Character
         // to make cursor visible, press Escape  
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        
 
+        lassoForceMultiplier = startingLassoForceMultiplier;
+        
         maxShootCooldown = 0.5f;
         shootCooldown = maxShootCooldown;  
 
@@ -135,8 +141,6 @@ public class Player : Character
         
         //remember it's not in terms of frames, so a value of 60 does not mean it'll wait 1 second.
         restartCooldown = maxRestartCooldown = 40;      
-
-        //come back here
 
         cam = Camera.main;
         // lasso should be the second child of Camera for this to work
@@ -233,24 +237,13 @@ public class Player : Character
         }
         else if (context.performed)
         {
+            //actual logic for holding RMB must go somewhere else since context.performed is only called the FIRST frame the user holds RMB
             holdingRMB = true;
-
-            if (currentMovementState == movementState.SWINGING)
-            {
-               bool valid = lasso.GetComponent<Lasso>().StartLasso();
-
-                if (valid)
-                {
-                    player.currentMovementState = movementState.SWINGING;
-                    lassoLockCooldown = maxLassoLockCooldown;
-                    inLassoLock = true;
-                    lassoSfx.Play();
-                } 
-            }
         }
         else if (context.canceled)
         {
             holdingRMB = false;
+            lassoForceMultiplier = startingLassoForceMultiplier;
             
             //prevents player from being in air state after just tapping RMB
             if (!isGrounded() && player.currentMovementState == movementState.SWINGING)
@@ -445,7 +438,7 @@ public class Player : Character
     }
 
     //courtesy of internet physics/game dev guru. Calculates force needed to launch player towards hook
-    //if needed, we can tweak this so that distance is not a factor or is less of a factor
+    //most of what this function does is probably unnecessary, but we should only change it if needed cause it works!
     public Vector3 calculateLassoForce(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight)
     {
         float gravity = Physics.gravity.y;
@@ -463,7 +456,9 @@ public class Player : Character
 
     public void lassoLaunch(Vector3 targetPosition, float height)
     {
-        rigidbody.velocity = calculateLassoForce(transform.position, targetPosition, height) * lassoForceMultiplier;
+        Vector3 initialLassoForce = calculateLassoForce(transform.position, targetPosition, height) * lassoForceMultiplier;
+        rigidbody.velocity = (initialLassoForce.magnitude <= maxLassoSpeed ? initialLassoForce : initialLassoForce.normalized * maxLassoSpeed);
+        Debug.Log(rigidbody.velocity.magnitude);
     }
 
     public float playerFeetPosition()
@@ -505,13 +500,20 @@ public class Player : Character
             }
             else
             {
-                restartCooldown = maxRestartCooldown;
-                holdingRMB = false;
                 Death();
             }
-        }       
+        }     
+  
 
-        if (currentMovementState == movementState.SLIDING)
+
+        if (currentMovementState == movementState.SWINGING)
+        {
+            if (holdingRMB){
+                lassoForceMultiplier += lassoForceIncrease;
+                lasso.GetComponent<Lasso>().ContinueLasso();
+            } 
+        }
+        else if (currentMovementState == movementState.SLIDING)
         {
             if(wallSlideSfx != null && !wallSlideSfx.isPlaying)
                 wallSlideSfx.Play();
