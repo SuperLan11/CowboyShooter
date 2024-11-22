@@ -104,8 +104,17 @@ Assets Used:
 	ZapSplat
 	https://www.zapsplat.com/music/angry-man-shouts-scream-3/
 
-	The Wild West (Main Menu Song)	
-	https://www.youtube.com/watch?v=VDPMAuv-3nk
+	Mexican Cowboys (Main Menu Theme)
+	Steve Oxen
+	https://www.fesliyanstudios.com/royalty-free-music/download/mexican-cowboys/3251
+
+	Western Cowboy Ride (Level 1 Theme)
+	David Fesliyan
+	https://www.fesliyanstudios.com/royalty-free-music/download/western-cowboy-ride/315
+
+	Western Adventures (Second and Final Level Theme)
+	David Fesliyan
+	https://www.fesliyanstudios.com/royalty-free-music/download/western-adventures-without-orchestra/564
 
 	Creaking Wood
 	VoiceBosch
