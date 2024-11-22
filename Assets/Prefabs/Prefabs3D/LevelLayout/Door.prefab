@@ -20,8 +20,8 @@ GameObject:
   m_Name: Door
   m_TagString: DOOR
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &4687078694023522704
 Transform:

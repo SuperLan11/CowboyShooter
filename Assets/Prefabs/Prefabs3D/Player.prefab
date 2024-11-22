@@ -494,8 +494,8 @@ MonoBehaviour:
   takeDamageSfx: {fileID: 4959015502900481118}
   horCamSnap: 10
   vertCamSnap: 10
-  mouseSensitivityX: 6
-  mouseSensitivityY: 6
+  mouseSensitivityX: 5
+  mouseSensitivityY: 5
 --- !u!114 &2539925554298584340
 MonoBehaviour:
   m_ObjectHideFlags: 0

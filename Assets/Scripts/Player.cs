@@ -301,8 +301,7 @@ public class Player : Character
             
             // perfect wall jump counts towards wall jump counter            
             if (hitWall && gotTiming && !hitFeet && wallJumpsLeft > 0 && !isGrounded())
-            {
-                Debug.Log("got kick in enter");
+            {                
                 kickStarted = true;                
                 wallJumpsLeft--;                
                 Vector3 curRot = transform.eulerAngles;                
