@@ -52,7 +52,11 @@ public abstract class Enemy : Character
         enemiesInitialized++;
         // destroy enemies in completed rooms, but not enemies in future rooms
         if (roomNum < Player.roomNum)
+        {
             Destroy(this.gameObject);
+            Debug.Log("print after destroy");
+            return;
+        }
 
         agent = GetComponent<NavMeshAgent>();
         player = Player.player.gameObject;
