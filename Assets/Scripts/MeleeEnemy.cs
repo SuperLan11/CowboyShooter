@@ -20,7 +20,7 @@ public class MeleeEnemy : Enemy
                 StartCoroutine(AttackCooldown());
                 StartCoroutine(StopForTime(recoilTime));
             }
-        }
+        }        
     }
 
     private IEnumerator StopForTime(float seconds)
@@ -41,7 +41,8 @@ public class MeleeEnemy : Enemy
 
     private void Strike(Player player)
     {
-        if (isDead){
+        if (isDead)
+        {
             return;
         }
         
@@ -52,7 +53,7 @@ public class MeleeEnemy : Enemy
     }
 
     void Update()
-    {
+    {        
         if (!switchingDest && agent.remainingDistance <= 0.01f)
         {
             //Debug.Log("got to dest, find new dest");

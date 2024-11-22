@@ -247,7 +247,8 @@ MonoBehaviour:
   destination2: {fileID: 0}
   maxAttackCooldown: 0.5
   attackDamage: 1
-  sightRange: 7
+  roomNum: 3
+  sightRange: 8
   deathSfx: {fileID: 6909237089869480448}
   recoilTime: 1
   daggerSfx: {fileID: 3962084463372493288}
