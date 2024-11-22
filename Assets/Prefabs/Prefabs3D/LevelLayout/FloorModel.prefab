@@ -145,5 +145,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   singleNavLink: {fileID: 2092633861073207576, guid: f9ca0696e2270bc44b4345ad67134da9, type: 3}
   useUniqueLinks: 0
-  xSpacePerLink: 0
-  zSpacePerLink: 0
+  xSpacePerLink: 2
+  zSpacePerLink: 2

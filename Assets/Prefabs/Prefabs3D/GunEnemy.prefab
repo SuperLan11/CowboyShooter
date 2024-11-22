@@ -245,7 +245,7 @@ MonoBehaviour:
   health: 3
   destination1: {fileID: 0}
   destination2: {fileID: 0}
-  maxAttackCooldown: 1
+  maxAttackCooldown: 1.2
   attackDamage: 1
   roomNum: 3
   sightRange: 8

@@ -29,7 +29,7 @@ public class Door : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (gameObject.name == "FirstDoorOfGame")
+        if (gameObject.name == "FirstDoorOfGame" && Player.roomNum == 1)
             movingUp = true;
 
         doorSlamSfx = GetComponents<AudioSource>()[0];

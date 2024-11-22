@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 1, z: 5}
+  m_LocalScale: {x: 3.6496933, y: 2.4478688, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -147,6 +147,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   singleNavLink: {fileID: 2092633861073207576, guid: f9ca0696e2270bc44b4345ad67134da9, type: 3}
-  useUniqueLinks: 1
-  xSpacePerLink: 0
-  zSpacePerLink: 0
+  useUniqueLinks: 0
+  xSpacePerLink: 2
+  zSpacePerLink: 2

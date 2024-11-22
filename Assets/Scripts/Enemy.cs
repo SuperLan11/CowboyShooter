@@ -21,8 +21,7 @@ public abstract class Enemy : Character
     [SerializeField] protected Transform destination2;
     protected List<Vector3> destList = new List<Vector3>();
     // assuming all enemies can jump the same distance
-    [SerializeField] public static float maxJumpDist = 7f;
-    protected float speed;
+    [SerializeField] public static float maxJumpDist = 7f;    
 
     public static int enemiesInitialized = 0;
     public static int enemiesInRoom = 0;
@@ -45,18 +44,20 @@ public abstract class Enemy : Character
     [System.NonSerialized] public bool gotShot = false;
     protected bool isDead = false;
 
-    [SerializeField] protected AudioSource deathSfx;
+    [SerializeField] protected AudioSource deathSfx;    
 
     // all enemies have the same start function
     void Start()
-    {
-        //SetRoomNum();                
-        gameObject.name += "R" + roomNum;
+    {               
+        enemiesInitialized++;
+        // destroy enemies in completed rooms, but not enemies in future rooms
+        if (roomNum < Player.roomNum)
+            Destroy(this.gameObject);
 
         agent = GetComponent<NavMeshAgent>();
-        player = FindObjectOfType<Player>().gameObject;
+        player = Player.player.gameObject;
         playerNear = false;
-        playerSighted = false;             
+        playerSighted = false;
 
         destList.Add(destination1.position);
         destList.Add(destination2.position);
@@ -64,29 +65,23 @@ public abstract class Enemy : Character
         
         // in seconds
         destCooldown = 0f;
-        maxDestCooldown = 0.2f;
-        switchingDest = false;
-        speed = GetComponent<NavMeshAgent>().speed;
+        maxDestCooldown = 0.4f;
+        switchingDest = false;        
             
         shootSfx = GetComponent<AudioSource>();
         StartCoroutine(AttackCooldown());
 
         int numEnemies = FindObjectsOfType<Enemy>().Length;
-        enemiesInitialized++;
-        if (enemiesInitialized >= numEnemies)
-            Door.ResetDoorCounter();
+        if (enemiesInitialized >= numEnemies)        
+            Door.ResetDoorCounter();                    
 
-        PrintAnyNulls();
-
-        // destroy enemies in completed rooms, but not enemies in future rooms
-
-        if (roomNum < Player.roomNum)
-            Destroy(this.gameObject);
+        //PrintAnyNulls();
     }
+
     private void PrintAnyNulls()
     {
         // check if any important serialized variables are unset
-        if(health == 0)
+        if (health == 0)
             Debug.LogWarning("health was not set for " + gameObject.name);
         if (sightRange == 0)
             Debug.LogWarning("sightRange was not set for " + gameObject.name);
@@ -100,26 +95,6 @@ public abstract class Enemy : Character
             Debug.LogWarning("destination1 was not set for " + gameObject.name);
         if (destination2 == null)
             Debug.LogWarning("destination2 was not set " + gameObject.name);
-    }       
-
-    protected void SetRoomNum()
-    {
-        roomNum = 1;
-        // GetRootGameObjects returns the objects in scene in the order of the hierarchy
-        // use the order of the hierarchy to determine which room an enemy is in
-        // checkpoints and enemies in the hierarchy should be ordered based on when the player encounters them
-        foreach (GameObject obj in gameObject.scene.GetRootGameObjects())
-        {
-            if (obj.GetComponent<Checkpoint>() != null)
-                roomNum++;
-            else if (obj == this.gameObject)
-                break;
-        }        
-    }
-
-    public int GetRoomNum()
-    {
-        return roomNum;
     }
 
     public void SetGotShot(bool wasShot)
@@ -193,7 +168,7 @@ public abstract class Enemy : Character
     {
         isDead = true;
         //disables all components and re-enables death SFX
-        disableAllComponents();
+        DisableAllComponents();
         deathSfx.enabled = true;
         
         if(deathSfx != null)
@@ -225,7 +200,7 @@ public abstract class Enemy : Character
             Death();
     }
 
-    protected void disableAllComponents()
+    protected void DisableAllComponents()
     {
         MonoBehaviour[] components = GetComponents<MonoBehaviour>();
         foreach (MonoBehaviour c in components)

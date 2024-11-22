@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
-{
-    private bool isCollected = false;
+{    
     // checkpoint can also be a door lower trigger
     private bool isDoorTrigger;
     [SerializeField] private int roomNum;
@@ -34,9 +33,8 @@ public class Checkpoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {        
-        if (other.gameObject.name == "Player" && !isCollected)
-        {            
-            isCollected = true;
+        if (other.gameObject.name == "Player" && Player.roomNum != this.roomNum)
+        {                        
             Player.roomNum = roomNum;
             Player.respawnPos = transform.position;
             Player.respawnRot = transform.eulerAngles;

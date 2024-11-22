@@ -37,10 +37,7 @@ public class Floor : MonoBehaviour
         // if an OffMeshLink goes into a wall, NavMesh will ignore it as long as it has been baked
         // auto update positions needs to be activated in the NavLink prefabs so the start and end transforms can be modified        
 
-        myMesh = GetComponent<MeshRenderer>();                
-
-        xSpacePerLink = 0.8f;
-        zSpacePerLink = 0.8f;
+        myMesh = GetComponent<MeshRenderer>();
         
         float minLinkX = myMesh.bounds.min.x + xSpacePerLink;
         float maxLinkX = myMesh.bounds.max.x - xSpacePerLink;
@@ -61,7 +58,7 @@ public class Floor : MonoBehaviour
         int linkNum = 0;        
 
         // place links along top and bottom edges and place a link on nearby floor if it exists
-        for (; curLinkX < maxLinkX; curLinkX += 1.0f)
+        for (; curLinkX < maxLinkX; curLinkX += xSpacePerLink)
         {
             Vector3 linkPos1 = new Vector3(curLinkX, linkY, minLinkZ);
             GameObject link1 = Instantiate(singleNavLink, linkPos1, Quaternion.identity);
@@ -86,7 +83,7 @@ public class Floor : MonoBehaviour
         float curLinkZ = minLinkZ;
 
         // same thing with left and right edges
-        for (; curLinkZ < myMesh.bounds.max.z; curLinkZ += 1.0f)
+        for (; curLinkZ < myMesh.bounds.max.z; curLinkZ += zSpacePerLink)
         {
             Vector3 linkPos1 = new Vector3(minLinkX, linkY, curLinkZ);
             GameObject link1 = Instantiate(singleNavLink, linkPos1, Quaternion.identity);
