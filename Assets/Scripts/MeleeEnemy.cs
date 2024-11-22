@@ -41,6 +41,10 @@ public class MeleeEnemy : Enemy
 
     private void Strike(Player player)
     {
+        if (isDead){
+            return;
+        }
+        
         if (daggerSfx != null)
             daggerSfx.Play();
 
