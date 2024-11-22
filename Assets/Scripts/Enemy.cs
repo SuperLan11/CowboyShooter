@@ -79,11 +79,10 @@ public abstract class Enemy : Character
         PrintAnyNulls();
 
         // destroy enemies in completed rooms, but not enemies in future rooms
-        /*
+
         if (roomNum < Player.roomNum)
             Destroy(this.gameObject);
-            */
-    }   
+    }
     private void PrintAnyNulls()
     {
         // check if any important serialized variables are unset

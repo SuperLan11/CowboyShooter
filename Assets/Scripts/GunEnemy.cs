@@ -8,10 +8,10 @@ public class GunEnemy : Enemy
 
     protected void Shoot(GameObject player)
     {       
-        /*if (isDead)
+        if (isDead)
         {
             return;
-        }*/
+        }
         
         player.GetComponent<Player>().TakeDamage(attackDamage);        
         if (shootSfx != null)
