@@ -17,10 +17,10 @@ public class ThrowEnemy : Enemy
 
     private void ThrowTNT()
     {        
-        /*if (isDead)
+        if (isDead)
         {
             return;
-        }*/
+        }
         
         // tntChild is not a TNT prefab. 
         // This prevents weird link issues and makes the tnt the enemy holds stay in place
