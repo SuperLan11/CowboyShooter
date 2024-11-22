@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
     //!You MUST change game manager variables here!
     public void Start()
     {
-        debugMode = true;
+        debugMode = false;
     }
 
     public void Update()

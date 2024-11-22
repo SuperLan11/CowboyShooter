@@ -21,7 +21,7 @@ public abstract class Enemy : Character
     [SerializeField] protected Transform destination2;
     protected List<Vector3> destList = new List<Vector3>();
     // assuming all enemies can jump the same distance
-    public static float maxJumpDist = 7f;
+    [SerializeField] public static float maxJumpDist = 7f;
     protected float speed;
 
     public static int enemiesInitialized = 0;
@@ -31,8 +31,8 @@ public abstract class Enemy : Character
     protected bool attackCooldownDone;    
     [SerializeField] protected float maxAttackCooldown;
     [SerializeField] protected int attackDamage;
-
-    [SerializeField] protected int roomNum;
+    
+    public int roomNum;
 
     protected float destCooldown;
     protected float maxDestCooldown;
@@ -42,7 +42,7 @@ public abstract class Enemy : Character
     [SerializeField] protected float sightRange;
     protected bool playerNear;
     protected bool playerSighted;
-    protected bool gotShot = false;
+    [System.NonSerialized] public bool gotShot = false;
     protected bool isDead = false;
 
     [SerializeField] protected AudioSource deathSfx;
@@ -52,11 +52,11 @@ public abstract class Enemy : Character
     {
         //SetRoomNum();                
         gameObject.name += "R" + roomNum;
-        
-        agent = GetComponent<NavMeshAgent>();        
+
+        agent = GetComponent<NavMeshAgent>();
         player = FindObjectOfType<Player>().gameObject;
         playerNear = false;
-        playerSighted = false;        
+        playerSighted = false;             
 
         destList.Add(destination1.position);
         destList.Add(destination2.position);
@@ -73,12 +73,17 @@ public abstract class Enemy : Character
 
         int numEnemies = FindObjectsOfType<Enemy>().Length;
         enemiesInitialized++;
-        if (enemiesInitialized >= numEnemies)        
-            Door.ResetDoorCounter();                    
+        if (enemiesInitialized >= numEnemies)
+            Door.ResetDoorCounter();
 
         PrintAnyNulls();
-    }    
 
+        // destroy enemies in completed rooms, but not enemies in future rooms
+        /*
+        if (roomNum < Player.roomNum)
+            Destroy(this.gameObject);
+            */
+    }   
     private void PrintAnyNulls()
     {
         // check if any important serialized variables are unset
