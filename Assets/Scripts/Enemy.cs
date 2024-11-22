@@ -20,7 +20,7 @@ public abstract class Enemy : Character
     [SerializeField] protected Transform destination2;
     protected List<Vector3> destList = new List<Vector3>();
     // assuming all enemies can jump the same distance
-    [SerializeField] public static float maxJumpDist = 7f;
+    public static float maxJumpDist = 7f;
     protected float speed;
 
     public static int enemiesInitialized = 0;
@@ -72,8 +72,8 @@ public abstract class Enemy : Character
 
         int numEnemies = FindObjectsOfType<Enemy>().Length;
         enemiesInitialized++;
-        if (enemiesInitialized >= numEnemies)                    
-            Door.ResetDoorCounter();
+        if (enemiesInitialized >= numEnemies)        
+            Door.ResetDoorCounter();                    
 
         PrintAnyNulls();
     }    

@@ -247,8 +247,9 @@ MonoBehaviour:
   health: 3
   destination1: {fileID: 0}
   destination2: {fileID: 0}
-  maxAttackCooldown: 2
+  maxAttackCooldown: 1.5
   attackDamage: 1
+  roomNum: 0
   sightRange: 8
   deathSfx: {fileID: 1771406328416087080}
   tntPrefab: {fileID: 6165991136970091572, guid: 9e55919bab26ecb41b2c77ba8bb2ce07, type: 3}

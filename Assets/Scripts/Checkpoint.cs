@@ -7,6 +7,7 @@ public class Checkpoint : MonoBehaviour
     private bool isCollected = false;
     // checkpoint can also be a door lower trigger
     private bool isDoorTrigger;
+    [SerializeField] private int roomNum;
 
     // Start is called before the first frame update
     void Start()
@@ -36,10 +37,12 @@ public class Checkpoint : MonoBehaviour
         if (other.gameObject.name == "Player" && !isCollected)
         {            
             isCollected = true;
-            Player.roomNum++;
+            Player.roomNum = roomNum;
             Player.respawnPos = transform.position;
             Player.respawnRot = transform.eulerAngles;
             Player.hasCheckpoint = true;
+
+            Debug.Log("player room num: " + Player.roomNum);
             
             // if player touches door trigger without raising door first, don't lower again
             if (isDoorTrigger && Door.movingUp)

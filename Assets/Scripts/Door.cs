@@ -75,6 +75,7 @@ public class Door : MonoBehaviour
         foreach (GameObject door in doors)
         {
             door.transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = enemiesInRoom.ToString();
+            door.transform.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>().text = enemiesInRoom.ToString();
         }     
     }
 

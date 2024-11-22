@@ -51,7 +51,7 @@ public class Player : Character
     private float lassoForceMultiplier;
 
     // these need to be static so the values persist when scene reloads
-    public static int roomNum;    
+    public static int roomNum = 1;
     public static Vector3 respawnPos;
     public static Vector3 respawnRot;
     public static bool hasCheckpoint = false;
@@ -122,8 +122,6 @@ public class Player : Character
             transform.eulerAngles = respawnRot;
         }
 
-        roomNum = 1;
-
         // Important: this affects gravity for everything!
         Physics.gravity = new Vector3(0, gravityAccel, 0);
 
@@ -147,9 +145,7 @@ public class Player : Character
         cam = Camera.main;
         // lasso should be the second child of Camera for this to work
         lasso = transform.GetChild(0).GetChild(1).gameObject;        
-        rigidbody = GetComponent<Rigidbody>();   
-
-        
+        rigidbody = GetComponent<Rigidbody>();           
 
         holdingRMB = false;
         holdingRestart = false;
@@ -576,8 +572,7 @@ public class Player : Character
             // The camera only scrolls vertically since the player parent object handles horizontal scroll
             Vector3 camRot = cam.transform.rotation.eulerAngles;
             Vector3 newCamRot = Vector3.zero;
-
-            float deltaMouseX = Input.GetAxis("Mouse X");
+            
             float deltaMouseY = Input.GetAxis("Mouse Y");
 
             // camRot.x starts decreasing from 360 when you look up and is positive downwards   

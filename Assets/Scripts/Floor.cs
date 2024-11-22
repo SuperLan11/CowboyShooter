@@ -9,7 +9,11 @@ using UnityEngine.AI;
 public class Floor : MonoBehaviour
 {
     [SerializeField] private GameObject singleNavLink;
-    private float maxJumpDist;
+    // how far the NavMesh can jump up/away to another floor
+    // make sure the jump distance in the navigation tab is sufficient for this value
+    // otherwise NavMesh will not jump even though a link is set
+    private float maxJumpDist = Enemy.maxJumpDist;
+
     private MeshRenderer myMesh;
     private List<GameObject> perimiterLinks = new List<GameObject>();
 
@@ -33,11 +37,7 @@ public class Floor : MonoBehaviour
         // if an OffMeshLink goes into a wall, NavMesh will ignore it as long as it has been baked
         // auto update positions needs to be activated in the NavLink prefabs so the start and end transforms can be modified        
 
-        myMesh = GetComponent<MeshRenderer>();
-        // how far the NavMesh can jump up/away to another floor
-        // make sure the jump distance in the navigation tab is sufficient for this value
-        // otherwise NavMesh will not jump even though a link is set
-        maxJumpDist = Enemy.maxJumpDist;
+        myMesh = GetComponent<MeshRenderer>();                
 
         xSpacePerLink = 0.8f;
         zSpacePerLink = 0.8f;
