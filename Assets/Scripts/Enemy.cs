@@ -4,6 +4,7 @@
 !There should be be NO PRIVATE METHODS in this class! Only protected and public.
 */
 
+//pointless comment
 
 using System.Collections.Generic;
 using UnityEngine;
