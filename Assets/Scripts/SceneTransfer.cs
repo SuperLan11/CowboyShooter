@@ -19,6 +19,7 @@ public class SceneTransfer : MonoBehaviour
         GetComponent<Image>().enabled = true;
         fadeAnim.Play("FadeOut");
         yield return new WaitForSecondsRealtime(fadeTime);
+        Player.hasCheckpoint = false;
         SceneManager.LoadScene(buildIndex);
         // The animator will automatically play a fade in animation when the scene loads
         // as long as the FadePanel is in that scene with an animator.

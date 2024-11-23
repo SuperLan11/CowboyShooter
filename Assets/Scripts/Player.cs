@@ -112,12 +112,9 @@ public class Player : Character
         {
             Debug.LogError("You ain't got a gun sound, partner!");
         }
-
-        // when player dies and scene reloads
-        // when more scenes are used, if scene loading is different from current scene, set hasCheckpoint to false
+                
         if (hasCheckpoint)
-        {
-            Debug.Log("set to checkpoint pos");
+        {            
             transform.position = respawnPos;
             transform.eulerAngles = respawnRot;
         }

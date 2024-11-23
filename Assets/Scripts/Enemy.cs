@@ -51,9 +51,13 @@ public abstract class Enemy : Character
     // all enemies have the same start function
     void Start()
     {               
-        enemiesInitialized++;
+        enemiesInitialized++;        
+        int numEnemies = FindObjectsOfType<Enemy>().Length;
+        if (enemiesInitialized >= numEnemies)
+            Door.ResetDoorCounter();
+
         // destroy enemies in completed rooms, but not enemies in future rooms
-        // doing this at the start of Start() makes scene reloading much faster
+        // doing this at the start of Start() makes scene reloading faster
         if (roomNum < Player.roomNum)
         {
             Destroy(this.gameObject);
@@ -77,11 +81,7 @@ public abstract class Enemy : Character
             
         shootSfx = GetComponent<AudioSource>();
         StartCoroutine(AttackCooldown());
-
-        int numEnemies = FindObjectsOfType<Enemy>().Length;
-        if (enemiesInitialized >= numEnemies)
-            Door.ResetDoorCounter();           
-
+       
         //PrintAnyNulls();
     }
 

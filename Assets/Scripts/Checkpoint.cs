@@ -34,15 +34,15 @@ public class Checkpoint : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {        
         if (other.gameObject.name == "Player")
-        {                        
-            Player.roomNum = roomNum;
+        {                                    
             Player.respawnPos = transform.position;
             Player.respawnRot = transform.eulerAngles;
             Player.hasCheckpoint = true;            
 
             // if player touches door trigger without raising door first, don't lower again
             if (isDoorTrigger && Door.movingUp && Player.roomNum != this.roomNum)
-            {                
+            {
+                Player.roomNum = roomNum;
                 Door.LowerDoors();
                 Door.ResetDoorCounter();
             }
