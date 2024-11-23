@@ -246,7 +246,7 @@ MonoBehaviour:
   health: 3
   destination1: {fileID: 0}
   destination2: {fileID: 0}
-  maxAttackCooldown: 1.2
+  maxAttackCooldown: 1.4
   attackDamage: 1
   minDistFromWall: 0.5
   roomNum: 2

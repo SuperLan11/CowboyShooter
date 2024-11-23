@@ -6,11 +6,14 @@ using UnityEngine.AI;
 public class MeleeEnemy : Enemy
 {    
     [SerializeField] private float recoilTime = 0.75f;
-    [SerializeField] private AudioSource daggerSfx;
-    [SerializeField] private float recoilAccel;
+    [SerializeField] private float recoilDist = 2f;
+    [SerializeField] private float recoilAccel = 0.05f;
+    private bool inRecoil = false;
     private Vector3 recoilPos;
-    private bool inRecoil = false;    
-    [SerializeField] private LayerMask wallMask;
+
+    [SerializeField] private AudioSource daggerSfx;    
+    [SerializeField] private LayerMask wallMask;            
+    private bool sawWall = false;    
 
     private void OnCollisionEnter(Collision collision)
     {                
@@ -20,6 +23,8 @@ public class MeleeEnemy : Enemy
             if (hitPlayer && attackCooldownDone)
             {                
                 Strike(Player.player);
+                inRecoil = true;
+                recoilPos = transform.position - transform.forward * recoilDist;
                 attackCooldownDone = false;               
                 StartCoroutine(AttackCooldown());
                 StartCoroutine(StopForTime(recoilTime));
@@ -29,25 +34,10 @@ public class MeleeEnemy : Enemy
     }
 
     private IEnumerator StopForTime(float seconds)
-    {        
-        // how to immediately stop NavMesh? this has some ease out
-        //GetComponent<NavMeshAgent>().speed = 0f;
-        GetComponent<NavMeshAgent>().velocity = Vector3.zero;
-        //GetComponent<NavMeshAgent>().isStopped = true;        
-        yield return new WaitForSecondsRealtime(seconds);
-        //GetComponent<NavMeshAgent>().isStopped = false;
-        inRecoil = false;
-        //GetComponent<NavMeshAgent>().speed = speed;
-    }
-
-    private void RecoilBack()
-    {
-        if (!inRecoil)
-        {
-            recoilPos = transform.position - transform.forward * 5f;
-            inRecoil = true;
-        }
-        transform.position = Vector3.Lerp(transform.position, recoilPos, recoilAccel);
+    {                
+        GetComponent<NavMeshAgent>().velocity = Vector3.zero;          
+        yield return new WaitForSecondsRealtime(seconds);        
+        inRecoil = false;        
     }
 
     private void Strike(Player player)
@@ -59,17 +49,7 @@ public class MeleeEnemy : Enemy
             daggerSfx.Play();
 
         player.TakeDamage(attackDamage);                
-    }
-
-    private bool SawWall()
-    {
-        if (Physics.Raycast(transform.position, transform.forward, 5f, wallMask))
-        {
-            Debug.Log("saw wall nearby");
-            return true;
-        }
-        return false;
-    }
+    } 
 
     void Update()
     {        
@@ -92,7 +72,7 @@ public class MeleeEnemy : Enemy
         }
         
         playerNear = PlayerIsNearby();
-        playerSighted = PlayerIsSighted();        
+        playerSighted = PlayerIsSighted();
 
         if (playerSighted && (playerNear || gotShot))
         {            
@@ -106,6 +86,6 @@ public class MeleeEnemy : Enemy
         }
 
         if (inRecoil)
-            RecoilBack();
+            transform.position = Vector3.Lerp(transform.position, recoilPos, recoilAccel);
     }    
 }

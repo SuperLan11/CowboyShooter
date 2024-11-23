@@ -247,13 +247,13 @@ MonoBehaviour:
   destination2: {fileID: 0}
   maxAttackCooldown: 0.5
   attackDamage: 1
-  minDistFromWall: 0.5
   roomNum: 3
   sightRange: 8
   deathSfx: {fileID: 6909237089869480448}
-  recoilTime: 1
+  recoilTime: 0.2
+  recoilDist: 1.5
+  recoilAccel: 0.1
   daggerSfx: {fileID: 3962084463372493288}
-  recoilAccel: 0.2
   wallMask:
     serializedVersion: 2
     m_Bits: 128

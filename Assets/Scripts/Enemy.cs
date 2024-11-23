@@ -21,7 +21,7 @@ public abstract class Enemy : Character
     [SerializeField] protected Transform destination2;
     protected List<Vector3> destList = new List<Vector3>();
     // assuming all enemies can jump the same distance
-    [SerializeField] public static float maxJumpDist = 7f;    
+    [SerializeField] public static float maxJumpDist = 2f;
 
     public static int enemiesInitialized = 0;
     public static int enemiesInRoom = 0;
@@ -29,9 +29,7 @@ public abstract class Enemy : Character
     // attackCooldown var not needed as coroutines are used
     protected bool attackCooldownDone;    
     [SerializeField] protected float maxAttackCooldown;
-    [SerializeField] protected int attackDamage;
-    // the closest distance an enemy can stay from a wall while being pushed into corner by player
-    [SerializeField] protected float minDistFromWall = 0.5f;
+    [SerializeField] protected int attackDamage;    
 
     public int roomNum;
 

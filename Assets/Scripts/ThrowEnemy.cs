@@ -12,6 +12,8 @@ public class ThrowEnemy : Enemy
     [SerializeField] private GameObject tntChild;
     [SerializeField] public AudioSource boomSfx;
 
+    // the closest distance the enemy can stay from a wall while throwing tnt
+    [SerializeField] protected float minDistFromWall = 0.5f;
     private bool canThrow = true;    
 
     private void ThrowTNT()

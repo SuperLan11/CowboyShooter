@@ -37,7 +37,7 @@ public class Checkpoint : MonoBehaviour
         {                                    
             Player.respawnPos = transform.position;
             Player.respawnRot = transform.eulerAngles;
-            Player.hasCheckpoint = true;            
+            Player.hasCheckpoint = true;                        
 
             // if player touches door trigger without raising door first, don't lower again
             if (isDoorTrigger && Door.movingUp && Player.roomNum != this.roomNum)
