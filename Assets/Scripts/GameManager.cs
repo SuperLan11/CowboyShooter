@@ -13,7 +13,9 @@ public class GameManager : MonoBehaviour
     public static GameManager gameManager;
     
     public int currentLevel;
-    public bool debugMode;
+    private bool debugMode;
+    private bool disableCursor;
+    private bool enableCursor;
 
     public void Awake()
     {
@@ -32,6 +34,8 @@ public class GameManager : MonoBehaviour
     public void Start()
     {
         debugMode = false;
+        disableCursor = false;
+        enableCursor = false;
     }
 
     public void Update()
@@ -44,5 +48,25 @@ public class GameManager : MonoBehaviour
                 Destroy(enemy.gameObject);
             }
         }
+
+        //This cannot be if-else, they are not mutually exclusive
+        if (enableCursor){
+            EnableCursor();
+        }
+        if (disableCursor) {
+            DisableCursor();
+        }
+    }
+
+    public void EnableCursor() 
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    public void DisableCursor() 
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 }

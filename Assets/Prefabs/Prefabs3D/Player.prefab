@@ -601,6 +601,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: b6c707d9-04f1-4eae-86e2-faaa1c728a0d
     m_ActionName: Player/RestartLevel[/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8509015516763741730}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: PauseActivated
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: cbfb863f-db49-41b3-8979-c6131842b055
+    m_ActionName: Player/Pause[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

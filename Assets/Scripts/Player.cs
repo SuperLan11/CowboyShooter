@@ -112,9 +112,11 @@ public class Player : Character
         {
             Debug.LogError("You ain't got a gun sound, partner!");
         }
-                
+
+        // when player dies and scene reloads
+        // when more scenes are used, if scene loading is different from current scene, set hasCheckpoint to false
         if (hasCheckpoint)
-        {            
+        {
             transform.position = respawnPos;
             transform.eulerAngles = respawnRot;
         }
@@ -193,7 +195,8 @@ public class Player : Character
 
     public void ShootActivated(InputAction.CallbackContext context)
     {
-        if (context.started)
+        //without second condition, player can shoot once while being in pause menu
+        if (context.started && !PauseMenu.gameIsPaused)
         { 
             try
             {
@@ -281,7 +284,14 @@ public class Player : Character
             holdingRestart = false;
             restartCooldown = maxRestartCooldown;
         }
+    }
 
+    public void PauseActivated(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            PauseMenu.gameIsPaused = !PauseMenu.gameIsPaused;
+        }
     }
     
     private void OnCollisionEnter(Collision collision)
@@ -299,7 +309,8 @@ public class Player : Character
             
             // perfect wall jump counts towards wall jump counter            
             if (hitWall && gotTiming && !hitFeet && wallJumpsLeft > 0 && !isGrounded())
-            {                
+            {
+                Debug.Log("got kick in enter");
                 kickStarted = true;                
                 wallJumpsLeft--;                
                 Vector3 curRot = transform.eulerAngles;                
