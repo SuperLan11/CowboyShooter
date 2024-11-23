@@ -119,3 +119,7 @@ Assets Used:
 	Creaking Wood
 	VoiceBosch
 	https://pixabay.com/sound-effects/creaking-wood-199971/
+
+	Typing on a typewriter with ding at end of each line
+	evsecrets (Freesound)
+	https://pixabay.com/sound-effects/typing-on-a-typewriter-with-ding-at-end-of-each-line-55941/

@@ -254,7 +254,7 @@ MonoBehaviour:
   deathSfx: {fileID: 3693498155660872604}
   bulletSpawn: {fileID: 2785411703906060388}
   bulletPrefab: {fileID: 5238476219402099163, guid: 418fbbc712cab9a4fbc8c17b4ad4aea2, type: 3}
-  bulletSpeed: 90
+  bulletSpeed: 85
 --- !u!82 &3693498155660872604
 AudioSource:
   m_ObjectHideFlags: 0
