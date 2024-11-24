@@ -455,7 +455,6 @@ public class Player : Character
 
         if (tooManyHearts)
         {
-            Debug.Log("too many hearts");
             int healthIndex = hearts.Count - 1;
 
             while (healthDisparity < 0 && healthIndex > 0)
