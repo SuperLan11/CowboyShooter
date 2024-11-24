@@ -430,7 +430,7 @@ public class Player : Character
         health = h;
     }
 
-    private void updateHealthBar()
+    private void UpdateHealthBar()
     {
         List<GameObject> hearts = new List<GameObject>();
         for (int i = 0; i < healthBar.transform.childCount; i++)
@@ -506,7 +506,7 @@ public class Player : Character
         if(takeDamageSfx != null)
             takeDamageSfx.Play();
 
-        SetHealth(health);        
+        SetHealth(health);
         if (health == 0)
             Death();
     }    
@@ -552,7 +552,7 @@ public class Player : Character
 
         if (health != healthLastFrame)
         {
-            updateHealthBar();
+            UpdateHealthBar();
             //Debug.Log("this is being called");
         }        
 

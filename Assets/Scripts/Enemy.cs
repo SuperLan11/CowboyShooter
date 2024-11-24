@@ -27,9 +27,9 @@ public abstract class Enemy : Character
     public static int enemiesInRoom = 0;
 
     // attackCooldown var not needed as coroutines are used
-    protected bool attackCooldownDone;    
+    protected bool attackCooldownDone;
     [SerializeField] protected float maxAttackCooldown;
-    [SerializeField] protected int attackDamage;    
+    [SerializeField] protected int attackDamage;
 
     public int checkpointNum;
 
