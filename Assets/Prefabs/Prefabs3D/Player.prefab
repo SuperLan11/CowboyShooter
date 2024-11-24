@@ -477,6 +477,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 3
+  maxHealth: 3
   speed: 6
   jumpStrength: 7
   gravityAccel: -13

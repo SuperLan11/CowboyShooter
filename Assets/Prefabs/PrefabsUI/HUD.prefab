@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8810636605245409350}
   - component: {fileID: 5955265247414882804}
   m_Layer: 0
-  m_Name: Panel
+  m_Name: HeartPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

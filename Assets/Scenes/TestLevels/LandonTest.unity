@@ -332,6 +332,67 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &184707211
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1755655047032494691, guid: e634665f72ae0fa4e974aca4c3e23f41, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 12.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 1755655047032494691, guid: e634665f72ae0fa4e974aca4c3e23f41, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1755655047032494691, guid: e634665f72ae0fa4e974aca4c3e23f41, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -29.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 1755655047032494691, guid: e634665f72ae0fa4e974aca4c3e23f41, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1755655047032494691, guid: e634665f72ae0fa4e974aca4c3e23f41, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1755655047032494691, guid: e634665f72ae0fa4e974aca4c3e23f41, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1755655047032494691, guid: e634665f72ae0fa4e974aca4c3e23f41, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1755655047032494691, guid: e634665f72ae0fa4e974aca4c3e23f41, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1755655047032494691, guid: e634665f72ae0fa4e974aca4c3e23f41, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1755655047032494691, guid: e634665f72ae0fa4e974aca4c3e23f41, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2466760912329956121, guid: e634665f72ae0fa4e974aca4c3e23f41, type: 3}
+      propertyPath: checkpointNum
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226382186234767293, guid: e634665f72ae0fa4e974aca4c3e23f41, type: 3}
+      propertyPath: m_Name
+      value: Checkpoint (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e634665f72ae0fa4e974aca4c3e23f41, type: 3}
 --- !u!1 &189234667
 GameObject:
   m_ObjectHideFlags: 0
@@ -2335,6 +2396,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1549814315}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1553591658 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 603583326010913655, guid: 167138a76c8ac334c84c2ba5620f1823, type: 3}
+  m_PrefabInstance: {fileID: 327994669}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1580983899
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2772,6 +2838,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8509015516763741730, guid: 675c419c1fbc55e44bd3d2b98522cc87, type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 1553591658}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3507,6 +3577,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2466760912329956121, guid: e634665f72ae0fa4e974aca4c3e23f41, type: 3}
+      propertyPath: checkpointNum
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7226382186234767293, guid: e634665f72ae0fa4e974aca4c3e23f41, type: 3}
       propertyPath: m_Name
       value: Checkpoint
@@ -3537,6 +3611,7 @@ SceneRoots:
   - {fileID: 1881398922}
   - {fileID: 3222255550945768122}
   - {fileID: 6981904309826964972}
+  - {fileID: 184707211}
   - {fileID: 5029205828319544815}
   - {fileID: 2079173623}
   - {fileID: 101799026}

@@ -1,3 +1,9 @@
+/*
+@Authors - Landon, Patrick
+@Description - Checkpoint functionality
+datafields.
+*/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +13,7 @@ public class Checkpoint : MonoBehaviour
     // checkpoint can also be a door lower trigger
     private bool isDoorTrigger;
     [SerializeField] private int roomNum;
+    [SerializeField] private int checkpointNum;
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +42,14 @@ public class Checkpoint : MonoBehaviour
     {        
         if (other.gameObject.name == "Player")
         {                                    
+            bool reachedNewCheckpoint = (checkpointNum > GameManager.gameManager.currentCheckpoint);
+            if (!reachedNewCheckpoint){
+                return;
+            }
+            
+            GameManager.gameManager.currentCheckpoint = checkpointNum;
+            Player.player.SetHealth(Player.player.GetMaxHealth());
+
             Player.respawnPos = transform.position;
             Player.respawnRot = transform.eulerAngles;
             Player.hasCheckpoint = true;                        
@@ -47,11 +62,5 @@ public class Checkpoint : MonoBehaviour
                 Door.ResetDoorCounter();
             }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

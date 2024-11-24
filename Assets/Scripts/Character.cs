@@ -12,7 +12,8 @@ using UnityEngine.UI;
 public abstract class Character : MonoBehaviour
 {
     //serialize needed to customize prefabs
-    [SerializeField] protected int health;            
+    [SerializeField] protected int health;
+    [SerializeField] protected int maxHealth;            
     protected AudioSource shootSfx;
 
     protected Weapon weapon;

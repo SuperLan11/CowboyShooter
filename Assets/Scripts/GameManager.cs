@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public static GameManager gameManager;
     
     public int currentLevel;
+    public int currentCheckpoint;
     private bool debugMode;
     private bool disableCursor;
     private bool enableCursor;
@@ -33,9 +34,11 @@ public class GameManager : MonoBehaviour
     //!You MUST change game manager variables here!
     public void Start()
     {
-        debugMode = false;
+        debugMode = true;
         disableCursor = false;
         enableCursor = false;
+
+        currentCheckpoint = 0;
     }
 
     public void Update()
