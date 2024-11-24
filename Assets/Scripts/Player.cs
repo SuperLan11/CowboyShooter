@@ -438,11 +438,11 @@ public class Player : Character
                 hearts.Add(img);
         }
         if(hearts.Count > 0)
-            Destroy(hearts[hearts.Count - 1].gameObject);
+            hearts[hearts.Count - 1].enabled = false;
 
         if (health == 0)
             Death();
-    }
+    }    
 
     //courtesy of internet physics/game dev guru. Calculates force needed to launch player towards hook
     //most of what this function does is probably unnecessary, but we should only change it if needed cause it works!
