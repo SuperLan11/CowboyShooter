@@ -12,9 +12,7 @@ public class MeleeEnemy : Enemy
     private Vector3 recoilPos;
 
     [SerializeField] private AudioSource daggerSfx;    
-    [SerializeField] private LayerMask wallMask;            
-    private bool sawWall = false;    
-
+    
     private void OnCollisionEnter(Collision collision)
     {                
         for(int i = 0; i < collision.contactCount; i++)

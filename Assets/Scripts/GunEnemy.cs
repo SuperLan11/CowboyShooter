@@ -9,6 +9,12 @@ public class GunEnemy : Enemy
     [SerializeField] private Transform bulletSpawn;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private float bulletSpeed;
+    
+    // loadTime is how long enemy needs to see player to start shooting player
+    [SerializeField] private float loadTime;
+    private bool loadCooldownDone = false;
+    private bool loadingShot = false;    
+    private float playerFocusTime = 0f;
 
     protected void Shoot(GameObject player)
     {       
@@ -26,11 +32,23 @@ public class GunEnemy : Enemy
     }
 
     private Vector3 ShootPos()
-    {
-        Vector3 playerDirection = (player.transform.position - transform.position).normalized;        
+    {        
+        Vector3 playerDirection = (player.transform.position - transform.position).normalized;
         float distToPlayer = DistToPlayer();
+        playerFocusTime += Time.deltaTime;
         // NavMesh accounts for if the enemy can't go to shoot pos while against a wall
+        if (playerSighted)
+            return player.transform.position - playerDirection * -2f;                
         return transform.position + playerDirection * -(sightRange - 2 - distToPlayer);
+    }
+
+    private IEnumerator LoadCooldown(float seconds)
+    {                
+        yield return new WaitForSecondsRealtime(seconds);        
+        loadingShot = false;
+        // only finish loading to finish if player is still in sight
+        if (agent.destination == shootPos)
+            loadCooldownDone = true;                
     }
 
     // Update is called once per frame
@@ -55,16 +73,23 @@ public class GunEnemy : Enemy
         }
 
         playerNear = PlayerIsNearby();
-        playerSighted = PlayerIsSighted();
+        playerSighted = PlayerIsSighted();        
 
         if (playerSighted && (playerNear || gotShot))
         {            
             agent.destination = ShootPos();
             shootPos = agent.destination;
-            transform.LookAt(player.transform);            
-
-            if (attackCooldownDone && playerNear)
+            transform.LookAt(player.transform);
+            if (!loadingShot)
             {                
+                loadingShot = true;
+                StartCoroutine(LoadCooldown(loadTime));
+            }
+
+            if (loadCooldownDone && attackCooldownDone && playerNear)
+            {                
+                loadCooldownDone = false;
+                loadingShot = false;
                 Shoot(player);
                 attackCooldownDone = false;
                 StartCoroutine(AttackCooldown());
@@ -72,8 +97,11 @@ public class GunEnemy : Enemy
         }
         else if (agent.destination == shootPos)
         {            
+            loadCooldownDone = false;
+            loadingShot = false;
             gotShot = false;
             FindNewDest();
+            playerFocusTime = 0f;
         }
     }
 }

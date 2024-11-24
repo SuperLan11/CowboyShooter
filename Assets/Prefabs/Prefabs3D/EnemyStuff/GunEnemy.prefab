@@ -123,7 +123,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5000001
-  m_Speed: 3.6
+  m_Speed: 3.2
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -246,15 +246,15 @@ MonoBehaviour:
   health: 3
   destination1: {fileID: 0}
   destination2: {fileID: 0}
-  maxAttackCooldown: 1.4
+  maxAttackCooldown: 1.5
   attackDamage: 1
-  minDistFromWall: 0.5
-  roomNum: 2
-  sightRange: 11
+  roomNum: 3
+  sightRange: 20
   deathSfx: {fileID: 3693498155660872604}
   bulletSpawn: {fileID: 2785411703906060388}
   bulletPrefab: {fileID: 5238476219402099163, guid: 418fbbc712cab9a4fbc8c17b4ad4aea2, type: 3}
-  bulletSpeed: 85
+  bulletSpeed: 65
+  loadTime: 0.3
 --- !u!82 &3693498155660872604
 AudioSource:
   m_ObjectHideFlags: 0

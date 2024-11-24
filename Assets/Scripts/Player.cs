@@ -46,7 +46,7 @@ public class Player : Character
     private int lassoLockCooldown;
     private int maxLassoLockCooldown;    
     private const float startingLassoForceMultiplier = 10f;  //originally 15f
-    private const float lassoForceIncrease = 0.1f;
+    private const float lassoForceIncrease = 0.15f;
     private float maxLassoSpeed = 30f;
     private float lassoForceMultiplier;
 
@@ -476,7 +476,7 @@ public class Player : Character
     //Dragon's Den of the Movement Code
     void FixedUpdate()
     {
-        //Debug.Log("State: " + currentMovementState);
+        Debug.Log("State: " + currentMovementState);
         //Debug.Log(rigidbody.velocity.magnitude);        
 
         //forces camera to look straight as you're opening up scene
