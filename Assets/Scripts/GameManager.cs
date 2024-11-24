@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     
     public int currentLevel;
     public int currentCheckpoint;
-    private bool debugMode;
+    [SerializeField] private bool debugMode = false;
     private bool disableCursor;
     private bool enableCursor;
 
@@ -33,8 +33,7 @@ public class GameManager : MonoBehaviour
 
     //!You MUST change game manager variables here!
     public void Start()
-    {
-        debugMode = true;
+    {               
         disableCursor = false;
         enableCursor = false;
 

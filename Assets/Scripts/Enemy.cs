@@ -57,7 +57,7 @@ public abstract class Enemy : Character
         // destroy enemies in completed rooms, but not enemies in future rooms
         // doing this at the start of Start() makes scene reloading faster
         if (roomNum < Player.roomNum)
-        {
+        {            
             Destroy(this.gameObject);
             // the script still runs even after the gameObject is destroyed            
             return;

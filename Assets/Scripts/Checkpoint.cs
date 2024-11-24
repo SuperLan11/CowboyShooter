@@ -42,7 +42,9 @@ public class Checkpoint : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {        
         if (other.gameObject.name == "Player")
-        {                                    
+        {
+            if (GameManager.gameManager == null)
+                Debug.Log("null gameManager");
             bool reachedNewCheckpoint = (checkpointNum > GameManager.gameManager.currentCheckpoint);
             if (!reachedNewCheckpoint){
                 return;

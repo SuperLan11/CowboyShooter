@@ -505,9 +505,21 @@ public class Player : Character
         if(takeDamageSfx != null)
             takeDamageSfx.Play();
 
+        SetHealth(health);
+        // this should get the hearts in the hierarchy order so you don't need to sort
+        /*Image[] images = FindObjectsOfType<Image>();
+        List<Image> hearts = new List<Image>();
+        foreach (Image img in images)
+        {
+            if (img.gameObject.name.Contains("Heart"))
+                hearts.Add(img);
+        }
+        if(hearts.Count > 0)
+            Destroy(hearts[hearts.Count - 1].gameObject);
+*/
         if (health == 0)
             Death();
-    }
+    }    
 
     //courtesy of internet physics/game dev guru. Calculates force needed to launch player towards hook
     //most of what this function does is probably unnecessary, but we should only change it if needed cause it works!
