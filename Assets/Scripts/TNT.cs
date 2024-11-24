@@ -60,7 +60,7 @@ public class TNT : MonoBehaviour
         if (boomSfx != null)
             boomSfx.Play();
 
-        GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
         if (Vector3.Distance(transform.position, Player.player.transform.position) < explodeRadius &&
             PlayerExposed())        

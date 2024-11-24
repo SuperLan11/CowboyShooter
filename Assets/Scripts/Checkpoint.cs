@@ -12,7 +12,7 @@ public class Checkpoint : MonoBehaviour
 {    
     // checkpoint can also be a door lower trigger
     private bool isDoorTrigger;
-    [SerializeField] private int roomNum;
+    //[SerializeField] private int roomNum;
     //!This variable may be redundant. Ask Landon to see if this variable could just be swapped out with roomNum
     [SerializeField] private int checkpointNum;
 
@@ -43,24 +43,23 @@ public class Checkpoint : MonoBehaviour
     {        
         if (other.gameObject.name == "Player")
         {
-            if (GameManager.gameManager == null)
-                Debug.Log("null gameManager");
-            bool reachedNewCheckpoint = (checkpointNum > GameManager.gameManager.currentCheckpoint);
-            if (!reachedNewCheckpoint){
+            bool reachedNewCheckpoint = (checkpointNum > GameManager.currentCheckpoint);
+            if (!reachedNewCheckpoint)
+            {
+                //Debug.Log("not a new checkpoint, returning");
                 return;
             }
-            
-            GameManager.gameManager.currentCheckpoint = checkpointNum;
+
+            GameManager.currentCheckpoint = checkpointNum;            
             Player.player.SetHealth(Player.player.GetMaxHealth());
 
             Player.respawnPos = transform.position;
             Player.respawnRot = transform.eulerAngles;
-            Player.hasCheckpoint = true;                        
+            Player.hasCheckpoint = true;
 
-            // if player touches door trigger without raising door first, don't lower again
-            if (isDoorTrigger && Door.movingUp && Player.roomNum != this.roomNum)
-            {
-                Player.roomNum = roomNum;
+            // if player touches door trigger without raising door first, don't lower again      
+            if (isDoorTrigger && Door.movingUp)
+            {                
                 Door.LowerDoors();
                 Door.ResetDoorCounter();
             }

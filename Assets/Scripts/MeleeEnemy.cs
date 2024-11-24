@@ -52,8 +52,7 @@ public class MeleeEnemy : Enemy
     void Update()
     {        
         if (!switchingDest && agent.remainingDistance <= 0.01f)
-        {
-            //Debug.Log("got to dest, find new dest");
+        {            
             switchingDest = true;
             FindNewDest();
             return;
@@ -77,8 +76,7 @@ public class MeleeEnemy : Enemy
             agent.destination = player.transform.position;
         }
         else if (agent.destination == player.transform.position)
-        {
-            //Debug.Log("Find dest other than player");
+        {            
             gotShot = false;
             FindNewDest();
         }

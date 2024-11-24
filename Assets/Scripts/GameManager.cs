@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public static GameManager gameManager;
     
     public int currentLevel;
-    public int currentCheckpoint;
+    public static int currentCheckpoint = 0;
     [SerializeField] private bool debugMode = false;
     private bool disableCursor;
     private bool enableCursor;
@@ -33,11 +33,10 @@ public class GameManager : MonoBehaviour
 
     //!You MUST change game manager variables here!
     public void Start()
-    {               
+    {
+        //Debug.Log("cp on Start(): " + currentCheckpoint);
         disableCursor = false;
         enableCursor = false;
-
-        currentCheckpoint = 0;
     }
 
     public void Update()
@@ -52,10 +51,12 @@ public class GameManager : MonoBehaviour
         }
 
         //This cannot be if-else, they are not mutually exclusive
-        if (enableCursor){
+        if (enableCursor)
+        {
             EnableCursor();
         }
-        if (disableCursor) {
+        if (disableCursor) 
+        {
             DisableCursor();
         }
     }

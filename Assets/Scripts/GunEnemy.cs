@@ -79,7 +79,8 @@ public class GunEnemy : Enemy
         {            
             agent.destination = ShootPos();
             shootPos = agent.destination;
-            transform.LookAt(player.transform);
+            Vector3 playerDirection = (player.transform.position - transform.position).normalized;            
+            transform.LookAt(playerDirection);
             if (!loadingShot)
             {                
                 loadingShot = true;

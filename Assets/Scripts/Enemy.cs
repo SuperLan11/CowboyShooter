@@ -31,7 +31,7 @@ public abstract class Enemy : Character
     [SerializeField] protected float maxAttackCooldown;
     [SerializeField] protected int attackDamage;    
 
-    public int roomNum;
+    public int checkpointNum;
 
     protected float destCooldown;
     protected float maxDestCooldown;
@@ -56,7 +56,7 @@ public abstract class Enemy : Character
 
         // destroy enemies in completed rooms, but not enemies in future rooms
         // doing this at the start of Start() makes scene reloading faster
-        if (roomNum < Player.roomNum)
+        if (checkpointNum < GameManager.currentCheckpoint)
         {            
             Destroy(this.gameObject);
             // the script still runs even after the gameObject is destroyed            
@@ -189,9 +189,13 @@ public abstract class Enemy : Character
             deathSfx.Play();
 
         enemiesInRoom--;
+                
         Door.SetDoorCounter(enemiesInRoom);
         if (enemiesInRoom <= 0)
+        {
+            Debug.Log("raising doors");
             Door.RaiseDoors();
+        }
         
         //waits 1 second and then calls DeathCleanup()
         Invoke("DeathCleanup", 1);

@@ -245,19 +245,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 3
+  maxHealth: 0
   destination1: {fileID: 0}
   destination2: {fileID: 0}
-  maxAttackCooldown: 1.5
+  maxAttackCooldown: 1.2
   attackDamage: 1
-  roomNum: 0
-  sightRange: 8
+  checkpointNum: 3
+  sightRange: 9
   deathSfx: {fileID: 1771406328416087080}
   tntPrefab: {fileID: 6165991136970091572, guid: 9e55919bab26ecb41b2c77ba8bb2ce07, type: 3}
   tntSpawn: {fileID: 8337465913492797655}
-  defaultThrowHeight: 2
-  minDistFromWall: 0.5
+  defaultThrowHeight: 1.5
   tntChild: {fileID: 9110062379386791031}
   boomSfx: {fileID: 2820707565410132836}
+  minDistFromWall: 0.5
 --- !u!82 &2820707565410132836
 AudioSource:
   m_ObjectHideFlags: 0

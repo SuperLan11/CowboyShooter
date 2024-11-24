@@ -52,8 +52,7 @@ public class Player : Character
     private float maxLassoSpeed = 30f;
     private float lassoForceMultiplier;
 
-    // these need to be static so the values persist when scene reloads
-    public static int roomNum = 1;
+    // these need to be static so the values persist when scene reloads    
     public static Vector3 respawnPos;
     public static Vector3 respawnRot;
     public static bool hasCheckpoint = false;
@@ -209,7 +208,7 @@ public class Player : Character
                 GameObject objAimed = ObjAimedAt();
                 //Debug.Log("objAimed: " + objAimed.name);
                 if (shootCooldown >= maxShootCooldown)
-                {
+                {                    
                     gunSfx.Play();
                     shootCooldown = 0f;
                     reloadPlayed = false;
@@ -483,7 +482,8 @@ public class Player : Character
                 healthIndex++;
             }
         }
-        else{
+        else
+        {
             Debug.LogError("This aint s'posed to happen, partner!");
         }
 
@@ -497,6 +497,7 @@ public class Player : Character
         Floor.floorsInitialized = 0;
         Enemy.enemiesInitialized = 0;
         Enemy.enemiesInRoom = 0;
+        Door.movingUp = false;
     }
 
     public override void TakeDamage(int damage)
@@ -505,18 +506,7 @@ public class Player : Character
         if(takeDamageSfx != null)
             takeDamageSfx.Play();
 
-        SetHealth(health);
-        // this should get the hearts in the hierarchy order so you don't need to sort
-        /*Image[] images = FindObjectsOfType<Image>();
-        List<Image> hearts = new List<Image>();
-        foreach (Image img in images)
-        {
-            if (img.gameObject.name.Contains("Heart"))
-                hearts.Add(img);
-        }
-        if(hearts.Count > 0)
-            Destroy(hearts[hearts.Count - 1].gameObject);
-*/
+        SetHealth(health);        
         if (health == 0)
             Death();
     }    
