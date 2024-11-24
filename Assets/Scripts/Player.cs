@@ -26,6 +26,8 @@ public class Player : Character
     private Vector2 lastMoveInput = Vector2.zero;
     //!Must be between 0 and 1f. Determines how fast player accelerates towards max speed
     private float moveAccel = 0.4f;
+    
+    private float healthLastFrame;
 
     private bool tryingToJump;
     private bool holdingRMB;
@@ -82,6 +84,8 @@ public class Player : Character
     [SerializeField] private AudioSource gunReloadSfx;
     [SerializeField] private AudioSource wallSlideSfx;    
     [SerializeField] private AudioSource takeDamageSfx;
+
+    [SerializeField] private GameObject healthBar;
 
     private bool reloadPlayed = false;
 
@@ -148,6 +152,8 @@ public class Player : Character
 
         holdingRMB = false;
         holdingRestart = false;
+
+        healthLastFrame = health;
     }    
 
     private void Awake()
@@ -415,6 +421,76 @@ public class Player : Character
         return health;
     }
 
+    public int GetMaxHealth()
+    {
+        return maxHealth;
+    }
+
+    public void SetHealth(int h)
+    {
+        health = h;
+    }
+
+    private void updateHealthBar()
+    {
+        List<GameObject> hearts = new List<GameObject>();
+        for (int i = 0; i < healthBar.transform.childCount; i++)
+        {
+            hearts.Add(healthBar.transform.GetChild(i).gameObject);
+        }
+
+        int numActiveHearts = 0;
+        for (int i = 0; i < hearts.Count; i++)
+        {
+            if (hearts[i].activeSelf)
+            {
+                numActiveHearts++;
+            }
+        }
+
+
+        int healthDisparity = health - numActiveHearts;
+        bool tooManyHearts = healthDisparity < 0;
+        bool notEnoughHearts = healthDisparity > 0;
+
+        if (tooManyHearts)
+        {
+            Debug.Log("too many hearts");
+            int healthIndex = hearts.Count - 1;
+
+            while (healthDisparity < 0 && healthIndex > 0)
+            {
+                if (hearts[healthIndex].activeSelf)
+                {
+                    hearts[healthIndex].SetActive(false);
+                    healthDisparity++;
+                }
+
+                healthIndex--;
+            }
+        }
+        else if (notEnoughHearts)
+        {
+            int healthIndex = 0;
+            
+            while (healthDisparity > 0 && healthIndex < hearts.Count)
+            {
+                if (!hearts[healthIndex].activeSelf)
+                {
+                    hearts[healthIndex].SetActive(true);
+                    healthDisparity--;
+                }
+                
+                healthIndex++;
+            }
+        }
+        else{
+            Debug.LogError("This aint s'posed to happen, partner!");
+        }
+
+        
+    }
+
     protected override void Death()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -429,16 +505,6 @@ public class Player : Character
         health -= damage;
         if(takeDamageSfx != null)
             takeDamageSfx.Play();
-        // this should get the hearts in the hierarchy order so you don't need to sort
-        Image[] images = FindObjectsOfType<Image>();
-        List<Image> hearts = new List<Image>();
-        foreach (Image img in images)
-        {
-            if (img.gameObject.name.Contains("Heart"))
-                hearts.Add(img);
-        }
-        if(hearts.Count > 0)
-            Destroy(hearts[hearts.Count - 1].gameObject);
 
         if (health == 0)
             Death();
@@ -476,12 +542,18 @@ public class Player : Character
     //Dragon's Den of the Movement Code
     void FixedUpdate()
     {
-        Debug.Log("State: " + currentMovementState);
+        //Debug.Log("State: " + currentMovementState);
         //Debug.Log(rigidbody.velocity.magnitude);        
 
         //forces camera to look straight as you're opening up scene
         if (Time.timeSinceLevelLoad < 0.1f)
-            return;        
+            return;
+
+        if (health != healthLastFrame)
+        {
+            updateHealthBar();
+            //Debug.Log("this is being called");
+        }        
 
         //guarantees lasso state won't be overwritten
         if (inLassoLock)
@@ -652,5 +724,7 @@ public class Player : Character
             gunReloadSfx.Play();
             reloadPlayed = true;
         }
+
+        healthLastFrame = health;
     }   
 }
