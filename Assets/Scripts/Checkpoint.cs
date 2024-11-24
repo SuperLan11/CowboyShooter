@@ -13,6 +13,7 @@ public class Checkpoint : MonoBehaviour
     // checkpoint can also be a door lower trigger
     private bool isDoorTrigger;
     [SerializeField] private int roomNum;
+    //!This variable may be redundant. Ask Landon to see if this variable could just be swapped out with roomNum
     [SerializeField] private int checkpointNum;
 
     // Start is called before the first frame update
