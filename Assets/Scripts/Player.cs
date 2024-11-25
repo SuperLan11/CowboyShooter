@@ -96,7 +96,8 @@ public class Player : Character
     [SerializeField] private float mouseSensitivityY = 10f;
     private float curMouseX = 0f;
     private float curMouseY = 0f;
-    [SerializeField] private float snapDistance = 50f;
+    
+    [SerializeField] private float camLockDist = 50f;    
 
     public enum movementState
     {
@@ -547,16 +548,27 @@ public class Player : Character
         Enemy[] enemies = FindObjectsOfType<Enemy>();
         foreach(Enemy enemy in enemies)
         {
+            if (GameManager.currentCheckpoint != enemy.checkpointNum)
+                continue;
+
             Vector2 enemy2DPos = Camera.main.WorldToScreenPoint(enemy.transform.position);
-            float distToEnemy = Vector2.Distance(Input.mousePosition, enemy2DPos);
-            Debug.Log("distToEnemy: " + distToEnemy);
-            if (distToEnemy < snapDistance)
-            {
-                player.transform.LookAt(enemy.transform.position);
-                cam.transform.LookAt(enemy.transform.position);
-                return;
+            float distToEnemy = Vector2.Distance(Input.mousePosition, enemy2DPos);            
+            if (distToEnemy < camLockDist)
+            {                
+                RaycastHit hit;
+                Vector3 enemyDir = (enemy.transform.position - cam.transform.position).normalized;
+                Physics.Raycast(cam.transform.position, enemyDir, out hit, Mathf.Infinity);                
+                if (hit.transform.gameObject.GetComponent<Enemy>() != null)
+                {
+                    // transform.LookAt ignores rigidbody constraints, which can cause movement bugs
+                    // only rotate horizontally for player and vertically for camera to avoid this
+                    Vector3 enemyXPos = new Vector3(enemy.transform.position.x, transform.position.y + transform.forward.y, enemy.transform.position.z);                                                            
+                    player.transform.LookAt(enemyXPos);
+                    cam.transform.LookAt(enemy.transform.position);
+                    return;
+                }
             }
-        }
+        }        
     }
 
     //Dragon's Den of the Movement Code
@@ -637,10 +649,8 @@ public class Player : Character
             rigidbody.velocity = Vector3.Lerp(rigidbody.velocity, newVel, moveAccel);
         }
         else if (currentMovementState == movementState.FLYING)
-        {
-            /*Debug.Log("mouse position: " + Input.mousePosition);
-            Debug.Log(Vector2.Distance(Input.mousePosition, new Vector2(5, 10)));*/
-            CheckEnemyLock();
+        {            
+            CheckEnemyLock();            
         }
 
         // Input.GetAxis is the change in value since last frame                
@@ -698,7 +708,7 @@ public class Player : Character
         
         if (kickStarted)
         {
-            perfectWallJumpSfx.Play();            
+            perfectWallJumpSfx.Play();
 
             rigidbody.velocity += new Vector3(0, 1.2f * jumpStrength, 0);
 

@@ -498,6 +498,7 @@ MonoBehaviour:
   vertCamSnap: 12
   mouseSensitivityX: 1.6
   mouseSensitivityY: 1.6
+  snapDistance: 50
 --- !u!114 &2539925554298584340
 MonoBehaviour:
   m_ObjectHideFlags: 0
