@@ -88,4 +88,9 @@ public class GameManager : MonoBehaviour
     {
         storedTime = 0;
     }
+
+    public void DestroySelf()
+    {
+        Destroy(this.gameObject);
+    }
 }
