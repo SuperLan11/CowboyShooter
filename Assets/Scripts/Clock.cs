@@ -6,12 +6,12 @@ using TMPro;
 public class Clock : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI clock;
-    public double rawSeconds = 0.0;
+    public static double rawSeconds = 0.0;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        rawSeconds = GameManager.storedTime;
     }
 
     // Update is called once per frame

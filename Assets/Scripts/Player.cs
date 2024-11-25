@@ -495,6 +495,8 @@ public class Player : Character
 
     protected override void Death()
     {
+        GameManager.gameManager.StoreTimerValue(Clock.rawSeconds);
+        
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         // reset floorsInitialized so floors can reset offmeshlinks
         Floor.floorsInitialized = 0;

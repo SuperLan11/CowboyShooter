@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool debugMode = false;
     private bool disableCursor;
     private bool enableCursor;
+    public static double storedTime;
 
     public void Awake()
     {
@@ -28,7 +29,10 @@ public class GameManager : MonoBehaviour
         else 
         { 
             gameManager = this; 
-        } 
+        }
+
+        //makes obj persistent through checkpoints and scene transitions
+        DontDestroyOnLoad(this.gameObject); 
     }
 
     //!You MUST change game manager variables here!
@@ -37,6 +41,8 @@ public class GameManager : MonoBehaviour
         //Debug.Log("cp on Start(): " + currentCheckpoint);
         disableCursor = false;
         enableCursor = false;
+
+        storedTime = 0;
     }
 
     public void Update()
@@ -71,5 +77,15 @@ public class GameManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    public void StoreTimerValue(double time)
+    {
+        storedTime = time;
+    }
+
+    public void ResetTimerValue()
+    {
+        storedTime = 0;
     }
 }
