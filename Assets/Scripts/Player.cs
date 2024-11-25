@@ -96,6 +96,7 @@ public class Player : Character
     [SerializeField] private float mouseSensitivityY = 10f;
     private float curMouseX = 0f;
     private float curMouseY = 0f;
+    [SerializeField] private float snapDistance = 50f;
 
     public enum movementState
     {
@@ -255,7 +256,8 @@ public class Player : Character
             {
                 player.currentMovementState = movementState.FLYING;
             }
-            else if (!isGrounded() && player.currentMovementState == movementState.HANGING){
+            else if (!isGrounded() && player.currentMovementState == movementState.HANGING)
+            {
                 player.currentMovementState = movementState.AIR;
             }
             
@@ -540,6 +542,23 @@ public class Player : Character
         return GetComponent<BoxCollider>().bounds.min.y + 0.05f;
     }
 
+    private void CheckEnemyLock()
+    {        
+        Enemy[] enemies = FindObjectsOfType<Enemy>();
+        foreach(Enemy enemy in enemies)
+        {
+            Vector2 enemy2DPos = Camera.main.WorldToScreenPoint(enemy.transform.position);
+            float distToEnemy = Vector2.Distance(Input.mousePosition, enemy2DPos);
+            Debug.Log("distToEnemy: " + distToEnemy);
+            if (distToEnemy < snapDistance)
+            {
+                player.transform.LookAt(enemy.transform.position);
+                cam.transform.LookAt(enemy.transform.position);
+                return;
+            }
+        }
+    }
+
     //Dragon's Den of the Movement Code
     void FixedUpdate()
     {
@@ -582,20 +601,21 @@ public class Player : Character
             {
                 Death();
             }
-        }     
-  
+        }
+
 
 
         if (currentMovementState == movementState.SWINGING)
         {
-            if (holdingRMB){
+            if (holdingRMB)
+            {
                 lassoForceMultiplier += lassoForceIncrease;
                 lasso.GetComponent<Lasso>().ContinueLasso();
-            } 
+            }
         }
         else if (currentMovementState == movementState.SLIDING)
         {
-            if(wallSlideSfx != null && !wallSlideSfx.isPlaying)
+            if (wallSlideSfx != null && !wallSlideSfx.isPlaying)
                 wallSlideSfx.Play();
             rigidbody.velocity = new Vector3(0, slideVel, 0);
         }
@@ -615,6 +635,12 @@ public class Player : Character
                        transform.forward * lastMoveInput.y) * speed;
 
             rigidbody.velocity = Vector3.Lerp(rigidbody.velocity, newVel, moveAccel);
+        }
+        else if (currentMovementState == movementState.FLYING)
+        {
+            /*Debug.Log("mouse position: " + Input.mousePosition);
+            Debug.Log(Vector2.Distance(Input.mousePosition, new Vector2(5, 10)));*/
+            CheckEnemyLock();
         }
 
         // Input.GetAxis is the change in value since last frame                
