@@ -16,23 +16,19 @@ public class Potion : MonoBehaviour
         potionMesh = GetComponent<MeshRenderer>();
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        for (int i = 0; i < collision.contactCount; i++)
+    private void OnTriggerEnter(Collider other)
+    {                
+        if (other.gameObject.name == "Player" && !playingSound)
         {
-            bool hitPlayer = collision.GetContact(i).otherCollider.gameObject.name == "Player";
-            if (hitPlayer && !playingSound)
-            {
-                potionSfx.Play();
-                playingSound = true;
-                potionMesh.enabled = false;
-                int curHealth = Player.player.GetHealth();
-                int maxHealth = Player.player.GetMaxHealth();
-                if (curHealth < maxHealth)
-                    Player.player.SetHealth(curHealth + 1);
-                break;
-            }
-        }
+            potionSfx.Play();
+            playingSound = true;
+            potionMesh.enabled = false;
+            Destroy(GetComponent<BoxCollider>());
+            int curHealth = Player.player.GetHealth();
+            int maxHealth = Player.player.GetMaxHealth();
+            if (curHealth < maxHealth)
+                Player.player.SetHealth(curHealth + 1);            
+        }        
     }
 
     // Update is called once per frame

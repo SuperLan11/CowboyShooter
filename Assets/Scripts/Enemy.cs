@@ -192,8 +192,7 @@ public abstract class Enemy : Character
                 
         Door.SetDoorCounter(enemiesInRoom);
         if (enemiesInRoom <= 0)
-        {
-            Debug.Log("raising doors");
+        {           
             Door.RaiseDoors();
         }
         

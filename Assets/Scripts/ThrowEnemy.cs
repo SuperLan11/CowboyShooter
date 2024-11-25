@@ -26,14 +26,23 @@ public class ThrowEnemy : Enemy
         // tntChild is not a TNT prefab. 
         // This prevents weird link issues and makes the tnt the enemy holds stay in place
         // When throwing, the tnt held is hidden and a new tnt is created to appear to be throwing a tnt        
-        tntChild.GetComponent<MeshRenderer>().enabled = false;                
+        tntChild.GetComponent<MeshRenderer>().enabled = false;
 
+        RaycastHit frontHit;
+        Vector3 playerDirection = (player.transform.position - tntSpawn.position).normalized;
+        // consider using tnt spawn forward
+        bool hitObj = (Physics.Raycast(tntSpawn.position, playerDirection, out frontHit, sightRange));
+        bool hitWall = frontHit.transform.tag == "WALL";
+        bool hitFloor = frontHit.transform.tag == "FLOOR";
+        bool objBelow = frontHit.collider.bounds.max.y < tntSpawn.transform.position.y;
+
+        //if (PlayerIsSighted())
         Vector3 tntVel;
-        if(PlayerIsSighted())        
-            tntVel = DefaultThrowVel(defaultThrowHeight);
-        else        
-            tntVel = VelToClearWall();        
-        
+        if (!hitObj || playerSighted || (hitObj && objBelow))                    
+            tntVel = DefaultThrowVel(defaultThrowHeight, -3f);
+        else
+            tntVel = VelToClearWall();
+
         GameObject newTnt = Instantiate(tntPrefab, tntSpawn.position, Quaternion.identity);
         newTnt.GetComponent<Rigidbody>().velocity = tntVel;
     }    
@@ -45,13 +54,6 @@ public class ThrowEnemy : Enemy
         bool hitWall = (Physics.Raycast(tntSpawn.position, playerDirection, out frontHit, sightRange));
         float distToWall = frontHit.distance;
         float distToPlayer = DistToPlayer();
-
-        RaycastHit backHit;
-        // raycast backward to see if navmesh would move within 0.5 of wall
-        // prevents enemies from moving into walls
-        bool hitObjBackward = Physics.Raycast(transform.position, -1 * playerDirection, out backHit, minDistFromWall);
-        if (hitObjBackward && backHit.transform.tag == "WALL")
-            return transform.position;
         
         if (distToWall > minDistFromWall)
             canThrow = true;
@@ -62,15 +64,15 @@ public class ThrowEnemy : Enemy
         return throwPos;
     }
 
-    private Vector3 DefaultThrowVel(float height)
+    private Vector3 DefaultThrowVel(float height, float flatVelOffset)
     {        
         Vector3 playerDirection = (player.transform.position - tntSpawn.position).normalized;        
         float distToPlayer = Vector3.Distance(tntSpawn.position, player.transform.position);                                        
         
         float landTime = 2f * Mathf.Sqrt(height / (-Physics.gravity.y / 2));
         float yV0 = -Physics.gravity.y * Mathf.Sqrt(height / (-Physics.gravity.y / 2));
-        float xV0 = (distToPlayer / landTime) * playerDirection.x;
-        float zV0 = (distToPlayer / landTime) * playerDirection.z;        
+        float xV0 = (distToPlayer / landTime) * playerDirection.x + (flatVelOffset * playerDirection.x);
+        float zV0 = (distToPlayer / landTime) * playerDirection.z + (flatVelOffset * playerDirection.z);
 
         return new Vector3(xV0, yV0, zV0);
     }
@@ -100,12 +102,17 @@ public class ThrowEnemy : Enemy
         float halfTntHeight = tntPrefab.transform.localScale.z * tntPrefab.GetComponent<CapsuleCollider>().height / 2;        
         // account for width of tnt
         float relativeWallHeight = hit.collider.bounds.max.y + halfTntHeight - tntSpawn.position.y;
+        //Debug.Log("relative wall height: " + relativeWallHeight);
         // increase heightDiff until valid throw or angle limit exceeded        
         float landTime = 2f * Mathf.Sqrt(relativeWallHeight / (-Physics.gravity.y/2));
         float yV0 = -Physics.gravity.y * Mathf.Sqrt(relativeWallHeight / (-Physics.gravity.y / 2));
         float xV0 = (distToPlayer / landTime) * playerDirection.x;
         float zV0 = (distToPlayer / landTime) * playerDirection.z;
-        
+
+        /*Debug.Log("yV0: " + yV0);
+        Debug.Log("xV0: " + xV0);
+        Debug.Log("zV0: " + zV0);*/
+
         float distToWall = Vector3.Distance(tntSpawn.position, hit.point);
         float t = (distToWall / distToPlayer) * landTime;
         // how to get distToEndOfWall?
@@ -118,16 +125,24 @@ public class ThrowEnemy : Enemy
         while (!isValidThrow && angle <= 89f*Mathf.Rad2Deg)
         {
             angle += (15f * Mathf.Deg2Rad);
+            //Debug.Log("angle " + angle*Mathf.Rad2Deg);
             adjustedWallHeight = distToWall * Mathf.Tan(angle) + halfTntHeight;
 
             landTime = 2f * Mathf.Sqrt(adjustedWallHeight / (-Physics.gravity.y / 2));
             yV0 = -Physics.gravity.y * Mathf.Sqrt(adjustedWallHeight / (-Physics.gravity.y/2));            
             xV0 = (distToPlayer / landTime) * playerDirection.x;            
-            zV0 = (distToPlayer / landTime) * playerDirection.z;            
+            zV0 = (distToPlayer / landTime) * playerDirection.z;
+
+            /*Debug.Log("yV0: " + yV0);
+            Debug.Log("xV0: " + xV0);
+            Debug.Log("zV0: " + zV0);*/
 
             distToWall = Vector3.Distance(tntSpawn.position, hit.point);
             t = (distToWall / distToPlayer) * landTime;
             // how to get distToEndOfWall?
+
+            /*Debug.Log("distToWall: " + distToWall);
+            Debug.Log("t: " + t);*/
 
             aboveWallStart = (yV0 * t - (-Physics.gravity.y/2 * t * t) > relativeWallHeight);
             if (aboveWallStart)

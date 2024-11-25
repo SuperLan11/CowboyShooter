@@ -250,8 +250,8 @@ MonoBehaviour:
   destination2: {fileID: 0}
   maxAttackCooldown: 1.2
   attackDamage: 1
-  checkpointNum: 3
-  sightRange: 9
+  checkpointNum: 4
+  sightRange: 10
   deathSfx: {fileID: 1771406328416087080}
   tntPrefab: {fileID: 6165991136970091572, guid: 9e55919bab26ecb41b2c77ba8bb2ce07, type: 3}
   tntSpawn: {fileID: 8337465913492797655}
