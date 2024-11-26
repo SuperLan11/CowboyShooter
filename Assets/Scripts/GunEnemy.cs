@@ -38,7 +38,7 @@ public class GunEnemy : Enemy
         playerFocusTime += Time.deltaTime;
         // NavMesh accounts for if the enemy can't go to shoot pos while against a wall
         if (playerSighted)
-            return player.transform.position - playerDirection * -2f;                
+            return player.transform.position - playerDirection * 2f;                
         return transform.position + playerDirection * -(sightRange - 2 - distToPlayer);
     }
 

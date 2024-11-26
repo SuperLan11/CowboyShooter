@@ -154,7 +154,7 @@ public class Player : Character
         holdingRMB = false;
         holdingRestart = false;
 
-        mouseSensitivityX = mouseSensitivityY = GameManager.mouseSensitivity;
+        //mouseSensitivityX = mouseSensitivityY = GameManager.mouseSensitivity;
 
         healthLastFrame = health;
     }    

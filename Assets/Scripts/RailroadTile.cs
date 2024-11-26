@@ -26,6 +26,7 @@ public class RailroadTile : Railroad
         RandomizeDeco();
     }
 
+    // not working
     private bool IsObjectHere(GameObject[] decosPlaced, GameObject newDeco, Vector3 potentialPos)
     {
         Collider[] collisions = Physics.OverlapSphere(potentialPos, newDeco.GetComponent<MeshRenderer>().bounds.size.x / 2);
@@ -92,6 +93,7 @@ public class RailroadTile : Railroad
         //DestroyAnyDecos();
 
         int itemsLeft = maxDecorations;
+        // this isn't really used at the moment
         bool canPlace = true;
         
         GameObject[] decosPlaced = new GameObject[decorations.Length];
@@ -135,6 +137,7 @@ public class RailroadTile : Railroad
         if (transform.position.x > maxX)
         {
             transform.position = spawnPos;
+            // uncomment once destroying deco works without errors
             //RandomizeDeco();
         }
     }
