@@ -139,3 +139,11 @@ Assets Used:
 	Steam Train at Crossing
 	Mark_MPT (Freesound)
 	https://pixabay.com/sound-effects/steam-train-at-crossing-62158/
+
+	Rope Ring 3D Model (lasso)
+	DaronJewelry
+	https://www.cgtrader.com/free-3d-print-models/jewelry/rings/rope-ring-dc65347a-31d1-40e6-bd60-dc0cc1a5c868
+
+	AllSky Free Skyboxes
+	RPGWhiteLock
+	https://assetstore.unity.com/packages/2d/textures-materials/sky/allsky-free-10-sky-skybox-set-146014#description
