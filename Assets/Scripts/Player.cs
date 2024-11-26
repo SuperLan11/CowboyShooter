@@ -562,12 +562,12 @@ public class Player : Character
                 {
                     // transform.LookAt ignores rigidbody constraints, which can cause movement bugs
                     // only rotate horizontally for player and vertically for camera to avoid this
-                    Vector3 enemyXPos = new Vector3(enemy.transform.position.x, transform.position.y + transform.forward.y, enemy.transform.position.z);                                                            
-                    player.transform.LookAt(enemyXPos);
+                    Vector3 enemyHorPos = new Vector3(enemy.transform.position.x, transform.position.y + transform.forward.y, enemy.transform.position.z);                                                            
+                    player.transform.LookAt(enemyHorPos);
                     cam.transform.LookAt(enemy.transform.position);
                     return;
                 }
-            }
+            }                                                                                          
         }        
     }
 
