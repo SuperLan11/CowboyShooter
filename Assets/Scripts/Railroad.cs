@@ -4,23 +4,22 @@ using UnityEngine;
 
 public class Railroad : MonoBehaviour
 {
-    [SerializeField] private float railroadSpeed;
-    [SerializeField] private float maxX;
-    private static float railroadLength;
+    [SerializeField] protected float railroadSpeed;
+    [SerializeField] protected float maxX;    
 
-    [SerializeField] private Transform initSpawnTile;
-    private Vector3 spawnPos;
-    [SerializeField] private int railroadNum;
-
-    /* make it so you only need to input last tile and railroad num */
+    [SerializeField] protected Transform initSpawnTile;
+    protected Vector3 spawnPos;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (initSpawnTile != null)
-            spawnPos = initSpawnTile.position;        
+        AssignSpawn();
+    }
 
-        railroadLength = GetComponent<BoxCollider>().bounds.size.x;
+    protected void AssignSpawn()
+    {
+        if (initSpawnTile != null)
+            spawnPos = initSpawnTile.position;
     }
 
     // Update is called once per frame
@@ -30,7 +29,7 @@ public class Railroad : MonoBehaviour
         newPos.x += railroadSpeed * Time.deltaTime;
         transform.position = newPos;
 
-        if (transform.position.x > maxX)                            
-            transform.position = spawnPos;        
+        if (transform.position.x > maxX)        
+            transform.position = spawnPos;                    
     }
 }
