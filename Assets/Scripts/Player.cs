@@ -85,6 +85,7 @@ public class Player : Character
     [SerializeField] private AudioSource takeDamageSfx;
 
     [SerializeField] private GameObject healthBar;
+    [SerializeField] private MeshRenderer lassoMesh;
 
     private bool reloadPlayed = false;
 
@@ -415,6 +416,12 @@ public class Player : Character
         return (currentMovementState == movementState.GROUND);
     }
 
+    public bool usingLasso()
+    {
+        return (Player.player.currentMovementState == Player.movementState.HANGING ||
+            Player.player.currentMovementState == Player.movementState.SWINGING);
+    }
+
     public bool isOnWall()
     {
         return (currentMovementState == movementState.SLIDING);
@@ -578,7 +585,7 @@ public class Player : Character
     //Dragon's Den of the Movement Code
     void FixedUpdate()
     {
-        //Debug.Log("State: " + currentMovementState);
+        Debug.Log("State: " + currentMovementState);
         //Debug.Log(rigidbody.velocity.magnitude);        
 
         //forces camera to look straight as you're opening up scene
@@ -589,7 +596,9 @@ public class Player : Character
         {
             UpdateHealthBar();
             //Debug.Log("this is being called");
-        }        
+        }
+
+        lassoMesh.enabled = !usingLasso();        
 
         //guarantees lasso state won't be overwritten
         if (inLassoLock)

@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     private bool disableCursor;
     private bool enableCursor;
     public static double storedTime;
-    public static float mouseSensitivity = 10f;
+    public static float mouseSensitivity = 2f;
 
     public void Awake()
     {
