@@ -14,7 +14,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/Level2_Redo.unity
     guid: 6ba96e689bad42f4785ff665cac1121c
-  - enabled: 1
-    path: Assets/Scenes/Menu/WinScreen.unity
-    guid: e37a8c587ae8bf745a18dc9acbac50fe
   m_configObjects: {}
