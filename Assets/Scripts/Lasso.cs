@@ -37,7 +37,7 @@ public class Lasso : MonoBehaviour
     }
 
     void LateUpdate(){
-        if (usingLasso()){
+        if (Player.player.usingLasso()){
             DrawRope();
         }
 
@@ -108,12 +108,6 @@ public class Lasso : MonoBehaviour
 
         lineRenderer.SetPosition(0, lassoTip.position);
         lineRenderer.SetPosition(1, grapplePoint);
-    }
-
-    public bool usingLasso()
-    {
-        return (Player.player.currentMovementState == Player.movementState.HANGING ||
-            Player.player.currentMovementState == Player.movementState.SWINGING);
     }
 
     public bool isValidLassoObj(GameObject obj){
