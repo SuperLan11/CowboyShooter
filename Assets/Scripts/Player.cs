@@ -92,8 +92,8 @@ public class Player : Character
     // Sensitivity changes how much magnitude moving the mouse has
     [SerializeField] private float horCamSnap = 10f;
     [SerializeField] private float vertCamSnap = 10f;
-    [SerializeField] private float mouseSensitivityX = 10f;
-    [SerializeField] private float mouseSensitivityY = 10f;
+    [SerializeField] public float mouseSensitivityX = 10f;
+    [SerializeField] public float mouseSensitivityY = 10f;
     private float curMouseX = 0f;
     private float curMouseY = 0f;
     
@@ -153,6 +153,8 @@ public class Player : Character
 
         holdingRMB = false;
         holdingRestart = false;
+
+        mouseSensitivityX = mouseSensitivityY = GameManager.mouseSensitivity;
 
         healthLastFrame = health;
     }    
@@ -495,6 +497,8 @@ public class Player : Character
 
     protected override void Death()
     {
+        GameManager.gameManager.StoreTimerValue(Clock.rawSeconds);
+        
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         // reset floorsInitialized so floors can reset offmeshlinks
         Floor.floorsInitialized = 0;

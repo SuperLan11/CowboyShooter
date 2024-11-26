@@ -51,6 +51,14 @@ public class MainMenu : MonoBehaviour
         masterVolume.SetFloat(masterVolumeString, volumeAdjustedForAudioEquation);
     }
 
+    public void SetMouseSensitivity(float sensitivity)
+    {
+        //this allows us to make the slider 1 to 100 instead of 1 to 20, which is more apealing imo
+        float conversionRatio = 5f;
+        float adjustedSensitivity = sensitivity / conversionRatio;
+        GameManager.mouseSensitivity = adjustedSensitivity;
+    }
+
     //I'm sure there's a better way to do this, but who cares
     public void SwitchMenus(int menuState)
     {

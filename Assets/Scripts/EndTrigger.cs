@@ -18,6 +18,8 @@ public class EndTrigger : MonoBehaviour
     {
         if (collider.gameObject.name == "Player")
         {
+            GameManager.gameManager.ResetTimerValue();
+
             int curSceneIndex = SceneManager.GetActiveScene().buildIndex;
             StartCoroutine(fadeAnim.FadeToNewScene(curSceneIndex+1, 1f));            
         }
