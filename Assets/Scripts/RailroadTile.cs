@@ -15,11 +15,11 @@ public class RailroadTile : Railroad
 
     [SerializeField] private int maxDecorations = 10;
     private List<GameObject> curDecorations = new List<GameObject>();
-    private BoxCollider collider;
+    private BoxCollider boxCollider;
 
     private void Start()
     {
-        collider = GetComponent<BoxCollider>();
+        boxCollider = GetComponent<BoxCollider>();
         AssignSpawn();
         decorations = new GameObject[] { rockPrefab, skullPrefab, canyonPrefab, shortCactusPrefab, tallCactusPrefab };
         // ideally make the railroad tiles very big to minimize the frequency of randomization
@@ -107,8 +107,8 @@ public class RailroadTile : Railroad
             float decoHalfXSize = potentialDeco.GetComponent<MeshRenderer>().bounds.size.x / 2;
             float decoHalfZSize = potentialDeco.GetComponent<MeshRenderer>().bounds.size.z / 2;
 
-            float randX = Random.Range(collider.bounds.min.x + decoHalfXSize, collider.bounds.max.x - decoHalfXSize);
-            float randZ = Random.Range(collider.bounds.min.z + decoHalfZSize, collider.bounds.max.z - decoHalfZSize);                       
+            float randX = Random.Range(GetComponent<Collider>().bounds.min.x + decoHalfXSize, GetComponent<Collider>().bounds.max.x - decoHalfXSize);
+            float randZ = Random.Range(GetComponent<Collider>().bounds.min.z + decoHalfZSize, GetComponent<Collider>().bounds.max.z - decoHalfZSize);                       
             float y = GetComponent<BoxCollider>().bounds.max.y;
             Vector3 potentialPos = new Vector3(randX, y, randZ);
 

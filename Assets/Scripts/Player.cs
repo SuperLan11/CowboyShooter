@@ -307,7 +307,7 @@ public class Player : Character
     
     private void OnCollisionEnter(Collision collision)
     {       
-        bool hitFeet, hitFloor, hitWall, hitJacobsWall, gotTiming;
+        bool hitFeet, hitFloor, hitWall, hitJacobsWall, hitMetalWall, gotTiming;
         for (int i = 0; i < collision.contactCount; i++)
         {
             hitFeet = collision.GetContact(i).otherCollider.bounds.max.y < playerFeetPosition();
@@ -316,12 +316,13 @@ public class Player : Character
             hitWall = collision.GetContact(i).otherCollider.gameObject.tag == "WALL";
             hitJacobsWall = collision.GetContact(i).otherCollider.gameObject.tag == "WALL" && 
                 collision.GetContact(i).otherCollider.gameObject.name.Contains("Model");
+            // used MetalWalls Layer instead of a tag since it's faster than checking tag1 == tag2 and I didn't want to rework code that uses the WALL tag
+            hitMetalWall = collision.GetContact(i).otherCollider.gameObject.layer == LayerMask.NameToLayer("MetalWalls");
             gotTiming = timeSinceJump > 0f && timeSinceJump < perfectJumpWindow;
             
             // perfect wall jump counts towards wall jump counter            
-            if (hitWall && gotTiming && !hitFeet && wallJumpsLeft > 0 && !isGrounded())
-            {
-                Debug.Log("got kick in enter");
+            if (hitWall && !hitMetalWall && gotTiming && !hitFeet && wallJumpsLeft > 0 && !isGrounded())
+            {                
                 kickStarted = true;                
                 wallJumpsLeft--;                
                 Vector3 curRot = transform.eulerAngles;                
@@ -355,7 +356,7 @@ public class Player : Character
                 wallJumpsLeft = maxWallJumps;
                 break;
             }
-            if (hitWall && rigidbody.velocity.y < wallSlideThreshold && !isGrounded() && wallJumpsLeft > 0)
+            if (hitWall && !hitMetalWall && rigidbody.velocity.y < wallSlideThreshold && !isGrounded() && wallJumpsLeft > 0)
             {                
                 currentMovementState = movementState.SLIDING;
                 lockedToWall = true;
@@ -368,7 +369,8 @@ public class Player : Character
     {
         for (int i = 0; i < collision.contactCount; i++)
         {
-            bool touchingWall = collision.GetContact(i).otherCollider.gameObject.tag == "WALL";
+            bool touchingWall = collision.GetContact(i).otherCollider.gameObject.tag == "WALL";        
+            bool touchingMetalWall = collision.GetContact(i).otherCollider.gameObject.layer == LayerMask.NameToLayer("MetalWalls");
             bool touchingFloor = collision.GetContact(i).otherCollider.gameObject.tag == "FLOOR";
             bool hitFeet = collision.collider.bounds.max.y < GetComponent<BoxCollider>().bounds.min.y + 0.01f;
 
@@ -380,7 +382,7 @@ public class Player : Character
                 wallJumpsLeft = maxWallJumps;
                 break;
             }
-            else if (touchingWall && rigidbody.velocity.y < wallSlideThreshold && !isGrounded() && wallJumpsLeft > 0)
+            else if (touchingWall && !touchingMetalWall && rigidbody.velocity.y < wallSlideThreshold && !isGrounded() && wallJumpsLeft > 0)
             {                
                 currentMovementState = movementState.SLIDING;
                 lockedToWall = true;

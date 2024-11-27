@@ -70,7 +70,11 @@ public class Door : MonoBehaviour
     
     // set door counter is for directly setting counter
     public static void SetDoorCounter(int enemiesInRoom)
-    {        
+    {
+        // don't change counter if player finishes a room and kills an enemy in the next room before entering that room
+        if (Enemy.enemiesInRoom < 0)
+            return;
+
         GameObject[] doors = GameObject.FindGameObjectsWithTag("DOOR");
         foreach (GameObject door in doors)
         {
