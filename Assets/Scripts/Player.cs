@@ -439,6 +439,10 @@ public class Player : Character
         return maxHealth;
     }
 
+    public bool AtFullHealth(){
+        return (GetHealth() == GetMaxHealth());
+    }
+
     public void SetHealth(int h)
     {
         health = h;

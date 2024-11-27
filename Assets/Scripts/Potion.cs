@@ -18,7 +18,7 @@ public class Potion : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {                
-        if (other.gameObject.name == "Player" && !playingSound)
+        if (other.gameObject.name == "Player" && !playingSound && !Player.player.AtFullHealth())
         {
             potionSfx.Play();
             playingSound = true;
