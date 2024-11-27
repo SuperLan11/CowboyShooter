@@ -585,7 +585,7 @@ public class Player : Character
     //Dragon's Den of the Movement Code
     void FixedUpdate()
     {
-        Debug.Log("State: " + currentMovementState);
+        //Debug.Log("State: " + currentMovementState);
         //Debug.Log(rigidbody.velocity.magnitude);        
 
         //forces camera to look straight as you're opening up scene
