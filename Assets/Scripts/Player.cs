@@ -13,6 +13,7 @@ using UnityEngine.SceneManagement;
 
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
+using Quaternion = UnityEngine.Quaternion;
 using UnityEngine.UI;
 using JetBrains.Rider.Unity.Editor;
 using System.Runtime.ConstrainedExecution;
@@ -86,6 +87,11 @@ public class Player : Character
 
     [SerializeField] private GameObject healthBar;
     [SerializeField] private MeshRenderer lassoMesh;
+    [SerializeField] private ParticleSystem shootingSystem;
+    //[SerializeField] private ParticleSystem impactParticleSystem;
+    [SerializeField] private TrailRenderer bulletTrail;
+    [SerializeField] private Transform gunTip;
+
 
     private bool reloadPlayed = false;
 
@@ -192,6 +198,24 @@ public class Player : Character
         enemy.GetComponent<Enemy>().SetGotShot(true);
     }
 
+    private IEnumerator SpawnTrail(TrailRenderer trail, RaycastHit hit){
+        float time = 0;
+        Vector3 startPosition = trail.transform.position;
+
+        while (time < 1)
+        {
+            trail.transform.position = Vector3.Lerp(startPosition, hit.point, time);
+            time += (Time.deltaTime / trail.time);
+
+            yield return null;
+        }
+
+        trail.transform.position = hit.point;
+        //Instantiate(impactParticleSystem, hit.point, Quaternion.LookRotation(hit.normal));
+
+        Destroy(trail.gameObject, trail.time);
+    }
+
     public GameObject ObjAimedAt()
     {
         RaycastHit hit;
@@ -217,6 +241,13 @@ public class Player : Character
                     gunSfx.Play();
                     shootCooldown = 0f;
                     reloadPlayed = false;
+
+                    //gun trail effect
+                    if (Physics.Raycast(gunTip.position, gunTip.transform.forward, out RaycastHit hit, Mathf.Infinity))
+                    {                    
+                        TrailRenderer trail = Instantiate(bulletTrail, gunTip.position, Quaternion.identity);
+                        StartCoroutine(SpawnTrail(trail, hit));
+                    }
 
                     if(objAimed.GetComponent<Enemy>() != null)
                     {

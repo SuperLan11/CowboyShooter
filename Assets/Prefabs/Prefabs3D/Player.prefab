@@ -31,6 +31,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6356685527699742814}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7314183672082732034
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4451810485344448118}
+  m_Layer: 3
+  m_Name: GunTip
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4451810485344448118
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7314183672082732034}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.0022, y: 0.0995, z: 0.2154}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2498760430914030587}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7346386731332392221
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,6 +277,9 @@ MonoBehaviour:
   takeDamageSfx: {fileID: 4959015502900481118}
   healthBar: {fileID: 0}
   lassoMesh: {fileID: 7418465067619759314}
+  shootingSystem: {fileID: 198234346748616026, guid: ad2ab49d0a2a17148bd51c93d977bdbc, type: 3}
+  bulletTrail: {fileID: 177620498509829972, guid: ce194b57033966c4e8e366fa3c22c44f, type: 3}
+  gunTip: {fileID: 4451810485344448118}
   horCamSnap: 12
   vertCamSnap: 12
   mouseSensitivityX: 0.5
@@ -1259,7 +1293,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 5766708098179972723, guid: edd08d4e4f552e64ba8fcd0ebb08dede, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4451810485344448118}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: edd08d4e4f552e64ba8fcd0ebb08dede, type: 3}
 --- !u!4 &2498760430914030587 stripped
