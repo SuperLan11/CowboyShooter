@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager gameManager;
     
+    //doesn't look like it's currently being used for anything. We'll need to change that if we need to do more complicated stuff
+    //with scene management
     public int currentLevel;
     public static int currentCheckpoint = 0;
     [SerializeField] private bool debugMode = false;
@@ -22,15 +24,7 @@ public class GameManager : MonoBehaviour
 
     public void Awake()
     {
-        //Deletes itself if there's another instance. Basically forces the class to be a singleton
-        if (gameManager != null && gameManager != this) 
-        { 
-            Destroy(this); 
-        } 
-        else 
-        { 
-            gameManager = this; 
-        }
+        gameManager = this; 
 
         //makes obj persistent through checkpoints and scene transitions
         DontDestroyOnLoad(this.gameObject); 

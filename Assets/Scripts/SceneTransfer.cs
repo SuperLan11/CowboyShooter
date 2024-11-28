@@ -20,15 +20,10 @@ public class SceneTransfer : MonoBehaviour
         fadeAnim.Play("FadeOut");
         yield return new WaitForSecondsRealtime(fadeTime);
         Player.hasCheckpoint = false;
+        GameManager.gameManager.currentLevel = buildIndex;
         SceneManager.LoadScene(buildIndex);
         // The animator will automatically play a fade in animation when the scene loads
         // as long as the FadePanel is in that scene with an animator.
         // To adjust the fade in/out animation timing, change the FadeIn/FadeOut clips and change fadeTime variable
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
