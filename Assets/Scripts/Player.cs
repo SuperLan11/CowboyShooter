@@ -99,8 +99,12 @@ public class Player : Character
     // Sensitivity changes how much magnitude moving the mouse has
     [SerializeField] private float horCamSnap = 10f;
     [SerializeField] private float vertCamSnap = 10f;
-    [SerializeField] public float mouseSensitivityX = 10f;
-    [SerializeField] public float mouseSensitivityY = 10f;
+
+    //these values are used in so many places that I think they need to not be serialized. Too many chances for the values
+    //to get screwed up with the object in the scene
+
+    private float mouseSensitivityX = 2f;
+    private float mouseSensitivityY = 2f;
     private float curMouseX = 0f;
     private float curMouseY = 0f;
     
@@ -161,7 +165,7 @@ public class Player : Character
         holdingRMB = false;
         holdingRestart = false;
 
-        //mouseSensitivityX = mouseSensitivityY = GameManager.mouseSensitivity;
+        mouseSensitivityX = mouseSensitivityY = GameManager.mouseSensitivity;
 
         healthLastFrame = health;
     }    

@@ -26,8 +26,9 @@ public class LevelManager : MonoBehaviour
             GameObject tempObj = Instantiate(gameManagerPrefab);
             
             manager = tempObj.GetComponent<GameManager>();
-            manager.debugMode = debugMode;
-            manager.currentLevel = currentLevel;;
         }
+
+        manager.debugMode = debugMode;
+        manager.currentLevel = currentLevel;;
     }
 }
