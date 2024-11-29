@@ -16,8 +16,8 @@ public class GameManager : MonoBehaviour
     //doesn't look like it's currently being used for anything. We'll need to change that if we need to do more complicated stuff
     //with scene management
     public int currentLevel;
+    public bool debugMode = false;
     public static int currentCheckpoint = 0;
-    [SerializeField] private bool debugMode = false;
     private bool disableCursor;
     private bool enableCursor;
     public static double storedTime;

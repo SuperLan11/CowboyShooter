@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Levels/Level1.unity
     guid: 5aa9de385967b3542b92a43d31be8bc6
   - enabled: 1
-    path: Assets/Scenes/Levels/Level2_Redo.unity
+    path: Assets/Scenes/Levels/Level2.unity
     guid: 6ba96e689bad42f4785ff665cac1121c
   - enabled: 1
     path: Assets/Scenes/Levels/Level3.unity
