@@ -198,6 +198,11 @@ public class Player : Character
         enemy.GetComponent<Enemy>().SetGotShot(true);
     }
 
+    private void ShootExplodingBarrel(GameObject explodingBarrel)
+    {
+        explodingBarrel.GetComponent<ExplodingBarrel>().Explode();
+    }
+
     private IEnumerator SpawnTrail(TrailRenderer trail, RaycastHit hit){
         float time = 0;
         Vector3 startPosition = trail.transform.position;
@@ -252,6 +257,10 @@ public class Player : Character
                     if(objAimed.GetComponent<Enemy>() != null)
                     {
                         Shoot(objAimed);
+                    }
+                    else if (objAimed.GetComponentInChildren<ExplodingBarrel>() != null)
+                    {
+                        ShootExplodingBarrel(objAimed);
                     }
                 }
             }

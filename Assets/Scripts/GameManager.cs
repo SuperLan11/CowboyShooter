@@ -6,6 +6,7 @@ that's a singleton as well, but we want to keep the scripts concise.
 
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -44,11 +45,8 @@ public class GameManager : MonoBehaviour
     {
         if (debugMode)
         {
-            Enemy[] enemies = GameObject.FindObjectsOfType<Enemy>();
-            foreach (Enemy enemy in enemies)
-            {
-                Destroy(enemy.gameObject);
-            }
+            Enemy[] enemies = GetAllEnemies();
+            DestroyAllEnemies(enemies);
         }
 
         //This cannot be if-else, they are not mutually exclusive
@@ -82,6 +80,19 @@ public class GameManager : MonoBehaviour
     public void ResetTimerValue()
     {
         storedTime = 0;
+    }
+
+    public Enemy[] GetAllEnemies()
+    {
+        return GameObject.FindObjectsOfType<Enemy>();
+    }
+
+    public void DestroyAllEnemies(Enemy[] enemies)
+    {
+        foreach (Enemy enemy in enemies)
+        {
+            Destroy(enemy.gameObject);
+        }
     }
 
     public void DestroySelf()
