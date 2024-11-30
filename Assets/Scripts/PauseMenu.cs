@@ -45,7 +45,6 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
-        Debug.Log("button has been pressed");
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         GameManager.gameManager.DisableCursor();
