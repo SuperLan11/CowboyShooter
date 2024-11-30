@@ -137,6 +137,8 @@ public class Player : Character
             transform.eulerAngles = respawnRot;
         }
 
+        currentMovementState = movementState.GROUND;
+
         // Important: this affects gravity for everything!
         Physics.gravity = new Vector3(0, gravityAccel, 0);
 
@@ -351,13 +353,14 @@ public class Player : Character
     
     private void OnCollisionEnter(Collision collision)
     {       
-        bool hitFeet, hitFloor, hitWall, hitJacobsWall, hitMetalWall, gotTiming;
+        bool hitFeet, hitFloor, hitWall, hitCeiling, hitJacobsWall, hitMetalWall, gotTiming;
         for (int i = 0; i < collision.contactCount; i++)
         {
             hitFeet = collision.GetContact(i).otherCollider.bounds.max.y < playerFeetPosition();
             hitFloor = collision.GetContact(i).otherCollider.gameObject.tag == "FLOOR";
             // add jacobWall tag here when that gets in
             hitWall = collision.GetContact(i).otherCollider.gameObject.tag == "WALL";
+            hitCeiling = collision.GetContact(i).otherCollider.gameObject.tag == "CEILING" && collision.GetContact(i).otherCollider.bounds.min.y > playerFeetPosition();
             hitJacobsWall = collision.GetContact(i).otherCollider.gameObject.tag == "WALL" && 
                 collision.GetContact(i).otherCollider.gameObject.name.Contains("Model");
             // used MetalWalls Layer instead of a tag since it's faster than checking tag1 == tag2 and I didn't want to rework code that uses the WALL tag
@@ -391,7 +394,14 @@ public class Player : Character
             // ignore wall collision during kick and kick lerp
             if (kickLerping)
                 return;
-                                   
+
+
+            if (hitCeiling && usingLasso())
+            {
+                //prevent player from getting stuck on ceiling
+                rigidbody.velocity = new Vector3(rigidbody.velocity.x, 0f, rigidbody.velocity.z);
+            }   
+
             // allow jumping on top of walls. this takes precedence over wall jump checking
             if (hitFeet && (hitFloor || hitWall))
             {                                
