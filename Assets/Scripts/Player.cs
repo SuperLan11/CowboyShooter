@@ -103,12 +103,12 @@ public class Player : Character
     //these values are used in so many places that I think they need to not be serialized. Too many chances for the values
     //to get screwed up with the object in the scene
 
-    private float mouseSensitivityX = 2f;
-    private float mouseSensitivityY = 2f;
+    private float mouseSensitivityX = 0.7f;
+    private float mouseSensitivityY = 1f;
     private float curMouseX = 0f;
     private float curMouseY = 0f;
     
-    [SerializeField] private float camLockDist = 50f;    
+    [SerializeField] private float camLockDist = 50f;
 
     public enum movementState
     {
