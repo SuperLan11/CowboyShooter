@@ -124,7 +124,7 @@ public class Player : Character
 
     void Start()
     {
-        GameManager.gameManager.CleanupScene();
+        //GameManager.gameManager.CleanupScene();
         
         
         if (gunSfx == null)
@@ -568,7 +568,7 @@ public class Player : Character
         GameManager.gameManager.StoreTimerValue(Clock.rawSeconds);
         
         GameManager.gameManager.RestartLevel();
-        //GameManager.gameManager.CleanupScene();
+        GameManager.gameManager.CleanupScene();
     }
 
     public override void TakeDamage(int damage)
@@ -681,7 +681,8 @@ public class Player : Character
             }
             else
             {
-                Death();
+                GameManager.gameManager.RestartLevel();
+                GameManager.gameManager.CleanupScene();
             }
         }
 
