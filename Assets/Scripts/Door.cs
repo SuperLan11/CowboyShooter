@@ -65,7 +65,7 @@ public class Door : MonoBehaviour
             if (enemy.checkpointNum == GameManager.currentCheckpoint)
                 Enemy.enemiesInRoom++;
         }        
-        Door.SetDoorCounter(Enemy.enemiesInRoom);
+        Door.SetDoorCounter(Enemy.enemiesInRoom);       
     }
     
     // set door counter is for directly setting counter

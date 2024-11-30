@@ -16,7 +16,27 @@ public class Potion : MonoBehaviour
         potionMesh = GetComponent<MeshRenderer>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
+    {
+        for (int i = 0; i < collision.contactCount; i++)
+        {
+            if (collision.GetContact(i).otherCollider.gameObject.name == "Player" && 
+                !playingSound && !Player.player.AtFullHealth())
+            {
+                potionSfx.Play();
+                playingSound = true;
+                potionMesh.enabled = false;
+                Destroy(GetComponent<BoxCollider>());
+                int curHealth = Player.player.GetHealth();
+                int maxHealth = Player.player.GetMaxHealth();
+                if (curHealth < maxHealth)
+                    Player.player.SetHealth(curHealth + 1);
+                break;
+            }
+        }
+    }
+
+        private void OnTriggerEnter(Collider other)
     {                
         if (other.gameObject.name == "Player" && !playingSound && !Player.player.AtFullHealth())
         {

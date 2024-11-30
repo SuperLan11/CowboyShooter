@@ -11,9 +11,7 @@ using UnityEngine;
 public class Checkpoint : MonoBehaviour
 {    
     // checkpoint can also be a door lower trigger
-    private bool isDoorTrigger;
-    //[SerializeField] private int roomNum;
-    //!This variable may be redundant. Ask Landon to see if this variable could just be swapped out with roomNum
+    private bool isDoorTrigger;    
     [SerializeField] private int checkpointNum;
 
     // Start is called before the first frame update
@@ -46,7 +44,7 @@ public class Checkpoint : MonoBehaviour
             bool reachedNewCheckpoint = (checkpointNum > GameManager.currentCheckpoint);
             if (!reachedNewCheckpoint)
             {
-                //Debug.Log("not a new checkpoint, returning");
+                Debug.Log("not a new checkpoint, returning");
                 return;
             }
 
