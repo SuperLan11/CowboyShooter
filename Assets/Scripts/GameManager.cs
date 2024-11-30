@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -98,5 +99,20 @@ public class GameManager : MonoBehaviour
     public void DestroySelf()
     {
         Destroy(this.gameObject);
+    }
+
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    //!needs to be called for main menu
+    public void CleanupScene()
+    {
+        // reset floorsInitialized so floors can reset offmeshlinks
+        Floor.floorsInitialized = 0;
+        Enemy.enemiesInitialized = 0;
+        Enemy.enemiesInRoom = 0;
+        Door.movingUp = false;
     }
 }

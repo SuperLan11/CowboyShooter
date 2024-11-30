@@ -558,20 +558,14 @@ public class Player : Character
         {
             Debug.LogError("This aint s'posed to happen, partner!");
         }
-
-        
     }
 
-    protected override void Death()
+    public void Death()
     {
         GameManager.gameManager.StoreTimerValue(Clock.rawSeconds);
         
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        // reset floorsInitialized so floors can reset offmeshlinks
-        Floor.floorsInitialized = 0;
-        Enemy.enemiesInitialized = 0;
-        Enemy.enemiesInRoom = 0;
-        Door.movingUp = false;
+        GameManager.gameManager.RestartLevel();
+        GameManager.gameManager.CleanupScene();
     }
 
     public override void TakeDamage(int damage)
