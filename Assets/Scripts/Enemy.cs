@@ -49,7 +49,7 @@ public abstract class Enemy : Character
     // all enemies have the same start function
     void Start()
     {               
-        enemiesInitialized++;        
+        enemiesInitialized++;
         int numEnemies = FindObjectsOfType<Enemy>().Length;
         if (enemiesInitialized >= numEnemies)
             Door.ResetDoorCounter();
@@ -70,7 +70,7 @@ public abstract class Enemy : Character
 
         destList.Add(destination1.position);
         destList.Add(destination2.position);
-        agent.destination = destination1.position;
+        agent.destination = destination1.position;  
         
         // in seconds
         destCooldown = 0f;
