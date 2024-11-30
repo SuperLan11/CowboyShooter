@@ -8,9 +8,22 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     public static bool gameIsPaused = false;
+    private bool gameManagerProtector;
     [SerializeField] private GameObject pauseMenuUI;
 
-    void Update(){
+    void Start()
+    {
+        gameManagerProtector = true;
+        Invoke("TimeBuffer", 0.5f);
+    }
+
+    void LateUpdate(){
+        //prevent null reference exception for GameManager
+        if (gameManagerProtector){
+            return;
+        }
+
+        
         if (gameIsPaused)
         {
             Pause();
@@ -47,5 +60,10 @@ public class PauseMenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    private void TimeBuffer()
+    {
+        gameManagerProtector = false;
     }
 }

@@ -13,6 +13,7 @@ using UnityEngine.SceneManagement;
 
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
+using Quaternion = UnityEngine.Quaternion;
 using UnityEngine.UI;
 using JetBrains.Rider.Unity.Editor;
 using System.Runtime.ConstrainedExecution;
@@ -86,6 +87,11 @@ public class Player : Character
 
     [SerializeField] private GameObject healthBar;
     [SerializeField] private MeshRenderer lassoMesh;
+    [SerializeField] private ParticleSystem shootingSystem;
+    //[SerializeField] private ParticleSystem impactParticleSystem;
+    [SerializeField] private TrailRenderer bulletTrail;
+    [SerializeField] private Transform gunTip;
+
 
     private bool reloadPlayed = false;
 
@@ -93,8 +99,12 @@ public class Player : Character
     // Sensitivity changes how much magnitude moving the mouse has
     [SerializeField] private float horCamSnap = 10f;
     [SerializeField] private float vertCamSnap = 10f;
-    [SerializeField] public float mouseSensitivityX = 10f;
-    [SerializeField] public float mouseSensitivityY = 10f;
+
+    //these values are used in so many places that I think they need to not be serialized. Too many chances for the values
+    //to get screwed up with the object in the scene
+
+    private float mouseSensitivityX = 2f;
+    private float mouseSensitivityY = 2f;
     private float curMouseX = 0f;
     private float curMouseY = 0f;
     
@@ -155,7 +165,7 @@ public class Player : Character
         holdingRMB = false;
         holdingRestart = false;
 
-        //mouseSensitivityX = mouseSensitivityY = GameManager.mouseSensitivity;
+        mouseSensitivityX = mouseSensitivityY = GameManager.mouseSensitivity;
 
         healthLastFrame = health;
     }    
@@ -192,6 +202,29 @@ public class Player : Character
         enemy.GetComponent<Enemy>().SetGotShot(true);
     }
 
+    private void ShootExplodingBarrel(GameObject explodingBarrel)
+    {
+        explodingBarrel.GetComponent<ExplodingBarrel>().Explode();
+    }
+
+    private IEnumerator SpawnTrail(TrailRenderer trail, RaycastHit hit){
+        float time = 0;
+        Vector3 startPosition = trail.transform.position;
+
+        while (time < 1)
+        {
+            trail.transform.position = Vector3.Lerp(startPosition, hit.point, time);
+            time += (Time.deltaTime / trail.time);
+
+            yield return null;
+        }
+
+        trail.transform.position = hit.point;
+        //Instantiate(impactParticleSystem, hit.point, Quaternion.LookRotation(hit.normal));
+
+        Destroy(trail.gameObject, trail.time);
+    }
+
     public GameObject ObjAimedAt()
     {
         RaycastHit hit;
@@ -218,9 +251,20 @@ public class Player : Character
                     shootCooldown = 0f;
                     reloadPlayed = false;
 
+                    //gun trail effect
+                    if (Physics.Raycast(gunTip.position, gunTip.transform.forward, out RaycastHit hit, Mathf.Infinity))
+                    {                    
+                        TrailRenderer trail = Instantiate(bulletTrail, gunTip.position, Quaternion.identity);
+                        StartCoroutine(SpawnTrail(trail, hit));
+                    }
+
                     if(objAimed.GetComponent<Enemy>() != null)
                     {
                         Shoot(objAimed);
+                    }
+                    else if (objAimed.GetComponentInChildren<ExplodingBarrel>() != null)
+                    {
+                        ShootExplodingBarrel(objAimed);
                     }
                 }
             }
@@ -437,6 +481,10 @@ public class Player : Character
     public int GetMaxHealth()
     {
         return maxHealth;
+    }
+
+    public bool AtFullHealth(){
+        return (GetHealth() == GetMaxHealth());
     }
 
     public void SetHealth(int h)

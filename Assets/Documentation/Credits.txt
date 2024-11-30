@@ -147,3 +147,15 @@ Assets Used:
 	AllSky Free Skyboxes
 	RPGWhiteLock
 	https://assetstore.unity.com/packages/2d/textures-materials/sky/allsky-free-10-sky-skybox-set-146014#description
+
+	Back to the Future Train - Steam Locomotive
+	Jotrain Models
+	https://sketchfab.com/3d-models/back-to-the-future-train-steam-locomotive-4d6d577d362c44aeb85ca9c1091bd6cb
+
+	Barrel TNT
+	chermandirkun
+	https://www.cgtrader.com/free-3d-models/furniture/kitchen-furniture/barrel-tnt
+
+	Animated Tornado
+	Yanez Designs
+	https://sketchfab.com/3d-models/animated-tornado-dbc7e7176ce9435d9f04f2c88257fff6

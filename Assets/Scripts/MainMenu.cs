@@ -103,4 +103,11 @@ public class MainMenu : MonoBehaviour
                 break;
         }
     }
+
+    //I'm sure there's a better way to do this, but who cares
+    public void LevelSelect(int levelNum)
+    {
+        //GameManager.gameManager.currentLevel = levelNum;
+        SceneManager.LoadScene(levelNum);
+    }
 }

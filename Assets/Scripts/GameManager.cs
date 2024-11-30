@@ -6,15 +6,18 @@ that's a singleton as well, but we want to keep the scripts concise.
 
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager gameManager;
     
+    //doesn't look like it's currently being used for anything. We'll need to change that if we need to do more complicated stuff
+    //with scene management
     public int currentLevel;
+    public bool debugMode = false;
     public static int currentCheckpoint = 0;
-    [SerializeField] private bool debugMode = false;
     private bool disableCursor;
     private bool enableCursor;
     public static double storedTime;
@@ -22,15 +25,7 @@ public class GameManager : MonoBehaviour
 
     public void Awake()
     {
-        //Deletes itself if there's another instance. Basically forces the class to be a singleton
-        if (gameManager != null && gameManager != this) 
-        { 
-            Destroy(this); 
-        } 
-        else 
-        { 
-            gameManager = this; 
-        }
+        gameManager = this; 
 
         //makes obj persistent through checkpoints and scene transitions
         DontDestroyOnLoad(this.gameObject); 
@@ -50,11 +45,8 @@ public class GameManager : MonoBehaviour
     {
         if (debugMode)
         {
-            Enemy[] enemies = GameObject.FindObjectsOfType<Enemy>();
-            foreach (Enemy enemy in enemies)
-            {
-                Destroy(enemy.gameObject);
-            }
+            Enemy[] enemies = GetAllEnemies();
+            DestroyAllEnemies(enemies);
         }
 
         //This cannot be if-else, they are not mutually exclusive
@@ -88,6 +80,19 @@ public class GameManager : MonoBehaviour
     public void ResetTimerValue()
     {
         storedTime = 0;
+    }
+
+    public Enemy[] GetAllEnemies()
+    {
+        return GameObject.FindObjectsOfType<Enemy>();
+    }
+
+    public void DestroyAllEnemies(Enemy[] enemies)
+    {
+        foreach (Enemy enemy in enemies)
+        {
+            Destroy(enemy.gameObject);
+        }
     }
 
     public void DestroySelf()
