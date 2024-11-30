@@ -1,7 +1,6 @@
 /*
 @Authors - Patrick, Landon
-@Description - Character class that defines behavior for all objects that can shoot. Basically an interface but with 
-datafields.
+@Description - Character class that's basically an interface but with datafields.
 */
 
 using System.Collections;

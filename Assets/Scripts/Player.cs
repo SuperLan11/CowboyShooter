@@ -124,6 +124,9 @@ public class Player : Character
 
     void Start()
     {
+        GameManager.gameManager.CleanupScene();
+        
+        
         if (gunSfx == null)
         {
             Debug.LogError("You ain't got a gun sound, partner!");
@@ -560,12 +563,12 @@ public class Player : Character
         }
     }
 
-    public void Death()
+    protected override void Death()
     {
         GameManager.gameManager.StoreTimerValue(Clock.rawSeconds);
         
         GameManager.gameManager.RestartLevel();
-        GameManager.gameManager.CleanupScene();
+        //GameManager.gameManager.CleanupScene();
     }
 
     public override void TakeDamage(int damage)
