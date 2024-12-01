@@ -11,7 +11,7 @@ public class EndTrigger : MonoBehaviour
     {
         fadeAnim = GameObject.Find("FadePanel").GetComponent<SceneTransfer>();
         // assuming we want the level end to be an invisible trigger
-        GetComponent<MeshRenderer>().enabled = false;
+        //GetComponent<MeshRenderer>().enabled = false;
     }
 
     private void OnTriggerEnter(Collider collider)

@@ -9,6 +9,7 @@ TagManager:
   - WALL
   - DOOR
   - CEILING
+  - TORNADO
   layers:
   - Default
   - TransparentFX

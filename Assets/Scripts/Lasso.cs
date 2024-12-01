@@ -111,7 +111,7 @@ public class Lasso : MonoBehaviour
     }
 
     public bool isValidLassoObj(GameObject obj){
-        return (obj.tag == "HOOK" || obj.tag == "BARREL");
+        return (obj.tag == "HOOK" || obj.tag == "BARREL" || obj.tag == "TORNADO");
     }
 }
 

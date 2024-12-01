@@ -468,6 +468,11 @@ public class Player : Character
         {
             currentMovementState = movementState.HANGING;
         }
+
+        if (collision.tag == "TORNADO")
+        {
+            
+        }
     }
 
     public bool isGrounded()
