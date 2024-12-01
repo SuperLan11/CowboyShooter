@@ -15,7 +15,6 @@ using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 using Quaternion = UnityEngine.Quaternion;
 using UnityEngine.UI;
-using JetBrains.Rider.Unity.Editor;
 using System.Runtime.ConstrainedExecution;
 
 public class Player : Character
@@ -125,7 +124,7 @@ public class Player : Character
     void Start()
     {
         //GameManager.gameManager.CleanupScene();
-        
+        transform.rotation = Quaternion.Normalize(transform.rotation);        
         
         if (gunSfx == null)
         {
@@ -646,7 +645,12 @@ public class Player : Character
         //Debug.Log(rigidbody.velocity.magnitude);        
 
         //forces camera to look straight as you're opening up scene
+        /*Debug.Log("forward before return: " + transform.forward);
         if (Time.timeSinceLevelLoad < 0.1f)
+            return;
+        Debug.Log("forward after return: " + transform.forward);*/
+
+        if (!Application.isPlaying)
             return;
 
         if (health != healthLastFrame)
@@ -712,9 +716,7 @@ public class Player : Character
             //!Acceleration based movement. The only things you should change if you want to change movement are
             //!speed and moveAccel 
 
-            // need to assign y velocity first so it is not overriden
-            Debug.Log("moveInput.x: " + lastMoveInput.x);
-            Debug.Log("moveInput.y: " + lastMoveInput.y);
+            // need to assign y velocity first so it is not overriden           
             Debug.Log("transform.forward: " + transform.forward);
             Vector3 newVel = new Vector3(0, rigidbody.velocity.y, 0);
             newVel += (transform.right * lastMoveInput.x +
@@ -749,6 +751,7 @@ public class Player : Character
         {
             float mouseX = curMouseX * mouseSensitivityX * 100f * Time.deltaTime;
             float mouseY = curMouseY * mouseSensitivityY * 100f * Time.deltaTime;
+            //float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivityY * 100f * Time.deltaTime;
 
             // Player will not scroll vertically so that transform.forward doesn't move into the sky
             Vector3 playerRot = transform.eulerAngles;
@@ -758,26 +761,30 @@ public class Player : Character
             newPlayerRot.x = playerRot.x;
             newPlayerRot.z = 0;
             transform.eulerAngles = Vector3.Lerp(playerRot, newPlayerRot, horCamSnap);
+            //transform.eulerAngles = Quaternion.Lerp(playerRot, newPlayerRot, horCamSnap);
 
             // The camera only scrolls vertically since the player parent object handles horizontal scroll
+            
             Vector3 camRot = cam.transform.rotation.eulerAngles;
             Vector3 newCamRot = Vector3.zero;
             
             float deltaMouseY = Input.GetAxis("Mouse Y");
+            Debug.Log("mouseY: " + mouseY);
 
             // camRot.x starts decreasing from 360 when you look up and is positive downwards   
             bool inNormalRange = (camRot.x > 280f || camRot.x < 80f);
             bool inLowerRange = (camRot.x <= 280f && camRot.x >= 270f && deltaMouseY < -0.001f);
             bool inRaiseRange = (camRot.x >= 80f && camRot.x <= 90f && deltaMouseY > 0.001f);
-            
+
             newCamRot.z = 0;
             newCamRot.y = camRot.y;
             // -= because xRot is negative upwards
             if (inNormalRange || inLowerRange | inRaiseRange)
-            {                
+            {
+                // this seems to be causinng the issue
                 newCamRot.x = camRot.x - mouseY;
                 cam.transform.eulerAngles = Vector3.Lerp(camRot, newCamRot, vertCamSnap);
-            }            
+            }
         }
         
         if (kickStarted)
