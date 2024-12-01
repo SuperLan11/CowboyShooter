@@ -20,6 +20,7 @@ public class EndTrigger : MonoBehaviour
         {
             GameManager.gameManager.ResetTimerValue();
 
+            Player.player.yeehawSfx.Play();
             int curSceneIndex = SceneManager.GetActiveScene().buildIndex;
             StartCoroutine(fadeAnim.FadeToNewScene(curSceneIndex+1, 1f));            
         }

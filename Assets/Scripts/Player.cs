@@ -83,6 +83,7 @@ public class Player : Character
     [SerializeField] private AudioSource gunReloadSfx;
     [SerializeField] private AudioSource wallSlideSfx;    
     [SerializeField] private AudioSource takeDamageSfx;
+    [SerializeField] public AudioSource yeehawSfx;
 
     [SerializeField] private GameObject healthBar;
     [SerializeField] private MeshRenderer lassoMesh;
@@ -467,11 +468,6 @@ public class Player : Character
         if (collision.tag == "HOOK" && holdingRMB)
         {
             currentMovementState = movementState.HANGING;
-        }
-
-        if (collision.tag == "TORNADO")
-        {
-            
         }
     }
 
