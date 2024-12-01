@@ -108,6 +108,7 @@ public class Player : Character
     private float curMouseY = 0f;
     
     [SerializeField] private float camLockDist = 50f;
+    private bool wasPlaying = false;
 
     public enum movementState
     {
@@ -644,13 +645,8 @@ public class Player : Character
         //Debug.Log("State: " + currentMovementState);
         //Debug.Log(rigidbody.velocity.magnitude);        
 
-        //forces camera to look straight as you're opening up scene
-        /*Debug.Log("forward before return: " + transform.forward);
+        //forces camera to look straight as you're opening up scene        
         if (Time.timeSinceLevelLoad < 0.1f)
-            return;
-        Debug.Log("forward after return: " + transform.forward);*/
-
-        if (!Application.isPlaying)
             return;
 
         if (health != healthLastFrame)
@@ -731,7 +727,7 @@ public class Player : Character
 
         // Input.GetAxis is the change in value since last frame                
         curMouseX = Mathf.Lerp(curMouseX, Input.GetAxis("Mouse X"), horCamSnap * Time.deltaTime);
-        curMouseY = Mathf.Lerp(curMouseY, Input.GetAxis("Mouse Y"), vertCamSnap * Time.deltaTime); 
+        curMouseY = Mathf.Lerp(curMouseY, Input.GetAxis("Mouse Y"), vertCamSnap * Time.deltaTime);
 
         // kick rotation momentarily overrides normal rotation
         // consider using a time variable to unstuck for emergencies
@@ -763,9 +759,8 @@ public class Player : Character
             transform.eulerAngles = Vector3.Lerp(playerRot, newPlayerRot, horCamSnap);
             //transform.eulerAngles = Quaternion.Lerp(playerRot, newPlayerRot, horCamSnap);
 
-            // The camera only scrolls vertically since the player parent object handles horizontal scroll
-            
-            Vector3 camRot = cam.transform.rotation.eulerAngles;
+            // The camera only scrolls vertically since the player parent object handles horizontal scroll            
+            Vector3 camRot = cam.transform.eulerAngles;
             Vector3 newCamRot = Vector3.zero;
             
             float deltaMouseY = Input.GetAxis("Mouse Y");
@@ -777,12 +772,12 @@ public class Player : Character
             bool inRaiseRange = (camRot.x >= 80f && camRot.x <= 90f && deltaMouseY > 0.001f);
 
             newCamRot.z = 0;
-            newCamRot.y = camRot.y;
-            // -= because xRot is negative upwards
+            newCamRot.y = camRot.y;            
             if (inNormalRange || inLowerRange | inRaiseRange)
             {
-                // this seems to be causinng the issue
-                newCamRot.x = camRot.x - mouseY;
+                // - because xRot is negative upwards
+                // seems to be causing the invert controls issue
+                newCamRot.x = camRot.x - mouseY;                
                 cam.transform.eulerAngles = Vector3.Lerp(camRot, newCamRot, vertCamSnap);
             }
         }
