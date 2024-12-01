@@ -16,6 +16,7 @@ using Vector3 = UnityEngine.Vector3;
 using Quaternion = UnityEngine.Quaternion;
 using UnityEngine.UI;
 using System.Runtime.ConstrainedExecution;
+using UnityEditor.Rendering.LookDev;
 
 public class Player : Character
 {
@@ -612,6 +613,46 @@ public class Player : Character
         return GetComponent<BoxCollider>().bounds.min.y + 0.05f;
     }
 
+    private void CheckHookLock()
+    {        
+        GameObject[] hooks = GameObject.FindGameObjectsWithTag("HOOK");
+        foreach(GameObject hookObj in hooks)
+        {
+            Vector2 hook2DPos = Camera.main.WorldToScreenPoint(hookObj.transform.position);
+            float distToHook = Vector2.Distance(Input.mousePosition, hook2DPos);            
+            if (distToHook < camLockDist)
+            {                
+                RaycastHit hit;
+                
+                Vector3 hookDir = (hookObj.transform.position - cam.transform.position).normalized;
+                float FOV = cam.fieldOfView;
+                float dotThreshold = Mathf.Cos(Mathf.Deg2Rad * (FOV / 2f));
+                float dotProduct = Vector3.Dot(hookDir, cam.transform.forward);
+                bool inGeneralForwardDirection = (dotProduct < dotThreshold);
+
+                Vector3 screenPoint = cam.WorldToViewportPoint(hookObj.transform.position);
+                bool offScreen = !(screenPoint.z > 0 && screenPoint.x >= 0 && screenPoint.x <= 1 && screenPoint.y >= 0 && screenPoint.y <= 1);
+                
+                
+                if (!inGeneralForwardDirection || offScreen)
+                {
+                    return;
+                }
+
+                Physics.Raycast(cam.transform.position, hookDir, out hit, Mathf.Infinity);                
+                if (hit.transform.gameObject.tag == "HOOK")
+                {
+                    // transform.LookAt ignores rigidbody constraints, which can cause movement bugs
+                    // only rotate horizontally for player and vertically for camera to avoid this
+                    Vector3 hookHorPos = new Vector3(hookObj.transform.position.x, transform.position.y + transform.forward.y, hookObj.transform.position.z);                                                            
+                    player.transform.LookAt(hookHorPos);
+                    cam.transform.LookAt(hookObj.transform.position);
+                    return;
+                }
+            }                                                                                          
+        }        
+    }
+
     private void CheckEnemyLock()
     {        
         Enemy[] enemies = FindObjectsOfType<Enemy>();
@@ -723,6 +764,8 @@ public class Player : Character
         }
         else if (currentMovementState == movementState.FLYING)
         {            
+            //aim assist
+            CheckHookLock();
             CheckEnemyLock();            
         }
 

@@ -16,7 +16,11 @@ public class EndTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.name == "Player")
+        //comment this book out of condition if you're using old end trigger instead of tornado
+        bool movingTowardsTornado = (Player.player.currentMovementState == Player.movementState.FLYING) || 
+                                    (Player.player.currentMovementState == Player.movementState.SWINGING);
+
+        if (collider.gameObject.name == "Player" && movingTowardsTornado)
         {
             GameManager.gameManager.ResetTimerValue();
 
