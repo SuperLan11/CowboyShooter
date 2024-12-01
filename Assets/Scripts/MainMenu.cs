@@ -20,6 +20,8 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
+        SetVolume(GameManager.volume);
+        
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
 
@@ -39,9 +41,11 @@ public class MainMenu : MonoBehaviour
         StartCoroutine(fadeScript.FadeToNewScene(currentSceneIndex + 1, 1f));
     }
 
+
     public void ExitGamePressed()
     {
-        Application.Quit();
+        GameManager.QuitGame();
+        //Application.Quit();
     }
 
     public void SetVolume(float volume)
@@ -49,6 +53,12 @@ public class MainMenu : MonoBehaviour
         //Unity doesn't handle audio linearly
         float volumeAdjustedForAudioEquation = Mathf.Log10(volume) * 20f;
         masterVolume.SetFloat(masterVolumeString, volumeAdjustedForAudioEquation);
+        GameManager.volume = volumeAdjustedForAudioEquation;
+    }
+
+    public void SetVolumeRaw(float volume)
+    {
+        
     }
 
     public void SetMouseSensitivity(float sensitivity)

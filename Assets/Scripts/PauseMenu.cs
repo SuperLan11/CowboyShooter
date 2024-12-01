@@ -60,7 +60,8 @@ public class PauseMenu : MonoBehaviour
 
     public void QuitGame()
     {
-        Application.Quit();
+        GameManager.QuitGame();
+        //Application.Quit();
     }
 
     private void TimeBuffer()

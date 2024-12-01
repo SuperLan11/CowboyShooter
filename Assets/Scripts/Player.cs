@@ -15,7 +15,7 @@ using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 using Quaternion = UnityEngine.Quaternion;
 using UnityEngine.UI;
-using JetBrains.Rider.Unity.Editor;
+//using JetBrains.Rider.Unity.Editor;
 using System.Runtime.ConstrainedExecution;
 
 public class Player : Character

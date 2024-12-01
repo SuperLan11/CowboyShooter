@@ -143,7 +143,7 @@ AudioSource:
   m_GameObject: {fileID: 3213481671088487891}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 3e2b09f138b53e347993dce8dd73c744, type: 2}
   m_audioClip: {fileID: 8300000, guid: b1725b4e4a6eebb4c847e2f3be866535, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -243,20 +243,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 2
+  maxHealth: 0
   destination1: {fileID: 0}
   destination2: {fileID: 0}
   maxAttackCooldown: 0.5
   attackDamage: 1
-  roomNum: 3
+  checkpointNum: 0
   sightRange: 8
   deathSfx: {fileID: 6909237089869480448}
   recoilTime: 0.2
   recoilDist: 1.5
   recoilAccel: 0.1
   daggerSfx: {fileID: 3962084463372493288}
-  wallMask:
-    serializedVersion: 2
-    m_Bits: 128
 --- !u!82 &6909237089869480448
 AudioSource:
   m_ObjectHideFlags: 0
