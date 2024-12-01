@@ -144,7 +144,7 @@ AudioSource:
   m_GameObject: {fileID: 3213481671088487891}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 3e2b09f138b53e347993dce8dd73c744, type: 2}
   m_audioClip: {fileID: 8300000, guid: e1240cf0e2bc16346bb2df7aae38b364, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -244,11 +244,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 3
+  maxHealth: 0
   destination1: {fileID: 0}
   destination2: {fileID: 0}
   maxAttackCooldown: 1.5
   attackDamage: 1
-  roomNum: 3
+  checkpointNum: 0
   sightRange: 20
   deathSfx: {fileID: 3693498155660872604}
   bulletSpawn: {fileID: 2785411703906060388}

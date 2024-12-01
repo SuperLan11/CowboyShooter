@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     private bool enableCursor;
     public static double storedTime;
     public static float mouseSensitivity = 2f;
+    public static float volume = 1f;
 
     public void Awake()
     {
@@ -35,6 +36,14 @@ public class GameManager : MonoBehaviour
     //!You MUST change game manager variables here!
     public void Start()
     {
+        PlayerData playerData = SaveSystem.LoadPlayer();
+
+        if (playerData != null)
+        {
+            mouseSensitivity = playerData.mouseSensitivity;
+            volume = playerData.volume;
+        }
+        
         //Debug.Log("cp on Start(): " + currentCheckpoint);
         disableCursor = false;
         enableCursor = false;
@@ -114,5 +123,11 @@ public class GameManager : MonoBehaviour
         Enemy.enemiesInitialized = 0;
         Enemy.enemiesInRoom = 0;
         Door.movingUp = false;
+    }
+
+    public static void QuitGame()
+    {
+        SaveSystem.savePlayer();
+        Application.Quit();
     }
 }
