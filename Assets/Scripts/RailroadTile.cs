@@ -92,25 +92,22 @@ public class RailroadTile : Railroad
     {
         //DestroyAnyDecos();
 
-        int itemsLeft = maxDecorations;
-        // this isn't really used at the moment
-        bool canPlace = true;
-        
+        int decosLeft = maxDecorations;               
         GameObject[] decosPlaced = new GameObject[decorations.Length];
+        // to prevent infinite loop if can't fit any new decorations
+        int numIters = 0;
 
-        while (itemsLeft > 0 && canPlace)
+        while (decosLeft > 0 && numIters < 100)
         {
             // max is exclusive
             int randIdx = Random.Range(0, decorations.Length);
             GameObject potentialDeco = decorations[randIdx];
 
             float scale = 1.0f;
-
             if(potentialDeco.name.Contains("Canyone"))
             {
                 scale = Random.Range(0, 10) * 0.1f;
-            }
-            int numIters = 0;
+            }            
 
             float decoHalfXSize = scale * potentialDeco.GetComponent<MeshRenderer>().bounds.size.x / 2;
             float decoHalfZSize = scale * potentialDeco.GetComponent<MeshRenderer>().bounds.size.z / 2;
@@ -120,15 +117,10 @@ public class RailroadTile : Railroad
             float y = GetComponent<BoxCollider>().bounds.max.y;
             Vector3 potentialPos = new Vector3(randX, y, randZ);                        
 
-            if (IsObjectHere(decosPlaced, potentialDeco, potentialPos))
-            {
-                continue;
-            }
-            // prevent looping forever if no more decorations can fit
-            else if(numIters < 100)
-            {
-                itemsLeft--;
+            if (!IsObjectHere(decosPlaced, potentialDeco, potentialPos))                                    
+            {                
                 GameObject newDeco = Instantiate(potentialDeco, potentialPos, potentialDeco.transform.rotation);
+                decosLeft--;
                 if (scale != 1.0f)
                 {
                     float xScale = newDeco.transform.localScale.x;
@@ -138,13 +130,9 @@ public class RailroadTile : Railroad
                 }
                 newDeco.transform.SetParent(this.transform);
                 curDecorations.Add(newDeco);
-            }
-            else
-            {
-                break;
-            }
+            }            
             numIters++;
-        }
+        }        
     }
     private void OnCollisionEnter(Collision collision)
     {

@@ -150,4 +150,5 @@ MonoBehaviour:
   maxX: 250
   tunnelPrefab: {fileID: 9143646768246589184, guid: 8f28ec1af4bb0de4b860f430893534a8, type: 3}
   initSpawnTile: {fileID: 0}
-  tunnelCooldown: 10
+  tunnelCooldown: 5
+  tunnelDistToPlayer: 0

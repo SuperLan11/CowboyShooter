@@ -755,7 +755,7 @@ public class Player : Character
             //!speed and moveAccel 
 
             // need to assign y velocity first so it is not overriden           
-            Debug.Log("transform.forward: " + transform.forward);
+            //Debug.Log("transform.forward: " + transform.forward);
             Vector3 newVel = new Vector3(0, rigidbody.velocity.y, 0);
             newVel += (transform.right * lastMoveInput.x +
                        transform.forward * lastMoveInput.y) * speed;
@@ -808,7 +808,7 @@ public class Player : Character
             Vector3 newCamRot = Vector3.zero;
             
             float deltaMouseY = Input.GetAxis("Mouse Y");
-            Debug.Log("mouseY: " + mouseY);
+            //Debug.Log("mouseY: " + mouseY);
 
             // camRot.x starts decreasing from 360 when you look up and is positive downwards   
             bool inNormalRange = (camRot.x > 280f || camRot.x < 80f);

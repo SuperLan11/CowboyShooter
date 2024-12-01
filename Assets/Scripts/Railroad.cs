@@ -7,12 +7,14 @@ public class Railroad : MonoBehaviour
     [SerializeField] protected float railroadSpeed;
     [SerializeField] protected float maxX;
     [SerializeField] private GameObject tunnelPrefab;
+    private float railroadLength;
 
     // works with multiple railroads since tile spawns are set manually for each column/row
     [SerializeField] protected Transform initSpawnTile;
     protected Vector3 spawnPos;
 
     [SerializeField] protected float tunnelCooldown;
+    [SerializeField] protected float tunnelOffset;
     private static bool tunnelCooldownDone = false;
     private bool hasTunnel = false;
 
@@ -24,6 +26,7 @@ public class Railroad : MonoBehaviour
     {
         AssignSpawn();
         StartCoroutine(TunnelCooldown(tunnelCooldown));
+        railroadLength = GetComponent<BoxCollider>().bounds.size.x;
     }
 
     private IEnumerator TunnelCooldown(float seconds)
@@ -58,7 +61,7 @@ public class Railroad : MonoBehaviour
         transform.position = newPos;
 
         if (transform.position.x > maxX)
-        {
+        {            
             transform.position = spawnPos;
             if(hasTunnel)
             {
@@ -66,15 +69,25 @@ public class Railroad : MonoBehaviour
                 hasTunnel = false;
             }
             // only spawn tunnels at the end of the railroad
-            else if(tunnelCooldownDone)
+            /*else if(tunnelCooldownDone)
             {                
                 tunnelCooldownDone = false;
-                StartCoroutine(TunnelCooldown(tunnelCooldown));
+                StartCoroutine(TunnelCooldown(tunnelCooldown));                
                 // how to spawn tunnels on both sides or one tunnel for each side
                 GameObject tunnel = Instantiate(tunnelPrefab, spawnPos, tunnelPrefab.transform.rotation);
                 tunnel.transform.SetParent(this.transform);
                 hasTunnel = true;
-            }
+            }*/
+        }
+        float xDiff = transform.position.x - Player.player.transform.position.x;
+        if (tunnelCooldownDone && xDiff > tunnelOffset && xDiff < (tunnelOffset + railroadLength))
+        {
+            tunnelCooldownDone = false;
+            StartCoroutine(TunnelCooldown(tunnelCooldown));
+            // how to spawn tunnels on both sides or one tunnel for each side
+            GameObject tunnel = Instantiate(tunnelPrefab, spawnPos, tunnelPrefab.transform.rotation);
+            tunnel.transform.SetParent(this.transform);
+            hasTunnel = true;
         }
     }
 }
