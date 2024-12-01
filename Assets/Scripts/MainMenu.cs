@@ -20,7 +20,7 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
-        SetVolume(GameManager.volume);
+        StartCoroutine(InitializeVolume());
         
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
@@ -48,17 +48,20 @@ public class MainMenu : MonoBehaviour
         //Application.Quit();
     }
 
+    private IEnumerator InitializeVolume()
+    {
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        //already adjusted for Unity's nonlinear audio
+        masterVolume.SetFloat(masterVolumeString, GameManager.volume);
+    }
+
     public void SetVolume(float volume)
     {
         //Unity doesn't handle audio linearly
         float volumeAdjustedForAudioEquation = Mathf.Log10(volume) * 20f;
         masterVolume.SetFloat(masterVolumeString, volumeAdjustedForAudioEquation);
         GameManager.volume = volumeAdjustedForAudioEquation;
-    }
-
-    public void SetVolumeRaw(float volume)
-    {
-        
     }
 
     public void SetMouseSensitivity(float sensitivity)
