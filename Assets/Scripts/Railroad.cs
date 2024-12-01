@@ -38,6 +38,18 @@ public class Railroad : MonoBehaviour
             spawnPos = initSpawnTile.position;
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        for (int i = 0; i < collision.contactCount; i++)
+        {
+            if (collision.gameObject.name == "Player")
+            {
+                Player.player.TakeDamage(Player.player.GetHealth());
+                break;
+            }
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {        

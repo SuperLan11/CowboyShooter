@@ -43,8 +43,7 @@ public class Checkpoint : MonoBehaviour
         {
             bool reachedNewCheckpoint = (checkpointNum > GameManager.currentCheckpoint);
             if (!reachedNewCheckpoint)
-            {
-                Debug.Log("not a new checkpoint, returning");
+            {                
                 return;
             }
 

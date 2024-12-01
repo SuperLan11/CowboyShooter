@@ -104,26 +104,56 @@ public class RailroadTile : Railroad
             int randIdx = Random.Range(0, decorations.Length);
             GameObject potentialDeco = decorations[randIdx];
 
-            float decoHalfXSize = potentialDeco.GetComponent<MeshRenderer>().bounds.size.x / 2;
-            float decoHalfZSize = potentialDeco.GetComponent<MeshRenderer>().bounds.size.z / 2;
+            float scale = 1.0f;
+
+            if(potentialDeco.name.Contains("Canyone"))
+            {
+                scale = Random.Range(0, 10) * 0.1f;
+            }
+            int numIters = 0;
+
+            float decoHalfXSize = scale * potentialDeco.GetComponent<MeshRenderer>().bounds.size.x / 2;
+            float decoHalfZSize = scale * potentialDeco.GetComponent<MeshRenderer>().bounds.size.z / 2;
 
             float randX = Random.Range(GetComponent<Collider>().bounds.min.x + decoHalfXSize, GetComponent<Collider>().bounds.max.x - decoHalfXSize);
             float randZ = Random.Range(GetComponent<Collider>().bounds.min.z + decoHalfZSize, GetComponent<Collider>().bounds.max.z - decoHalfZSize);                       
             float y = GetComponent<BoxCollider>().bounds.max.y;
-            Vector3 potentialPos = new Vector3(randX, y, randZ);
-
-            // just in case it's impossible to place more decorations, do this in all cases
-            itemsLeft--;
+            Vector3 potentialPos = new Vector3(randX, y, randZ);                        
 
             if (IsObjectHere(decosPlaced, potentialDeco, potentialPos))
             {
                 continue;
             }
-            else if(IsUniqueDeco(potentialDeco))
+            // prevent looping forever if no more decorations can fit
+            else if(numIters < 100)
             {
+                itemsLeft--;
                 GameObject newDeco = Instantiate(potentialDeco, potentialPos, potentialDeco.transform.rotation);
+                if (scale != 1.0f)
+                {
+                    float xScale = newDeco.transform.localScale.x;
+                    float yScale = newDeco.transform.localScale.y;
+                    float zScale = newDeco.transform.localScale.z;
+                    newDeco.transform.localScale = new Vector3(xScale * scale, yScale * scale, zScale * scale);                    
+                }
                 newDeco.transform.SetParent(this.transform);
                 curDecorations.Add(newDeco);
+            }
+            else
+            {
+                break;
+            }
+            numIters++;
+        }
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        for (int i = 0; i < collision.contactCount; i++)
+        {
+            if (collision.gameObject.name == "Player")
+            {
+                Player.player.TakeDamage(Player.player.GetHealth());
+                break;
             }
         }
     }

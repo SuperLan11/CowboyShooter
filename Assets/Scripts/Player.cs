@@ -713,6 +713,9 @@ public class Player : Character
             //!speed and moveAccel 
 
             // need to assign y velocity first so it is not overriden
+            Debug.Log("moveInput.x: " + lastMoveInput.x);
+            Debug.Log("moveInput.y: " + lastMoveInput.y);
+            Debug.Log("transform.forward: " + transform.forward);
             Vector3 newVel = new Vector3(0, rigidbody.velocity.y, 0);
             newVel += (transform.right * lastMoveInput.x +
                        transform.forward * lastMoveInput.y) * speed;
