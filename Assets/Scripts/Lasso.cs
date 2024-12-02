@@ -20,9 +20,8 @@ public class Lasso : MonoBehaviour
     //private SpringJoint joint;
     private float lassoMaxRange = 25f;
     
-    //!Make sure you keep track of this cause it's in the editor;
-    [SerializeField] private float lassoYOffset = 0.25f;
-    float overshootYAxis = 5f;
+    private float lassoYOffset = 0; //0.25f
+    private float overshootYAxis = 0;  //5f
 
     [SerializeField] private GameObject hook, barrel;
     [SerializeField] private Transform lassoTip;
