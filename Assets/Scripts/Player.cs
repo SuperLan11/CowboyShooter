@@ -825,8 +825,7 @@ public class Player : Character
             newCamRot.y = newPlayerRot.y;
             if (inNormalRange || inLowerRange | inRaiseRange)
             {
-                // - because xRot is negative upwards
-                // seems to be causing the invert controls issue
+                // - because xRot is negative upwards                
                 newCamRot.x = camRot.x - mouseY;                
                 cam.transform.eulerAngles = Vector3.Lerp(camRot, newCamRot, vertCamSnap);
             }

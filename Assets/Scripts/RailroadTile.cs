@@ -2,56 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RailroadTile : Railroad
-{
-    private GameObject[] decorations;
-    [SerializeField] private GameObject rockPrefab;
-    [SerializeField] private GameObject skullPrefab;
-    [SerializeField] private GameObject canyonPrefab;
-    [SerializeField] private GameObject shortCactusPrefab;
-    [SerializeField] private GameObject tallCactusPrefab;    
-    // has weird scale issues
-    //[SerializeField] private GameObject flowerCactusPrefab;
-
-    [SerializeField] private int maxDecorations = 10;    
-    private BoxCollider boxCollider;
-
-    private Transform[] railroads;
-    private static List<Transform> initSpawnTiles = new List<Transform>();
+public class RailroadTile : MonoBehaviour
+{    
+    [SerializeField] private int maxDecorations = 10;
+    [System.NonSerialized] public Vector3 spawnPos;
+    [SerializeField] protected Transform initSpawnTile;    
 
     private void Start()
     {
-        boxCollider = GetComponent<BoxCollider>();
-        AssignSpawn();
-        decorations = new GameObject[] { rockPrefab, skullPrefab, canyonPrefab, shortCactusPrefab, tallCactusPrefab };
+        if (initSpawnTile != null)
+            spawnPos = initSpawnTile.position;
         // ideally make the railroad tiles very big to minimize the frequency of randomization
-        RandomizeDeco();
-
-        if(initSpawnTiles.Count == 0)
-            initSpawnTiles.Add(initSpawnTile);
-        else if (!initSpawnTiles.Contains(initSpawnTile))
-            initSpawnTiles.Add(initSpawnTile);
-
-        railroads = new Transform[] { initSpawnTile };        
+        RandomizeDeco();     
     }
-
-    private void CycleTiles()
-    {
-        for(int i = 0; i < railroads.Length-1; i++)
-        {
-            if (railroads[i] != null)
-                railroads[i + 1] = railroads[i];
-        }
-        if (railroads[railroads.Length - 1] != null)
-            railroads[0] = railroads[railroads.Length - 1];   
-        
-        for(int i = 0; i < railroads.Length; i++)
-        {
-            Debug.Log("cycled railroads[" + i + "]: " + railroads[i].position);
-        }
-    }
-
-    // has errors
+    
     private void DestroyAnyDecos()
     {
         for (int i = 0; i < transform.childCount; i++)        
@@ -81,8 +45,8 @@ public class RailroadTile : Railroad
         while (decosLeft > 0 && numIters < 100)
         {            
                 // max is exclusive
-                int randIdx = Random.Range(0, decorations.Length);                      
-                GameObject potentialDeco = decorations[randIdx];
+                int randIdx = Random.Range(0, RailroadManager.decorations.Length);                      
+                GameObject potentialDeco = RailroadManager.decorations[randIdx];
 
                 float scale = 1.0f;
                 if (potentialDeco.name.Contains("Canyone"))
@@ -104,7 +68,7 @@ public class RailroadTile : Railroad
                     GameObject newDeco = Instantiate(potentialDeco, potentialPos, potentialDeco.transform.rotation);
                     decosLeft--;
                     if (scale != 1.0f)                    
-                        newDeco.transform.localScale *= scale;                                
+                        newDeco.transform.localScale *= scale;
                     newDeco.transform.SetParent(this.transform);          
                 }
                 numIters++;
@@ -112,7 +76,7 @@ public class RailroadTile : Railroad
     }    
 
     private void OnCollisionEnter(Collision collision)
-    {
+    {       
         for (int i = 0; i < collision.contactCount; i++)
         {
             if (collision.gameObject.name == "Player")
@@ -129,24 +93,25 @@ public class RailroadTile : Railroad
         RandomizeDeco();
     }
 
-    void Update()
-    {        
-        Vector3 newPos = transform.position;
-        newPos.x += railroadSpeed * Time.deltaTime;
-        transform.position = newPos;
-
-        if (transform.position.x > maxX)
+  /*  private void CycleTiles()
+    {
+        for (int i = 0; i < railroads.Length - 1; i++)
         {
-            transform.position = spawnPos;
-
-            railroads[railroads.Length - 1] = transform;
-            CycleTiles();
-
-            DestroyAnyDecos();
-            // had some issues where deco was out of bounds when waiting was not used
-            StartCoroutine(WaitToRedeco(0.05f));
+            if (railroads[i] != null)
+                railroads[i + 1] = railroads[i];
         }
-    }
+        if (railroads[railroads.Length - 1] != null)
+        {
+            railroads[0] = railroads[railroads.Length - 1];
+            *//*Vector3 newPos;
+            railroads[0].position = railroads[1].position*//*
+        }
+
+        for (int i = 0; i < railroads.Length; i++)
+        {
+            Debug.Log("cycled railroads[" + i + "]: " + railroads[i].position);
+        }
+    }   */ 
 
     /*
      * algorithm to randomize decorations:     

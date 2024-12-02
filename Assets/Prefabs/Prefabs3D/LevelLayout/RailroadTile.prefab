@@ -19,7 +19,7 @@ GameObject:
   m_TagString: FLOOR
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 8
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &6897118885592080529
 Transform:
@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 263.9, y: 0, z: 101.6}
-  m_LocalScale: {x: 124.6662, y: 2.4478688, z: 622.8241}
+  m_LocalScale: {x: 124.6662, y: 2.4478688, z: 29.179657}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -150,11 +150,12 @@ MonoBehaviour:
   xMax: 1000
   tunnelPrefab: {fileID: 0}
   initSpawnTile: {fileID: 0}
-  tunnelCooldown: 0
-  tunnelOffset: 0
+  spawnPos: {x: 0, y: 0, z: 0}
+  tunnelCooldown: 5
+  tunnelOffset: 50
   rockPrefab: {fileID: 7216489676564596528, guid: 3c4b8aa7cf661834696e5f41d616976a, type: 3}
   skullPrefab: {fileID: 1430866310615406873, guid: cb24018d3ae0f9a41b1e569dfbf9fc91, type: 3}
   canyonPrefab: {fileID: 3252368549753659191, guid: 5be4117093aa6bb49936c38a4dec6ac9, type: 3}
   shortCactusPrefab: {fileID: 8495445453651733061, guid: 2c9468c56fd2f9c4aae0033b0d0627b5, type: 3}
   tallCactusPrefab: {fileID: 3016104843862543609, guid: f1ce342066940194488408a8ca6ec7bb, type: 3}
-  maxDecorations: 10
+  maxDecorations: 3

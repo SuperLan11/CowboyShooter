@@ -11,8 +11,8 @@ public class Tunnel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        railroadSpeed = Railroad.railroadSpeed;
-        maxX = Railroad.maxX;
+        railroadSpeed = RailroadManager.railroadSpeed;
+        maxX = RailroadManager.maxX;
         bellWarningSfx = GetComponent<AudioSource>();
         if(bellWarningSfx != null && !bellWarningSfx.isPlaying)
             bellWarningSfx.Play();
