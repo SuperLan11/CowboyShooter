@@ -73,15 +73,13 @@ public class RailroadManager : MonoBehaviour
         // one railroad is guaranteed to be this distance from the player since the
         // range is as long as a railroad.
         // this can spawn tunnels on multiple railroads at once since xDiff is used instead of distance
-                
-        if (xDiff > (tunnelLength + tunnelOffset) && xDiff < (tunnelLength + tunnelOffset + railroadLength))
-        {
-            Vector3 tunnelPos;
-            tunnelPos.x = Player.player.transform.position.x - xDiff;
-            tunnelPos.y = GetComponent<MeshRenderer>().bounds.max.y;
-            tunnelPos.z = transform.position.z;
-            Instantiate(tunnelPrefab, tunnelPos, tunnelPrefab.transform.rotation);
-        }
+                        
+        // fix this later
+        Vector3 tunnelPos;
+        tunnelPos.x = Player.player.transform.position.x - xDiff;
+        tunnelPos.y = GetComponent<MeshRenderer>().bounds.max.y;
+        tunnelPos.z = transform.position.z;
+        Instantiate(tunnelPrefab, tunnelPos, tunnelPrefab.transform.rotation);        
         // recursively call coroutine for every railroad
         StartCoroutine(TunnelCooldown(tunnelCooldown));
     }

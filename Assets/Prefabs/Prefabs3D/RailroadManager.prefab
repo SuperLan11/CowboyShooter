@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5724143627297470493
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2298330965843347123}
+  - component: {fileID: 6130333419040913964}
+  m_Layer: 0
+  m_Name: RailroadManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2298330965843347123
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5724143627297470493}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -227, y: 0, z: 1470.9}
+  m_LocalScale: {x: 124.6662, y: 2.4478688, z: 29.179657}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6130333419040913964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5724143627297470493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfc8db75661b74d44b3b4cec35a9c59d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rrSpeed: 160
+  xMax: 1000
+  tunnelPrefab: {fileID: 9143646768246589184, guid: 8f28ec1af4bb0de4b860f430893534a8, type: 3}
+  tunnelCooldown: 30
+  tunnelOffset: 500
+  rockPrefab: {fileID: 7216489676564596528, guid: 3c4b8aa7cf661834696e5f41d616976a, type: 3}
+  skullPrefab: {fileID: 1430866310615406873, guid: cb24018d3ae0f9a41b1e569dfbf9fc91, type: 3}
+  canyonPrefab: {fileID: 3252368549753659191, guid: 5be4117093aa6bb49936c38a4dec6ac9, type: 3}
+  shortCactusPrefab: {fileID: 8495445453651733061, guid: 2c9468c56fd2f9c4aae0033b0d0627b5, type: 3}
+  tallCactusPrefab: {fileID: 3016104843862543609, guid: f1ce342066940194488408a8ca6ec7bb, type: 3}
