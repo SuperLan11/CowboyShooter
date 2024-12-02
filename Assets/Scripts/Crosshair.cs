@@ -11,7 +11,7 @@ using UnityEngine.UI;
 
 using Image = UnityEngine.UI.Image;
 
-public class HUD : MonoBehaviour
+public class Crosshair : MonoBehaviour
 {
     [SerializeField] private GameObject crosshair;
     private Player player;
@@ -49,6 +49,16 @@ public class HUD : MonoBehaviour
     private bool PointedAtEnemyOrHook()
     {
         return PointedAtEnemy() || PointedAtHook();
+    }
+
+    public void EnableCrosshair()
+    {
+        crosshairImage.enabled = true;
+    }
+
+    public void DisableCrosshair()
+    {
+        crosshairImage.enabled = false;
     }
 
     // Update is called once per frame

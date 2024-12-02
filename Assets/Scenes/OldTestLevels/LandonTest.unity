@@ -2505,6 +2505,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4803128306122175533, guid: a3b65b394f3b5194ca04c02f7c144182, type: 3}
+      propertyPath: crosshair
+      value: 
+      objectReference: {fileID: 1531998672}
     - target: {fileID: 5927074331687074194, guid: a3b65b394f3b5194ca04c02f7c144182, type: 3}
       propertyPath: m_Name
       value: PauseMenu
@@ -2903,6 +2907,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd5c7f9cab7fa7d4eb5ab7287174bf7b, type: 3}
+--- !u!1 &1531998672 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2148660656521393484, guid: 167138a76c8ac334c84c2ba5620f1823, type: 3}
+  m_PrefabInstance: {fileID: 327994669}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1549814315
 GameObject:
   m_ObjectHideFlags: 0

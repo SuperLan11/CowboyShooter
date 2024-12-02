@@ -10,6 +10,7 @@ public class PauseMenu : MonoBehaviour
     public static bool gameIsPaused = false;
     private bool gameManagerProtector;
     [SerializeField] private GameObject pauseMenuUI;
+    [SerializeField] private GameObject crosshair;
 
     void Start()
     {
@@ -39,6 +40,7 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameManager.gameManager.EnableCursor();
+        crosshair.GetComponent<Crosshair>().DisableCrosshair();
 
         gameIsPaused = true;
     }
@@ -48,6 +50,7 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         GameManager.gameManager.DisableCursor();
+        crosshair.GetComponent<Crosshair>().EnableCrosshair();
 
         gameIsPaused = false;
     }
