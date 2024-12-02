@@ -60,6 +60,7 @@ public class Door : MonoBehaviour
     {
         // enemiesInRoom should already be 0, but just in case
         Player.player.enemiesInRoom.Clear();
+
         Enemy.enemiesInRoom = 0;
         foreach (Enemy enemy in FindObjectsOfType<Enemy>())
         {

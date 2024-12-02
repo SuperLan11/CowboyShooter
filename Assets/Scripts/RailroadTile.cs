@@ -16,6 +16,9 @@ public class RailroadTile : Railroad
     [SerializeField] private int maxDecorations = 10;    
     private BoxCollider boxCollider;
 
+    private Transform[] railroads;
+    private static List<Transform> initSpawnTiles = new List<Transform>();
+
     private void Start()
     {
         boxCollider = GetComponent<BoxCollider>();
@@ -23,6 +26,29 @@ public class RailroadTile : Railroad
         decorations = new GameObject[] { rockPrefab, skullPrefab, canyonPrefab, shortCactusPrefab, tallCactusPrefab };
         // ideally make the railroad tiles very big to minimize the frequency of randomization
         RandomizeDeco();
+
+        if(initSpawnTiles.Count == 0)
+            initSpawnTiles.Add(initSpawnTile);
+        else if (!initSpawnTiles.Contains(initSpawnTile))
+            initSpawnTiles.Add(initSpawnTile);
+
+        railroads = new Transform[] { initSpawnTile };        
+    }
+
+    private void CycleTiles()
+    {
+        for(int i = 0; i < railroads.Length-1; i++)
+        {
+            if (railroads[i] != null)
+                railroads[i + 1] = railroads[i];
+        }
+        if (railroads[railroads.Length - 1] != null)
+            railroads[0] = railroads[railroads.Length - 1];   
+        
+        for(int i = 0; i < railroads.Length; i++)
+        {
+            Debug.Log("cycled railroads[" + i + "]: " + railroads[i].position);
+        }
     }
 
     // has errors
@@ -55,7 +81,7 @@ public class RailroadTile : Railroad
         while (decosLeft > 0 && numIters < 100)
         {            
                 // max is exclusive
-                int randIdx = Random.Range(0, decorations.Length);                                
+                int randIdx = Random.Range(0, decorations.Length);                      
                 GameObject potentialDeco = decorations[randIdx];
 
                 float scale = 1.0f;
@@ -71,7 +97,7 @@ public class RailroadTile : Railroad
                 float randX = Random.Range(GetComponent<Collider>().bounds.min.x + decoHalfXSize, GetComponent<Collider>().bounds.max.x - decoHalfXSize);
                 float randZ = Random.Range(GetComponent<Collider>().bounds.min.z + decoHalfZSize, GetComponent<Collider>().bounds.max.z - decoHalfZSize);
                 float y = GetComponent<BoxCollider>().bounds.max.y;
-                Vector3 potentialPos = new Vector3(randX, y, randZ);                                          
+                Vector3 potentialPos = new Vector3(randX, y, randZ);                                  
 
                 if (!IsObjectHere(potentialDeco, potentialPos))
                 {
@@ -104,7 +130,7 @@ public class RailroadTile : Railroad
     }
 
     void Update()
-    {
+    {        
         Vector3 newPos = transform.position;
         newPos.x += railroadSpeed * Time.deltaTime;
         transform.position = newPos;
@@ -112,6 +138,10 @@ public class RailroadTile : Railroad
         if (transform.position.x > maxX)
         {
             transform.position = spawnPos;
+
+            railroads[railroads.Length - 1] = transform;
+            CycleTiles();
+
             DestroyAnyDecos();
             // had some issues where deco was out of bounds when waiting was not used
             StartCoroutine(WaitToRedeco(0.05f));

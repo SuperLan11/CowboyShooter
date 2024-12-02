@@ -822,7 +822,7 @@ public class Player : Character
             bool inRaiseRange = (camRot.x >= 80f && camRot.x <= 90f && deltaMouseY > 0.001f);
 
             newCamRot.z = 0;
-            newCamRot.y = camRot.y;            
+            newCamRot.y = newPlayerRot.y;
             if (inNormalRange || inLowerRange | inRaiseRange)
             {
                 // - because xRot is negative upwards
