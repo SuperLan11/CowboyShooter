@@ -42,11 +42,14 @@ public abstract class Enemy : Character
     [System.NonSerialized] public bool gotShot = false;
     protected bool isDead = false;
 
+    public Vector3 spawnPos;
+
     [SerializeField] protected AudioSource deathSfx;    
 
     // all enemies have the same start function
     void Start()
-    {               
+    {
+        spawnPos = transform.position;
         enemiesInitialized++;
         int numEnemies = FindObjectsOfType<Enemy>().Length;
         if (enemiesInitialized >= numEnemies)

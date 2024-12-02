@@ -57,6 +57,7 @@ public class Player : Character
     public static Vector3 respawnPos;
     public static Vector3 respawnRot;
     public static bool hasCheckpoint = false;
+    public List<Enemy> enemiesInRoom = new List<Enemy>();
 
     [SerializeField] private float slideVel = -0.5f;
     // the max y velocity the player can have and still stick to a wall
@@ -567,9 +568,15 @@ public class Player : Character
     protected override void Death()
     {
         GameManager.gameManager.StoreTimerValue(Clock.rawSeconds);
-        
+
         GameManager.gameManager.RestartLevel();
         GameManager.gameManager.CleanupScene();
+        /*foreach (Enemy enemy in enemiesInRoom)
+        {
+            enemy.transform.position = enemy.spawnPos;
+        }
+        transform.position = respawnPos;
+        transform.eulerAngles = respawnRot;*/
     }
 
     public override void TakeDamage(int damage)

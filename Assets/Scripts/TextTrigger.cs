@@ -19,19 +19,20 @@ public class TextTrigger : MonoBehaviour
     void Start()
     {
         typewriterSfx = GetComponent<AudioSource>();
-        GetComponent<MeshRenderer>().enabled = false;        
+        GetComponent<MeshRenderer>().enabled = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.name == "Player")
         {
-            textObj.enabled = true;
+            fadingText = false;            
             textObj.text = "";
+            curLetterIdx = 0;
             textObj.GetComponent<CanvasGroup>().alpha = 1;
             if (typewriterSfx != null)            
                 typewriterSfx.Play();            
-            placingLetters = true;            
+            placingLetters = true;
         }
     }
 

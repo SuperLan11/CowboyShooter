@@ -57,13 +57,17 @@ public class Door : MonoBehaviour
 
     // reset door counter is used for starting/entering a room
     public static void ResetDoorCounter()
-    {        
+    {
         // enemiesInRoom should already be 0, but just in case
+        Player.player.enemiesInRoom.Clear();
         Enemy.enemiesInRoom = 0;
         foreach (Enemy enemy in FindObjectsOfType<Enemy>())
         {
             if (enemy.checkpointNum == GameManager.currentCheckpoint)
+            {
+                Player.player.enemiesInRoom.Add(enemy);
                 Enemy.enemiesInRoom++;
+            }
         }        
         Door.SetDoorCounter(Enemy.enemiesInRoom);       
     }
