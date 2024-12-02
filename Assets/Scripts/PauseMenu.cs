@@ -52,6 +52,9 @@ public class PauseMenu : MonoBehaviour
         GameManager.gameManager.DisableCursor();
         crosshair.GetComponent<Crosshair>().EnableCrosshair();
 
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         gameIsPaused = false;
     }
 
