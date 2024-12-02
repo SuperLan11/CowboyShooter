@@ -16,7 +16,7 @@ using Vector3 = UnityEngine.Vector3;
 using Quaternion = UnityEngine.Quaternion;
 using UnityEngine.UI;
 using System.Runtime.ConstrainedExecution;
-using UnityEditor.Rendering.LookDev;
+//using UnityEditor.Rendering.LookDev;
 
 public class Player : Character
 {
@@ -456,7 +456,7 @@ public class Player : Character
         // if you slide off a wall or jump over a wall, return to air state        
         bool isWall = collision.gameObject.tag == "WALL";
         bool isFloor = collision.gameObject.tag == "FLOOR";
-        bool standingOnWall = isWall && GetComponent<BoxCollider>().bounds.min.y + 0.1f > collision.gameObject.GetComponent<MeshRenderer>().bounds.max.y;
+        bool standingOnWall = isWall && GetComponent<BoxCollider>().bounds.min.y + 0.1f > collision.gameObject.GetComponent<BoxCollider>().bounds.max.y;
 
         if (isFloor || standingOnWall)
             currentMovementState = movementState.AIR;

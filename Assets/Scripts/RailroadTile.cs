@@ -31,8 +31,7 @@ public class RailroadTile : Railroad
         for (int i = 0; i < transform.childCount; i++)        
             Destroy(transform.GetChild(i).gameObject); 
     }    
-
-    // not working
+    
     private bool IsObjectHere(GameObject newDeco, Vector3 potentialPos)
     {
         Collider[] collisions = Physics.OverlapSphere(potentialPos, newDeco.GetComponent<MeshRenderer>().bounds.size.x / 2);
