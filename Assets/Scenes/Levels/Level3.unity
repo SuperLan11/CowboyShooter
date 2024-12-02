@@ -536,6 +536,10 @@ PrefabInstance:
       propertyPath: initSpawnTile
       value: 
       objectReference: {fileID: 1285166906}
+    - target: {fileID: 6524479121202459995, guid: f0d2650e03b4704478484b1f41203bdf, type: 3}
+      propertyPath: maxDecorations
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6897118885592080529, guid: f0d2650e03b4704478484b1f41203bdf, type: 3}
       propertyPath: m_LocalScale.z
       value: 29.179657
@@ -667,9 +671,21 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 6524479121202459995, guid: f0d2650e03b4704478484b1f41203bdf, type: 3}
+      propertyPath: tunnelOffset
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6524479121202459995, guid: f0d2650e03b4704478484b1f41203bdf, type: 3}
       propertyPath: initSpawnTile
       value: 
       objectReference: {fileID: 1285166906}
+    - target: {fileID: 6524479121202459995, guid: f0d2650e03b4704478484b1f41203bdf, type: 3}
+      propertyPath: maxDecorations
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6524479121202459995, guid: f0d2650e03b4704478484b1f41203bdf, type: 3}
+      propertyPath: tunnelCooldown
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6897118885592080529, guid: f0d2650e03b4704478484b1f41203bdf, type: 3}
       propertyPath: m_LocalScale.z
       value: 29.179657
@@ -938,6 +954,10 @@ PrefabInstance:
       propertyPath: initSpawnTile
       value: 
       objectReference: {fileID: 1285166906}
+    - target: {fileID: 6524479121202459995, guid: f0d2650e03b4704478484b1f41203bdf, type: 3}
+      propertyPath: maxDecorations
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6897118885592080529, guid: f0d2650e03b4704478484b1f41203bdf, type: 3}
       propertyPath: m_LocalScale.z
       value: 29.179657
@@ -2143,6 +2163,10 @@ PrefabInstance:
       propertyPath: initSpawnTile
       value: 
       objectReference: {fileID: 1285166906}
+    - target: {fileID: 6524479121202459995, guid: f0d2650e03b4704478484b1f41203bdf, type: 3}
+      propertyPath: maxDecorations
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6897118885592080529, guid: f0d2650e03b4704478484b1f41203bdf, type: 3}
       propertyPath: m_LocalScale.z
       value: 29.179657
@@ -2727,6 +2751,10 @@ PrefabInstance:
       propertyPath: initSpawnTile
       value: 
       objectReference: {fileID: 1285166906}
+    - target: {fileID: 6524479121202459995, guid: f0d2650e03b4704478484b1f41203bdf, type: 3}
+      propertyPath: maxDecorations
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6897118885592080529, guid: f0d2650e03b4704478484b1f41203bdf, type: 3}
       propertyPath: m_LocalScale.z
       value: 29.179657
@@ -2996,6 +3024,10 @@ PrefabInstance:
       propertyPath: initSpawnTile
       value: 
       objectReference: {fileID: 1285166906}
+    - target: {fileID: 6524479121202459995, guid: f0d2650e03b4704478484b1f41203bdf, type: 3}
+      propertyPath: maxDecorations
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6897118885592080529, guid: f0d2650e03b4704478484b1f41203bdf, type: 3}
       propertyPath: m_LocalScale.z
       value: 29.179657
@@ -3156,37 +3188,13 @@ PrefabInstance:
       value: Railroad (16)
       objectReference: {fileID: 0}
     - target: {fileID: 5852386623749469768, guid: 55f1940369c655f409c4b4ddbb10b1d2, type: 3}
-      propertyPath: spawnTile
-      value: 
-      objectReference: {fileID: 1940843171}
-    - target: {fileID: 5852386623749469768, guid: 55f1940369c655f409c4b4ddbb10b1d2, type: 3}
-      propertyPath: spawnTile1
-      value: 
-      objectReference: {fileID: 1923629928}
-    - target: {fileID: 5852386623749469768, guid: 55f1940369c655f409c4b4ddbb10b1d2, type: 3}
-      propertyPath: spawnTile2
-      value: 
-      objectReference: {fileID: 1940843171}
-    - target: {fileID: 5852386623749469768, guid: 55f1940369c655f409c4b4ddbb10b1d2, type: 3}
-      propertyPath: railroadNum
-      value: 2
+      propertyPath: tunnelOffset
+      value: 550
       objectReference: {fileID: 0}
     - target: {fileID: 5852386623749469768, guid: 55f1940369c655f409c4b4ddbb10b1d2, type: 3}
       propertyPath: initSpawnTile
       value: 
       objectReference: {fileID: 1923629928}
-    - target: {fileID: 5852386623749469768, guid: 55f1940369c655f409c4b4ddbb10b1d2, type: 3}
-      propertyPath: initSpawnTile1
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5852386623749469768, guid: 55f1940369c655f409c4b4ddbb10b1d2, type: 3}
-      propertyPath: initSpawnTile2
-      value: 
-      objectReference: {fileID: 1940843171}
-    - target: {fileID: 6627258724471058738, guid: 55f1940369c655f409c4b4ddbb10b1d2, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 124.6662
-      objectReference: {fileID: 0}
     - target: {fileID: 6627258724471058738, guid: 55f1940369c655f409c4b4ddbb10b1d2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 388
@@ -3402,37 +3410,9 @@ PrefabInstance:
       value: Railroad (13)
       objectReference: {fileID: 0}
     - target: {fileID: 5852386623749469768, guid: 55f1940369c655f409c4b4ddbb10b1d2, type: 3}
-      propertyPath: spawnTile
-      value: 
-      objectReference: {fileID: 1940843171}
-    - target: {fileID: 5852386623749469768, guid: 55f1940369c655f409c4b4ddbb10b1d2, type: 3}
-      propertyPath: spawnTile1
-      value: 
-      objectReference: {fileID: 1923629928}
-    - target: {fileID: 5852386623749469768, guid: 55f1940369c655f409c4b4ddbb10b1d2, type: 3}
-      propertyPath: spawnTile2
-      value: 
-      objectReference: {fileID: 1940843171}
-    - target: {fileID: 5852386623749469768, guid: 55f1940369c655f409c4b4ddbb10b1d2, type: 3}
-      propertyPath: railroadNum
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5852386623749469768, guid: 55f1940369c655f409c4b4ddbb10b1d2, type: 3}
       propertyPath: initSpawnTile
       value: 
       objectReference: {fileID: 1923629928}
-    - target: {fileID: 5852386623749469768, guid: 55f1940369c655f409c4b4ddbb10b1d2, type: 3}
-      propertyPath: initSpawnTile1
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5852386623749469768, guid: 55f1940369c655f409c4b4ddbb10b1d2, type: 3}
-      propertyPath: initSpawnTile2
-      value: 
-      objectReference: {fileID: 1940843171}
-    - target: {fileID: 6627258724471058738, guid: 55f1940369c655f409c4b4ddbb10b1d2, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 124.6662
-      objectReference: {fileID: 0}
     - target: {fileID: 6627258724471058738, guid: 55f1940369c655f409c4b4ddbb10b1d2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 139.9
@@ -3691,71 +3671,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6627258724471058738, guid: 55f1940369c655f409c4b4ddbb10b1d2, type: 3}
   m_PrefabInstance: {fileID: 1940843170}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1968958042
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3146208231127847851, guid: fd5c7f9cab7fa7d4eb5ab7287174bf7b, type: 3}
-      propertyPath: m_Name
-      value: DeathZone
-      objectReference: {fileID: 0}
-    - target: {fileID: 4041861443817775661, guid: fd5c7f9cab7fa7d4eb5ab7287174bf7b, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1026.0548
-      objectReference: {fileID: 0}
-    - target: {fileID: 4041861443817775661, guid: fd5c7f9cab7fa7d4eb5ab7287174bf7b, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 493.46002
-      objectReference: {fileID: 0}
-    - target: {fileID: 4041861443817775661, guid: fd5c7f9cab7fa7d4eb5ab7287174bf7b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -27
-      objectReference: {fileID: 0}
-    - target: {fileID: 4041861443817775661, guid: fd5c7f9cab7fa7d4eb5ab7287174bf7b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4041861443817775661, guid: fd5c7f9cab7fa7d4eb5ab7287174bf7b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1474
-      objectReference: {fileID: 0}
-    - target: {fileID: 4041861443817775661, guid: fd5c7f9cab7fa7d4eb5ab7287174bf7b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4041861443817775661, guid: fd5c7f9cab7fa7d4eb5ab7287174bf7b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4041861443817775661, guid: fd5c7f9cab7fa7d4eb5ab7287174bf7b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4041861443817775661, guid: fd5c7f9cab7fa7d4eb5ab7287174bf7b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4041861443817775661, guid: fd5c7f9cab7fa7d4eb5ab7287174bf7b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4041861443817775661, guid: fd5c7f9cab7fa7d4eb5ab7287174bf7b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4041861443817775661, guid: fd5c7f9cab7fa7d4eb5ab7287174bf7b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: fd5c7f9cab7fa7d4eb5ab7287174bf7b, type: 3}
 --- !u!1 &2003539388 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 603583326010913655, guid: 167138a76c8ac334c84c2ba5620f1823, type: 3}
@@ -3968,6 +3883,10 @@ PrefabInstance:
       propertyPath: initSpawnTile
       value: 
       objectReference: {fileID: 1285166906}
+    - target: {fileID: 6524479121202459995, guid: f0d2650e03b4704478484b1f41203bdf, type: 3}
+      propertyPath: maxDecorations
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6897118885592080529, guid: f0d2650e03b4704478484b1f41203bdf, type: 3}
       propertyPath: m_LocalScale.z
       value: 29.179657
@@ -4075,4 +3994,3 @@ SceneRoots:
   - {fileID: 984929933}
   - {fileID: 1874720302}
   - {fileID: 1315942476}
-  - {fileID: 1968958042}

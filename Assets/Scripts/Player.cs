@@ -109,8 +109,7 @@ public class Player : Character
     private float curMouseX = 0f;
     private float curMouseY = 0f;
     
-    [SerializeField] private float camLockDist = 50f;
-    private bool wasPlaying = false;
+    [SerializeField] private float camLockDist = 50f;    
 
     public enum movementState
     {

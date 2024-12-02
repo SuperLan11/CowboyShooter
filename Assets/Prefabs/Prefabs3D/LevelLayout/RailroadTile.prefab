@@ -151,6 +151,7 @@ MonoBehaviour:
   tunnelPrefab: {fileID: 0}
   initSpawnTile: {fileID: 0}
   tunnelCooldown: 0
+  tunnelOffset: 0
   rockPrefab: {fileID: 7216489676564596528, guid: 3c4b8aa7cf661834696e5f41d616976a, type: 3}
   skullPrefab: {fileID: 1430866310615406873, guid: cb24018d3ae0f9a41b1e569dfbf9fc91, type: 3}
   canyonPrefab: {fileID: 3252368549753659191, guid: 5be4117093aa6bb49936c38a4dec6ac9, type: 3}
