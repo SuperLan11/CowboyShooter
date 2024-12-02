@@ -5,10 +5,14 @@ using UnityEngine;
 public class Tunnel : MonoBehaviour
 {
     private static AudioSource bellWarningSfx;
+    private float railroadSpeed;
+    private float maxX;
 
     // Start is called before the first frame update
     void Start()
     {
+        railroadSpeed = Railroad.railroadSpeed;
+        maxX = Railroad.maxX;
         bellWarningSfx = GetComponent<AudioSource>();
         if(bellWarningSfx != null && !bellWarningSfx.isPlaying)
             bellWarningSfx.Play();
@@ -29,6 +33,11 @@ public class Tunnel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Vector3 newPos = transform.position;
+        newPos.x += railroadSpeed * Time.deltaTime;
+        transform.position = newPos;
+
+        if (transform.position.x > maxX)        
+            Destroy(this.gameObject);        
     }
 }

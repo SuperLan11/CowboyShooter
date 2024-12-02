@@ -41,7 +41,7 @@ public class RailroadTile : Railroad
             bool isRailroad = collider.gameObject.GetComponent<Railroad>() != null;
             bool isRailroadTile = collider.gameObject.GetComponent<RailroadTile>() != null;
             bool isDeathZone = collider.gameObject.GetComponent<DeathZone>() != null;
-            if (!isRailroad && !isRailroadTile && !isDeathZone)                            
+            if (!isRailroad && !isRailroadTile && !isDeathZone)          
                 return true;            
         }       
         return false;
@@ -49,8 +49,7 @@ public class RailroadTile : Railroad
 
     private void RandomizeDeco()
     {
-        int decosLeft = maxDecorations;               
-        GameObject[] decosPlaced = new GameObject[decorations.Length];
+        int decosLeft = maxDecorations;        
         // to prevent infinite loop if can't fit any new decorations
         int numIters = 0;        
 
@@ -73,21 +72,16 @@ public class RailroadTile : Railroad
                 float randX = Random.Range(GetComponent<Collider>().bounds.min.x + decoHalfXSize, GetComponent<Collider>().bounds.max.x - decoHalfXSize);
                 float randZ = Random.Range(GetComponent<Collider>().bounds.min.z + decoHalfZSize, GetComponent<Collider>().bounds.max.z - decoHalfZSize);
                 float y = GetComponent<BoxCollider>().bounds.max.y;
-                Vector3 potentialPos = new Vector3(randX, y, randZ);                                                    
+                Vector3 potentialPos = new Vector3(randX, y, randZ);                                          
 
                 if (!IsObjectHere(potentialDeco, potentialPos))
                 {
                     GameObject newDeco = Instantiate(potentialDeco, potentialPos, potentialDeco.transform.rotation);
                     decosLeft--;
-                    if (scale != 1.0f)
-                    {
-                        float xScale = newDeco.transform.localScale.x;
-                        float yScale = newDeco.transform.localScale.y;
-                        float zScale = newDeco.transform.localScale.z;
-                        newDeco.transform.localScale = new Vector3(xScale * scale, yScale * scale, zScale * scale);
-                    }
-                    newDeco.transform.SetParent(this.transform);                            
-                }                
+                    if (scale != 1.0f)                    
+                        newDeco.transform.localScale *= scale;                                
+                    newDeco.transform.SetParent(this.transform);          
+                }
                 numIters++;
         }
     }    
@@ -103,7 +97,7 @@ public class RailroadTile : Railroad
             }
         }
     }
-
+    
     private IEnumerator WaitToRedeco(float seconds)
     {
         yield return new WaitForSecondsRealtime(seconds);
@@ -120,7 +114,8 @@ public class RailroadTile : Railroad
         {
             transform.position = spawnPos;
             DestroyAnyDecos();
-            StartCoroutine(WaitToRedeco(0.05f));            
+            // had some issues where deco was out of bounds when waiting was not used
+            StartCoroutine(WaitToRedeco(0.05f));
         }
     }
 

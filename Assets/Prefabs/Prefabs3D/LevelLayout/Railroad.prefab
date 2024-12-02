@@ -146,8 +146,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cb658976a27e4d4c9447899978929bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  railroadSpeed: 160
-  maxX: 500
+  rrSpeed: 160
+  xMax: 1000
   tunnelPrefab: {fileID: 9143646768246589184, guid: 8f28ec1af4bb0de4b860f430893534a8, type: 3}
   initSpawnTile: {fileID: 0}
   tunnelCooldown: 5
