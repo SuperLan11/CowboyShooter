@@ -4323,6 +4323,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6746264509344037945, guid: f84f8b8f7f452f64d850792266b5db5a, type: 3}
+      propertyPath: m_ProvidesContacts
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7275754898803347124, guid: f84f8b8f7f452f64d850792266b5db5a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.4975767
@@ -4367,6 +4371,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SmallTornado
       objectReference: {fileID: 0}
+    - target: {fileID: 8409206029843477979, guid: f84f8b8f7f452f64d850792266b5db5a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bdf7aae2a41b78841b7113344d58ffdb, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
