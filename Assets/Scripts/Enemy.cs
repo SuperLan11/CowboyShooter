@@ -43,12 +43,13 @@ public abstract class Enemy : Character
     protected bool isDead = false;
 
     public Vector3 spawnPos;
+    [SerializeField] protected AudioSource deathSfx;
 
-    [SerializeField] protected AudioSource deathSfx;    
+    protected Animator animator;
 
     // all enemies have the same start function
     void Start()
-    {
+    {        
         spawnPos = transform.position;
         enemiesInitialized++;
         int numEnemies = FindObjectsOfType<Enemy>().Length;
@@ -64,6 +65,8 @@ public abstract class Enemy : Character
             return;
         }
 
+        if(animator != null)
+            animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         player = Player.player.gameObject;
         playerNear = false;

@@ -97,7 +97,7 @@ public class RailroadManager : MonoBehaviour
             {
                 if (tile.GetComponent<RailroadTile>() != null)
                 {
-                    tile.transform.position = tile.GetComponent<RailroadTile>().spawnPos;                    
+                    tile.transform.position = tile.GetComponent<RailroadTile>().spawnPos;      
                 }
                 else if (tile.GetComponent<Railroad>() != null)
                 {

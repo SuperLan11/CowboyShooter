@@ -49,11 +49,11 @@ public class GunEnemy : Enemy
         // only finish loading to finish if player is still in sight
         if (agent.destination == shootPos)
             loadCooldownDone = true;                
-    }
+    }    
 
     // Update is called once per frame
     void Update()
-    {
+    {        
         if (!switchingDest && agent.remainingDistance <= 0.01f)
         {
             //Debug.Log("got to dest, find new dest");
@@ -79,8 +79,16 @@ public class GunEnemy : Enemy
         {            
             agent.destination = ShootPos();
             shootPos = agent.destination;
-            Vector3 playerDirection = (player.transform.position - transform.position).normalized;            
-            transform.LookAt(playerDirection);
+            Vector3 playerPos = Player.player.transform.position;
+            playerPos.y = transform.position.y;            
+            transform.LookAt(playerPos);
+
+            if (animator != null && animator.GetCurrentAnimatorStateInfo(0).normalizedTime == 0)
+            {
+                Debug.Log("shooting");
+                animator.Play("Shoot");
+            }
+
             if (!loadingShot)
             {                
                 loadingShot = true;
