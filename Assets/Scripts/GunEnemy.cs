@@ -29,6 +29,12 @@ public class GunEnemy : Enemy
 
         if (shootSfx != null)
             shootSfx.Play();
+
+        if (animator != null)
+        {
+            // replay the animation from the start (0)
+            animator.Play("Shoot", -1, 0f);
+        }
     }
 
     private Vector3 ShootPos()
@@ -38,7 +44,23 @@ public class GunEnemy : Enemy
         playerFocusTime += Time.deltaTime;
         // NavMesh accounts for if the enemy can't go to shoot pos while against a wall
         if (playerSighted)
-            return player.transform.position - playerDirection * 2f;                
+        {
+            float distFromPlayer = Vector3.Distance(transform.position, player.transform.position);
+            float distToShootPos = Vector3.Distance(transform.position, player.transform.position - playerDirection * 2f);
+            if (distFromPlayer < distToShootPos)
+            {
+                animator.SetBool("MovingBack", true);
+            }
+            else
+            {
+                animator.SetBool("MovingBack", false);
+            }
+            return player.transform.position - playerDirection * 2f;
+        }
+
+        if (sightRange - 2 - distToPlayer > 0)
+            animator.SetBool("MovingBack", true);
+
         return transform.position + playerDirection * -(sightRange - 2 - distToPlayer);
     }
 
@@ -76,18 +98,13 @@ public class GunEnemy : Enemy
         playerSighted = PlayerIsSighted();        
 
         if (playerSighted && (playerNear || gotShot))
-        {            
+        {
+            animator.SetBool("FollowingPlayer", true);
             agent.destination = ShootPos();
             shootPos = agent.destination;
             Vector3 playerPos = Player.player.transform.position;
             playerPos.y = transform.position.y;            
-            transform.LookAt(playerPos);
-
-            if (animator != null && animator.GetCurrentAnimatorStateInfo(0).normalizedTime == 0)
-            {
-                Debug.Log("shooting");
-                animator.Play("Shoot");
-            }
+            transform.LookAt(playerPos);            
 
             if (!loadingShot)
             {                
@@ -105,7 +122,8 @@ public class GunEnemy : Enemy
             }            
         }
         else if (agent.destination == shootPos)
-        {            
+        {
+            animator.SetBool("FollowingPlayer", false);
             loadCooldownDone = false;
             loadingShot = false;
             gotShot = false;

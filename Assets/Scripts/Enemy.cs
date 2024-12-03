@@ -64,9 +64,8 @@ public abstract class Enemy : Character
             // the script still runs even after the gameObject is destroyed            
             return;
         }
-
-        if(animator != null)
-            animator = GetComponent<Animator>();
+        
+        animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         player = Player.player.gameObject;
         playerNear = false;
@@ -184,6 +183,8 @@ public abstract class Enemy : Character
     // called from inherited TakeDamage function
     protected override void Death()
     {
+        animator.Play("Death", -1, 0f);
+
         isDead = true;
         //disables all components and re-enables death SFX
         DisableAllComponents();
@@ -219,6 +220,8 @@ public abstract class Enemy : Character
         health -= damage;
         if (health <= 0)
             Death();
+        
+        animator.Play("TakeDamage", -1, 0f);
     }
 
     protected void DisableAllComponents()
