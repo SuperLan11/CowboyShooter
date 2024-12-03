@@ -46,8 +46,11 @@ public class Player : Character
     private int restartCooldown;
 
     private bool inLassoLock = false;
+    private bool inLassoCooldown = false;
     private int lassoLockCooldown;
     private int maxLassoLockCooldown;    
+    private int lassoCooldown;
+    private int maxLassoCooldown;
     private const float startingLassoForceMultiplier = 10f;  //originally 15f
     private const float lassoForceIncrease = 0.15f;
     private float maxLassoSpeed = 30f;
@@ -159,6 +162,7 @@ public class Player : Character
 
         jumpCooldown = maxJumpCooldown = 2;
 
+        lassoCooldown = maxLassoCooldown = 22;
         lassoLockCooldown = maxLassoLockCooldown = 5;
         
         //remember it's not in terms of frames, so a value of 60 does not mean it'll wait 1 second.
@@ -288,11 +292,12 @@ public class Player : Character
         {
             bool valid = lasso.GetComponent<Lasso>().StartLasso();
 
-            if (valid)
+            if (valid && !inLassoCooldown)
             {
                 player.currentMovementState = movementState.SWINGING;
                 lassoLockCooldown = maxLassoLockCooldown;
                 inLassoLock = true;
+                inLassoCooldown = true;
                 lassoSfx.Play();
             }
         }
@@ -718,6 +723,19 @@ public class Player : Character
             {
                 lassoLockCooldown = maxLassoLockCooldown;
                 inLassoLock = false;
+            }
+        }
+
+        if (inLassoCooldown)
+        {
+            if (lassoCooldown > 0)
+            {
+                lassoCooldown--;
+            }
+            else
+            {
+                lassoCooldown = maxLassoCooldown;
+                inLassoCooldown = false;
             }
         }
 
