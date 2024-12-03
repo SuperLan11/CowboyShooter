@@ -2657,75 +2657,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!1001 &352892910
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4380967612754759488, guid: be4e07e4881ef1e4fba4aed24cda620b, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 5e8852c1c6940d0418df6460a66325b2, type: 3}
-    - target: {fileID: 4785803613257643189, guid: be4e07e4881ef1e4fba4aed24cda620b, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 21.344465
-      objectReference: {fileID: 0}
-    - target: {fileID: 4785803613257643189, guid: be4e07e4881ef1e4fba4aed24cda620b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 109.24682
-      objectReference: {fileID: 0}
-    - target: {fileID: 4785803613257643189, guid: be4e07e4881ef1e4fba4aed24cda620b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 3.60227
-      objectReference: {fileID: 0}
-    - target: {fileID: 4785803613257643189, guid: be4e07e4881ef1e4fba4aed24cda620b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1061.1978
-      objectReference: {fileID: 0}
-    - target: {fileID: 4785803613257643189, guid: be4e07e4881ef1e4fba4aed24cda620b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4785803613257643189, guid: be4e07e4881ef1e4fba4aed24cda620b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4785803613257643189, guid: be4e07e4881ef1e4fba4aed24cda620b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4785803613257643189, guid: be4e07e4881ef1e4fba4aed24cda620b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4785803613257643189, guid: be4e07e4881ef1e4fba4aed24cda620b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4785803613257643189, guid: be4e07e4881ef1e4fba4aed24cda620b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4785803613257643189, guid: be4e07e4881ef1e4fba4aed24cda620b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7471153399614866689, guid: be4e07e4881ef1e4fba4aed24cda620b, type: 3}
-      propertyPath: m_Name
-      value: MusicPlayer
-      objectReference: {fileID: 0}
-    - target: {fileID: 7471153399614866689, guid: be4e07e4881ef1e4fba4aed24cda620b, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: be4e07e4881ef1e4fba4aed24cda620b, type: 3}
 --- !u!1001 &356301305
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4694,12 +4625,12 @@ MonoBehaviour:
     QA/Design
     Help:
 
-    insert raf name here
+    Rafael Casanova
 
 
     Art Help:
 
-    insert jenna name here'
+    Jenna Castlewitz'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ed47c561789fa764694afc511052688b, type: 2}
   m_sharedMaterial: {fileID: 7732814686946176234, guid: ed47c561789fa764694afc511052688b, type: 2}
@@ -20353,7 +20284,9 @@ MonoBehaviour:
     Left Click - Shoot
     Gun
 
-    Right Click (hold) - Lasso'
+    Right Click (hold) - Lasso
+
+    R (hold) - Restart Level'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ed47c561789fa764694afc511052688b, type: 2}
   m_sharedMaterial: {fileID: 7732814686946176234, guid: ed47c561789fa764694afc511052688b, type: 2}
@@ -25171,7 +25104,6 @@ SceneRoots:
   - {fileID: 2110438483}
   - {fileID: 435260553}
   - {fileID: 1997402334}
-  - {fileID: 352892910}
   - {fileID: 490683416}
   - {fileID: 1754316870}
   - {fileID: 1932667555}

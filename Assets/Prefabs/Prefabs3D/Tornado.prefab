@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &6040235662803077780
+--- !u!1001 &6679646817159886827
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -9,28 +9,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 91adb1d91252cc94aa5956a05a3f4836, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.02194142
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 91adb1d91252cc94aa5956a05a3f4836, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.02194142
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 91adb1d91252cc94aa5956a05a3f4836, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.02194142
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 91adb1d91252cc94aa5956a05a3f4836, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.01
+      value: 25.815193
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 91adb1d91252cc94aa5956a05a3f4836, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.16
+      value: -3.7761443
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 91adb1d91252cc94aa5956a05a3f4836, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -34.48
+      value: 68.064415
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 91adb1d91252cc94aa5956a05a3f4836, type: 3}
       propertyPath: m_LocalRotation.w
@@ -60,13 +48,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 91adb1d91252cc94aa5956a05a3f4836, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bdf7aae2a41b78841b7113344d58ffdb, type: 2}
     - target: {fileID: 919132149155446097, guid: 91adb1d91252cc94aa5956a05a3f4836, type: 3}
       propertyPath: m_Name
       value: Tornado
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 91adb1d91252cc94aa5956a05a3f4836, type: 3}
-      propertyPath: m_TagString
-      value: TORNADO
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -74,33 +62,31 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 91adb1d91252cc94aa5956a05a3f4836, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2001966998649013386}
+      addedObject: {fileID: 6061141508301405752}
   m_SourcePrefab: {fileID: 100100000, guid: 91adb1d91252cc94aa5956a05a3f4836, type: 3}
---- !u!1 &6850629813159016389 stripped
+--- !u!1 &5797178021881252538 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 91adb1d91252cc94aa5956a05a3f4836, type: 3}
-  m_PrefabInstance: {fileID: 6040235662803077780}
+  m_PrefabInstance: {fileID: 6679646817159886827}
   m_PrefabAsset: {fileID: 0}
---- !u!136 &2001966998649013386
-CapsuleCollider:
+--- !u!95 &6061141508301405752
+Animator:
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6850629813159016389}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
+  m_GameObject: {fileID: 5797178021881252538}
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 132.6
-  m_Height: 438.1
-  m_Direction: 2
-  m_Center: {x: 18.939695, y: 33.959347, z: 157.28993}
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 83dcbcfe51274014e9632bf5c2147462, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
