@@ -4625,12 +4625,12 @@ MonoBehaviour:
     QA/Design
     Help:
 
-    insert raf name here
+    Rafael Casanova
 
 
     Art Help:
 
-    insert jenna name here'
+    Jenna Castlewitz'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ed47c561789fa764694afc511052688b, type: 2}
   m_sharedMaterial: {fileID: 7732814686946176234, guid: ed47c561789fa764694afc511052688b, type: 2}
@@ -20284,7 +20284,9 @@ MonoBehaviour:
     Left Click - Shoot
     Gun
 
-    Right Click (hold) - Lasso'
+    Right Click (hold) - Lasso
+
+    R (hold) - Restart Level'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ed47c561789fa764694afc511052688b, type: 2}
   m_sharedMaterial: {fileID: 7732814686946176234, guid: ed47c561789fa764694afc511052688b, type: 2}
