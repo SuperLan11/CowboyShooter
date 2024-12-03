@@ -35,6 +35,7 @@ public class EndTrigger : MonoBehaviour
         else if (collider.gameObject.name == "Player")
         {
             GameManager.gameManager.ResetTimerValue();
+            GameManager.currentCheckpoint = 0;
 
             Player.player.yeehawSfx.Play();
             int curSceneIndex = SceneManager.GetActiveScene().buildIndex;
