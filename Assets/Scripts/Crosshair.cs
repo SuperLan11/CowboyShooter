@@ -46,9 +46,14 @@ public class Crosshair : MonoBehaviour
         return Player.player.ObjAimedAt().tag == "HOOK";
     }
 
-    private bool PointedAtEnemyOrHook()
+    private bool PointedAtTornado()
     {
-        return PointedAtEnemy() || PointedAtHook();
+        return Player.player.ObjAimedAt().tag == "TORNADO";
+    }
+
+    private bool PointedAtImportantObject()
+    {
+        return PointedAtEnemy() || PointedAtHook() || PointedAtTornado();
     }
 
     public void EnableCrosshair()
@@ -64,9 +69,11 @@ public class Crosshair : MonoBehaviour
     // Update is called once per frame
     void Update()
     {        
+        Debug.Log(Player.player.ObjAimedAt().tag);
+        
         if (player.shootCooldown < player.maxShootCooldown)
         {
-            if (PointedAtObj() && PointedAtHook())
+            if (PointedAtObj() && (PointedAtHook() || PointedAtTornado()))
             {
                 crosshairImage.color = orange;
             }
@@ -84,7 +91,7 @@ public class Crosshair : MonoBehaviour
             return;
         }
 
-        if (!PointedAtEnemyOrHook())
+        if (!PointedAtImportantObject())
         {
             crosshairImage.color = Color.white;            
         }
@@ -92,7 +99,7 @@ public class Crosshair : MonoBehaviour
         {
             crosshairImage.color = Color.red;
         }
-        else if (PointedAtHook())
+        else if (PointedAtHook() || PointedAtTornado())
         {
             crosshairImage.color = orange;
         }

@@ -236,6 +236,7 @@ public class Player : Character
         Destroy(trail.gameObject, trail.time);
     }
 
+    //!Returns the name of the GameObject, NOT the name of the tag!
     public GameObject ObjAimedAt()
     {
         RaycastHit hit;
