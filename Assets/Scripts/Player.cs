@@ -575,8 +575,33 @@ public class Player : Character
     {
         GameManager.gameManager.StoreTimerValue(Clock.rawSeconds);
 
+        
+        // Enemy[] enemies = GameManager.gameManager.originalEnemyList;
+        // foreach (Enemy e in enemies)
+        // {
+        //     if (e.checkpointNum == GameManager.currentCheckpoint)
+        //     {
+        //         Debug.Log("Good morning");
+        //         Enemy tempEnemy = e;
+        //         Destroy(e.gameObject);
+        //         Instantiate(tempEnemy.gameObject, tempEnemy.spawnPos, Quaternion.identity);
+        //     }
+        // }
+
+        // /*
+        // foreach(Enemy e in enemiesInRoom)
+        // {
+        //     Instantiate(e, e.spawnPos, Quaternion.identity);
+        // }
+        // */
+
+        // health = maxHealth;
+        // transform.position = respawnPos;
+        // transform.eulerAngles = respawnRot;
+
         GameManager.gameManager.RestartLevel();
         GameManager.gameManager.CleanupScene();
+        
         /*foreach (Enemy enemy in enemiesInRoom)
         {
             enemy.transform.position = enemy.spawnPos;
