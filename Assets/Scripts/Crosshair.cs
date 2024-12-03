@@ -68,9 +68,7 @@ public class Crosshair : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {        
-        Debug.Log(Player.player.ObjAimedAt().tag);
-        
+    {               
         if (player.shootCooldown < player.maxShootCooldown)
         {
             if (PointedAtObj() && (PointedAtHook() || PointedAtTornado()))
