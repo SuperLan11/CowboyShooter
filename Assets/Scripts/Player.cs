@@ -614,9 +614,17 @@ public class Player : Character
 
     public void lassoLaunch(Vector3 targetPosition, float height)
     {
+        float oldVelocityMagnitude = rigidbody.velocity.magnitude;
+        
         Vector3 initialLassoForce = calculateLassoForce(transform.position, targetPosition, height) * lassoForceMultiplier;
         rigidbody.velocity = (initialLassoForce.magnitude <= maxLassoSpeed ? initialLassoForce : initialLassoForce.normalized * maxLassoSpeed);
-        //Debug.Log(rigidbody.velocity.magnitude);
+
+        //makes sure you keep your momentum if you were going fast already
+        if (rigidbody.velocity.magnitude < oldVelocityMagnitude)
+        {
+            rigidbody.velocity = rigidbody.velocity.normalized * oldVelocityMagnitude;
+        }
+        Debug.Log(rigidbody.velocity.magnitude);
     }
 
     public float playerFeetPosition()
