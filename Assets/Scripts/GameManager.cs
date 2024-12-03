@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     public static double storedTime;
     public static float mouseSensitivity = 2f;
     public static float volume = 1f;
+    public Enemy[] originalEnemyList;
 
     public void Awake()
     {

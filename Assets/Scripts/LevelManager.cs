@@ -29,6 +29,7 @@ public class LevelManager : MonoBehaviour
         }
 
         manager.debugMode = debugMode;
-        manager.currentLevel = currentLevel;;
+        manager.currentLevel = currentLevel;
+        manager.originalEnemyList = GameManager.gameManager.GetAllEnemies();
     }
 }
