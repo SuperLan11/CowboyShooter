@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 121242783325884661}
   - component: {fileID: 1199401410198860625}
   - component: {fileID: 5796726386382853721}
+  - component: {fileID: 6844624410762242760}
   m_Layer: 0
   m_Name: pitcher
   m_TagString: Untagged
@@ -107,7 +108,28 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &6844624410762242760
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2133052212710738145}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.3024015, y: 0.42559618, z: 0.4102175}
+  m_Center: {x: 0, y: -0.03482864, z: -0.0034234077}

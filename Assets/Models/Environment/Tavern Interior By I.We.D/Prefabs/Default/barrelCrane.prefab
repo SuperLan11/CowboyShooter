@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 177264230866396700}
   - component: {fileID: 1596793400915865348}
   - component: {fileID: 8229810017012205628}
+  - component: {fileID: 926961445222738900}
   m_Layer: 0
   m_Name: barrelCrane
   m_TagString: Untagged
@@ -112,3 +113,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!65 &926961445222738900
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 177317364729937687}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.050353, y: 1.2131286, z: 1.1697094}
+  m_Center: {x: -0.07113953, y: 0.12905107, z: -0.021200448}

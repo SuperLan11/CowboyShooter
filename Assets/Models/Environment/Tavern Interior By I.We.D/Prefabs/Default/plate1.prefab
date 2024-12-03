@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5420394659226649063}
   - component: {fileID: 6586893539295455441}
   - component: {fileID: 918774333582200122}
+  - component: {fileID: 8412187411591659958}
   m_Layer: 0
   m_Name: plate1
   m_TagString: Untagged
@@ -107,7 +108,28 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &8412187411591659958
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3941281164132131145}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.4399699, y: 0.050151378, z: 0.4399699}
+  m_Center: {x: 0, y: 0.0009914953, z: 0}

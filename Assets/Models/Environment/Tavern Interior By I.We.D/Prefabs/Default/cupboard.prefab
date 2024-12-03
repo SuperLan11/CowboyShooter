@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2623036611203985929}
   - component: {fileID: 1945472466882582284}
   - component: {fileID: 3544530349474708827}
+  - component: {fileID: 8224280241656974691}
   m_Layer: 0
   m_Name: cupboard
   m_TagString: Untagged
@@ -111,3 +112,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!65 &8224280241656974691
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8427702825668929617}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.96007437, y: 2.0380604, z: 1.2378157}
+  m_Center: {x: 0.04779455, y: -0.09848067, z: 0.0021022558}

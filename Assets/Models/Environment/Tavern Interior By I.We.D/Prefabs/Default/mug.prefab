@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3147128630736172091}
   - component: {fileID: 2169184569777551074}
   - component: {fileID: 1705604116976772048}
+  - component: {fileID: 5869443952769738776}
   m_Layer: 0
   m_Name: mug
   m_TagString: Untagged
@@ -108,7 +109,28 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &5869443952769738776
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6017223113634340166}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.19730905, y: 0.18782866, z: 0.25734806}
+  m_Center: {x: -0.000032134354, y: -0.007348627, z: 0.009117696}
