@@ -129,6 +129,7 @@ public class Player : Character
 
     void Start()
     {
+        DeathMenu.deathMenuActive = false;
         //GameManager.gameManager.CleanupScene();
         transform.rotation = Quaternion.Normalize(transform.rotation);        
         
@@ -574,6 +575,7 @@ public class Player : Character
     protected override void Death()
     {
         GameManager.gameManager.StoreTimerValue(Clock.rawSeconds);
+        DeathMenu.deathMenuActive = true;
 
         
         // Enemy[] enemies = GameManager.gameManager.originalEnemyList;

@@ -224,8 +224,10 @@ public abstract class Enemy : Character
         animator.Play("TakeDamage", -1, 0f);
     }
 
+    //if we want to go back to disabling mesh renderers, we can just uncomment those lines
     protected void DisableAllComponents()
     {
+        /*
         MonoBehaviour[] components = GetComponents<MonoBehaviour>();
         foreach (MonoBehaviour c in components)
         {
@@ -234,6 +236,7 @@ public abstract class Enemy : Character
                 c.enabled = false;
             }
         }
+        */
 
         NavMeshAgent navMeshAgent = GetComponent<NavMeshAgent>();
         if (navMeshAgent != null)
@@ -247,11 +250,13 @@ public abstract class Enemy : Character
             rb.isKinematic = true;
         }
 
+        /*
         MeshRenderer meshRenderer= GetComponent<MeshRenderer>();
         if (meshRenderer != null)
         {
             meshRenderer.enabled = false;
         }
+        */
 
         CapsuleCollider capsuleColldier= GetComponent<CapsuleCollider>();
         if (capsuleColldier != null)
@@ -259,6 +264,7 @@ public abstract class Enemy : Character
             capsuleColldier.enabled = false;
         }
 
+        /*
         GameObject[] childObjects = GetAllChildren(gameObject);
         foreach (GameObject child in childObjects)
         {
@@ -268,6 +274,7 @@ public abstract class Enemy : Character
                 childMeshRenderer.enabled = false;
             }
         }
+        */
     }
 
     protected GameObject[] GetAllChildren(GameObject parent)
