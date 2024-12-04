@@ -46,6 +46,11 @@ public class MeleeEnemy : Enemy
         if (daggerSfx != null)
             daggerSfx.Play();
 
+        if (animator != null)
+        {
+            animator.Play("Attack", -1, 0f);
+        }
+
         player.TakeDamage(attackDamage);                
     } 
 
