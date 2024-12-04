@@ -833,8 +833,8 @@ public class Player : Character
         else if (currentMovementState == movementState.FLYING)
         {            
             //aim assist
-            CheckHookLock();
-            CheckEnemyLock();            
+            //CheckHookLock();
+            //CheckEnemyLock();            
         }
 
         // Input.GetAxis is the change in value since last frame                

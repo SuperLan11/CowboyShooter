@@ -183,12 +183,12 @@ public abstract class Enemy : Character
     // called from inherited TakeDamage function
     protected override void Death()
     {
-        animator.Play("Death", -1, 0f);
+        //animator.Play("Death", -1, 0f);
 
         isDead = true;
         //disables all components and re-enables death SFX
-        DisableAllComponents();
-        deathSfx.enabled = true;
+        //DisableAllComponents();
+        //deathSfx.enabled = true;
         
         if(deathSfx != null)
             deathSfx.Play();
@@ -202,7 +202,8 @@ public abstract class Enemy : Character
         }
         
         //waits 1 second and then calls DeathCleanup()
-        Invoke("DeathCleanup", 1);
+        //Invoke("DeathCleanup", 1);
+        DeathCleanup();
     }
 
     protected void DeathCleanup()

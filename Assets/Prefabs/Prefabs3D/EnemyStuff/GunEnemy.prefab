@@ -32,6 +32,37 @@ Transform:
   - {fileID: 5431270727392504868}
   m_Father: {fileID: 705302977742854976}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &90441719892969717
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 214591569413781617}
+  m_Layer: 0
+  m_Name: BulletSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &214591569413781617
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90441719892969717}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.733, y: 3.613, z: 0.158}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 779189034347386787}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &177931639983677581
 GameObject:
   m_ObjectHideFlags: 0
@@ -324,11 +355,12 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.9550266, y: 0.3, z: -29.728865}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3071734954466445001}
   - {fileID: 2106599104918449164}
+  - {fileID: 214591569413781617}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4881856615886507105
@@ -344,7 +376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 3
-  maxHealth: 0
+  maxHealth: 3
   destination1: {fileID: 0}
   destination2: {fileID: 0}
   maxAttackCooldown: 1.5
@@ -353,7 +385,7 @@ MonoBehaviour:
   sightRange: 8
   spawnPos: {x: 0, y: 0, z: 0}
   deathSfx: {fileID: 7274230335824233674}
-  bulletSpawn: {fileID: 6916008535529215917}
+  bulletSpawn: {fileID: 214591569413781617}
   bulletPrefab: {fileID: 5238476219402099163, guid: 418fbbc712cab9a4fbc8c17b4ad4aea2, type: 3}
   bulletSpeed: 65
   loadTime: 0.3
@@ -376,7 +408,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 1
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!136 &8611291025354527813
@@ -398,7 +430,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.8195486
+  m_Radius: 1.64
   m_Height: 7.170224
   m_Direction: 1
   m_Center: {x: 0, y: 1.7147487, z: 0.3195486}
@@ -459,7 +491,7 @@ AudioSource:
   m_GameObject: {fileID: 1199860818825218710}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 3e2b09f138b53e347993dce8dd73c744, type: 2}
   m_audioClip: {fileID: 8300000, guid: 3fa4d72d4b64c1e4cac252ca07697e98, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
