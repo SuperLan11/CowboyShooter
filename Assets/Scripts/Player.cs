@@ -55,6 +55,7 @@ public class Player : Character
     private const float lassoForceIncrease = 0.15f;
     private float maxLassoSpeed = 30f;
     private float lassoForceMultiplier;
+    [System.NonSerialized] public float maxLassoRange = 25f;
 
     // these need to be static so the values persist when scene reloads    
     public static Vector3 respawnPos;
@@ -132,6 +133,13 @@ public class Player : Character
         DeathMenu.deathMenuActive = false;
         //GameManager.gameManager.CleanupScene();
         transform.rotation = Quaternion.Normalize(transform.rotation);        
+
+        //variables need to be changed to account for 3rd level
+        if (SceneManager.GetActiveScene().buildIndex == 3){
+            maxLassoRange *= 3f;
+            speed *= 2f;
+            maxLassoSpeed *= 1.5f;
+        }
         
         if (gunSfx == null)
         {

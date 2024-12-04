@@ -18,7 +18,6 @@ public class Lasso : MonoBehaviour
     private LineRenderer lineRenderer;
     private Vector3 grapplePoint;
     //private SpringJoint joint;
-    private float lassoMaxRange = 25f;
     
     private float lassoYOffset = 0; //0.25f
     private float overshootYAxis = 0;  //5f
@@ -60,7 +59,7 @@ public class Lasso : MonoBehaviour
     {
         RaycastHit hit;
 
-        if (Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, lassoMaxRange)) {
+        if (Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, Player.player.maxLassoRange)) {
             grapplePoint = hit.point;
 
             if (!isValidLassoObj(hit.transform.gameObject))
