@@ -187,7 +187,7 @@ public class Player : Character
         holdingRMB = false;
         holdingRestart = false;
 
-        mouseSensitivityX = mouseSensitivityY = GameManager.mouseSensitivity;
+        SetPlayerMouseSensitivity();
 
         healthLastFrame = health;
     }    
@@ -376,6 +376,12 @@ public class Player : Character
         if (context.started)
         {
             PauseMenu.gameIsPaused = !PauseMenu.gameIsPaused;
+        }
+
+        //when user resumes, appropriate settings must be applied
+        if (!PauseMenu.gameIsPaused)
+        {
+            mouseSensitivityX = mouseSensitivityY = GameManager.mouseSensitivity;
         }
     }
     
@@ -742,6 +748,11 @@ public class Player : Character
                 }
             }                                                                                          
         }        
+    }
+
+    public void SetPlayerMouseSensitivity()
+    {
+        mouseSensitivityX = mouseSensitivityY = GameManager.mouseSensitivity;
     }
 
     //Dragon's Den of the Movement Code

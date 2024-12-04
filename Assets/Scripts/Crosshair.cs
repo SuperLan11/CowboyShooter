@@ -56,6 +56,7 @@ public class Crosshair : MonoBehaviour
         return PointedAtEnemy() || PointedAtHook() || PointedAtTornado();
     }
 
+    /*
     public void EnableCrosshair()
     {
         crosshairImage.enabled = true;
@@ -65,6 +66,7 @@ public class Crosshair : MonoBehaviour
     {
         crosshairImage.enabled = false;
     }
+    */
 
     // Update is called once per frame
     void Update()

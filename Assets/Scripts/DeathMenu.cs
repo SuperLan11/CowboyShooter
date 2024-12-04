@@ -10,7 +10,7 @@ public class DeathMenu : MonoBehaviour
     public static bool deathMenuActive = false;
     private bool gameManagerProtector;
     [SerializeField] private GameObject deathMenuUI;
-    [SerializeField] private GameObject crosshair;
+    [SerializeField] private GameObject HUD;
 
     void Start()
     {
@@ -41,7 +41,7 @@ public class DeathMenu : MonoBehaviour
         deathMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameManager.gameManager.EnableCursor();
-        crosshair.GetComponent<Crosshair>().DisableCrosshair();
+        HUD.GetComponent<PlayerHUD>().DisableHUD();
 
         deathMenuActive = true;
     }
@@ -51,7 +51,7 @@ public class DeathMenu : MonoBehaviour
         deathMenuUI.SetActive(false);
         Time.timeScale = 1f;
         GameManager.gameManager.DisableCursor();
-        crosshair.GetComponent<Crosshair>().EnableCrosshair();
+        HUD.GetComponent<PlayerHUD>().EnableHUD();
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

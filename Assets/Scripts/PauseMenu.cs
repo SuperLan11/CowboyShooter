@@ -3,14 +3,19 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 
 public class PauseMenu : MonoBehaviour
 {
     public static bool gameIsPaused = false;
+    private bool inOptionsMenu = false;
     private bool gameManagerProtector;
     [SerializeField] private GameObject pauseMenuUI;
-    [SerializeField] private GameObject crosshair;
+    [SerializeField] private GameObject optionsMenuUI;
+    [SerializeField] private GameObject HUD;
+    [SerializeField] private AudioMixer masterVolume;
+    private const string masterVolumeString = "MasterVolume";
 
     void Start()
     {
@@ -37,20 +42,41 @@ public class PauseMenu : MonoBehaviour
 
     public void Pause()
     {
-        pauseMenuUI.SetActive(true);
+        pauseMenuUI.SetActive(!inOptionsMenu);
         Time.timeScale = 0f;
         GameManager.gameManager.EnableCursor();
-        crosshair.GetComponent<Crosshair>().DisableCrosshair();
+        HUD.GetComponent<PlayerHUD>().DisableHUD();
 
         gameIsPaused = true;
+    }
+
+     public void SwitchMenus(int menuState)
+    {
+        switch(menuState)
+        {
+            case 0:
+                pauseMenuUI.SetActive(true);
+                optionsMenuUI.SetActive(false);
+                inOptionsMenu = false;
+                Player.player.SetPlayerMouseSensitivity();
+                break;
+            case 1:
+                pauseMenuUI.SetActive(false);
+                optionsMenuUI.SetActive(true);
+                inOptionsMenu = true;
+                break;
+            default:
+                break;
+        }
     }
 
     public void Resume()
     {
         pauseMenuUI.SetActive(false);
+        optionsMenuUI.SetActive(false);
         Time.timeScale = 1f;
         GameManager.gameManager.DisableCursor();
-        crosshair.GetComponent<Crosshair>().EnableCrosshair();
+        HUD.GetComponent<PlayerHUD>().EnableHUD();
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -73,5 +99,21 @@ public class PauseMenu : MonoBehaviour
     private void TimeBuffer()
     {
         gameManagerProtector = false;
+    }
+
+    public void SetVolume(float volume)
+    {
+        //Unity doesn't handle audio linearly
+        float volumeAdjustedForAudioEquation = Mathf.Log10(volume) * 20f;
+        masterVolume.SetFloat(masterVolumeString, volumeAdjustedForAudioEquation);
+        GameManager.volume = volumeAdjustedForAudioEquation;
+    }
+
+    public void SetMouseSensitivity(float sensitivity)
+    {
+        //this allows us to make the slider 1 to 100 instead of 1 to 20, which is more apealing imo
+        float conversionRatio = 5f;
+        float adjustedSensitivity = sensitivity / conversionRatio;
+        GameManager.mouseSensitivity = adjustedSensitivity;
     }
 }
