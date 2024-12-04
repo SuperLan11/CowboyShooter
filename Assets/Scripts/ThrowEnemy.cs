@@ -45,6 +45,7 @@ public class ThrowEnemy : Enemy
 
         GameObject newTnt = Instantiate(tntPrefab, tntSpawn.position, Quaternion.identity);
         newTnt.GetComponent<Rigidbody>().velocity = tntVel;
+        animator.Play("Throw", -1, 0.4f);
     }    
 
     private Vector3 ThrowPos()
@@ -186,11 +187,19 @@ public class ThrowEnemy : Enemy
         playerSighted = PlayerIsSighted();
 
         if (playerNear)
-        {                     
+        {
+            animator.SetBool("FollowPlayer", true);
             throwPos = ThrowPos();
             transform.LookAt(player.transform);
-            if (canThrow)            
-                agent.destination = throwPos;            
+            if (canThrow)
+            {
+                agent.destination = throwPos;
+                Debug.Log("can throw");
+            }
+            else
+            {
+                Debug.Log("can throw");
+            }
 
             if (attackCooldownDone && canThrow)
             {                
@@ -201,8 +210,12 @@ public class ThrowEnemy : Enemy
             }
         }
         else if (agent.destination == throwPos)
-        {            
+        {                       
             FindNewDest();
+        }
+        else
+        {            
+            animator.SetBool("FollowPlayer", false);
         }
     }
 }
