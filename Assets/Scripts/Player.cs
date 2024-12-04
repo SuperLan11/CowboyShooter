@@ -80,6 +80,8 @@ public class Player : Character
     // from 0 to 1, how fast camera rotates horizontally during kick. increasing this lets player regains camera control sooner
     [SerializeField] private float kickLerpSpeed = 0.1f;
 
+    private const float KNOCKBACK_FORCE = 2.5f;
+
     private Camera cam;
     private GameObject lasso;
 
@@ -282,6 +284,12 @@ public class Player : Character
                     if(objAimed.GetComponent<Enemy>() != null)
                     {
                         Shoot(objAimed);
+
+                        //knockback
+                        Vector3 enemyDirection = (objAimed.transform.position - this.transform.position).normalized;
+                        Vector3 knockback = enemyDirection * KNOCKBACK_FORCE;
+                        knockback.y = 0f;
+                        objAimed.GetComponent<Enemy>().ApplyForce(knockback);
                     }
                     else if (objAimed.GetComponentInChildren<ExplodingBarrel>() != null)
                     {

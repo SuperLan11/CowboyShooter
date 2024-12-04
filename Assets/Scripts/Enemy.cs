@@ -6,8 +6,10 @@
 
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 using UnityEngine.AI;
+using UnityEngine.InputSystem.LowLevel;
 using Vector3 = UnityEngine.Vector3;
 
 public abstract class Enemy : Character
@@ -41,6 +43,8 @@ public abstract class Enemy : Character
     protected bool playerSighted;
     [System.NonSerialized] public bool gotShot = false;
     protected bool isDead = false;
+    private bool inKnockback = false;
+    private float beforeKnockbackYPos;
 
     public Vector3 spawnPos;
     [SerializeField] protected AudioSource deathSfx;
@@ -65,6 +69,7 @@ public abstract class Enemy : Character
             return;
         }
         
+        rigidbody = GetComponent<Rigidbody>();     
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         player = Player.player.gameObject;
@@ -84,6 +89,14 @@ public abstract class Enemy : Character
         StartCoroutine(AttackCooldown());
        
         //PrintAnyNulls();
+    }
+
+    void FixedUpdate()
+    {
+        if (inKnockback)
+        {
+            transform.position = new Vector3(transform.position.x, beforeKnockbackYPos, transform.position.z);
+        }
     }
 
     private void PrintAnyNulls()
@@ -293,5 +306,28 @@ public abstract class Enemy : Character
             }
         }
         return children;
+    }
+
+    public void ApplyForce(Vector3 modifiedVector)
+    {
+        inKnockback = true;
+        agent.isStopped = true;
+        agent.enabled = false;
+        beforeKnockbackYPos = transform.position.y;
+
+        rigidbody.AddForce(modifiedVector, ForceMode.Impulse);
+        
+        transform.position = new Vector3(transform.position.x, beforeKnockbackYPos, transform.position.z);
+        StartCoroutine(EnableNavMeshAgent());
+    }
+
+    //this will solve some of the errors
+    private IEnumerator EnableNavMeshAgent()
+    {
+        yield return new WaitForSeconds(0.15f);
+
+        agent.enabled = true;
+        agent.isStopped = false;
+        inKnockback = false;
     }
 }
