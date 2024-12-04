@@ -1350,6 +1350,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7002091652719081947}
     m_Modifications:
+    - target: {fileID: 2571460479888576356, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
+      propertyPath: m_VersionIndex
+      value: 684
+      objectReference: {fileID: 0}
     - target: {fileID: 2607478313363516862, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
       propertyPath: m_Name
       value: Fence (18)
@@ -1424,6 +1428,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7002091652719081947}
     m_Modifications:
+    - target: {fileID: 2571460479888576356, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
+      propertyPath: m_VersionIndex
+      value: 684
+      objectReference: {fileID: 0}
     - target: {fileID: 2607478313363516862, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
       propertyPath: m_Name
       value: Fence (17)
@@ -1498,6 +1506,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7002091652719081947}
     m_Modifications:
+    - target: {fileID: 2571460479888576356, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
+      propertyPath: m_VersionIndex
+      value: 684
+      objectReference: {fileID: 0}
     - target: {fileID: 2607478313363516862, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
       propertyPath: m_Name
       value: Fence (9)
@@ -1572,6 +1584,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7002091652719081947}
     m_Modifications:
+    - target: {fileID: 2571460479888576356, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
+      propertyPath: m_VersionIndex
+      value: 684
+      objectReference: {fileID: 0}
     - target: {fileID: 2607478313363516862, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
       propertyPath: m_Name
       value: Fence (5)
@@ -1720,6 +1736,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7002091652719081947}
     m_Modifications:
+    - target: {fileID: 2571460479888576356, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
+      propertyPath: m_VersionIndex
+      value: 684
+      objectReference: {fileID: 0}
     - target: {fileID: 2607478313363516862, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
       propertyPath: m_Name
       value: Fence (13)
@@ -1794,6 +1814,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7002091652719081947}
     m_Modifications:
+    - target: {fileID: 2571460479888576356, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
+      propertyPath: m_VersionIndex
+      value: 684
+      objectReference: {fileID: 0}
     - target: {fileID: 2607478313363516862, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
       propertyPath: m_Name
       value: Fence (11)
@@ -2016,6 +2040,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7002091652719081947}
     m_Modifications:
+    - target: {fileID: 2571460479888576356, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
+      propertyPath: m_VersionIndex
+      value: 684
+      objectReference: {fileID: 0}
     - target: {fileID: 2607478313363516862, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
       propertyPath: m_Name
       value: Fence (7)
@@ -2090,6 +2118,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7002091652719081947}
     m_Modifications:
+    - target: {fileID: 2571460479888576356, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
+      propertyPath: m_VersionIndex
+      value: 684
+      objectReference: {fileID: 0}
     - target: {fileID: 2607478313363516862, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
       propertyPath: m_Name
       value: Fence (14)
@@ -2164,6 +2196,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7002091652719081947}
     m_Modifications:
+    - target: {fileID: 2571460479888576356, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
+      propertyPath: m_VersionIndex
+      value: 684
+      objectReference: {fileID: 0}
     - target: {fileID: 2607478313363516862, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
       propertyPath: m_Name
       value: Fence (10)
@@ -2238,6 +2274,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7002091652719081947}
     m_Modifications:
+    - target: {fileID: 2571460479888576356, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
+      propertyPath: m_VersionIndex
+      value: 684
+      objectReference: {fileID: 0}
     - target: {fileID: 2607478313363516862, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
       propertyPath: m_Name
       value: Fence (6)
@@ -2312,6 +2352,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7002091652719081947}
     m_Modifications:
+    - target: {fileID: 2571460479888576356, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
+      propertyPath: m_VersionIndex
+      value: 684
+      objectReference: {fileID: 0}
     - target: {fileID: 2607478313363516862, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
       propertyPath: m_Name
       value: Fence (15)
@@ -2386,6 +2430,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7002091652719081947}
     m_Modifications:
+    - target: {fileID: 2571460479888576356, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
+      propertyPath: m_VersionIndex
+      value: 684
+      objectReference: {fileID: 0}
     - target: {fileID: 2607478313363516862, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
       propertyPath: m_Name
       value: Fence (19)
@@ -2460,6 +2508,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7002091652719081947}
     m_Modifications:
+    - target: {fileID: 2571460479888576356, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
+      propertyPath: m_VersionIndex
+      value: 684
+      objectReference: {fileID: 0}
     - target: {fileID: 2607478313363516862, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
       propertyPath: m_Name
       value: Fence (8)
@@ -2534,6 +2586,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7002091652719081947}
     m_Modifications:
+    - target: {fileID: 2571460479888576356, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
+      propertyPath: m_VersionIndex
+      value: 684
+      objectReference: {fileID: 0}
     - target: {fileID: 2607478313363516862, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
       propertyPath: m_Name
       value: Fence (20)
@@ -2608,6 +2664,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7002091652719081947}
     m_Modifications:
+    - target: {fileID: 2571460479888576356, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
+      propertyPath: m_VersionIndex
+      value: 684
+      objectReference: {fileID: 0}
     - target: {fileID: 2607478313363516862, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
       propertyPath: m_Name
       value: Fence (16)
@@ -2682,6 +2742,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7002091652719081947}
     m_Modifications:
+    - target: {fileID: 2571460479888576356, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
+      propertyPath: m_VersionIndex
+      value: 684
+      objectReference: {fileID: 0}
     - target: {fileID: 2607478313363516862, guid: 8a4b501817fb61044b7bf755ae6bdbef, type: 3}
       propertyPath: m_Name
       value: Fence (12)
