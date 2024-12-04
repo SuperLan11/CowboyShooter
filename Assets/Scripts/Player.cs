@@ -116,7 +116,8 @@ public class Player : Character
     private float curMouseX = 0f;
     private float curMouseY = 0f;
     
-    [SerializeField] private float camLockDist = 50f;    
+    [SerializeField] private float camLockDist = 50f;
+    private Animator gunAnim;
 
     public enum movementState
     {
@@ -160,6 +161,8 @@ public class Player : Character
 
         // Important: this affects gravity for everything!
         Physics.gravity = new Vector3(0, gravityAccel, 0);
+
+        gunAnim = GetComponentInChildren<Animator>();
 
         // this makes the cursor stay insivible in the editor
         // to make cursor visible, press Escape  
@@ -219,7 +222,7 @@ public class Player : Character
    
     private void Shoot(GameObject enemy)
     {
-        //Debug.Log("shot enemy");
+        //Debug.Log("shot enemy");        
         enemy.GetComponent<Enemy>().TakeDamage(1);
         enemy.GetComponent<Enemy>().SetGotShot(true);
     }
@@ -265,11 +268,12 @@ public class Player : Character
         if (context.started && !PauseMenu.gameIsPaused)
         { 
             try
-            {
+            {                
                 GameObject objAimed = ObjAimedAt();
                 //Debug.Log("objAimed: " + objAimed.name);
                 if (shootCooldown >= maxShootCooldown)
-                {                    
+                {
+                    gunAnim.Play("Shoot", -1, 0f);
                     gunSfx.Play();
                     shootCooldown = 0f;
                     reloadPlayed = false;
