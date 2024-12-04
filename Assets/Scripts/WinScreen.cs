@@ -12,7 +12,7 @@ public class WinScreen : MonoBehaviour
     {
         GameManager.gameManager.DestroySelf();
 
-        Debug.Log("good morning");
+        //Debug.Log("good morning");
 
         Invoke("LoadMainMenu", 5);
     }
