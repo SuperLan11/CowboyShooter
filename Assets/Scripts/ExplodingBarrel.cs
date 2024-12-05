@@ -51,6 +51,20 @@ public class ExplodingBarrel : MonoBehaviour
                 enemies[i].TakeDamage(explodeDamage);
             }
         }
+
+        //eventually we'll want barrels to explode each other
+        /*
+        ExplodingBarrel[] barrels = GameManager.gameManager.GetAllBarrels();
+
+        for (int i = 0; i < barrels.Length; i++)
+        {
+            if (Vector3.Distance(transform.position, barrels[i].gameObject.transform.position) < explodeRadius
+                && barrels[i].gameObject != this.gameObject)
+            {
+                barrels[i].GetComponent<ExplodingBarrel>().Explode();
+            }
+        }
+        */
         
         StartCoroutine(WaitToDestroy(2f));
     }

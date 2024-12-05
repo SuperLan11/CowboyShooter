@@ -98,6 +98,11 @@ public class GameManager : MonoBehaviour
         return GameObject.FindObjectsOfType<Enemy>();
     }
 
+    public ExplodingBarrel[] GetAllBarrels()
+    {
+       return GameObject.FindObjectsOfType<ExplodingBarrel>();
+    }
+
     public void DestroyAllEnemies(Enemy[] enemies)
     {
         foreach (Enemy enemy in enemies)
