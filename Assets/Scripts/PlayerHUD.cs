@@ -9,7 +9,7 @@ public class PlayerHUD : MonoBehaviour
     public void EnableHUD()
     {
         this.gameObject.SetActive(true);
-        fadePanel.SetActive(false);
+        //fadePanel.SetActive(false);
     }
 
     public void DisableHUD()

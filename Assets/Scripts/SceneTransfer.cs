@@ -15,7 +15,7 @@ public class SceneTransfer : MonoBehaviour
 
     // while fadeTime is customizable, the fade animation length will not change unless you change it manually
     public IEnumerator FadeToNewScene(int buildIndex, float fadeTime)
-    {
+    {        
         GetComponent<Image>().enabled = true;
         fadeAnim.Play("FadeOut");
         yield return new WaitForSecondsRealtime(fadeTime);

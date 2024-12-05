@@ -16,6 +16,7 @@ public class EndTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
+        fadeAnim.enabled = true;
         //comment this book out of condition if you're using old end trigger instead of tornado
         bool movingTowardsTornado = (Player.player.currentMovementState == Player.movementState.FLYING) || 
                                     (Player.player.currentMovementState == Player.movementState.SWINGING);
@@ -23,14 +24,14 @@ public class EndTrigger : MonoBehaviour
         if (collider.gameObject.name == "Player" && movingTowardsTornado)
         {
             //!if we want any extra functionality for the tornado like screen shake, do it here!
-            
-            /*
+
             GameManager.gameManager.ResetTimerValue();
+            GameManager.currentCheckpoint = 0;
 
             Player.player.yeehawSfx.Play();
             int curSceneIndex = SceneManager.GetActiveScene().buildIndex;
-            StartCoroutine(fadeAnim.FadeToNewScene(curSceneIndex+1, 1f));
-            */            
+            StartCoroutine(fadeAnim.FadeToNewScene(curSceneIndex + 1, 1f));
+                        
         }
         else if (collider.gameObject.name == "Player")
         {
@@ -39,7 +40,7 @@ public class EndTrigger : MonoBehaviour
 
             Player.player.yeehawSfx.Play();
             int curSceneIndex = SceneManager.GetActiveScene().buildIndex;
-            StartCoroutine(fadeAnim.FadeToNewScene(curSceneIndex+1, 1f));
+            StartCoroutine(fadeAnim.FadeToNewScene(curSceneIndex + 1, 1f));
         }
     }
 
