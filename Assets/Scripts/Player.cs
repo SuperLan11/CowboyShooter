@@ -396,10 +396,11 @@ public class Player : Character
     
     private void OnCollisionEnter(Collision collision)
     {       
-        bool hitFeet, hitFloor, hitWall, hitCeiling, hitJacobsWall, hitMetalWall, gotTiming;
+        bool hitFeet, hitFloor, hitWall, hitCeiling, hitJacobsWall, hitMetalWall, gotTiming;        
         for (int i = 0; i < collision.contactCount; i++)
         {
-            hitFeet = collision.GetContact(i).otherCollider.bounds.max.y < playerFeetPosition();
+            //hitFeet = collision.GetContact(i).otherCollider.bounds.max.y < playerFeetPosition();
+            hitFeet = Physics.Raycast(transform.position, (-1 * transform.up).normalized);
             hitFloor = collision.GetContact(i).otherCollider.gameObject.tag == "FLOOR";
             // add jacobWall tag here when that gets in
             hitWall = collision.GetContact(i).otherCollider.gameObject.tag == "WALL";
@@ -469,13 +470,14 @@ public class Player : Character
             bool touchingWall = collision.GetContact(i).otherCollider.gameObject.tag == "WALL";        
             bool touchingMetalWall = collision.GetContact(i).otherCollider.gameObject.layer == LayerMask.NameToLayer("MetalWalls");
             bool touchingFloor = collision.GetContact(i).otherCollider.gameObject.tag == "FLOOR";
-            bool hitFeet = collision.collider.bounds.max.y < GetComponent<BoxCollider>().bounds.min.y + 0.01f;
+            //bool hitFeet = collision.collider.bounds.max.y < GetComponent<BoxCollider>().bounds.min.y + 0.01f;
+            bool hitFeet = Physics.Raycast(transform.position, (-1 * transform.up).normalized);
 
             // this causes standing on wall issue. should be fixed when colliders are realigned
             if (hitFeet && (touchingFloor || touchingWall))
             {
                 currentMovementState = movementState.GROUND;
-                lockedToWall = false;                
+                lockedToWall = false;
                 wallJumpsLeft = maxWallJumps;
                 break;
             }
@@ -697,7 +699,7 @@ public class Player : Character
         foreach(GameObject hookObj in hooks)
         {
             Vector2 hook2DPos = Camera.main.WorldToScreenPoint(hookObj.transform.position);
-            float distToHook = Vector2.Distance(Input.mousePosition, hook2DPos);            
+            float distToHook = Vector2.Distance(Input.mousePosition, hook2DPos);
             if (distToHook < camLockDist)
             {                
                 RaycastHit hit;
@@ -768,7 +770,7 @@ public class Player : Character
     void FixedUpdate()
     {
         //Debug.Log("State: " + currentMovementState);
-        //Debug.Log(rigidbody.velocity.magnitude);        
+        //Debug.Log(rigidbody.velocity.magnitude);
 
         //forces camera to look straight as you're opening up scene        
         if (Time.timeSinceLevelLoad < 0.1f)
