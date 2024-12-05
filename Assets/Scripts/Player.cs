@@ -69,6 +69,7 @@ public class Player : Character
     private bool lockedToWall = false;
     private int wallJumpsLeft = 1;
     private int maxWallJumps = 1;
+    private float halfHeight;    
 
     private float timeSinceJump = 0f;
     [SerializeField] private float perfectJumpWindow = 0.15f;
@@ -158,6 +159,8 @@ public class Player : Character
         }
 
         currentMovementState = movementState.GROUND;
+
+        halfHeight = GetComponent<BoxCollider>().bounds.size.y / 2;
 
         // Important: this affects gravity for everything!
         Physics.gravity = new Vector3(0, gravityAccel, 0);
@@ -399,8 +402,8 @@ public class Player : Character
         bool hitFeet, hitFloor, hitWall, hitCeiling, hitJacobsWall, hitMetalWall, gotTiming;        
         for (int i = 0; i < collision.contactCount; i++)
         {
-            //hitFeet = collision.GetContact(i).otherCollider.bounds.max.y < playerFeetPosition();
-            hitFeet = Physics.Raycast(transform.position, (-1 * transform.up).normalized);
+            //hitFeet = collision.GetContact(i).otherCollider.bounds.max.y < playerFeetPosition();            
+            hitFeet = Physics.Raycast(transform.position, Vector3.down, halfHeight+0.01f);
             hitFloor = collision.GetContact(i).otherCollider.gameObject.tag == "FLOOR";
             // add jacobWall tag here when that gets in
             hitWall = collision.GetContact(i).otherCollider.gameObject.tag == "WALL";
@@ -455,7 +458,8 @@ public class Player : Character
                 break;
             }
             if (hitWall && !hitMetalWall && rigidbody.velocity.y < wallSlideThreshold && !isGrounded() && wallJumpsLeft > 0)
-            {                
+            {
+                Debug.Log("sliding!");
                 currentMovementState = movementState.SLIDING;
                 lockedToWall = true;
                 break;
@@ -464,14 +468,14 @@ public class Player : Character
     }
     
     private void OnCollisionStay(Collision collision)
-    {
+    {        
         for (int i = 0; i < collision.contactCount; i++)
         {
             bool touchingWall = collision.GetContact(i).otherCollider.gameObject.tag == "WALL";        
             bool touchingMetalWall = collision.GetContact(i).otherCollider.gameObject.layer == LayerMask.NameToLayer("MetalWalls");
             bool touchingFloor = collision.GetContact(i).otherCollider.gameObject.tag == "FLOOR";
-            //bool hitFeet = collision.collider.bounds.max.y < GetComponent<BoxCollider>().bounds.min.y + 0.01f;
-            bool hitFeet = Physics.Raycast(transform.position, (-1 * transform.up).normalized);
+            //bool hitFeet = collision.collider.bounds.max.y < GetComponent<BoxCollider>().bounds.min.y + 0.01f;            
+            bool hitFeet = Physics.Raycast(transform.position, Vector3.down, halfHeight + 0.01f);
 
             // this causes standing on wall issue. should be fixed when colliders are realigned
             if (hitFeet && (touchingFloor || touchingWall))
@@ -482,7 +486,8 @@ public class Player : Character
                 break;
             }
             else if (touchingWall && !touchingMetalWall && rigidbody.velocity.y < wallSlideThreshold && !isGrounded() && wallJumpsLeft > 0)
-            {                
+            {
+                Debug.Log("sliding!");
                 currentMovementState = movementState.SLIDING;
                 lockedToWall = true;
                 break;
@@ -769,7 +774,7 @@ public class Player : Character
     //Dragon's Den of the Movement Code
     void FixedUpdate()
     {
-        //Debug.Log("State: " + currentMovementState);
+        Debug.Log("State: " + currentMovementState);
         //Debug.Log(rigidbody.velocity.magnitude);
 
         //forces camera to look straight as you're opening up scene
