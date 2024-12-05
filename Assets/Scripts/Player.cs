@@ -56,6 +56,7 @@ public class Player : Character
     private float maxLassoSpeed = 30f;
     private float lassoForceMultiplier;
     [System.NonSerialized] public float maxLassoRange = 25f;
+    [System.NonSerialized] public GameObject currentHook;
 
     // these need to be static so the values persist when scene reloads    
     public static Vector3 respawnPos;
@@ -510,7 +511,7 @@ public class Player : Character
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.tag == "HOOK" && holdingRMB)
+        if (collision.tag == "HOOK" && holdingRMB && OnSameHook(collision.gameObject))
         {
             currentMovementState = movementState.HANGING;
         }
@@ -697,6 +698,10 @@ public class Player : Character
         return GetComponent<BoxCollider>().bounds.min.y + 0.05f;
     }
 
+    private bool OnSameHook(GameObject newHook){
+        return newHook == currentHook;
+    }
+
     private void CheckHookLock()
     {        
         GameObject[] hooks = GameObject.FindGameObjectsWithTag("HOOK");
@@ -773,10 +778,10 @@ public class Player : Character
     //Dragon's Den of the Movement Code
     void FixedUpdate()
     {
-        Debug.Log("State: " + currentMovementState);
+        //Debug.Log("State: " + currentMovementState);
         //Debug.Log(rigidbody.velocity.magnitude);
 
-        //forces camera to look straight as you're opening up scene
+        //forces camera to look straight as you're opening up scene        
         if (Time.timeSinceLevelLoad < 0.1f)
             return;
 
