@@ -67,6 +67,8 @@ public class Lasso : MonoBehaviour
                 return false;
             }
 
+            Player.player.currentHook = hit.transform.gameObject;
+
             LassoPhysics();
             lineRenderer.positionCount = 2;
 
