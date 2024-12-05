@@ -14,7 +14,8 @@ public class ThrowEnemy : Enemy
 
     // the closest distance the enemy can stay from a wall while throwing tnt
     [SerializeField] protected float minDistFromWall = 0.5f;
-    private bool canThrow = true;    
+    private bool canThrow = true;
+    [SerializeField] private LayerMask wallLayer;
 
     private void ThrowTNT()
     {        
@@ -23,6 +24,9 @@ public class ThrowEnemy : Enemy
             return;
         }
         
+        // start animation 20% of the way in
+        animator.Play("Throw", -1, 0.2f);
+
         // tntChild is not a TNT prefab. 
         // This prevents weird link issues and makes the tnt the enemy holds stay in place
         // When throwing, the tnt held is hidden and a new tnt is created to appear to be throwing a tnt        
@@ -31,35 +35,41 @@ public class ThrowEnemy : Enemy
         RaycastHit frontHit;
         Vector3 playerDirection = (player.transform.position - tntSpawn.position).normalized;
         // consider using tnt spawn forward
-        bool hitObj = (Physics.Raycast(tntSpawn.position, playerDirection, out frontHit, sightRange));
-        bool hitWall = frontHit.transform.tag == "WALL";
-        bool hitFloor = frontHit.transform.tag == "FLOOR";
-        bool objBelow = frontHit.collider.bounds.max.y < tntSpawn.transform.position.y;
-
-        //if (PlayerIsSighted())
+        bool hitObj = (Physics.Raycast(tntSpawn.position, playerDirection, out frontHit, sightRange, wallLayer));
+        /*bool hitWall = false;
+        bool hitFloor = false;*/
+        bool objBelow = false;
+        if (hitObj)
+        {
+            /*hitWall = frontHit.transform.tag == "WALL";
+            hitFloor = frontHit.transform.tag == "FLOOR";*/
+            objBelow = frontHit.collider.bounds.max.y < tntSpawn.transform.position.y;
+        }
+                
         Vector3 tntVel;
-        if (!hitObj || playerSighted || (hitObj && objBelow))                    
+        if (!hitObj || playerSighted || (hitObj && objBelow))       
             tntVel = DefaultThrowVel(defaultThrowHeight, -3f);
         else
             tntVel = VelToClearWall();
 
-        GameObject newTnt = Instantiate(tntPrefab, tntSpawn.position, Quaternion.identity);
+        GameObject newTnt = Instantiate(tntPrefab, tntSpawn.position, Quaternion.identity);        
         newTnt.GetComponent<Rigidbody>().velocity = tntVel;
-        animator.Play("Throw", -1, 0.4f);
     }    
 
     private Vector3 ThrowPos()
     {        
         RaycastHit frontHit;
         Vector3 playerDirection = (player.transform.position - tntSpawn.position).normalized;
-        bool hitWall = (Physics.Raycast(tntSpawn.position, playerDirection, out frontHit, sightRange));
+        // floor is included in case enemy sees the side of a floor
+        LayerMask wallLayer = LayerMask.GetMask("Walls", "Floors");
+        bool hitWall = Physics.Raycast(tntSpawn.position, playerDirection, out frontHit, sightRange, wallLayer);
         float distToWall = frontHit.distance;
         float distToPlayer = DistToPlayer();
-        
-        if (distToWall > minDistFromWall)
-            canThrow = true;
-        else
-            canThrow = false;
+
+        if (!hitWall || (distToWall > minDistFromWall))
+            canThrow = true;        
+        else       
+            canThrow = false;        
 
         Vector3 throwPos = transform.position + playerDirection * -(sightRange - 1 - distToPlayer);
         return throwPos;
@@ -187,23 +197,15 @@ public class ThrowEnemy : Enemy
         playerSighted = PlayerIsSighted();
 
         if (playerNear)
-        {
-            animator.SetBool("FollowPlayer", true);
+        {            
             throwPos = ThrowPos();
             transform.LookAt(player.transform);
-            if (canThrow)
-            {
-                agent.destination = throwPos;
-                Debug.Log("can throw");
-            }
-            else
-            {
-                Debug.Log("can throw");
-            }
+            if (canThrow)            
+                agent.destination = throwPos;            
 
             if (attackCooldownDone && canThrow)
             {                
-                ThrowTNT();                
+                ThrowTNT();
                 StartCoroutine(WaitToReplaceTNT());
                 attackCooldownDone = false;
                 StartCoroutine(AttackCooldown());                
@@ -212,10 +214,6 @@ public class ThrowEnemy : Enemy
         else if (agent.destination == throwPos)
         {                       
             FindNewDest();
-        }
-        else
-        {            
-            animator.SetBool("FollowPlayer", false);
-        }
+        }        
     }
 }
