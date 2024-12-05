@@ -224,7 +224,7 @@ public class Player : Character
     {
         //Debug.Log("shot enemy");        
         enemy.GetComponent<Enemy>().TakeDamage(1);
-        enemy.GetComponent<Enemy>().SetGotShot(true);
+        enemy.GetComponent<Enemy>().SetGotShot(true);        
     }
 
     private void ShootExplodingBarrel(GameObject explodingBarrel)
@@ -290,10 +290,10 @@ public class Player : Character
                         Shoot(objAimed);
 
                         //knockback
-                        Vector3 enemyDirection = (objAimed.transform.position - this.transform.position).normalized;
+                        /*Vector3 enemyDirection = (objAimed.transform.position - this.transform.position).normalized;
                         Vector3 knockback = enemyDirection * KNOCKBACK_FORCE;
                         knockback.y = 0f;
-                        objAimed.GetComponent<Enemy>().ApplyForce(knockback);
+                        objAimed.GetComponent<Enemy>().ApplyForce(knockback);*/
                     }
                     else if (objAimed.GetComponentInChildren<ExplodingBarrel>() != null)
                     {
