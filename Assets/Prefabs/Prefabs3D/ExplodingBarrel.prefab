@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2607738050244440587}
   m_Layer: 0
   m_Name: ExplodingBarrel
-  m_TagString: Untagged
+  m_TagString: BARREL
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -83,6 +83,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 909c8b29aaa979b40bda16c211f3abc8, type: 3}
       propertyPath: m_Name
       value: barrel
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 909c8b29aaa979b40bda16c211f3abc8, type: 3}
+      propertyPath: m_TagString
+      value: BARREL
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

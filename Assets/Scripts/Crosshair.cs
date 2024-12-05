@@ -51,9 +51,14 @@ public class Crosshair : MonoBehaviour
         return Player.player.ObjAimedAt().tag == "TORNADO";
     }
 
+    private bool PointedAtBarrel()
+    {
+        return Player.player.ObjAimedAt().tag == "BARREL";
+    }
+
     private bool PointedAtImportantObject()
     {
-        return PointedAtEnemy() || PointedAtHook() || PointedAtTornado();
+        return PointedAtEnemy() || PointedAtHook() || PointedAtTornado() || PointedAtBarrel();
     }
 
     /*
@@ -95,7 +100,7 @@ public class Crosshair : MonoBehaviour
         {
             crosshairImage.color = Color.white;            
         }
-        else if (PointedAtEnemy())
+        else if (PointedAtEnemy() || PointedAtBarrel())
         {
             crosshairImage.color = Color.red;
         }
