@@ -1069,7 +1069,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6573115938124550144, guid: 7e69147bc8525f54ca05b8f9a16fa420, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.8427947
+      value: -3.842795
       objectReference: {fileID: 0}
     - target: {fileID: 6573115938124550144, guid: 7e69147bc8525f54ca05b8f9a16fa420, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1093,11 +1093,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6573115938124550144, guid: 7e69147bc8525f54ca05b8f9a16fa420, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 6573115938124550144, guid: 7e69147bc8525f54ca05b8f9a16fa420, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -2.2431297
       objectReference: {fileID: 0}
     - target: {fileID: 6573115938124550144, guid: 7e69147bc8525f54ca05b8f9a16fa420, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -1611,7 +1611,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 779189034347386787, guid: 293e1dcedf94fd748a64132c1108a747, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -33.28
+      value: -44.66
       objectReference: {fileID: 0}
     - target: {fileID: 779189034347386787, guid: 293e1dcedf94fd748a64132c1108a747, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1644,6 +1644,10 @@ PrefabInstance:
     - target: {fileID: 1199860818825218710, guid: 293e1dcedf94fd748a64132c1108a747, type: 3}
       propertyPath: m_Name
       value: GunEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199860818825218710, guid: 293e1dcedf94fd748a64132c1108a747, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4881856615886507105, guid: 293e1dcedf94fd748a64132c1108a747, type: 3}
       propertyPath: destination1

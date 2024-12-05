@@ -47,6 +47,7 @@ public class TextTrigger : MonoBehaviour
         if (other.gameObject.name == "Player")
         {            
             fadingText = true;
+            placingLetters = false;
             FadeOutText();
         }
     }

@@ -51,6 +51,8 @@ public abstract class Enemy : Character
 
     protected Animator animator;
 
+    public static List<Vector3> enemiesKilled = new List<Vector3>();
+
     // all enemies have the same start function
     void Start()
     {        

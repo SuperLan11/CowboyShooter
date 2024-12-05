@@ -772,7 +772,7 @@ public class Player : Character
         //Debug.Log("State: " + currentMovementState);
         //Debug.Log(rigidbody.velocity.magnitude);
 
-        //forces camera to look straight as you're opening up scene        
+        //forces camera to look straight as you're opening up scene
         if (Time.timeSinceLevelLoad < 0.1f)
             return;
 
