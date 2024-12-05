@@ -24,22 +24,24 @@ public class EndTrigger : MonoBehaviour
         {
             //!if we want any extra functionality for the tornado like screen shake, do it here!
             
-            /*
-            GameManager.gameManager.ResetTimerValue();
-
-            Player.player.yeehawSfx.Play();
-            int curSceneIndex = SceneManager.GetActiveScene().buildIndex;
-            StartCoroutine(fadeAnim.FadeToNewScene(curSceneIndex+1, 1f));
-            */            
-        }
-        else if (collider.gameObject.name == "Player")
-        {
             GameManager.gameManager.ResetTimerValue();
             GameManager.currentCheckpoint = 0;
 
             Player.player.yeehawSfx.Play();
             int curSceneIndex = SceneManager.GetActiveScene().buildIndex;
             StartCoroutine(fadeAnim.FadeToNewScene(curSceneIndex+1, 1f));
+                     
+        }
+        else if (collider.gameObject.name == "Player")
+        {
+            /*
+            GameManager.gameManager.ResetTimerValue();
+            GameManager.currentCheckpoint = 0;
+
+            Player.player.yeehawSfx.Play();
+            int curSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            StartCoroutine(fadeAnim.FadeToNewScene(curSceneIndex+1, 1f));
+            */
         }
     }
 
