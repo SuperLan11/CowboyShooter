@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     private bool disableCursor;
     private bool enableCursor;
     public static double storedTime;
+    public static double totalTime;
     public static float mouseSensitivity = 2f;
     public static float volume = 1f;
     public Enemy[] originalEnemyList;
@@ -50,6 +51,7 @@ public class GameManager : MonoBehaviour
         enableCursor = false;
 
         storedTime = 0;
+        totalTime = 0;
     }
 
     public void Update()

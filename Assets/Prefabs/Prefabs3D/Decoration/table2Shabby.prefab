@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6980818246271222132}
   m_Layer: 0
   m_Name: table2Shabby
-  m_TagString: Untagged
+  m_TagString: FLOOR
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
