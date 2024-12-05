@@ -33,7 +33,7 @@ public class EndTrigger : MonoBehaviour
             StartCoroutine(fadeAnim.FadeToNewScene(curSceneIndex + 1, 1f));
                         
         }
-        else if (collider.gameObject.name == "Player")
+        /*else if (collider.gameObject.name == "Player")
         {
             GameManager.gameManager.ResetTimerValue();
             GameManager.currentCheckpoint = 0;
@@ -41,7 +41,7 @@ public class EndTrigger : MonoBehaviour
             Player.player.yeehawSfx.Play();
             int curSceneIndex = SceneManager.GetActiveScene().buildIndex;
             StartCoroutine(fadeAnim.FadeToNewScene(curSceneIndex + 1, 1f));
-        }
+        }*/
     }
 
     // Update is called once per frame

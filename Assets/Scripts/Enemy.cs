@@ -50,6 +50,7 @@ public abstract class Enemy : Character
     [SerializeField] protected AudioSource deathSfx;
 
     protected Animator animator;
+    private LayerMask floorLayer;
 
     public static List<Vector3> enemiesKilled = new List<Vector3>();
 
@@ -70,6 +71,8 @@ public abstract class Enemy : Character
             // the script still runs even after the gameObject is destroyed            
             return;
         }
+
+        floorLayer = LayerMask.GetMask("Floors");
         
         rigidbody = GetComponent<Rigidbody>();     
         animator = GetComponent<Animator>();
@@ -180,8 +183,8 @@ public abstract class Enemy : Character
 
         RaycastHit hit;
         Vector3 beneathDest = new Vector3(newDest.x, newDest.y - 1, newDest.z);
-        Vector3 downDirection = (beneathDest - newDest).normalized;
-        if (Physics.Raycast(newDest, downDirection, out hit, Mathf.Infinity))
+        Vector3 downDirection = (beneathDest - newDest).normalized;        
+        if (Physics.Raycast(newDest, downDirection, out hit, Mathf.Infinity, floorLayer))
             agent.destination = hit.point;
         else
             agent.destination = newDest;

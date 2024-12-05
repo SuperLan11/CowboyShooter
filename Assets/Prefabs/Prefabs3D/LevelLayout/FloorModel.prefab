@@ -61,6 +61,10 @@ PrefabInstance:
       value: FloorModel
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5024303262982104baf1519ae0565170, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5024303262982104baf1519ae0565170, type: 3}
       propertyPath: m_TagString
       value: FLOOR
       objectReference: {fileID: 0}

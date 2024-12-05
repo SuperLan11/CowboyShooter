@@ -29,6 +29,7 @@ public class TextTrigger : MonoBehaviour
             fadingText = false;            
             textObj.text = "";
             curLetterIdx = 0;
+            Debug.Log("set alpha to 1");
             textObj.GetComponent<CanvasGroup>().alpha = 1;
             if (typewriterSfx != null)            
                 typewriterSfx.Play();            
@@ -55,6 +56,8 @@ public class TextTrigger : MonoBehaviour
     private void FadeOutText()
     {
         textObj.GetComponent<CanvasGroup>().alpha -= (Time.deltaTime / fadeTime);
+        Debug.Log("subtract " + Time.deltaTime / fadeTime);
+        Debug.Log("text alpha is now " + textObj.GetComponent<CanvasGroup>().alpha);
         if (textObj.GetComponent<CanvasGroup>().alpha <= 0)
             fadingText = false;
     }
