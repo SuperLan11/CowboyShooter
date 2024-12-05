@@ -377,6 +377,11 @@ public class Player : Character
 
     public void PauseActivated(InputAction.CallbackContext context)
     {
+        if (PauseMenu.inOptionsMenu)
+        {
+            return;
+        }
+        
         if (context.started)
         {
             PauseMenu.gameIsPaused = !PauseMenu.gameIsPaused;

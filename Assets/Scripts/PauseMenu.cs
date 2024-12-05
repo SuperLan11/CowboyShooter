@@ -9,7 +9,7 @@ using UnityEngine.Audio;
 public class PauseMenu : MonoBehaviour
 {
     public static bool gameIsPaused = false;
-    private bool inOptionsMenu = false;
+    public static bool inOptionsMenu = false;
     private bool gameManagerProtector;
     [SerializeField] private GameObject pauseMenuUI;
     [SerializeField] private GameObject optionsMenuUI;
