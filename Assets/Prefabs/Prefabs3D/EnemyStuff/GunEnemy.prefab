@@ -379,7 +379,7 @@ MonoBehaviour:
   maxHealth: 3
   destination1: {fileID: 0}
   destination2: {fileID: 0}
-  maxAttackCooldown: 3
+  maxAttackCooldown: 1.5
   attackDamage: 1
   checkpointNum: 0
   sightRange: 8
@@ -430,10 +430,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.9
+  m_Radius: 3.0822861
   m_Height: 7.170224
   m_Direction: 1
-  m_Center: {x: 0, y: 1.63, z: 0.3195486}
+  m_Center: {x: -0.07, y: 1.6299999, z: -0.52}
 --- !u!54 &3968243448572427738
 Rigidbody:
   m_ObjectHideFlags: 0

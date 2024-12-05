@@ -321,14 +321,5 @@ public abstract class Enemy : Character
         agent.enabled = true;
         agent.isStopped = false;
         inKnockback = false;
-    }
-
-    // only child updates will run since they override parent update
-    /*void Update()
-    {
-        if (inKnockback)
-        {
-            transform.position = new Vector3(transform.position.x, beforeKnockbackYPos, transform.position.z);
-        }
-    }*/
+    }    
 }
