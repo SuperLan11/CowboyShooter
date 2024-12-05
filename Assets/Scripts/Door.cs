@@ -59,7 +59,7 @@ public class Door : MonoBehaviour
     public static void ResetDoorCounter()
     {
         // enemiesInRoom should already be 0, but just in case
-        Player.player.enemiesInRoom.Clear();
+        //Player.player.enemiesInRoom.Clear();
 
         Enemy.enemiesInRoom = 0;
         foreach (Enemy enemy in FindObjectsOfType<Enemy>())
