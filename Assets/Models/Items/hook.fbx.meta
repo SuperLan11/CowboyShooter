@@ -3,7 +3,17 @@ guid: 1a45d02023a737e43a7f3b2e88f980cd
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal_Corrogated_Shiny
+    second: {fileID: 2100000, guid: e84b6d10edf4cd141a6bafd78d7163a6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: '[Metal_Corrogated_Shiny]1'
+    second: {fileID: 2100000, guid: e84b6d10edf4cd141a6bafd78d7163a6, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
