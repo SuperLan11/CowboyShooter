@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 3225072641737112755}
   m_Layer: 0
   m_Name: TrainCar
-  m_TagString: WALL
+  m_TagString: FLOOR
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
