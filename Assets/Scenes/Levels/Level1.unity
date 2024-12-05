@@ -10682,10 +10682,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3673631851261809183, guid: db1bd02cacf5fb94daa85d830447c630, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.10000004
-      objectReference: {fileID: 0}
-    - target: {fileID: 3673631851261809183, guid: db1bd02cacf5fb94daa85d830447c630, type: 3}
       propertyPath: m_LocalPosition.x
       value: -41
       objectReference: {fileID: 0}
@@ -10728,10 +10724,6 @@ PrefabInstance:
     - target: {fileID: 4156976494540032165, guid: db1bd02cacf5fb94daa85d830447c630, type: 3}
       propertyPath: m_Name
       value: WallF1Model (138)
-      objectReference: {fileID: 0}
-    - target: {fileID: 4156976494540032165, guid: db1bd02cacf5fb94daa85d830447c630, type: 3}
-      propertyPath: m_TagString
-      value: WALL
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -45633,6 +45625,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -4587141904262243179, guid: 9df5bfa34effe654aaba40bf142fe399, type: 3}
+      propertyPath: m_Size.y
+      value: 2.0104518
+      objectReference: {fileID: 0}
+    - target: {fileID: -4587141904262243179, guid: 9df5bfa34effe654aaba40bf142fe399, type: 3}
+      propertyPath: m_Center.x
+      value: 0.4999999
+      objectReference: {fileID: 0}
+    - target: {fileID: -4587141904262243179, guid: 9df5bfa34effe654aaba40bf142fe399, type: 3}
+      propertyPath: m_Center.y
+      value: 0.9947741
+      objectReference: {fileID: 0}
+    - target: {fileID: -4587141904262243179, guid: 9df5bfa34effe654aaba40bf142fe399, type: 3}
+      propertyPath: m_Center.z
+      value: -1.776353e-16
+      objectReference: {fileID: 0}
     - target: {fileID: 5904184890213390565, guid: 9df5bfa34effe654aaba40bf142fe399, type: 3}
       propertyPath: m_Name
       value: WallF2Model (165)

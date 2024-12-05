@@ -486,8 +486,7 @@ public class Player : Character
                 break;
             }
             else if (touchingWall && !touchingMetalWall && rigidbody.velocity.y < wallSlideThreshold && !isGrounded() && wallJumpsLeft > 0)
-            {
-                Debug.Log("sliding!");
+            {                
                 currentMovementState = movementState.SLIDING;
                 lockedToWall = true;
                 break;
