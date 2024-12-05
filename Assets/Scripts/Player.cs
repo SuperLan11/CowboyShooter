@@ -685,7 +685,7 @@ public class Player : Character
         {
             rigidbody.velocity = rigidbody.velocity.normalized * oldVelocityMagnitude;
         }
-        Debug.Log(rigidbody.velocity.magnitude);
+        //Debug.Log(rigidbody.velocity.magnitude);
     }
 
     public float playerFeetPosition()
