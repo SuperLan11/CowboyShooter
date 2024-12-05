@@ -224,10 +224,10 @@ public abstract class Enemy : Character
     public override void TakeDamage(int damage)
     {
         health -= damage;
-        if (health <= 0)
-            Death();
-        
+        Debug.Log(gameObject.name + " now has " + health + " hp");
         animator.Play("TakeDamage", -1, 0f);
+        if (health <= 0)
+            Death();                
     }
 
     //if we want to go back to disabling mesh renderers, we can just uncomment those lines
