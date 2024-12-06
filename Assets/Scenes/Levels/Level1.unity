@@ -13363,7 +13363,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2512540741462570124, guid: da7d1c9cb6dd6ba4b8c5d78b5811dd88, type: 3}
       propertyPath: text
-      value: Hold RMB to lasso hang!
+      value: Hold RMB to attach to hook!
       objectReference: {fileID: 0}
     - target: {fileID: 2512540741462570124, guid: da7d1c9cb6dd6ba4b8c5d78b5811dd88, type: 3}
       propertyPath: textObj
@@ -14926,6 +14926,71 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a01698bbbfe6a3a4f9242b702acb7b44, type: 3}
+--- !u!1001 &1540632482
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 353821330864209988, guid: da7d1c9cb6dd6ba4b8c5d78b5811dd88, type: 3}
+      propertyPath: m_Name
+      value: TextTrigger (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 512295967599665455, guid: da7d1c9cb6dd6ba4b8c5d78b5811dd88, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -46.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 512295967599665455, guid: da7d1c9cb6dd6ba4b8c5d78b5811dd88, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 512295967599665455, guid: da7d1c9cb6dd6ba4b8c5d78b5811dd88, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -82.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 512295967599665455, guid: da7d1c9cb6dd6ba4b8c5d78b5811dd88, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 512295967599665455, guid: da7d1c9cb6dd6ba4b8c5d78b5811dd88, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 512295967599665455, guid: da7d1c9cb6dd6ba4b8c5d78b5811dd88, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 512295967599665455, guid: da7d1c9cb6dd6ba4b8c5d78b5811dd88, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 512295967599665455, guid: da7d1c9cb6dd6ba4b8c5d78b5811dd88, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 512295967599665455, guid: da7d1c9cb6dd6ba4b8c5d78b5811dd88, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 512295967599665455, guid: da7d1c9cb6dd6ba4b8c5d78b5811dd88, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2512540741462570124, guid: da7d1c9cb6dd6ba4b8c5d78b5811dd88, type: 3}
+      propertyPath: text
+      value: Lasso Up!
+      objectReference: {fileID: 0}
+    - target: {fileID: 2512540741462570124, guid: da7d1c9cb6dd6ba4b8c5d78b5811dd88, type: 3}
+      propertyPath: textObj
+      value: 
+      objectReference: {fileID: 795833541}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: da7d1c9cb6dd6ba4b8c5d78b5811dd88, type: 3}
 --- !u!1001 &1541901011
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15633,6 +15698,18 @@ PrefabInstance:
     - target: {fileID: 1157969092201536739, guid: 675c419c1fbc55e44bd3d2b98522cc87, type: 3}
       propertyPath: m_BackGroundColor.r
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288041999702056488, guid: 675c419c1fbc55e44bd3d2b98522cc87, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288041999702056488, guid: 675c419c1fbc55e44bd3d2b98522cc87, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.165
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288041999702056488, guid: 675c419c1fbc55e44bd3d2b98522cc87, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.089
       objectReference: {fileID: 0}
     - target: {fileID: 6534627142798155943, guid: 675c419c1fbc55e44bd3d2b98522cc87, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21908,3 +21985,4 @@ SceneRoots:
   - {fileID: 1959269658}
   - {fileID: 473638175}
   - {fileID: 360675440}
+  - {fileID: 1540632482}
