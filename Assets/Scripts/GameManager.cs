@@ -133,6 +133,18 @@ public class GameManager : MonoBehaviour
         Door.movingUp = false;
     }
 
+    public void MenuMode(GameObject pHUD)
+    {
+        EnableCursor();
+        pHUD.GetComponent<PlayerHUD>().DisableHUD();
+    }
+
+    public void GameplayMode(GameObject pHUD)
+    {
+        DisableCursor();
+        pHUD.GetComponent<PlayerHUD>().EnableHUD();
+    }
+
     public static void QuitGame()
     {
         SaveSystem.savePlayer();

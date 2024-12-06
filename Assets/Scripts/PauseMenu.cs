@@ -31,7 +31,7 @@ public class PauseMenu : MonoBehaviour
 
     void LateUpdate(){
         //prevent null reference exception for GameManager
-        if (gameManagerProtector){
+        if (gameManagerProtector || DeathMenu.deathMenuActive){
             return;
         }
 
@@ -50,10 +50,19 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenuUI.SetActive(!inOptionsMenu);
         Time.timeScale = 0f;
-        GameManager.gameManager.EnableCursor();
-        HUD.GetComponent<PlayerHUD>().DisableHUD();
+        GameManager.gameManager.MenuMode(HUD);
 
         gameIsPaused = true;
+    }
+
+    public void Resume()
+    {
+        pauseMenuUI.SetActive(false);
+        optionsMenuUI.SetActive(false);
+        Time.timeScale = 1f;
+        GameManager.gameManager.GameplayMode(HUD);
+
+        gameIsPaused = false;
     }
 
      public void SwitchMenus(int menuState)
@@ -74,20 +83,6 @@ public class PauseMenu : MonoBehaviour
             default:
                 break;
         }
-    }
-
-    public void Resume()
-    {
-        pauseMenuUI.SetActive(false);
-        optionsMenuUI.SetActive(false);
-        Time.timeScale = 1f;
-        GameManager.gameManager.DisableCursor();
-        HUD.GetComponent<PlayerHUD>().EnableHUD();
-
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-
-        gameIsPaused = false;
     }
 
     public void LoadMainMenu()

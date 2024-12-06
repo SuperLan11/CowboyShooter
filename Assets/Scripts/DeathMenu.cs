@@ -27,7 +27,7 @@ public class DeathMenu : MonoBehaviour
 
     void LateUpdate(){
         //prevent null reference exception for GameManager
-        if (gameManagerProtector){
+        if (gameManagerProtector || PauseMenu.gameIsPaused){
             return;
         }
 
@@ -46,8 +46,7 @@ public class DeathMenu : MonoBehaviour
     public void EnablePanel()
     {
         deathMenuUI.SetActive(true);
-        GameManager.gameManager.EnableCursor();
-        HUD.GetComponent<PlayerHUD>().DisableHUD();
+        GameManager.gameManager.MenuMode(HUD);
 
         deathMenuActive = true;
     }
@@ -55,11 +54,7 @@ public class DeathMenu : MonoBehaviour
     public void DisablePanel()
     {
         deathMenuUI.SetActive(false);
-        GameManager.gameManager.DisableCursor();
-        HUD.GetComponent<PlayerHUD>().EnableHUD();
-
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        GameManager.gameManager.GameplayMode(HUD);
 
         deathMenuActive = false;
     }
