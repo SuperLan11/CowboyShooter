@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2579927445858776859}
   m_Layer: 0
   m_Name: bench
-  m_TagString: Untagged
+  m_TagString: FLOOR
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
