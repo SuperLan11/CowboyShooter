@@ -181,7 +181,7 @@ public class Player : Character
         // Important: this affects gravity for everything!
         Physics.gravity = new Vector3(0, gravityAccel, 0);
 
-        gunAnim = GetComponentInChildren<Animator>();
+        gunAnim = GameObject.Find("Lowpoly Viewmodel Arms - Right").GetComponent<Animator>();
 
         // this makes the cursor stay insivible in the editor
         // to make cursor visible, press Escape  
