@@ -48,16 +48,18 @@ public class TextTrigger : MonoBehaviour
         if (other.gameObject.name == "Player")
         {            
             fadingText = true;
-            placingLetters = false;
-            FadeOutText();
+            placingLetters = false;            
         }
     }
 
     private void FadeOutText()
     {
-        textObj.GetComponent<CanvasGroup>().alpha -= (Time.deltaTime / fadeTime);
-        Debug.Log("subtract " + Time.deltaTime / fadeTime);
-        Debug.Log("text alpha is now " + textObj.GetComponent<CanvasGroup>().alpha);
+        float curAlpha = textObj.GetComponent<CanvasGroup>().alpha;
+        // use clamp to not subtract more than the value of alpha
+        float alphaChange = Mathf.Clamp((Time.deltaTime / fadeTime), 0, curAlpha);
+        textObj.GetComponent<CanvasGroup>().alpha -= alphaChange;
+        /*Debug.Log("subtract " + alphaChange);
+        Debug.Log("text alpha is now " + textObj.GetComponent<CanvasGroup>().alpha);*/
         if (textObj.GetComponent<CanvasGroup>().alpha <= 0)
             fadingText = false;
     }

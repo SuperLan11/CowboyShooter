@@ -265,7 +265,11 @@ MonoBehaviour:
   jumpStrength: 7
   gravityAccel: -13
   maxShootCooldown: 0.5
-  enemiesInRoom: []
+  gunEnemyPrefab: {fileID: 1199860818825218710, guid: 293e1dcedf94fd748a64132c1108a747, type: 3}
+  throwEnemyPrefab: {fileID: 3190573814319370729, guid: 141c7534726fdf54ebf4d2b4e709cecd, type: 3}
+  meleeEnemyPrefab: {fileID: 7991649779420139700, guid: 9d22cb8cac1a2784bb83a94a263879f1, type: 3}
+  potionSpawns: []
+  potionPrefab: {fileID: 8869284981402668712, guid: 30293ad77c0dffb4096752ecf8cd0a4f, type: 3}
   slideVel: -1
   wallSlideThreshold: 2
   perfectJumpWindow: 0.15

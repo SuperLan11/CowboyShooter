@@ -337,6 +337,7 @@ MonoBehaviour:
   recoilDist: 1.5
   recoilAccel: 0.1
   daggerSfx: {fileID: 5231734978599123065}
+  meleePrefab: {fileID: 7991649779420139700}
 --- !u!82 &3329688631680826020
 AudioSource:
   m_ObjectHideFlags: 0

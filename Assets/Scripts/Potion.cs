@@ -31,12 +31,14 @@ public class Potion : MonoBehaviour
                 int maxHealth = Player.player.GetMaxHealth();
                 if (curHealth < maxHealth)
                     Player.player.SetHealth(curHealth + 1);
+                Player.player.potionSpawns.Add(this.transform.position);
                 break;
             }
         }
     }
 
-        private void OnTriggerEnter(Collider other)
+    // if we want potion to be a trigger instead
+    private void OnTriggerEnter(Collider other)
     {                
         if (other.gameObject.name == "Player" && !playingSound && !Player.player.AtFullHealth())
         {
@@ -47,7 +49,8 @@ public class Potion : MonoBehaviour
             int curHealth = Player.player.GetHealth();
             int maxHealth = Player.player.GetMaxHealth();
             if (curHealth < maxHealth)
-                Player.player.SetHealth(curHealth + 1);            
+                Player.player.SetHealth(curHealth + 1);
+            Player.player.potionSpawns.Add(this.transform.position);
         }        
     }
 

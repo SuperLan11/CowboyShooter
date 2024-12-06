@@ -62,7 +62,14 @@ public class Player : Character
     public static Vector3 respawnPos;
     public static Vector3 respawnRot;
     public static bool hasCheckpoint = false;
-    public List<Enemy> enemiesInRoom = new List<Enemy>();
+    [System.NonSerialized] public List<Enemy> enemiesInRoom = new List<Enemy>();
+    // for respawning when player dies
+    [SerializeField] private GameObject gunEnemyPrefab;
+    [SerializeField] private GameObject throwEnemyPrefab;
+    [SerializeField] private GameObject meleeEnemyPrefab;
+
+    [System.NonSerialized] public List<Vector3> potionSpawns = new List<Vector3>();
+    [SerializeField] private GameObject potionPrefab;
 
     [SerializeField] private float slideVel = -0.5f;
     // the max y velocity the player can have and still stick to a wall
@@ -459,8 +466,7 @@ public class Player : Character
                 break;
             }
             if (hitWall && !hitMetalWall && rigidbody.velocity.y < wallSlideThreshold && !isGrounded() && wallJumpsLeft > 0)
-            {
-                Debug.Log("sliding!");
+            {                
                 currentMovementState = movementState.SLIDING;
                 lockedToWall = true;
                 break;
@@ -615,6 +621,55 @@ public class Player : Character
         GameManager.gameManager.StoreTimerValue(Clock.rawSeconds);
         DeathMenu.deathMenuActive = true;
 
+        for(int i = 0; i < Enemy.killedEnemySpawns.Count; i++)
+        {
+            // don't reinstantiate enemies in previous rooms
+            if (Enemy.killedEnemyCps[i] < GameManager.currentCheckpoint)
+                continue;
+
+            Vector3 enemySpawn = Enemy.killedEnemySpawns[i];
+            Enemy enemy;
+            if (Enemy.enemiesTypesKilled[i] == "Melee")
+                enemy = Instantiate(meleeEnemyPrefab, enemySpawn, Quaternion.identity).GetComponent<Enemy>();
+            else if (Enemy.enemiesTypesKilled[i] == "Throw")
+                enemy = Instantiate(throwEnemyPrefab, enemySpawn, Quaternion.identity).GetComponent<Enemy>();
+            // else, enemy type is gun enemy, but putting an else if has an unitialized error for the enemy variable
+            else
+                enemy = Instantiate(gunEnemyPrefab, enemySpawn, Quaternion.identity).GetComponent<Enemy>();
+
+            enemy.destination1 = Enemy.killedDest1List[i];
+            enemy.destination2 = Enemy.killedDest2List[i];
+            enemy.checkpointNum = Enemy.killedEnemyCps[i];
+            // if spawnPos not set, enemy will only correctly respawn once
+            enemy.spawnPos = enemy.transform.position;
+        }
+
+        foreach (Enemy enemy in FindObjectsOfType<Enemy>())
+        {
+            // enemy was already set to spawn pos
+            if (Enemy.killedEnemySpawns.Contains(enemy.transform.position))
+                continue;
+
+            enemy.transform.position = enemy.spawnPos;
+        }
+
+        // change this for projectiles later
+        Enemy.killedEnemySpawns.Clear();
+        Enemy.enemiesTypesKilled.Clear();
+        Enemy.killedDest1List.Clear();
+        Enemy.killedDest2List.Clear();
+        Enemy.killedEnemyCps.Clear();                        
+
+        for (int i = 0; i < potionSpawns.Count; i++)
+        {
+            Vector3 potionSpawn = potionSpawns[i];
+            Instantiate(potionPrefab, potionSpawn, Quaternion.identity);
+        }
+
+        transform.position = respawnPos;
+        transform.eulerAngles = respawnRot;
+        Door.ResetDoorCounter();
+        SetHealth(GetMaxHealth());        
         
         // Enemy[] enemies = GameManager.gameManager.originalEnemyList;
         // foreach (Enemy e in enemies)
@@ -639,7 +694,8 @@ public class Player : Character
         // transform.position = respawnPos;
         // transform.eulerAngles = respawnRot;
 
-        GameManager.gameManager.RestartLevel();
+        // may want to uncomment this line if respawn thing does not work!!
+        //GameManager.gameManager.RestartLevel();
         GameManager.gameManager.CleanupScene();
         
         /*foreach (Enemy enemy in enemiesInRoom)

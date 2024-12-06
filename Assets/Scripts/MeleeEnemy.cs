@@ -11,8 +11,8 @@ public class MeleeEnemy : Enemy
     private bool inRecoil = false;
     private Vector3 recoilPos;
 
-    [SerializeField] private AudioSource daggerSfx;    
-    
+    [SerializeField] private AudioSource daggerSfx;
+
     private void OnCollisionEnter(Collision collision)
     {                
         for(int i = 0; i < collision.contactCount; i++)
@@ -29,6 +29,24 @@ public class MeleeEnemy : Enemy
                 break;
             }
         }        
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        for (int i = 0; i < collision.contactCount; i++)
+        {
+            bool hitPlayer = collision.GetContact(i).otherCollider.gameObject.name == "Player";
+            if (hitPlayer && attackCooldownDone)
+            {
+                Strike(Player.player);
+                inRecoil = true;
+                recoilPos = transform.position - transform.forward * recoilDist;
+                attackCooldownDone = false;
+                StartCoroutine(AttackCooldown());
+                StartCoroutine(StopForTime(recoilTime));
+                break;
+            }
+        }
     }
 
     private IEnumerator StopForTime(float seconds)

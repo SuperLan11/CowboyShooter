@@ -17,8 +17,8 @@ public abstract class Enemy : Character
     protected NavMeshAgent agent;
 
     // make these Transform since Vector3 can't be dragged in inspector
-    [SerializeField] protected Transform destination1;
-    [SerializeField] protected Transform destination2;
+    [SerializeField] public Transform destination1;
+    [SerializeField] public Transform destination2;
     protected List<Vector3> destList = new List<Vector3>();
     // assuming all enemies can jump the same distance
     [SerializeField] public static float maxJumpDist = 2f;
@@ -52,7 +52,11 @@ public abstract class Enemy : Character
     protected Animator animator;
     private LayerMask floorLayer;
 
-    public static List<Vector3> enemiesKilled = new List<Vector3>();
+    public static List<Vector3> killedEnemySpawns = new List<Vector3>();
+    public static List<string> enemiesTypesKilled = new List<string>();
+    public static List<Transform> killedDest1List = new List<Transform>();
+    public static List<Transform> killedDest2List = new List<Transform>();
+    public static List<int> killedEnemyCps = new List<int>();
 
     // all enemies have the same start function
     void Start()
@@ -80,6 +84,13 @@ public abstract class Enemy : Character
         player = Player.player.gameObject;
         playerNear = false;
         playerSighted = false;
+
+        // if enemy is respawning after player dies, use dest1Pos and dest2Pos instead of retrieving transform references
+        // wait, can't you use transform?
+        /*if (destination1 != null)
+            dest1Pos = destination1.position;
+        if (destination2 != null)
+            dest2Pos = destination2.position;*/
 
         destList.Add(destination1.position);
         destList.Add(destination2.position);
@@ -199,12 +210,36 @@ public abstract class Enemy : Character
         //disables all components and re-enables death SFX
         //DisableAllComponents();
         //deathSfx.enabled = true;
-        
-        if(deathSfx != null)
-            deathSfx.Play();
+
+        killedEnemySpawns.Add(this.spawnPos);
+        killedDest1List.Add(this.destination1);
+        killedDest2List.Add(this.destination2);
+        killedEnemyCps.Add(checkpointNum);
+
+        if (GetComponent<MeleeEnemy>() != null)
+            enemiesTypesKilled.Add("Melee");
+        else if (GetComponent<ThrowEnemy>() != null)
+            enemiesTypesKilled.Add("Throw");
+        else if (GetComponent<GunEnemy>() != null)
+            enemiesTypesKilled.Add("Gun");
+
+        if (deathSfx != null)
+                deathSfx.Play();
 
         enemiesInRoom--;
-                
+
+        /*int projectilesAlive = 0;
+        projectilesAlive += FindObjectsOfType<Bullet>().Length;
+        projectilesAlive += FindObjectsOfType<TNT>().Length;
+
+        if(projectilesAlive > 0)
+        {
+
+        }*/
+
+        // clear enemiesKilled
+        // what if player dies after all enemies are dead? player spawns at same checkpoint with no enemies, which is a softlock
+        // check if no bullets or tnt is alive before clearing. if so, set a bool for that bullet/tnt to checkEnemyClear. if last tnt/bullet, clearEnemy is true   
         Door.SetDoorCounter(enemiesInRoom);
         if (enemiesInRoom <= 0)
         {           
@@ -228,8 +263,7 @@ public abstract class Enemy : Character
 
     public override void TakeDamage(int damage)
     {
-        health -= damage;
-        Debug.Log(gameObject.name + " now has " + health + " hp");
+        health -= damage;        
         animator.Play("TakeDamage", -1, 0f);
         if (health <= 0)
             Death();                
