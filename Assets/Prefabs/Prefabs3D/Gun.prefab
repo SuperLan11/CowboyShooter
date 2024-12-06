@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 317ad542dc509c240b5f14ab46743d1e, type: 2}
+    - target: {fileID: -369234161736492572, guid: d4511be2ca8883b44a5287524ed29849, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 236216658851537685, guid: d4511be2ca8883b44a5287524ed29849, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -68,14 +72,42 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gun
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d4511be2ca8883b44a5287524ed29849, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1893433255505381828, guid: d4511be2ca8883b44a5287524ed29849, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2299367606294272437, guid: d4511be2ca8883b44a5287524ed29849, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5768850371490852165, guid: d4511be2ca8883b44a5287524ed29849, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 317ad542dc509c240b5f14ab46743d1e, type: 2}
+    - target: {fileID: 5771103467687990799, guid: d4511be2ca8883b44a5287524ed29849, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6033742243018171262, guid: d4511be2ca8883b44a5287524ed29849, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 317ad542dc509c240b5f14ab46743d1e, type: 2}
+    - target: {fileID: 6619225641134156614, guid: d4511be2ca8883b44a5287524ed29849, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8351053838077304830, guid: d4511be2ca8883b44a5287524ed29849, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8726897661482398489, guid: d4511be2ca8883b44a5287524ed29849, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8989718054506788599, guid: d4511be2ca8883b44a5287524ed29849, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
