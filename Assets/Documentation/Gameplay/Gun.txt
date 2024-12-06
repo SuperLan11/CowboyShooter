@@ -1,0 +1,7 @@
+Players and some enemies will have a gun that they can shoot at each other.
+
+Specs:
+	Infinite ammo
+	Cooldown of 1 second
+
+The player will have 5 health, and different enemies will have different amount of health depending on the type.

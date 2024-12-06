@@ -1,0 +1,173 @@
+Main Developers:
+	Patrick Mayer
+	Jacob Paccione
+	Landon Johnson
+
+Assets Used:
+	Modular Building Wild West Cowboy Stylized Low Poly 3D Model
+	by Cornese
+	https://coynese.itch.io/modular-building-wild-west-cowboy-stylized-low-poly-3d-model
+	
+	ASGS Classic Revolver - Trial
+	by A Square Games and Simulation, LLC
+	https://assetstore.unity.com/packages/3d/props/guns/asgs-classic-revolver-trial-288921
+	
+	Lowpoly Cowboy RIO
+	by VertexModeler Team
+	https://assetstore.unity.com/packages/3d/characters/humanoids/lowpoly-cowboy-rio-288965
+	
+	Western Pack
+	by dqurp
+	https://assetstore.unity.com/packages/3d/environments/fantasy/western-pack-3116
+	
+	Beer Barrel Low-poly PBR
+	by HuNtEr_3DdD
+	https://www.turbosquid.com/3d-models/beer-barrel-low-poly-pbr-2094774
+	
+	cactus and skull
+	by Gabriel Bernardes
+	https://www.turbosquid.com/3d-models/cactus-and-skull-1448632
+	
+	Crate
+	by Kamiomi
+	https://www.turbosquid.com/3d-models/crate-333167
+	
+	PBR Grenades, Bombs & Mines pack
+	by ASTRALMESH
+	https://assetstore.unity.com/packages/3d/props/guns/pbr-grenades-bombs-mines-pack-267217
+	
+	Low Poly Tavern Interior
+	by I.We.D
+	https://assetstore.unity.com/packages/3d/props/interior/low-poly-tavern-interior-245229
+	
+	Dynamite
+	by MaX3Dd
+	https://sketchfab.com/3d-models/dynamite-7308cdc679c14e24880b8d05c2f22ffe
+
+	Hook
+	by c-fferreira
+	https://www.cgtrader.com/items/205518/download-page
+
+	Whip#2 SFX
+	by Universefield
+	https://pixabay.com/sound-effects/whip-2-242215/
+
+	Door Slam SFX
+	by kreckie123
+	https://pixabay.com/sound-effects/door-slam-79889/
+
+	Gun Shot 1
+	by Audiosto
+	https://pixabay.com/sound-effects/gun-shot-1-176892/
+
+	New Kick 01
+	by u_0incawl5vi
+	https://pixabay.com/sound-effects/new-kick-01-238978/
+
+	mag in (GunReload)
+	by nettimato (Freesound)
+	https://pixabay.com/sound-effects/mag-in-82094/
+
+	Sliding Sound
+	by cbenci (Freesound)
+	https://pixabay.com/sound-effects/sliding-sound-103631/
+
+	Metal Door Slam
+	SoundReality
+	https://pixabay.com/sound-effects/metal-door-slam-172172/
+
+	Old Western Door Free low-poly 3D model
+	by Makarios-Zaref
+	https://www.cgtrader.com/free-3d-models/architectural/door/old-western-door
+
+	Survival Kit - Dagger free VR / AR / low-poly 3d model
+	extrin6
+	https://www.cgtrader.com/free-3d-models/various/various-models/survival-kit-dagger
+
+	Metal Dagger Hit
+	DavidDumaisAudio
+	https://pixabay.com/sound-effects/metal-dagger-hit-185444/
+
+	Explosion
+	FlashTrauma (Freesound)
+	https://pixabay.com/sound-effects/explosion-6055/
+
+	Snake Hiss
+	xoiziox (Freesound)
+	https://pixabay.com/sound-effects/snake-hiss-95241/
+
+	Hurt_C_08
+	cabled_mess (Freesound)	
+	https://pixabay.com/sound-effects/hurt-c-08-102842/
+
+	Enemy Death Shout
+	ZapSplat
+	https://www.zapsplat.com/music/angry-man-shouts-scream-3/
+
+	Mexican Cowboys (Main Menu Theme)
+	Steve Oxen
+	https://www.fesliyanstudios.com/royalty-free-music/download/mexican-cowboys/3251
+
+	Western Cowboy Ride (Level 1 Theme)
+	David Fesliyan
+	https://www.fesliyanstudios.com/royalty-free-music/download/western-cowboy-ride/315
+
+	Western Adventures (Second and Final Level Theme)
+	David Fesliyan
+	https://www.fesliyanstudios.com/royalty-free-music/download/western-adventures-without-orchestra/564
+
+	Creaking Wood
+	VoiceBosch
+	https://pixabay.com/sound-effects/creaking-wood-199971/
+
+	Typing on a typewriter with ding at end of each line
+	evsecrets (Freesound)
+	https://pixabay.com/sound-effects/typing-on-a-typewriter-with-ding-at-end-of-each-line-55941/
+
+	080997_Bullet
+	Freesound Community
+	https://pixabay.com/sound-effects/080997-bullet-39735/
+
+	power up (Type 1)
+	RibhavAgrawal
+	https://pixabay.com/sound-effects/power-up-type-1-230548/
+
+	"Miner" (https://skfb.ly/66wRy) by Phuc Nguyen is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+
+	"Medkit :: Luna Far Away prop" (https://skfb.ly/prHLn) by Shorty_Digitan is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+
+	Steam Train at Crossing
+	Mark_MPT (Freesound)
+	https://pixabay.com/sound-effects/steam-train-at-crossing-62158/
+
+	Rope Ring 3D Model (lasso)
+	DaronJewelry
+	https://www.cgtrader.com/free-3d-print-models/jewelry/rings/rope-ring-dc65347a-31d1-40e6-bd60-dc0cc1a5c868
+
+	AllSky Free Skyboxes
+	RPGWhiteLock
+	https://assetstore.unity.com/packages/2d/textures-materials/sky/allsky-free-10-sky-skybox-set-146014#description
+
+	Back to the Future Train - Steam Locomotive
+	Jotrain Models
+	https://sketchfab.com/3d-models/back-to-the-future-train-steam-locomotive-4d6d577d362c44aeb85ca9c1091bd6cb
+
+	Barrel TNT
+	chermandirkun
+	https://www.cgtrader.com/free-3d-models/furniture/kitchen-furniture/barrel-tnt
+
+	Animated Tornado
+	Yanez Designs
+	https://sketchfab.com/3d-models/animated-tornado-dbc7e7176ce9435d9f04f2c88257fff6
+
+	braided-rope
+	nicocha7777
+	https://www.cgtrader.com/free-3d-models/military/other/braided-rope
+
+	"Western Cowboy (Rigged)" (https://skfb.ly/o9JI9) by human being is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+
+	https://assetstore.unity.com/packages/3d/characters/humanoids/humans/basic-bandit-89978
+
+	British Rail Class 20 Locomotive
+	https://downloadfree3d.com/3d-models/vehicles/trains/british-rail-class-20-locomotive/
+	Railmonsterinc

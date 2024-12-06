@@ -1,0 +1,5 @@
+Todo:
+
+• learn ProBuilder
+• fix missing textures
+• work on lasso physics

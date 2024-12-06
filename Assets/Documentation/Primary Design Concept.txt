@@ -1,0 +1,3 @@
+The player is a cowboy wielding a lasso and a gun and is trying to reach the end of each level. Each level is a sequence of rooms with preplaced enemies. When a player enters a room, the doors used to enter and exit the room will shut and will not open until all enemies are defeated. The player can move, shoot, throw a lasso, jump, or wall jump. 
+
+Each level will focus on a mechanic and each room will focus on a progression of that mechanic. For example, for a level focused on the lasso, room 1 could focus on lassoing blocks, room 2 could focus on using a lasso to hookshot onto a hook, and room 3 could focus on jumping off a hook with lasso momentum.

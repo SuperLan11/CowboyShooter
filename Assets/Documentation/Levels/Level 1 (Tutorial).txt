@@ -1,0 +1,8 @@
+Sub-Room 1:
+	Teaches movement, mainly having an open space to run around in, and a gap you have to wall jump across.
+
+Sub-Room 2:
+	Teaches the gun. After the player picks up the gun from a pedestal, there will be targets that the player has to shoot to unlock the ending door.
+
+Sub-Room 3:
+	Teaches the lasso. The player will get the lasso and have a gap they need to cross, that they cannot wall-jump on. There will be a hook on the ceiling that the player can use the lasso on.
