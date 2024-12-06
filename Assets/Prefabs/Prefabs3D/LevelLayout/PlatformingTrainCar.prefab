@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 9160147762095346182}
   m_Layer: 0
   m_Name: PlatformingTrainCar
-  m_TagString: WALL
+  m_TagString: FLOOR
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -395,8 +395,8 @@ Transform:
   m_GameObject: {fileID: 5085623402594823930}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.05, y: 1.24, z: -5.54}
-  m_LocalScale: {x: 2.5088356, y: 0.6119672, z: 3.8185465}
+  m_LocalPosition: {x: -2.3, y: 1.24, z: -3.81}
+  m_LocalScale: {x: 2.5088356, y: 0.6119672, z: 7.1218734}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8515934998683681801}
@@ -609,7 +609,7 @@ Transform:
   m_GameObject: {fileID: 5732902541812779412}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -2, y: 0, z: 1.94}
+  m_LocalPosition: {x: -2, y: 0, z: 6.63}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
