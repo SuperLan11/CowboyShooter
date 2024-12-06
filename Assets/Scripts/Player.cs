@@ -638,6 +638,10 @@ public class Player : Character
     {
         yield return new WaitForSeconds(0.3f);
 
+        Debug.Log("This runs");
+
+        //respawn logic
+
         DeathMenu.deathMenuActive = false;
 
         for(int i = 0; i < Enemy.killedEnemySpawns.Count; i++)
