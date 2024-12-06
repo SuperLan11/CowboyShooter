@@ -64,7 +64,7 @@ public class TNT : MonoBehaviour
 
         if (Vector3.Distance(transform.position, Player.player.transform.position) < explodeRadius &&
             PlayerExposed())        
-            Player.player.TakeDamage(explodeDamage);                    
+            Player.player.TakeDamage(explodeDamage);      
         
         Destroy(this.gameObject);
     }

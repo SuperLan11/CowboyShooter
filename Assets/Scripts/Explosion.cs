@@ -12,13 +12,12 @@ public class Explosion : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        transform.localScale *= (2*explodeRadius);   
-
+        transform.localScale *= (2*explodeRadius);
         StartCoroutine(TTL(fadeTime));
     }
 
     private IEnumerator TTL(float time)
-    {
+    {        
         yield return new WaitForSeconds(time);
         Destroy(this.gameObject);
     }

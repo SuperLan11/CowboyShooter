@@ -31,6 +31,9 @@ public abstract class Enemy : Character
     [SerializeField] protected float maxAttackCooldown;
     [SerializeField] protected int attackDamage;
 
+    private List<List<Material>> originalMaterials = new List<List<Material>>();
+    private List<Material> originalHatMaterials = new List<Material>();
+
     public int checkpointNum;
 
     protected float destCooldown;
@@ -87,13 +90,32 @@ public abstract class Enemy : Character
 
         destList.Add(destination1.position);
         destList.Add(destination2.position);
-        agent.destination = destination1.position;  
-        
+        agent.destination = destination1.position;
+
+        SkinnedMeshRenderer[] skinRenders = GetComponentsInChildren<SkinnedMeshRenderer>();          
+        for(int i = 0; i < skinRenders.Length; i++)
+        {            
+            originalMaterials.Add(new List<Material>());
+            for(int j = 0; j < skinRenders[i].materials.Length; j++)
+            {
+                // make new material so changing the materials later doesn't get rid of the original materials
+                originalMaterials[i].Add(new Material(skinRenders[i].materials[j]));
+            }            
+        }
+
+        if (GetComponent<MeleeEnemy>() != null)
+        {
+            foreach(Material mat in GetComponentInChildren<MeshRenderer>().materials)
+            {
+                originalHatMaterials.Add(new Material(mat));
+            }
+        }
+
         // in seconds
         destCooldown = 0f;
         maxDestCooldown = 0.4f;
-        switchingDest = false;        
-            
+        switchingDest = false;                
+
         shootSfx = GetComponent<AudioSource>();
         StartCoroutine(AttackCooldown());
        
@@ -218,27 +240,12 @@ public abstract class Enemy : Character
 
         if (deathSfx != null)
                 deathSfx.Play();
-
-        Debug.Log("enemiesInRoom before: " + enemiesInRoom);
-        enemiesInRoom--;
-        Debug.Log("enemiesInRoom after: " + enemiesInRoom);
-
-        /*int projectilesAlive = 0;
-        projectilesAlive += FindObjectsOfType<Bullet>().Length;
-        projectilesAlive += FindObjectsOfType<TNT>().Length;
-
-        if(projectilesAlive > 0)
-        {
-
-        }*/
-
-        // clear enemiesKilled
-        // what if player dies after all enemies are dead? player spawns at same checkpoint with no enemies, which is a softlock
-        // check if no bullets or tnt is alive before clearing. if so, set a bool for that bullet/tnt to checkEnemyClear. if last tnt/bullet, clearEnemy is true   
+        
+        enemiesInRoom--;        
+        
         Door.SetDoorCounter(enemiesInRoom);
         if (enemiesInRoom <= 0)
-        {
-            Debug.Log("raising doors");
+        {            
             Door.RaiseDoors();
         }
         
@@ -257,10 +264,52 @@ public abstract class Enemy : Character
         return health;
     }
 
+    private IEnumerator FlashRed(float seconds)
+    {                
+        SkinnedMeshRenderer[] skins = GetComponentsInChildren<SkinnedMeshRenderer>();
+        for(int i = 0; i < skins.Length; i++)
+        {
+            Material[] redMats = new Material[skins[i].materials.Length];
+            for(int j = 0; j < skins[i].materials.Length; j++)
+            {
+                redMats[j] = new Material(Shader.Find("Standard"));
+                redMats[j].color = Color.red;                
+            }            
+            skins[i].materials = redMats;
+        }
+
+        if(GetComponent<MeleeEnemy>() != null)
+        {
+            int numHatMats = GetComponentInChildren<MeshRenderer>().materials.Length;
+            Material[] redMats = new Material[numHatMats];
+            for (int j = 0; j < numHatMats; j++)
+            {
+                redMats[j] = new Material(Shader.Find("Standard"));
+                redMats[j].color = Color.red;
+            }
+            GetComponentInChildren<MeshRenderer>().materials = redMats;
+        }
+
+        yield return new WaitForSeconds(seconds);
+        if (!isDead)        
+            ChangeColorToNormal();             
+    }
+
+    private void ChangeColorToNormal()
+    {
+        SkinnedMeshRenderer[] meshRenders = GetComponentsInChildren<SkinnedMeshRenderer>();
+        for (int i = 0; i < meshRenders.Length; i++)
+            meshRenders[i].materials = originalMaterials[i].ToArray();
+
+        if (GetComponent<MeleeEnemy>() != null)        
+            GetComponentInChildren<MeshRenderer>().materials = originalHatMaterials.ToArray();        
+    }
+
     public override void TakeDamage(int damage)
     {
         health -= damage;        
         animator.Play("TakeDamage", -1, 0f);
+        StartCoroutine(FlashRed(0.2f));
         if (health <= 0)
             Death();                
     }
