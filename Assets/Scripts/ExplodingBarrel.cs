@@ -14,14 +14,15 @@ public class ExplodingBarrel : MonoBehaviour
     [SerializeField] private GameObject explosionPrefab;
     [SerializeField] private MeshRenderer meshRenderer;
     [SerializeField] private AudioSource explosionSfx;
-    private float explodeRadius;
+    [SerializeField] private float explodeSizeMult;
+    private float explodeLenPerTile = 3f;
 
     public bool isExploding = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        explodeRadius = explosionPrefab.GetComponent<Explosion>().explodeRadius;
+        
     }
 
     public void Explode()
@@ -41,7 +42,7 @@ public class ExplodingBarrel : MonoBehaviour
 
         Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
-        if (Vector3.Distance(transform.position, Player.player.transform.position) < explodeRadius)
+        if (Vector3.Distance(transform.position, Player.player.transform.position) < explodeSizeMult* explodeLenPerTile)
         {
             Player.player.TakeDamage(explodeDamage);                    
         }
@@ -50,7 +51,7 @@ public class ExplodingBarrel : MonoBehaviour
         
         for (int i = 0; i < enemies.Length; i++)
         {
-            if (Vector3.Distance(transform.position, enemies[i].gameObject.transform.position) < explodeRadius)
+            if (Vector3.Distance(transform.position, enemies[i].gameObject.transform.position) < explodeSizeMult* explodeLenPerTile)
             {
                 enemies[i].TakeDamage(explodeDamage);
             }

@@ -91,6 +91,7 @@ public abstract class Enemy : Character
         destList.Add(destination1.position);
         destList.Add(destination2.position);
         agent.destination = destination1.position;
+        FindNewDest();
 
         SkinnedMeshRenderer[] skinRenders = GetComponentsInChildren<SkinnedMeshRenderer>();          
         for(int i = 0; i < skinRenders.Length; i++)
