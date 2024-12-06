@@ -240,7 +240,10 @@ public class Player : Character
 
     private void ShootExplodingBarrel(GameObject explodingBarrel)
     {
-        explodingBarrel.GetComponent<ExplodingBarrel>().Explode();
+        if (!explodingBarrel.GetComponent<ExplodingBarrel>().isExploding)
+        {
+            explodingBarrel.GetComponent<ExplodingBarrel>().Explode();
+        }
     }
 
     private IEnumerator SpawnTrail(TrailRenderer trail, RaycastHit hit){
