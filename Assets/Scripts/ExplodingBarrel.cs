@@ -16,6 +16,8 @@ public class ExplodingBarrel : MonoBehaviour
     [SerializeField] private AudioSource explosionSfx;
     private float explodeRadius;
 
+    public bool isExploding = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +26,8 @@ public class ExplodingBarrel : MonoBehaviour
 
     public void Explode()
     {   
+        isExploding = true;
+        
         //this trick will make sure my explosion sfx doesn't mess with Landon's TNT
         if (explosionSfx != null)
         {
