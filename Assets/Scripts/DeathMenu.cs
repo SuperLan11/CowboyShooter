@@ -24,7 +24,7 @@ public class DeathMenu : MonoBehaviour
             return;
         }
 
-        /*
+        
         if (deathMenuActive)
         {
             EnablePanel();
@@ -33,7 +33,7 @@ public class DeathMenu : MonoBehaviour
         {
             DisablePanel();
         }
-        */
+        
     }
 
     public void EnablePanel()

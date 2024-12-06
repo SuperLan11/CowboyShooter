@@ -165,6 +165,10 @@ public class Player : Character
             transform.position = respawnPos;
             transform.eulerAngles = respawnRot;
         }
+        else
+        {
+            respawnPos = transform.position;
+        }
 
         currentMovementState = movementState.GROUND;
 
@@ -624,6 +628,15 @@ public class Player : Character
         GameManager.gameManager.StoreTimerValue(Clock.rawSeconds);
         DeathMenu.deathMenuActive = true;
 
+        StartCoroutine(DeathHelper());        
+    }
+
+    private IEnumerator DeathHelper()
+    {
+        yield return new WaitForSeconds(0.3f);
+
+        DeathMenu.deathMenuActive = false;
+
         for(int i = 0; i < Enemy.killedEnemySpawns.Count; i++)
         {
             // don't reinstantiate enemies in previous rooms
@@ -674,7 +687,7 @@ public class Player : Character
         GameManager.gameManager.CleanupScene();
         Door.LowerDoorsImmediately();
         Door.ResetDoorCounter();
-        SetHealth(GetMaxHealth());                
+        SetHealth(GetMaxHealth());
     }
 
     public override void TakeDamage(int damage)
