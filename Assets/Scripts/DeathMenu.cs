@@ -1,3 +1,10 @@
+/*
+@Authors - Patrick
+*/
+
+//!DO NOT mess with Time.timeScale in this class! It will overwrite what pause menu does.
+//!If there is an issue with the death menu, also check the pause menu. Sometimes changes to one can screw the other over.
+
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -39,7 +46,6 @@ public class DeathMenu : MonoBehaviour
     public void EnablePanel()
     {
         deathMenuUI.SetActive(true);
-        Time.timeScale = 0f;
         GameManager.gameManager.EnableCursor();
         HUD.GetComponent<PlayerHUD>().DisableHUD();
 
@@ -49,7 +55,6 @@ public class DeathMenu : MonoBehaviour
     public void DisablePanel()
     {
         deathMenuUI.SetActive(false);
-        Time.timeScale = 1f;
         GameManager.gameManager.DisableCursor();
         HUD.GetComponent<PlayerHUD>().EnableHUD();
 

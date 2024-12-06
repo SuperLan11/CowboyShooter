@@ -95,6 +95,20 @@
                 },
                 "m_SlotId": 0
             }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "cfc72acf242f4e47a0223344e95d6bec"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "577c60647aa24ef8b1d25c73722a0738"
+                },
+                "m_SlotId": 0
+            }
         }
     ],
     "m_VertexContext": {
@@ -832,9 +846,9 @@
     },
     "m_Color": {
         "color": {
-            "r": 1.0,
-            "g": 0.062745101749897,
-            "b": 0.0,
+            "r": 0.0,
+            "g": 0.2893190383911133,
+            "b": 1.0,
             "a": 0.0
         },
         "mode": 0
@@ -901,9 +915,9 @@
     },
     "m_Color": {
         "color": {
-            "r": 0.650943398475647,
-            "g": 0.0,
-            "b": 0.020421752706170083,
+            "r": 0.8196078538894653,
+            "g": 0.5803921818733215,
+            "b": 0.46666666865348818,
             "a": 0.0
         },
         "mode": 0
@@ -1082,7 +1096,7 @@
     "m_Hidden": false,
     "m_ShaderOutputName": "Power",
     "m_StageCapability": 3,
-    "m_Value": 1.0,
+    "m_Value": 4.0,
     "m_DefaultValue": 1.0,
     "m_Labels": []
 }

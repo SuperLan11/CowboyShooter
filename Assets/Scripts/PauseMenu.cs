@@ -1,3 +1,9 @@
+/*
+@Authors - Patrick
+*/
+
+//!If there is an issue with the pause menu, also check the death menu. Sometimes changes to one can screw the other over.
+
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;

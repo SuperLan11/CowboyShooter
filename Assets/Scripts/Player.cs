@@ -117,19 +117,20 @@ public class Player : Character
 
     // Snap is how closely the camera stays to the actual mouse value
     // Sensitivity changes how much magnitude moving the mouse has
-    [SerializeField] private float horCamSnap = 10f;
-    [SerializeField] private float vertCamSnap = 10f;
+    [SerializeField] private float horCamSnap = 20f;
+    [SerializeField] private float vertCamSnap = 20f;
 
     //these values are used in so many places that I think they need to not be serialized. Too many chances for the values
     //to get screwed up with the object in the scene
 
-    private float mouseSensitivityX = 0.7f;
+    private float mouseSensitivityX = 1f;
     private float mouseSensitivityY = 1f;
     private float curMouseX = 0f;
     private float curMouseY = 0f;
     
     [SerializeField] private float camLockDist = 50f;
     private Animator gunAnim;
+    private Animator whipAnim;
 
     public enum movementState
     {
@@ -637,6 +638,10 @@ public class Player : Character
     private IEnumerator DeathHelper()
     {
         yield return new WaitForSeconds(0.3f);
+
+        Debug.Log("This runs");
+
+        //respawn logic
 
         DeathMenu.deathMenuActive = false;
 
