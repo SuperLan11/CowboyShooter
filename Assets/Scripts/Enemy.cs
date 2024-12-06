@@ -85,13 +85,6 @@ public abstract class Enemy : Character
         playerNear = false;
         playerSighted = false;
 
-        // if enemy is respawning after player dies, use dest1Pos and dest2Pos instead of retrieving transform references
-        // wait, can't you use transform?
-        /*if (destination1 != null)
-            dest1Pos = destination1.position;
-        if (destination2 != null)
-            dest2Pos = destination2.position;*/
-
         destList.Add(destination1.position);
         destList.Add(destination2.position);
         agent.destination = destination1.position;  
@@ -226,7 +219,9 @@ public abstract class Enemy : Character
         if (deathSfx != null)
                 deathSfx.Play();
 
+        Debug.Log("enemiesInRoom before: " + enemiesInRoom);
         enemiesInRoom--;
+        Debug.Log("enemiesInRoom after: " + enemiesInRoom);
 
         /*int projectilesAlive = 0;
         projectilesAlive += FindObjectsOfType<Bullet>().Length;
@@ -242,7 +237,8 @@ public abstract class Enemy : Character
         // check if no bullets or tnt is alive before clearing. if so, set a bool for that bullet/tnt to checkEnemyClear. if last tnt/bullet, clearEnemy is true   
         Door.SetDoorCounter(enemiesInRoom);
         if (enemiesInRoom <= 0)
-        {           
+        {
+            Debug.Log("raising doors");
             Door.RaiseDoors();
         }
         

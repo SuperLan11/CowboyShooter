@@ -8,6 +8,7 @@ public class Door : MonoBehaviour
 {    
     public static bool movingUp = false;    
     public static bool movingDown = false;
+    public static bool lowerImmediate = false;
 
     private Vector3 raisedPos;    
     private Vector3 loweredPos;
@@ -47,30 +48,37 @@ public class Door : MonoBehaviour
     {
         movingUp = true;
         movingDown = false;
-    }
+        lowerImmediate = false;
+}
 
     public static void LowerDoors()
     {        
         movingUp = false;
         movingDown = true;
+        lowerImmediate = false;
+    }
+
+    public static void LowerDoorsImmediately()
+    {
+        movingUp = false;
+        movingDown = false;
+        lowerImmediate = true;        
     }
 
     // reset door counter is used for starting/entering a room
     public static void ResetDoorCounter()
     {
         // enemiesInRoom should already be 0, but just in case
-        //Player.player.enemiesInRoom.Clear();
-
         Enemy.enemiesInRoom = 0;
         foreach (Enemy enemy in FindObjectsOfType<Enemy>())
         {
             if (enemy.checkpointNum == GameManager.currentCheckpoint)
-            {
+            {                
                 Player.player.enemiesInRoom.Add(enemy);
                 Enemy.enemiesInRoom++;
-            }
+            }            
         }        
-        Door.SetDoorCounter(Enemy.enemiesInRoom);       
+        Door.SetDoorCounter(Enemy.enemiesInRoom);
     }
     
     // set door counter is for directly setting counter
@@ -90,15 +98,16 @@ public class Door : MonoBehaviour
 
     // Update is called once per frame
     void FixedUpdate()
-    {                
+    {
         if (movingUp)
-        {            
+        {
             movingDown = false;
+            lowerImmediate = false;
             transform.position = Vector3.Lerp(transform.position, raisedPos, raiseAccel);
             // door trigger is child, don't let parent move it from ground
-            transform.GetChild(0).position = triggerPos;            
+            transform.GetChild(0).position = triggerPos;
             slamSoundPlayed = false;
-            if(!openSoundPlayed && doorOpenSfx != null)
+            if (!openSoundPlayed && doorOpenSfx != null)
             {
                 doorOpenSfx.Play();
                 openSoundPlayed = true;
@@ -106,15 +115,24 @@ public class Door : MonoBehaviour
         }
         // wasMovingUp
         else if (movingDown)
-        {
+        {            
             movingUp = false;
-            openSoundPlayed = false;
+            lowerImmediate = false;
+            openSoundPlayed = false;                        
+
             if (!slamSoundPlayed && doorSlamSfx != null)
-            {                
+            {
                 doorSlamSfx.Play();
                 slamSoundPlayed = true;
             }
             transform.position = Vector3.Lerp(transform.position, loweredPos, lowerAccel);
+            transform.GetChild(0).position = triggerPos;
+        }
+        else if (lowerImmediate)
+        {
+            movingUp = false;
+            movingDown = false;
+            transform.position = Vector3.Lerp(transform.position, loweredPos, 1f);
             transform.GetChild(0).position = triggerPos;
         }
     }

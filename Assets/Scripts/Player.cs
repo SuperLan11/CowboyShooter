@@ -671,42 +671,10 @@ public class Player : Character
 
         transform.position = respawnPos;
         transform.eulerAngles = respawnRot;
-        Door.ResetDoorCounter();
-        SetHealth(GetMaxHealth());        
-        
-        // Enemy[] enemies = GameManager.gameManager.originalEnemyList;
-        // foreach (Enemy e in enemies)
-        // {
-        //     if (e.checkpointNum == GameManager.currentCheckpoint)
-        //     {
-        //         Debug.Log("Good morning");
-        //         Enemy tempEnemy = e;
-        //         Destroy(e.gameObject);
-        //         Instantiate(tempEnemy.gameObject, tempEnemy.spawnPos, Quaternion.identity);
-        //     }
-        // }
-
-        // /*
-        // foreach(Enemy e in enemiesInRoom)
-        // {
-        //     Instantiate(e, e.spawnPos, Quaternion.identity);
-        // }
-        // */
-
-        // health = maxHealth;
-        // transform.position = respawnPos;
-        // transform.eulerAngles = respawnRot;
-
-        // may want to uncomment this line if respawn thing does not work!!
-        //GameManager.gameManager.RestartLevel();
         GameManager.gameManager.CleanupScene();
-        
-        /*foreach (Enemy enemy in enemiesInRoom)
-        {
-            enemy.transform.position = enemy.spawnPos;
-        }
-        transform.position = respawnPos;
-        transform.eulerAngles = respawnRot;*/
+        Door.LowerDoorsImmediately();
+        Door.ResetDoorCounter();
+        SetHealth(GetMaxHealth());                
     }
 
     public override void TakeDamage(int damage)
@@ -716,7 +684,7 @@ public class Player : Character
             takeDamageSfx.Play();
 
         SetHealth(health);
-        if (health == 0)
+        if (health <= 0)
             Death();
     }    
 
