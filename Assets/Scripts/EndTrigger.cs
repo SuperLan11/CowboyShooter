@@ -31,6 +31,7 @@ public class EndTrigger : MonoBehaviour
             GameManager.currentCheckpoint = 0;
     
             Player.player.yeehawSfx.Play();
+            Player.player.GetComponent<Rigidbody>().isKinematic = true;
             int curSceneIndex = SceneManager.GetActiveScene().buildIndex;
             StartCoroutine(fadeAnim.FadeToNewScene(curSceneIndex + 1, 1f));
                         

@@ -277,7 +277,7 @@ public class Player : Character
     {
         RaycastHit hit;
         // use cam forward instead of player since player can't rotate vertically
-        if (Physics.Raycast(transform.position, cam.transform.forward, out hit, Mathf.Infinity))
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, Mathf.Infinity))
         {                    
             return hit.transform.gameObject;
         }
