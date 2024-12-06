@@ -71,6 +71,9 @@ public class Player : Character
     [System.NonSerialized] public List<Vector3> potionSpawns = new List<Vector3>();
     [SerializeField] private GameObject potionPrefab;
 
+    [System.NonSerialized] public List<Vector3> barrelSpawns = new List<Vector3>();
+    [SerializeField] private GameObject barrelPrefab;
+
     [SerializeField] private float slideVel = -0.5f;
     // the max y velocity the player can have and still stick to a wall
     [SerializeField] private float wallSlideThreshold = 2f;
@@ -668,8 +671,7 @@ public class Player : Character
 
             enemy.transform.position = enemy.spawnPos;
         }
-
-        // change this for projectiles later
+        
         Enemy.killedEnemySpawns.Clear();
         Enemy.enemiesTypesKilled.Clear();
         Enemy.killedDest1List.Clear();
@@ -681,6 +683,16 @@ public class Player : Character
             Vector3 potionSpawn = potionSpawns[i];
             Instantiate(potionPrefab, potionSpawn, Quaternion.identity);
         }
+
+        potionSpawns.Clear();
+
+        for (int i = 0; i < barrelSpawns.Count; i++)
+        {
+            Vector3 barrelSpawn = barrelSpawns[i];
+            Instantiate(barrelPrefab, barrelSpawn, Quaternion.identity);
+        }
+
+        barrelSpawns.Clear();
 
         transform.position = respawnPos;
         transform.eulerAngles = respawnRot;

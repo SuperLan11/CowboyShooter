@@ -76,6 +76,7 @@ public class ExplodingBarrel : MonoBehaviour
     private IEnumerator WaitToDestroy(float time)
     {
         yield return new WaitForSeconds(time);
+        Player.player.barrelSpawns.Add(transform.position);
         Destroy(this.gameObject);
     }
 }
