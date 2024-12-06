@@ -13298,7 +13298,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2512540741462570124, guid: da7d1c9cb6dd6ba4b8c5d78b5811dd88, type: 3}
       propertyPath: text
-      value: Hold RMB to hang!
+      value: Hold RMB to lasso hang!
       objectReference: {fileID: 0}
     - target: {fileID: 2512540741462570124, guid: da7d1c9cb6dd6ba4b8c5d78b5811dd88, type: 3}
       propertyPath: textObj
@@ -15583,7 +15583,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6534627142798155943, guid: 675c419c1fbc55e44bd3d2b98522cc87, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 6534627142798155943, guid: 675c419c1fbc55e44bd3d2b98522cc87, type: 3}
       propertyPath: m_LocalRotation.x
@@ -15591,7 +15591,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6534627142798155943, guid: 675c419c1fbc55e44bd3d2b98522cc87, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 6534627142798155943, guid: 675c419c1fbc55e44bd3d2b98522cc87, type: 3}
       propertyPath: m_LocalRotation.z
@@ -15603,7 +15603,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6534627142798155943, guid: 675c419c1fbc55e44bd3d2b98522cc87, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 6534627142798155943, guid: 675c419c1fbc55e44bd3d2b98522cc87, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
