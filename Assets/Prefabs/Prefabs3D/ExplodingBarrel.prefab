@@ -40,6 +40,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2607738050244440587}
     m_Modifications:
+    - target: {fileID: 4671830706158772365, guid: 46e74e8f82ab9a2428108b6e915f867d, type: 3}
+      propertyPath: explosionPrefab
+      value: 
+      objectReference: {fileID: 2433282508537954060, guid: 3ef3ae421f71c5c4e97fe12dc2fc6312, type: 3}
     - target: {fileID: 6130116917997602898, guid: 46e74e8f82ab9a2428108b6e915f867d, type: 3}
       propertyPath: m_Name
       value: barrel
