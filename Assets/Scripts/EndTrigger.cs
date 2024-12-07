@@ -31,6 +31,7 @@ public class EndTrigger : MonoBehaviour
             GameManager.currentCheckpoint = 0;
     
             Player.player.yeehawSfx.Play();
+            //prevents player from infinitely going back and forth
             Player.player.SetKinematicRigidbody();
             int curSceneIndex = SceneManager.GetActiveScene().buildIndex;
             StartCoroutine(fadeAnim.FadeToNewScene(curSceneIndex + 1, 1f));
