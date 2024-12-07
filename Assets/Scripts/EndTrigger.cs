@@ -26,7 +26,7 @@ public class EndTrigger : MonoBehaviour
                                     (Player.player.currentMovementState == Player.movementState.SWINGING);
 
         if (collider.gameObject.name == "Player" && movingTowardsTornado)
-        {
+        {            
             //!if we want any extra functionality for the tornado like screen shake, do it here!
             
             GameManager.gameManager.StoreTimerValue(Clock.rawSeconds);
@@ -43,8 +43,7 @@ public class EndTrigger : MonoBehaviour
             //prevents player from infinitely going back and forth
             Player.player.SetKinematicRigidbody();
             int curSceneIndex = SceneManager.GetActiveScene().buildIndex;
-            StartCoroutine(fadeAnim.FadeToNewScene(curSceneIndex + 1, 1f));
-                        
+            StartCoroutine(fadeAnim.FadeToNewScene(curSceneIndex + 1, 1f));                        
         }
         /*
         else if (collider.gameObject.name == "Player")
