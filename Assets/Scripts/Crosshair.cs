@@ -98,7 +98,7 @@ public class Crosshair : MonoBehaviour
 
         if (!PointedAtImportantObject())
         {
-            crosshairImage.color = Color.white;            
+            crosshairImage.color = Color.white;
         }
         else if (PointedAtEnemy() || PointedAtBarrel())
         {

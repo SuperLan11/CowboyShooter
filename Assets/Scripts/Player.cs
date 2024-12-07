@@ -139,6 +139,7 @@ public class Player : Character
         HANGING,
         SLIDING,
         FLYING,
+        TORNADO,
     };
 
     [System.NonSerialized] public movementState currentMovementState;
@@ -840,6 +841,20 @@ public class Player : Character
         //forces camera to look straight as you're opening up scene        
         if (Time.timeSinceLevelLoad < 0.1f)
             return;
+
+        if(currentMovementState == movementState.TORNADO)
+        {
+            Vector3 newRot = transform.eulerAngles;            
+            float curRotY = transform.eulerAngles.y;
+            float newRotY = curRotY + (BigTornado.spinSpeed * Time.deltaTime);
+            newRot.y = Mathf.LerpAngle(curRotY, newRotY, BigTornado.spinAccel);
+            transform.eulerAngles = newRot;            
+            if (transform.position.y > BigTornado.tornadoTopY)
+            {
+                int curIndex = SceneManager.GetActiveScene().buildIndex;
+                SceneManager.LoadScene(curIndex + 1);
+            }                
+        }
 
         if (health != healthLastFrame)
         {

@@ -389,7 +389,6 @@ MonoBehaviour:
   bulletPrefab: {fileID: 5238476219402099163, guid: 418fbbc712cab9a4fbc8c17b4ad4aea2, type: 3}
   bulletSpeed: 65
   loadTime: 0.3
-  gunPrefab: {fileID: 1199860818825218710}
 --- !u!195 &1294539945686754922
 NavMeshAgent:
   m_ObjectHideFlags: 0
