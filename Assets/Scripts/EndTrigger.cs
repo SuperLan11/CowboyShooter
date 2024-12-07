@@ -31,7 +31,7 @@ public class EndTrigger : MonoBehaviour
         {            
             //!if we want any extra functionality for the tornado like screen shake, do it here!
             
-            GameManager.gameManager.StoreTimerValue(Clock.rawSeconds);
+            //GameManager.gameManager.StoreTimerValue(Clock.rawSeconds);
             GameManager.totalTime += GameManager.levelTime;
             //GameManager.totalTime += Time.timeSinceLevelLoad; 
             GameManager.gameManager.ResetTimerValue();

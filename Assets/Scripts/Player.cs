@@ -92,6 +92,8 @@ public class Player : Character
     // from 0 to 1, how fast camera rotates horizontally during kick. increasing this lets player regains camera control sooner
     [SerializeField] private float kickLerpSpeed = 0.1f;
 
+    private bool inInvincibilityWindow = false;
+
     private const float KNOCKBACK_FORCE = 2.5f;
     private const float verticalMouseSensitivityFraction = 0.75f;
 

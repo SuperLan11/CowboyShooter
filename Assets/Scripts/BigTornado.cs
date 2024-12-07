@@ -40,7 +40,7 @@ public class BigTornado : MonoBehaviour
             Player.player.currentMovementState = Player.movementState.TORNADO;        
             
 
-            GameManager.gameManager.StoreTimerValue(Clock.rawSeconds);
+            //GameManager.gameManager.StoreTimerValue(Clock.rawSeconds);
             GameManager.totalTime += GameManager.levelTime;
             //GameManager.totalTime += Time.timeSinceLevelLoad;
             GameManager.gameManager.ResetTimerValue();

@@ -51,7 +51,11 @@ public class GameManager : MonoBehaviour
         enableCursor = false;
 
         levelTime = 0;
-        totalTime = 0;
+        
+        if (currentLevel == 0)
+        {
+            totalTime = 0;
+        }
     }
 
     public void Update()

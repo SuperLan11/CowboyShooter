@@ -52,8 +52,8 @@ public class WinScreen : MonoBehaviour
         GameManager.gameManager.EnableCursor();
 
         double finalTime = GameManager.totalTime;
-        double seconds = System.Math.Round(finalTime % 60, 2);
-        int minutes = (int)(finalTime / 60) % 60;
+        int seconds = (int)finalTime % 60;
+        int minutes = (int)(finalTime / 60);
 
         string tempString = "   " + (minutes.ToString() + " minutes and " + seconds.ToString() + " seconds!");
         timerText.text += tempString;
