@@ -630,7 +630,7 @@ public class Player : Character
 
     protected override void Death()
     {
-        GameManager.gameManager.StoreTimerValue(Clock.rawSeconds);
+        //GameManager.gameManager.StoreTimerValue(Clock.rawSeconds);
         DeathMenu.deathMenuActive = true;
 
         StartCoroutine(DeathHelper());        

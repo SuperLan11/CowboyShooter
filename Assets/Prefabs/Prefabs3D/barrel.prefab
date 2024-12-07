@@ -69,6 +69,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 909c8b29aaa979b40bda16c211f3abc8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 57651178319121375}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 909c8b29aaa979b40bda16c211f3abc8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1544524284412715326}
   m_SourcePrefab: {fileID: 100100000, guid: 909c8b29aaa979b40bda16c211f3abc8, type: 3}
 --- !u!23 &5625682766536616327 stripped
 MeshRenderer:
@@ -95,6 +98,7 @@ MonoBehaviour:
   explosionPrefab: {fileID: 2433282508537954060, guid: 3ef3ae421f71c5c4e97fe12dc2fc6312, type: 3}
   meshRenderer: {fileID: 5625682766536616327}
   explosionSfx: {fileID: 57651178319121375}
+  explodeSizeMult: 0
   isExploding: 0
 --- !u!136 &7618498059355102149
 CapsuleCollider:
@@ -215,3 +219,30 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!54 &1544524284412715326
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6130116917997602898}
+  serializedVersion: 4
+  m_Mass: 500
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

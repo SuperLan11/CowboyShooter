@@ -11,7 +11,7 @@ public class Clock : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rawSeconds = GameManager.storedTime;
+        rawSeconds = GameManager.levelTime;
     }
 
     // Update is called once per frame

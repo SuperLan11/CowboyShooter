@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     public static int currentCheckpoint = 0;
     private bool disableCursor;
     private bool enableCursor;
-    public static double storedTime;
+    public static double levelTime;
     public static double totalTime;
     public static float mouseSensitivity = 2f;
     public static float volume = 1f;
@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
         disableCursor = false;
         enableCursor = false;
 
-        storedTime = 0;
+        levelTime = 0;
         totalTime = 0;
     }
 
@@ -87,12 +87,12 @@ public class GameManager : MonoBehaviour
 
     public void StoreTimerValue(double time)
     {
-        storedTime = time;
+        levelTime = time;
     }
 
     public void ResetTimerValue()
     {
-        storedTime = 0;
+        levelTime = 0;
     }
 
     public Enemy[] GetAllEnemies()
