@@ -6,6 +6,10 @@ using UnityEngine.SceneManagement;
 public class EndTrigger : MonoBehaviour
 {
     private SceneTransfer fadeAnim;
+
+    //prevents multiple yee-haws
+    private bool yeehawPlayed = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,10 +31,15 @@ public class EndTrigger : MonoBehaviour
             
             GameManager.gameManager.StoreTimerValue(Clock.rawSeconds);
             GameManager.totalTime += GameManager.storedTime;
+            GameManager.totalTime += Time.timeSinceLevelLoad; 
             GameManager.gameManager.ResetTimerValue();
             GameManager.currentCheckpoint = 0;
     
-            Player.player.yeehawSfx.Play();
+            if (!yeehawPlayed)
+            {
+                Player.player.yeehawSfx.Play();
+                yeehawPlayed = true;
+            }
             //prevents player from infinitely going back and forth
             Player.player.SetKinematicRigidbody();
             int curSceneIndex = SceneManager.GetActiveScene().buildIndex;
