@@ -826,6 +826,11 @@ public class Player : Character
         }        
     }
 
+    public void SetKinematicRigidbody()
+    {
+        rigidbody.isKinematic = true;
+    }
+
     public void SetPlayerMouseSensitivity()
     {
         mouseSensitivityX = mouseSensitivityY = GameManager.mouseSensitivity;

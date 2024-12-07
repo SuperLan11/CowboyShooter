@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f001953e82cb92d42a948b3e411cf4b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explodeRadius: 7
+  explodeRadius: 3.5
 --- !u!82 &698214149795747211
 AudioSource:
   m_ObjectHideFlags: 0

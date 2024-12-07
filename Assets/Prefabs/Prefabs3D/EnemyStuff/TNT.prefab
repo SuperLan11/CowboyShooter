@@ -152,7 +152,7 @@ MonoBehaviour:
   TtlOnHit: 0.5
   sizzleSfx: {fileID: 8103946175110038214}
   explodeDamage: 1
-  explosionPrefab: {fileID: 7725463351204526251, guid: 4c4921d4eb322ec49ae68f2b69192a26, type: 3}
+  explosionPrefab: {fileID: 2433282508537954060, guid: c48f030a684ab954e9c50b121e428337, type: 3}
 --- !u!82 &8103946175110038214
 AudioSource:
   m_ObjectHideFlags: 0
