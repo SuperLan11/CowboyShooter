@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3027008539897501360}
   - component: {fileID: 961430626161014047}
   - component: {fileID: 2924396601892225376}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: TornadoTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119,5 +119,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tornadoPrefab: {fileID: 5797178021881252538, guid: 7e69147bc8525f54ca05b8f9a16fa420, type: 3}
-  smallTornadoPrefab: {fileID: 8048913456277689358, guid: f84f8b8f7f452f64d850792266b5db5a, type: 3}
   tornadoSpawn: {fileID: 0}

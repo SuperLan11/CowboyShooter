@@ -88,12 +88,19 @@ public class Door : MonoBehaviour
         if (Enemy.enemiesInRoom < 0)
             return;
 
-        GameObject[] doors = GameObject.FindGameObjectsWithTag("DOOR");
-        foreach (GameObject door in doors)
+        try
         {
-            door.transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = enemiesInRoom.ToString();
-            door.transform.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>().text = enemiesInRoom.ToString();
-        }     
+            GameObject[] doors = GameObject.FindGameObjectsWithTag("DOOR");
+            foreach (GameObject door in doors)
+            {
+                door.transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = enemiesInRoom.ToString();
+                door.transform.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>().text = enemiesInRoom.ToString();
+            }
+        }
+        catch
+        {
+            Debug.Log("a door was missing a child text");
+        }
     }
 
     // Update is called once per frame
