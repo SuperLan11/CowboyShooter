@@ -662,6 +662,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: mug (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 6017223113634340166, guid: a9a8a17fbc5ca2e47aa025e052d1aca7, type: 3}
+      propertyPath: m_TagString
+      value: FLOOR
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1614,6 +1618,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: pitcher (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 2133052212710738145, guid: d703adc8cf309264985eed53eaf40064, type: 3}
+      propertyPath: m_TagString
+      value: FLOOR
+      objectReference: {fileID: 0}
     - target: {fileID: 7998416793954061159, guid: d703adc8cf309264985eed53eaf40064, type: 3}
       propertyPath: m_LocalPosition.x
       value: 16.788773
@@ -1892,6 +1900,10 @@ PrefabInstance:
     - target: {fileID: 6017223113634340166, guid: a9a8a17fbc5ca2e47aa025e052d1aca7, type: 3}
       propertyPath: m_Name
       value: mug
+      objectReference: {fileID: 0}
+    - target: {fileID: 6017223113634340166, guid: a9a8a17fbc5ca2e47aa025e052d1aca7, type: 3}
+      propertyPath: m_TagString
+      value: FLOOR
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2887,6 +2899,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: bottle1 (19)
       objectReference: {fileID: 0}
+    - target: {fileID: 6285796835657255507, guid: f73e8979440854e4db673b7dab1e69a5, type: 3}
+      propertyPath: m_TagString
+      value: FLOOR
+      objectReference: {fileID: 0}
     - target: {fileID: 8595725771954483380, guid: f73e8979440854e4db673b7dab1e69a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: -44.28733
@@ -3264,6 +3280,10 @@ PrefabInstance:
     - target: {fileID: 617770405191272736, guid: 88c9717dd46f97740a08966fac3e364d, type: 3}
       propertyPath: m_Name
       value: candleBig (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 617770405191272736, guid: 88c9717dd46f97740a08966fac3e364d, type: 3}
+      propertyPath: m_TagString
+      value: FLOOR
       objectReference: {fileID: 0}
     - target: {fileID: 3037809403456250201, guid: 88c9717dd46f97740a08966fac3e364d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4825,6 +4845,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: bottle1 (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 6285796835657255507, guid: f73e8979440854e4db673b7dab1e69a5, type: 3}
+      propertyPath: m_TagString
+      value: FLOOR
+      objectReference: {fileID: 0}
     - target: {fileID: 8595725771954483380, guid: f73e8979440854e4db673b7dab1e69a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.358377
@@ -5081,6 +5105,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: candleBig (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 617770405191272736, guid: 88c9717dd46f97740a08966fac3e364d, type: 3}
+      propertyPath: m_TagString
+      value: FLOOR
+      objectReference: {fileID: 0}
     - target: {fileID: 3037809403456250201, guid: 88c9717dd46f97740a08966fac3e364d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -44.535
@@ -5137,6 +5165,10 @@ PrefabInstance:
     - target: {fileID: 4031338942691243561, guid: 593224d4e12beb5459c508a256608bd9, type: 3}
       propertyPath: m_Name
       value: plate2 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4031338942691243561, guid: 593224d4e12beb5459c508a256608bd9, type: 3}
+      propertyPath: m_TagString
+      value: FLOOR
       objectReference: {fileID: 0}
     - target: {fileID: 9073186655755578987, guid: 593224d4e12beb5459c508a256608bd9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5299,6 +5331,10 @@ PrefabInstance:
     - target: {fileID: 6285796835657255507, guid: f73e8979440854e4db673b7dab1e69a5, type: 3}
       propertyPath: m_Name
       value: bottle1 (15)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6285796835657255507, guid: f73e8979440854e4db673b7dab1e69a5, type: 3}
+      propertyPath: m_TagString
+      value: FLOOR
       objectReference: {fileID: 0}
     - target: {fileID: 8595725771954483380, guid: f73e8979440854e4db673b7dab1e69a5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6650,6 +6686,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: mug (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 6017223113634340166, guid: a9a8a17fbc5ca2e47aa025e052d1aca7, type: 3}
+      propertyPath: m_TagString
+      value: FLOOR
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7345,6 +7385,10 @@ PrefabInstance:
     - target: {fileID: 4031338942691243561, guid: 593224d4e12beb5459c508a256608bd9, type: 3}
       propertyPath: m_Name
       value: plate2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4031338942691243561, guid: 593224d4e12beb5459c508a256608bd9, type: 3}
+      propertyPath: m_TagString
+      value: FLOOR
       objectReference: {fileID: 0}
     - target: {fileID: 9073186655755578987, guid: 593224d4e12beb5459c508a256608bd9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8464,6 +8508,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: pitcher
       objectReference: {fileID: 0}
+    - target: {fileID: 2133052212710738145, guid: d703adc8cf309264985eed53eaf40064, type: 3}
+      propertyPath: m_TagString
+      value: FLOOR
+      objectReference: {fileID: 0}
     - target: {fileID: 7998416793954061159, guid: d703adc8cf309264985eed53eaf40064, type: 3}
       propertyPath: m_LocalPosition.x
       value: 18.721064
@@ -8710,6 +8758,10 @@ PrefabInstance:
     - target: {fileID: 2133052212710738145, guid: d703adc8cf309264985eed53eaf40064, type: 3}
       propertyPath: m_Name
       value: pitcher (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2133052212710738145, guid: d703adc8cf309264985eed53eaf40064, type: 3}
+      propertyPath: m_TagString
+      value: FLOOR
       objectReference: {fileID: 0}
     - target: {fileID: 7998416793954061159, guid: d703adc8cf309264985eed53eaf40064, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9076,6 +9128,10 @@ PrefabInstance:
     - target: {fileID: 2133052212710738145, guid: d703adc8cf309264985eed53eaf40064, type: 3}
       propertyPath: m_Name
       value: pitcher (17)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2133052212710738145, guid: d703adc8cf309264985eed53eaf40064, type: 3}
+      propertyPath: m_TagString
+      value: FLOOR
       objectReference: {fileID: 0}
     - target: {fileID: 7998416793954061159, guid: d703adc8cf309264985eed53eaf40064, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9545,6 +9601,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: bottle1 (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 6285796835657255507, guid: f73e8979440854e4db673b7dab1e69a5, type: 3}
+      propertyPath: m_TagString
+      value: FLOOR
+      objectReference: {fileID: 0}
     - target: {fileID: 8595725771954483380, guid: f73e8979440854e4db673b7dab1e69a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 13.22
@@ -9658,6 +9718,10 @@ PrefabInstance:
     - target: {fileID: 4031338942691243561, guid: 593224d4e12beb5459c508a256608bd9, type: 3}
       propertyPath: m_Name
       value: plate2 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4031338942691243561, guid: 593224d4e12beb5459c508a256608bd9, type: 3}
+      propertyPath: m_TagString
+      value: FLOOR
       objectReference: {fileID: 0}
     - target: {fileID: 9073186655755578987, guid: 593224d4e12beb5459c508a256608bd9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12558,6 +12622,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: pitcher (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 2133052212710738145, guid: d703adc8cf309264985eed53eaf40064, type: 3}
+      propertyPath: m_TagString
+      value: FLOOR
+      objectReference: {fileID: 0}
     - target: {fileID: 7998416793954061159, guid: d703adc8cf309264985eed53eaf40064, type: 3}
       propertyPath: m_LocalPosition.x
       value: 11.451
@@ -13224,6 +13292,10 @@ PrefabInstance:
     - target: {fileID: 6285796835657255507, guid: f73e8979440854e4db673b7dab1e69a5, type: 3}
       propertyPath: m_Name
       value: bottle1 (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6285796835657255507, guid: f73e8979440854e4db673b7dab1e69a5, type: 3}
+      propertyPath: m_TagString
+      value: FLOOR
       objectReference: {fileID: 0}
     - target: {fileID: 8595725771954483380, guid: f73e8979440854e4db673b7dab1e69a5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15073,6 +15145,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: candleBig
       objectReference: {fileID: 0}
+    - target: {fileID: 617770405191272736, guid: 88c9717dd46f97740a08966fac3e364d, type: 3}
+      propertyPath: m_TagString
+      value: FLOOR
+      objectReference: {fileID: 0}
     - target: {fileID: 3037809403456250201, guid: 88c9717dd46f97740a08966fac3e364d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 18.898958
@@ -15129,6 +15205,10 @@ PrefabInstance:
     - target: {fileID: 6285796835657255507, guid: f73e8979440854e4db673b7dab1e69a5, type: 3}
       propertyPath: m_Name
       value: bottle1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6285796835657255507, guid: f73e8979440854e4db673b7dab1e69a5, type: 3}
+      propertyPath: m_TagString
+      value: FLOOR
       objectReference: {fileID: 0}
     - target: {fileID: 8595725771954483380, guid: f73e8979440854e4db673b7dab1e69a5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18408,6 +18488,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: bottle1 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6285796835657255507, guid: f73e8979440854e4db673b7dab1e69a5, type: 3}
+      propertyPath: m_TagString
+      value: FLOOR
+      objectReference: {fileID: 0}
     - target: {fileID: 8595725771954483380, guid: f73e8979440854e4db673b7dab1e69a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 17.491
@@ -18854,6 +18938,10 @@ PrefabInstance:
     - target: {fileID: 2133052212710738145, guid: d703adc8cf309264985eed53eaf40064, type: 3}
       propertyPath: m_Name
       value: pitcher (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2133052212710738145, guid: d703adc8cf309264985eed53eaf40064, type: 3}
+      propertyPath: m_TagString
+      value: FLOOR
       objectReference: {fileID: 0}
     - target: {fileID: 7998416793954061159, guid: d703adc8cf309264985eed53eaf40064, type: 3}
       propertyPath: m_LocalPosition.x
@@ -19574,6 +19662,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: pitcher (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 2133052212710738145, guid: d703adc8cf309264985eed53eaf40064, type: 3}
+      propertyPath: m_TagString
+      value: FLOOR
+      objectReference: {fileID: 0}
     - target: {fileID: 7998416793954061159, guid: d703adc8cf309264985eed53eaf40064, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.9328127
@@ -19959,6 +20051,10 @@ PrefabInstance:
     - target: {fileID: 617770405191272736, guid: 88c9717dd46f97740a08966fac3e364d, type: 3}
       propertyPath: m_Name
       value: candleBig (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 617770405191272736, guid: 88c9717dd46f97740a08966fac3e364d, type: 3}
+      propertyPath: m_TagString
+      value: FLOOR
       objectReference: {fileID: 0}
     - target: {fileID: 3037809403456250201, guid: 88c9717dd46f97740a08966fac3e364d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -20464,6 +20560,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: bottle1 (13)
       objectReference: {fileID: 0}
+    - target: {fileID: 6285796835657255507, guid: f73e8979440854e4db673b7dab1e69a5, type: 3}
+      propertyPath: m_TagString
+      value: FLOOR
+      objectReference: {fileID: 0}
     - target: {fileID: 8595725771954483380, guid: f73e8979440854e4db673b7dab1e69a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: -13.539
@@ -20952,6 +21052,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: bottle1
       objectReference: {fileID: 0}
+    - target: {fileID: 6285796835657255507, guid: f73e8979440854e4db673b7dab1e69a5, type: 3}
+      propertyPath: m_TagString
+      value: FLOOR
+      objectReference: {fileID: 0}
     - target: {fileID: 8595725771954483380, guid: f73e8979440854e4db673b7dab1e69a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 19.14663
@@ -21252,6 +21356,10 @@ PrefabInstance:
     - target: {fileID: 6285796835657255507, guid: f73e8979440854e4db673b7dab1e69a5, type: 3}
       propertyPath: m_Name
       value: bottle1 (14)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6285796835657255507, guid: f73e8979440854e4db673b7dab1e69a5, type: 3}
+      propertyPath: m_TagString
+      value: FLOOR
       objectReference: {fileID: 0}
     - target: {fileID: 8595725771954483380, guid: f73e8979440854e4db673b7dab1e69a5, type: 3}
       propertyPath: m_LocalPosition.x
