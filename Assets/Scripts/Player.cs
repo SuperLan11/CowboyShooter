@@ -93,6 +93,7 @@ public class Player : Character
     [SerializeField] private float kickLerpSpeed = 0.1f;
 
     private const float KNOCKBACK_FORCE = 2.5f;
+    private const float verticalMouseSensitivityFraction = 0.75f;
 
     private Camera cam;
     private GameObject lasso;
@@ -412,7 +413,7 @@ public class Player : Character
         //when user resumes, appropriate settings must be applied
         if (!PauseMenu.gameIsPaused)
         {
-            mouseSensitivityX = mouseSensitivityY = GameManager.mouseSensitivity;
+            SetPlayerMouseSensitivity();
         }
     }
     
@@ -834,7 +835,8 @@ public class Player : Character
 
     public void SetPlayerMouseSensitivity()
     {
-        mouseSensitivityX = mouseSensitivityY = GameManager.mouseSensitivity;
+        mouseSensitivityX = GameManager.mouseSensitivity;
+        mouseSensitivityY = verticalMouseSensitivityFraction * mouseSensitivityX;
     }
 
     //Dragon's Den of the Movement Code

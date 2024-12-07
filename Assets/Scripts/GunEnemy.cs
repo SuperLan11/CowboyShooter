@@ -8,6 +8,7 @@ public class GunEnemy : Enemy
     private Vector3 shootPos;    
     [SerializeField] private Transform bulletSpawn;
     [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private GameObject gun;
     [SerializeField] private float bulletSpeed;
     
     // loadTime is how long enemy needs to see player to start shooting player
@@ -100,6 +101,13 @@ public class GunEnemy : Enemy
         if (playerSighted && (playerNear || gotShot))
         {
             animator.SetBool("FollowingPlayer", true);
+            /*
+            Vector3 targetPosition = Player.player.transform.position;
+
+            // Ensure the gun points correctly by considering only the Y-axis rotation (if necessary)
+            Vector3 direction = (targetPosition - gun.transform.position).normalized;
+            gun.transform.rotation = Quaternion.LookRotation(direction);
+            */
             agent.destination = ShootPos();
             shootPos = agent.destination;
             Vector3 playerPos = Player.player.transform.position;
