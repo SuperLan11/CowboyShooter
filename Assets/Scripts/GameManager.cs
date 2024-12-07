@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     public static double totalTime;
     public static float mouseSensitivity = 2f;
     public static float volume = 1f;
+    public Color originalBackgroundColor;
     public Enemy[] originalEnemyList;
 
     public void Awake()
@@ -56,6 +57,9 @@ public class GameManager : MonoBehaviour
         {
             totalTime = 0;
         }
+
+        //this is terrible code, but we've got 4 hours until the expo
+        originalBackgroundColor = GameObject.Find("Main Camera").GetComponent<Camera>().backgroundColor;
     }
 
     public void Update()

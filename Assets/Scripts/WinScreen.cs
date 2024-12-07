@@ -65,6 +65,7 @@ public class WinScreen : MonoBehaviour
         winScreenUI.SetActive(true);
         cutsceneScreen.SetActive(false);
         gameCamera.clearFlags = CameraClearFlags.Skybox;
+        gameCamera.backgroundColor = GameManager.gameManager.originalBackgroundColor;
         gameMusic.SetActive(true);
         environment.SetActive(true);
     }
