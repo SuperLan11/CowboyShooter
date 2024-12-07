@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class EndTrigger : MonoBehaviour
 {
-    private SceneTransfer fadeAnim;    
+    private SceneTransfer fadeAnim;
 
     //prevents multiple yee-haws
     private bool yeehawPlayed = false;
@@ -23,7 +23,7 @@ public class EndTrigger : MonoBehaviour
         // enable fade panel        
         fadeAnim.gameObject.SetActive(true);        
         
-        //comment this book out of condition if you're using old end trigger instead of tornado
+       //comment this book out of condition if you're using old end trigger instead of tornado
         bool movingTowardsTornado = (Player.player.currentMovementState == Player.movementState.FLYING) || 
                                     (Player.player.currentMovementState == Player.movementState.SWINGING);
 
@@ -32,8 +32,8 @@ public class EndTrigger : MonoBehaviour
             //!if we want any extra functionality for the tornado like screen shake, do it here!
             
             GameManager.gameManager.StoreTimerValue(Clock.rawSeconds);
-            GameManager.totalTime += GameManager.storedTime;
-            GameManager.totalTime += Time.timeSinceLevelLoad; 
+            GameManager.totalTime += GameManager.levelTime;
+            //GameManager.totalTime += Time.timeSinceLevelLoad; 
             GameManager.gameManager.ResetTimerValue();
             GameManager.currentCheckpoint = 0;
     

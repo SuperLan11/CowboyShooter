@@ -41,8 +41,8 @@ public class BigTornado : MonoBehaviour
             
 
             GameManager.gameManager.StoreTimerValue(Clock.rawSeconds);
-            GameManager.totalTime += GameManager.storedTime;
-            GameManager.totalTime += Time.timeSinceLevelLoad;
+            GameManager.totalTime += GameManager.levelTime;
+            //GameManager.totalTime += Time.timeSinceLevelLoad;
             GameManager.gameManager.ResetTimerValue();
             GameManager.currentCheckpoint = 0;
 
