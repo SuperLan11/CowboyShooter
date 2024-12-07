@@ -501,6 +501,7 @@ GameObject:
   - component: {fileID: 786792727633447010}
   - component: {fileID: 3583144191876925335}
   - component: {fileID: 3211816450638366499}
+  - component: {fileID: 4410752812712165617}
   m_Layer: 0
   m_Name: BTTF_WheelFront01
   m_TagString: Untagged
@@ -573,6 +574,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &4410752812712165617
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1487011829499920584}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d5b7afc9d56cdb643808ffd606a7e09a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1533282088755013221
 GameObject:
   m_ObjectHideFlags: 0
@@ -1889,7 +1911,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 152.46698, y: 1.223938, z: 220}
-  m_LocalScale: {x: 13.29, y: 13.29, z: 13.29}
+  m_LocalScale: {x: 9.061122, y: 9.061122, z: 9.061122}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2447141579888028923}
@@ -2423,6 +2445,7 @@ GameObject:
   - component: {fileID: 2659744009672212785}
   - component: {fileID: 8012112534525263854}
   - component: {fileID: 2209656661579425835}
+  - component: {fileID: 6980454609470925307}
   m_Layer: 0
   m_Name: BTTF_Wheel03
   m_TagString: Untagged
@@ -2495,6 +2518,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &6980454609470925307
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5175261704201088411}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4c2b2ca6868a77f4c8c7fdefdd3e4cfb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5195286313920249971
 GameObject:
   m_ObjectHideFlags: 0
@@ -3550,12 +3594,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6317377506219325745}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.44499585, y: 0.5495251, z: 0.54952526, w: -0.44499764}
-  m_LocalPosition: {x: -0.0009468143, y: 2.9802322e-10, z: -5.6056326e-10}
+  m_LocalRotation: {x: 0.0000008940697, y: -0.00000001490119, z: -0.0000006109476, w: -1}
+  m_LocalPosition: {x: -0.0024720894, y: 0, z: 0.0034276922}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4572138576383229228}
+  m_Father: {fileID: 2608866980240730721}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7184991512190303616
 MeshFilter:
@@ -3982,6 +4026,7 @@ GameObject:
   - component: {fileID: 4572138576383229228}
   - component: {fileID: 899446376617492100}
   - component: {fileID: 7522609882936814120}
+  - component: {fileID: 5501621024159984222}
   m_Layer: 0
   m_Name: BTTF_Wheel01
   m_TagString: Untagged
@@ -4001,8 +4046,7 @@ Transform:
   m_LocalPosition: {x: -0.0026689544, y: 0, z: 0.0025015688}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 4607438220253077146}
+  m_Children: []
   m_Father: {fileID: 2608866980240730721}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &899446376617492100
@@ -4055,6 +4099,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &5501621024159984222
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6834761832708653340}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6887b73cd3c5f5d4e8014445a908b70b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6990581868915337844
 GameObject:
   m_ObjectHideFlags: 0
@@ -4768,6 +4833,7 @@ Transform:
   - {fileID: 5257285965230762709}
   - {fileID: 6331713160744467000}
   - {fileID: 1133780866635970039}
+  - {fileID: 4607438220253077146}
   - {fileID: 4572138576383229228}
   m_Father: {fileID: 3805135335671577122}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4951,6 +5017,7 @@ GameObject:
   - component: {fileID: 2113900491072491432}
   - component: {fileID: 6464118134374628414}
   - component: {fileID: 5539094430621060149}
+  - component: {fileID: 7799453671967253005}
   m_Layer: 0
   m_Name: BTTF_Wheel02
   m_TagString: Untagged
@@ -5025,6 +5092,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &7799453671967253005
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8721957916370138341}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4392d113c3981354ebe0b94fc6462f90, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8803168582687693020
 GameObject:
   m_ObjectHideFlags: 0
@@ -5379,6 +5467,7 @@ GameObject:
   - component: {fileID: 1733926675551702625}
   - component: {fileID: 8564965827797904707}
   - component: {fileID: 1648626878799936402}
+  - component: {fileID: 9039699601921214400}
   m_Layer: 0
   m_Name: BTTF_WheelFront01.001
   m_TagString: Untagged
@@ -5451,6 +5540,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &9039699601921214400
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9105250577678008779}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d5b7afc9d56cdb643808ffd606a7e09a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &9208976012462201116
 GameObject:
   m_ObjectHideFlags: 0
