@@ -40,6 +40,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2607738050244440587}
     m_Modifications:
+    - target: {fileID: 4671830706158772365, guid: 46e74e8f82ab9a2428108b6e915f867d, type: 3}
+      propertyPath: isExploding
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4671830706158772365, guid: 46e74e8f82ab9a2428108b6e915f867d, type: 3}
+      propertyPath: explodeSizeMult
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6130116917997602898, guid: 46e74e8f82ab9a2428108b6e915f867d, type: 3}
       propertyPath: m_Name
       value: barrel
