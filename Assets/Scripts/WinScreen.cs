@@ -1,33 +1,72 @@
-
-
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class WinScreen : MonoBehaviour
 {
     public TextMeshProUGUI timerText;
-    
-    // Start is called before the first frame update
+    public VideoPlayer videoPlayer;
+    public GameObject winScreenUI;
+    public GameObject cutsceneScreen;
+    public Camera gameCamera;
+    public GameObject gameMusic;
+    public GameObject environment;
+
+    [System.NonSerialized] public bool skippedCutscene = false;
+    [System.NonSerialized] public bool cutsceneCompleted = false;
+
     void Start()
     {
-        GameManager.gameManager.EnableCursor();
-        
-        double finalTime = GameManager.totalTime;
+        StartCoroutine(WaitForVideoToLoad());
+    }
 
+    public IEnumerator WaitForVideoToLoad()
+    {
+        yield return new WaitForSeconds(0.1f);
+        StartCoroutine(WaitForCutscene());
+    }
+
+    public IEnumerator WaitForCutscene()
+    {
+        while (videoPlayer.isPlaying && !skippedCutscene)
+        {
+            yield return null;
+        }
+
+        if (!cutsceneCompleted)
+        {
+            StartWinScreen();
+        }
+    }
+
+    public void StartWinScreen()
+    {
+        if (cutsceneCompleted)
+            return;
+
+        cutsceneCompleted = true;
+        RestoreWinScreen();
+
+        GameManager.gameManager.EnableCursor();
+
+        double finalTime = GameManager.totalTime;
         double seconds = System.Math.Round(finalTime % 60, 2);
         int minutes = (int)(finalTime / 60) % 60;
 
         string tempString = "   " + (minutes.ToString() + " minutes and " + seconds.ToString() + " seconds!");
-
         timerText.text += tempString;
+    }
 
-        //Debug.Log("good morning");
-        //Invoke("LoadMainMenu", 5);
+    private void RestoreWinScreen()
+    {
+        Destroy(videoPlayer.gameObject);
+        winScreenUI.SetActive(true);
+        cutsceneScreen.SetActive(false);
+        gameCamera.clearFlags = CameraClearFlags.Skybox;
+        gameMusic.SetActive(true);
+        environment.SetActive(true);
     }
 
     public void LoadMainMenu()
