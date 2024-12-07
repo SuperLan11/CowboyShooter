@@ -15,6 +15,8 @@ public class WinScreen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameManager.gameManager.EnableCursor();
+        
         double finalTime = GameManager.totalTime;
 
         double seconds = System.Math.Round(finalTime % 60, 2);
