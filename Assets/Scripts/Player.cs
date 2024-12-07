@@ -851,16 +851,23 @@ public class Player : Character
 
         if(currentMovementState == movementState.TORNADO)
         {
-            Vector3 newRot = transform.eulerAngles;            
+            rigidbody.velocity = new Vector3(0, BigTornado.upVel, 0);
+            Vector3 newRot = transform.eulerAngles;
             float curRotY = transform.eulerAngles.y;
-            float newRotY = curRotY + (BigTornado.spinSpeed * Time.deltaTime);
-            newRot.y = Mathf.LerpAngle(curRotY, newRotY, BigTornado.spinAccel);
-            transform.eulerAngles = newRot;            
+            float newRotY = curRotY + (BigTornado.playerDegreesPerSecond * Time.deltaTime);
+            newRot.y = newRotY;            
+            transform.eulerAngles = newRot;
+
+            Vector3 newCamRot = cam.transform.eulerAngles;
+            newCamRot.x = 0;
+            cam.transform.eulerAngles = newCamRot;
+
             if (transform.position.y > BigTornado.tornadoTopY)
             {
                 int curIndex = SceneManager.GetActiveScene().buildIndex;
                 SceneManager.LoadScene(curIndex + 1);
-            }                
+            }
+            return;
         }
 
         if (health != healthLastFrame)

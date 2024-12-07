@@ -5,7 +5,7 @@ using UnityEngine;
 public class TornadoTrigger : MonoBehaviour
 {
     [SerializeField] private GameObject tornadoPrefab;
-    [SerializeField] private GameObject smallTornadoPrefab;
+    //[SerializeField] private GameObject smallTornadoPrefab;
     [SerializeField] private Transform tornadoSpawn;
     private bool tornadoPlaced = false;
 
@@ -24,8 +24,8 @@ public class TornadoTrigger : MonoBehaviour
         {
             Debug.Log("made tornado");
             //Instantiate(tornadoPrefab, tornadoSpawn.position, Quaternion.identity);
-            Instantiate(smallTornadoPrefab, tornadoSpawn.position, Quaternion.identity);
-            tornadoPlaced = true;            
+            Instantiate(tornadoPrefab, tornadoSpawn.position, Quaternion.identity);
+            tornadoPlaced = true;
         }                
     }
 
