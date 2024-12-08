@@ -48,6 +48,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: fedf039029f0c9943b5e84f4f9e64380, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bdf7aae2a41b78841b7113344d58ffdb, type: 2}
     - target: {fileID: 919132149155446097, guid: fedf039029f0c9943b5e84f4f9e64380, type: 3}
       propertyPath: m_Name
       value: SmallTornado

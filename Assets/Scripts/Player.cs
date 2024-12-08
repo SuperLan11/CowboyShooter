@@ -92,6 +92,10 @@ public class Player : Character
     // from 0 to 1, how fast camera rotates horizontally during kick. increasing this lets player regains camera control sooner
     [SerializeField] private float kickLerpSpeed = 0.1f;
 
+    private bool inInvincibilityWindow = false;
+    private int maxInvincibilityCooldown;
+    private int invincibilityCooldown;
+
     private const float KNOCKBACK_FORCE = 2.5f;
     private const float verticalMouseSensitivityFraction = 0.75f;
 
@@ -198,6 +202,8 @@ public class Player : Character
 
         lassoCooldown = maxLassoCooldown = 22;
         lassoLockCooldown = maxLassoLockCooldown = 5;
+
+        invincibilityCooldown = maxInvincibilityCooldown = 55;
         
         //remember it's not in terms of frames, so a value of 60 does not mean it'll wait 1 second.
         restartCooldown = maxRestartCooldown = 40;      
@@ -711,13 +717,27 @@ public class Player : Character
 
     public override void TakeDamage(int damage)
     {
+        if (inInvincibilityWindow)
+        {
+            return;
+        }
+        
+
         health -= damage;
         if(takeDamageSfx != null)
             takeDamageSfx.Play();
 
         SetHealth(health);
+        
+
         if (health <= 0)
+        {
             Death();
+        }
+        else
+        {
+            inInvincibilityWindow = true;
+        }
     }    
 
     //courtesy of internet physics/game dev guru. Calculates force needed to launch player towards hook
@@ -918,6 +938,19 @@ public class Player : Character
             {
                 GameManager.gameManager.RestartLevel();
                 GameManager.gameManager.CleanupScene();
+            }
+        }
+
+        if (inInvincibilityWindow)
+        {
+            if (invincibilityCooldown > 0)
+            {
+                invincibilityCooldown--;
+            }
+            else
+            {
+                invincibilityCooldown = maxInvincibilityCooldown;
+                inInvincibilityWindow = false;
             }
         }
 

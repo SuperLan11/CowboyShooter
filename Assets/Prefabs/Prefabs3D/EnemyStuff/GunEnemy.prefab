@@ -386,7 +386,7 @@ MonoBehaviour:
   deathSfx: {fileID: 7274230335824233674}
   bulletSpawn: {fileID: 214591569413781617}
   bulletPrefab: {fileID: 5238476219402099163, guid: 418fbbc712cab9a4fbc8c17b4ad4aea2, type: 3}
-  gun: {fileID: 0}
+  gun: {fileID: 6430548346741585250}
   bulletSpeed: 65
   loadTime: 0.3
 --- !u!195 &1294539945686754922
@@ -3103,5 +3103,10 @@ Animator:
 --- !u!4 &5941995075498258392 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5198696914093564397, guid: 76059886ce7fe7b4f888f7736e9d26aa, type: 3}
+  m_PrefabInstance: {fileID: 1896945933548441141}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6430548346741585250 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4859010027375508311, guid: 76059886ce7fe7b4f888f7736e9d26aa, type: 3}
   m_PrefabInstance: {fileID: 1896945933548441141}
   m_PrefabAsset: {fileID: 0}
