@@ -123,6 +123,16 @@ public abstract class Enemy : Character
         //PrintAnyNulls();
     }
 
+    public int GetMaxHealth()
+    {
+        return maxHealth;
+    }
+
+    public void SetHealth(int hp)
+    {
+        health = hp;
+    }
+
     private void PrintAnyNulls()
     {
         // check if any important serialized variables are unset

@@ -51,7 +51,15 @@ namespace TMPro.Examples
             m_TextPopup_RectTransform = Instantiate(TextPopup_Prefab_01) as RectTransform;
             m_TextPopup_RectTransform.SetParent(m_Canvas.transform, false);
             m_TextPopup_TMPComponent = m_TextPopup_RectTransform.GetComponentInChildren<TextMeshProUGUI>();
-            m_TextPopup_RectTransform.gameObject.SetActive(false);
+            m_TextPopup_RectTransform.gameObject.
+                
+                
+                
+                
+                
+                
+                
+                (false);
         }
 
 

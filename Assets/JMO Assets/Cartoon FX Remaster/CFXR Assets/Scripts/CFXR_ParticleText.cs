@@ -121,7 +121,15 @@ namespace CartoonFX
             if (isDynamic)
             {
                 basePivot.x = 0; // make sure to not offset the text horizontally
-                ps.gameObject.SetActive(false); // ensure first child is inactive
+                ps.gameObject.
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    (false); // ensure first child is inactive
                 ps.gameObject.name = "MODEL";
             }
         }
