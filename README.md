@@ -9,10 +9,10 @@ Click the green code button, download the ZIP, and extract the folder.
 Then open the Game folder in the extracted folder, and open CowboyShooter.exe to start the game.
 
 ## Team Contributions
-Landon Johnson - Programmed enemies and moving background in level 3, created level 2
-Patrick Mayer - Programmed lasso, created level 3
-Jacob Paccione - Created title and win screens, created level 1
-Rafael Casanova - Playtested the levels and gave corrective feedback
+- Landon Johnson - Programmed enemies and moving background in level 3, created level 2
+- Patrick Mayer - Programmed lasso, created level 3
+- Jacob Paccione - Created title and win screens, created level 1
+- Rafael Casanova - Playtested the levels and gave corrective feedback
 
 ## Credits
 Credits for the assets we used are in Assets/Documentation/Credits.txt.
