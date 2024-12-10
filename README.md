@@ -4,7 +4,7 @@
 The game served as our semester project and was presented at the Florida Polytechnic Game Expo on Demeber 7th, 2024.
 Our team placed 2nd while competing against 20+ other teams.
 
-## How to Play the Game
+## How to Play the Game (in progress)
 Click the green code button, download the ZIP, and extract the folder. 
 Then open the Game folder in the extracted folder, and open CowboyShooter.exe to start the game.
 
