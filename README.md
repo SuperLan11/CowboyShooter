@@ -1,6 +1,6 @@
 # Lasso Up, Partner!
 ## Project Background
-"Lasso Up, Partner!" is a game I developed in a team of four for my game development 1 course.
+"Lasso Up, Partner!" is a game I developed in a team of mainly four members for my game development 1 course.
 The game served as our semester project and was presented at the Florida Polytechnic Game Expo on Demeber 7th, 2024.
 Our team placed 2nd while competing against 20+ other teams.
 
