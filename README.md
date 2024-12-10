@@ -11,8 +11,9 @@ Then open the Game folder in the extracted folder, and open CowboyShooter.exe to
 ## Team Contributions
 - Landon Johnson - Programmed enemies and moving background in level 3, created level 2
 - Patrick Mayer - Programmed lasso, created level 3
-- Jacob Paccione - Created title and win screens, created level 1
+- Jacob Paccione - Created title and win screens, created level 1, made explode effects for tnt and barrels
 - Rafael Casanova - Playtested the levels and gave corrective feedback
+- Jenna - Created the heart sprites
 
 ## Credits
 Credits for the assets we used are in Assets/Documentation/Credits.txt.
