@@ -132,6 +132,7 @@ public class Player : Character
     private float mouseSensitivityY = 1f;
     private float curMouseX = 0f;
     private float curMouseY = 0f;
+    private float invertedControls;
     
     [SerializeField] private float camLockDist = 50f;
     private Animator gunAnim;
@@ -216,7 +217,7 @@ public class Player : Character
         holdingRMB = false;
         holdingRestart = false;
 
-        SetPlayerMouseSensitivity();
+        ApplySerializedVariables();
 
         healthLastFrame = health;
     }    
@@ -419,7 +420,7 @@ public class Player : Character
         //when user resumes, appropriate settings must be applied
         if (!PauseMenu.gameIsPaused)
         {
-            SetPlayerMouseSensitivity();
+            ApplySerializedVariables();
         }
     }
     
@@ -682,7 +683,7 @@ public class Player : Character
                 continue;
 
             enemy.transform.position = enemy.spawnPos;
-            //enemy.SetHealth(enemy.GetMaxHealth());
+            enemy.SetHealth(enemy.GetMaxHealth());
         }
         
         Enemy.killedEnemySpawns.Clear();
@@ -854,10 +855,21 @@ public class Player : Character
         rigidbody.isKinematic = true;
     }
 
+    public void ApplySerializedVariables()
+    {
+        SetPlayerMouseSensitivity();
+        SetPlayerInvertedControls();
+    }
+
     public void SetPlayerMouseSensitivity()
     {
         mouseSensitivityX = GameManager.mouseSensitivity;
         mouseSensitivityY = verticalMouseSensitivityFraction * mouseSensitivityX;
+    }
+
+    public void SetPlayerInvertedControls()
+    {
+        invertedControls = (GameManager.invertedControls ? -1f : 1f);
     }
 
     //Dragon's Den of the Movement Code
@@ -865,6 +877,7 @@ public class Player : Character
     {
         //Debug.Log("State: " + currentMovementState);
         //Debug.Log(rigidbody.velocity.magnitude);
+        //Debug.Log("Inverted Controls: " + invertedControls);
 
         //forces camera to look straight as you're opening up scene        
         if (Time.timeSinceLevelLoad < 0.1f)
@@ -997,7 +1010,7 @@ public class Player : Character
 
         // Input.GetAxis is the change in value since last frame                
         curMouseX = Mathf.Lerp(curMouseX, Input.GetAxis("Mouse X"), horCamSnap * Time.deltaTime);
-        curMouseY = Mathf.Lerp(curMouseY, Input.GetAxis("Mouse Y"), vertCamSnap * Time.deltaTime);
+        curMouseY = Mathf.Lerp(curMouseY, Input.GetAxis("Mouse Y") * invertedControls, vertCamSnap * Time.deltaTime);
 
         // kick rotation momentarily overrides normal rotation
         // consider using a time variable to unstuck for emergencies
@@ -1015,9 +1028,9 @@ public class Player : Character
         }
         else
         {
+            //!don't multiply by inverted controls, that has already been done earlier in the function in the lerp()
             float mouseX = curMouseX * mouseSensitivityX * 100f * Time.deltaTime;
             float mouseY = curMouseY * mouseSensitivityY * 100f * Time.deltaTime;
-            //float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivityY * 100f * Time.deltaTime;
 
             // Player will not scroll vertically so that transform.forward doesn't move into the sky
             Vector3 playerRot = transform.eulerAngles;
@@ -1033,7 +1046,7 @@ public class Player : Character
             Vector3 camRot = cam.transform.eulerAngles;
             Vector3 newCamRot = Vector3.zero;
             
-            float deltaMouseY = Input.GetAxis("Mouse Y");
+            float deltaMouseY = Input.GetAxis("Mouse Y") * invertedControls;
             //Debug.Log("mouseY: " + mouseY);
 
             // camRot.x starts decreasing from 360 when you look up and is positive downwards   

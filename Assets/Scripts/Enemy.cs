@@ -11,6 +11,7 @@ using System.Collections;
 using UnityEngine.AI;
 using UnityEngine.InputSystem.LowLevel;
 using Vector3 = UnityEngine.Vector3;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 public abstract class Enemy : Character
 {
@@ -150,6 +151,16 @@ public abstract class Enemy : Character
             Debug.LogWarning("destination1 was not set for " + gameObject.name);
         if (destination2 == null)
             Debug.LogWarning("destination2 was not set " + gameObject.name);
+    }
+
+    public void SetHealth(int hp)
+    {
+        health = hp;
+    }
+
+    public int GetMaxHealth()
+    {
+        return maxHealth;
     }
 
     public void SetGotShot(bool wasShot)

@@ -1393,6 +1393,7 @@ RectTransform:
   m_Children:
   - {fileID: 142318274}
   - {fileID: 2036250636}
+  - {fileID: 1451549370}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -13741,7 +13742,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1451549368}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: bb99dfa167f9d5448a4a14d37ebd11b9, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 25695050922d53d419e0058163056381, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -13759,7 +13760,8 @@ VideoPlayer:
   - {fileID: 0}
   m_DirectAudioVolumes:
   - 1
-  m_Url: 
+  m_Url: file://D:/Gold Builds/Game1 Extra Final Game/CowboyShooter_Data/StreamingAssets/Pecos
+    Tornado.mp4
   m_EnabledAudioTracks: 01
   m_DirectAudioMutes: 00
   m_ControlledAudioTrackCount: 1
@@ -13777,12 +13779,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1451549368}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 560.3245, y: 9.583765, z: 9725.594}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 242.32452, y: -169.41623, z: 9725.594}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 164514807}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1464360752
 Mesh:
@@ -18299,7 +18301,6 @@ SceneRoots:
   - {fileID: 620623894}
   - {fileID: 164514807}
   - {fileID: 1224278274}
-  - {fileID: 1451549370}
   - {fileID: 43924826}
   - {fileID: 320299699}
   - {fileID: 1631620003}

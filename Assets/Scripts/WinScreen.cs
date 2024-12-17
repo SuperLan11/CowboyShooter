@@ -1,4 +1,5 @@
 using System.Collections;
+using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,12 +20,28 @@ public class WinScreen : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(WaitForVideoToLoad());
+        videoPlayer.prepareCompleted += OnVideoPrepared;
+        videoPlayer.Prepare();
+        
+        //StartCoroutine(WaitForVideoToLoad());
+    }
+
+    void OnVideoPrepared(VideoPlayer vp)
+    {
+        videoPlayer.Play();
+
+        StartCoroutine(WaitForCutscene());
+        
     }
 
     public IEnumerator WaitForVideoToLoad()
     {
         yield return new WaitForSeconds(0.1f);
+
+        string videoPath = Path.Combine(Application.streamingAssetsPath, "Pecos Tornado.mp4");
+        videoPlayer.url = videoPath;
+        videoPlayer.Play();
+
         StartCoroutine(WaitForCutscene());
     }
 
