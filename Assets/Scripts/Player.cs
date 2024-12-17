@@ -682,6 +682,7 @@ public class Player : Character
                 continue;
 
             enemy.transform.position = enemy.spawnPos;
+            enemy.SetHealth(enemy.GetMaxHealth());
         }
         
         Enemy.killedEnemySpawns.Clear();
