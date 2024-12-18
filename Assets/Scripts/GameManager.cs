@@ -60,7 +60,8 @@ public class GameManager : MonoBehaviour
         }
 
         //this is terrible code, but we've got 4 hours until the expo
-        originalBackgroundColor = GameObject.Find("Main Camera").GetComponent<Camera>().backgroundColor;
+        // edit: I (Landon) changed this from Main Camera to Camera since that's how the player prefab is
+        originalBackgroundColor = GameObject.Find("Camera").GetComponent<Camera>().backgroundColor;
     }
 
     public void Update()

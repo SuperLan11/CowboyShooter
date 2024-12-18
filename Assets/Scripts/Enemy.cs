@@ -124,6 +124,16 @@ public abstract class Enemy : Character
         //PrintAnyNulls();
     }
 
+    public int GetMaxHealth()
+    {
+        return maxHealth;
+    }
+
+    public void SetHealth(int hp)
+    {
+        health = hp;
+    }
+
     private void PrintAnyNulls()
     {
         // check if any important serialized variables are unset
@@ -141,16 +151,6 @@ public abstract class Enemy : Character
             Debug.LogWarning("destination1 was not set for " + gameObject.name);
         if (destination2 == null)
             Debug.LogWarning("destination2 was not set " + gameObject.name);
-    }
-
-    public void SetHealth(int hp)
-    {
-        health = hp;
-    }
-
-    public int GetMaxHealth()
-    {
-        return maxHealth;
     }
 
     public void SetGotShot(bool wasShot)
