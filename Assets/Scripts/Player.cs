@@ -220,8 +220,6 @@ public class Player : Character
         ApplySerializedVariables();
 
         healthLastFrame = health;
-
-        Debug.Log("Has checkpoint: " + hasCheckpoint);
     }    
 
     private void Awake()

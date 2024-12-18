@@ -31,7 +31,7 @@ public class PauseMenu : MonoBehaviour
 
     void LateUpdate(){
         //prevent null reference exception for GameManager
-        if (gameManagerProtector || DeathMenu.deathMenuActive){
+        if (gameManagerProtector || DeathMenu.deathMenuActive || GameManager.gameManager.gameIsEnding){
             return;
         }
 

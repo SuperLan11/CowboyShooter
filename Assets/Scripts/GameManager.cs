@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     public static int currentCheckpoint = 0;
     private bool disableCursor;
     private bool enableCursor;
+    public bool gameIsEnding = false;
     public static double levelTime;
     public static double totalTime;
     public static float mouseSensitivity = 2f;
@@ -161,6 +162,7 @@ public class GameManager : MonoBehaviour
         ResetTimerValue();
         totalTime = 0;
         currentLevel = 0;
+        gameIsEnding = false;
         GameManager.currentCheckpoint = 0;
     }
 

@@ -44,7 +44,13 @@ public class BigTornado : MonoBehaviour
             GameManager.totalTime += GameManager.levelTime;
             //GameManager.totalTime += Time.timeSinceLevelLoad;
             GameManager.gameManager.ResetTimerValue();
+            
+            GameManager.gameManager.gameIsEnding = true;
+            //Dr. Towle, please forgive me
+            Destroy(GameObject.Find("HUD"));//.GetComponent<PlayerHUD>().DisableHUD();
+
             GameManager.currentCheckpoint = 0;
+            Player.hasCheckpoint = false;
 
             if (!yeehawPlayed)
             {
