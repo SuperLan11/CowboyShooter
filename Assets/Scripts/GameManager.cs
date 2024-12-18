@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
         {
             mouseSensitivity = playerData.mouseSensitivity;
             volume = playerData.volume;
+            invertedControls = playerData.invertedControls;
         }
         
         //Debug.Log("cp on Start(): " + currentCheckpoint);
@@ -153,6 +154,14 @@ public class GameManager : MonoBehaviour
     {
         DisableCursor();
         pHUD.GetComponent<PlayerHUD>().EnableHUD();
+    }
+
+    public void ResetGameManager()
+    {
+        ResetTimerValue();
+        totalTime = 0;
+        currentLevel = 0;
+        GameManager.currentCheckpoint = 0;
     }
 
     public static void QuitGame()

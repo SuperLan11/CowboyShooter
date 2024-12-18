@@ -1,3 +1,8 @@
+/*
+@Authors - Patrick
+@Description - Save data. If you need to add more variables, you shouldn't need to touch this class at all. 
+*/
+
 using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;

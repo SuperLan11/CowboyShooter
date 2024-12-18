@@ -32,6 +32,11 @@ public class MainMenu : MonoBehaviour
         fadeScript = fadePanel.GetComponent<SceneTransfer>();
         // if you want a fade in to the main menu, comment this out    
         fadePanel.GetComponent<Image>().enabled = false;
+
+        if (GameManager.gameManager != null)
+        {
+            GameManager.gameManager.ResetGameManager();
+        }
     }
 
     public void StartGamePressed()
@@ -112,7 +117,7 @@ public class MainMenu : MonoBehaviour
 
                 //makes sure inverted controls checkbox is set to correct one
                 invertedControlsToggle.GetComponent<Toggle>().isOn = GameManager.invertedControls;
-                
+
                 break;
             case 4:
                 mainPanel.SetActive(false);
