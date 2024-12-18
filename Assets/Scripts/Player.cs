@@ -672,13 +672,13 @@ public class Player : Character
             enemy.destination1 = Enemy.killedDest1List[i];
             enemy.destination2 = Enemy.killedDest2List[i];
             enemy.checkpointNum = Enemy.killedEnemyCps[i];
-            // if spawnPos not set, enemy will only correctly respawn once
+            // if this is not set, enemy will only correctly respawn once
             enemy.spawnPos = enemy.transform.position;
         }
 
         foreach (Enemy enemy in FindObjectsOfType<Enemy>())
         {
-            // enemy was already set to spawn pos
+            // means enemy was already set to spawn pos
             if (Enemy.killedEnemySpawns.Contains(enemy.transform.position))
                 continue;
 

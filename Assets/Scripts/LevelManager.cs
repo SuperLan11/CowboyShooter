@@ -17,7 +17,7 @@ public class LevelManager : MonoBehaviour
     public int currentLevel;
     
     private void LateUpdate()
-    {
+    {        
         //!there should only ever be one game manager in a scene
         GameManager manager = FindObjectOfType<GameManager>();
 
@@ -30,6 +30,6 @@ public class LevelManager : MonoBehaviour
 
         manager.debugMode = debugMode;
         manager.currentLevel = currentLevel;
-        manager.originalEnemyList = GameManager.gameManager.GetAllEnemies();
+        //manager.originalEnemyList = GameManager.gameManager.GetAllEnemies();
     }
 }

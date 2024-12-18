@@ -36,9 +36,7 @@ public class MainMenu : MonoBehaviour
 
     public void StartGamePressed()
     {
-        fadePanel.
-            
-            (true);
+        fadePanel.SetActive(true);
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;        
         StartCoroutine(fadeScript.FadeToNewScene(currentSceneIndex + 1, 1f));
     }
@@ -80,8 +78,7 @@ public class MainMenu : MonoBehaviour
         switch(menuState)
         {
             case 0:
-                mainPanel.
-                    (true);
+                mainPanel.SetActive(true);
                 creditsPanel.SetActive(false);
                 directionsPanel.SetActive(false);
                 optionsPanel.SetActive(false);

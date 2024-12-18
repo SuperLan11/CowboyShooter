@@ -559,11 +559,7 @@ namespace CartoonFX
 						}
 						else
 						{
-							this.gameObject.
-								
-								
-								
-								(false);
+							this.gameObject.SetActive(false);
 						}
 					}
 				}

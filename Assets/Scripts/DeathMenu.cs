@@ -45,23 +45,15 @@ public class DeathMenu : MonoBehaviour
 
     public void EnablePanel()
     {
-        deathMenuUI.
-            
-            
-            (true);
+        deathMenuUI.SetActive(true);
         GameManager.gameManager.MenuMode(HUD);
-
         deathMenuActive = true;
     }
 
     public void DisablePanel()
     {
-        deathMenuUI.
-            
-            
-            (false);
+        deathMenuUI.SetActive(false);
         GameManager.gameManager.GameplayMode(HUD);
-
         deathMenuActive = false;
     }
 
