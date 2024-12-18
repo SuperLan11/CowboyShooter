@@ -175,3 +175,7 @@ Assets Used:
 	Tornado Sound
 	Josh74000MC (Freesound)
 	https://pixabay.com/sound-effects/tornado-sound-29406/
+
+	Pinky UI (checkboxes)
+	LILA Design
+	https://assetstore.unity.com/packages/2d/gui/pinky-ui-274048

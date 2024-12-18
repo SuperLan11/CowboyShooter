@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     public static double totalTime;
     public static float mouseSensitivity = 2f;
     public static float volume = 1f;
-    public static bool invertedControls = true;
+    public static bool invertedControls = false;
     public Color originalBackgroundColor;
     public Enemy[] originalEnemyList;
 

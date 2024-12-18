@@ -12,7 +12,7 @@ using UnityEngine.Audio;
 
 public class MainMenu : MonoBehaviour
 {
-    public GameObject mainPanel, creditsPanel, directionsPanel, optionsPanel, levelSelectPanel;
+    public GameObject mainPanel, creditsPanel, directionsPanel, optionsPanel, levelSelectPanel, invertedControlsToggle;
     private SceneTransfer fadeScript;
     private GameObject fadePanel;
     [SerializeField] private AudioMixer masterVolume;
@@ -72,6 +72,11 @@ public class MainMenu : MonoBehaviour
         GameManager.mouseSensitivity = adjustedSensitivity;
     }
 
+    public void SetInvertedControls(bool inverted)
+    {
+        GameManager.invertedControls = inverted;
+    }
+
     //I'm sure there's a better way to do this, but who cares
     public void SwitchMenus(int menuState)
     {
@@ -104,6 +109,10 @@ public class MainMenu : MonoBehaviour
                 directionsPanel.SetActive(false);
                 optionsPanel.SetActive(true);
                 levelSelectPanel.SetActive(false);
+
+                //makes sure inverted controls checkbox is set to correct one
+                invertedControlsToggle.GetComponent<Toggle>().isOn = GameManager.invertedControls;
+                
                 break;
             case 4:
                 mainPanel.SetActive(false);
