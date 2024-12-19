@@ -179,3 +179,30 @@ Assets Used:
 	Pinky UI (checkboxes)
 	LILA Design
 	https://assetstore.unity.com/packages/2d/gui/pinky-ui-274048
+
+	Cartoon FX Remastered (explosions)
+	Jean Moreno
+	https://assetstore.unity.com/packages/vfx/particles/cartoon-fx-remaster-free-109565
+
+	Cowboy Hat
+	Inari_Green
+	https://assetstore.unity.com/packages/3d/props/clothing/cowboy-hat-1-2008350
+
+	Fantasy Monster - Skeleton
+	Teamjoker
+	https://assetstore.unity.com/packages/3d/characters/humanoids/fantasy-monster-skeleton-35635
+
+	Rock Texture
+	everytexture.com
+	https://everytexture.com/everytexture-com-stock-rocks-texture-00031/
+
+	Stone Texture
+	texturelabs.org
+	https://texturelabs.org/textures/stone_127/
+
+	Pecos Tornado Cutscene
+	Tall Tale (1995)
+
+	Double-barreled Shotgun
+	Abobyssd
+	https://www.cgtrader.com/free-3d-models/military/gun/double-barreled-shotgun-93ce77ba-5125-49d8-9e8d-66d83acb5870
