@@ -80,7 +80,9 @@ public class Player : Character
     private bool lockedToWall = false;
     private int wallJumpsLeft = 1;
     private int maxWallJumps = 1;
-    private float halfHeight;    
+    private float halfHeight;
+    // for allowing movement correction while flying
+    private float curMaxVelocity;
 
     private float timeSinceJump = 0f;
     [SerializeField] private float perfectJumpWindow = 0.15f;
@@ -362,7 +364,8 @@ public class Player : Character
         {
             holdingRMB = false;
             lassoForceMultiplier = startingLassoForceMultiplier;
-            
+            curMaxVelocity = rigidbody.velocity.magnitude;
+
             //prevents player from being in air state after just tapping RMB
             if (!isGrounded() && player.currentMovementState == movementState.SWINGING)
             {
@@ -399,7 +402,8 @@ public class Player : Character
         {
             holdingRestart = true;
         }
-        else{
+        else
+        {
             holdingRestart = false;
             restartCooldown = maxRestartCooldown;
         }
@@ -568,7 +572,8 @@ public class Player : Character
         return maxHealth;
     }
 
-    public bool AtFullHealth(){
+    public bool AtFullHealth()
+    {
         return (GetHealth() == GetMaxHealth());
     }
 
@@ -672,18 +677,17 @@ public class Player : Character
             enemy.destination1 = Enemy.killedDest1List[i];
             enemy.destination2 = Enemy.killedDest2List[i];
             enemy.checkpointNum = Enemy.killedEnemyCps[i];
-            // if this is not set, enemy will only correctly respawn once
+            // if spawnPos not set, enemy will only correctly respawn once
             enemy.spawnPos = enemy.transform.position;
         }
 
         foreach (Enemy enemy in FindObjectsOfType<Enemy>())
         {
-            // means enemy was already set to spawn pos
+            // enemy was already set to spawn pos
             if (Enemy.killedEnemySpawns.Contains(enemy.transform.position))
                 continue;
 
             enemy.transform.position = enemy.spawnPos;
-            enemy.SetHealth(enemy.GetMaxHealth());
         }
         
         Enemy.killedEnemySpawns.Clear();
@@ -1002,10 +1006,18 @@ public class Player : Character
             rigidbody.velocity = Vector3.Lerp(rigidbody.velocity, newVel, moveAccel);
         }
         else if (currentMovementState == movementState.FLYING)
-        {            
+        {
             //aim assist
             //CheckHookLock();
-            //CheckEnemyLock();            
+            //CheckEnemyLock();
+            
+            Vector3 newVel = new Vector3(rigidbody.velocity.x, rigidbody.velocity.y, rigidbody.velocity.z);            
+            newVel += (transform.right * lastMoveInput.x +
+                       transform.forward * lastMoveInput.y) * speed * Time.deltaTime;
+
+            // caps velocity so player can't speed up by holding forward
+            if(rigidbody.velocity.magnitude < curMaxVelocity)
+                rigidbody.velocity = Vector3.Lerp(rigidbody.velocity, newVel, moveAccel);     
         }
 
         // Input.GetAxis is the change in value since last frame                

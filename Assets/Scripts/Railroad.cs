@@ -8,6 +8,9 @@ public class Railroad : MonoBehaviour
     [SerializeField] protected Transform initSpawnTile;
     public static float railroadLength;
     [System.NonSerialized] public Vector3 spawnPos;
+    // use an array with only the last tile transform in it so you can assign the transform of the array
+    // instead of assigning the tile transform to another tile's transform
+    [System.NonSerialized] public Transform[] lastTile = new Transform[1];
 
     private void Awake()
     {
@@ -19,6 +22,8 @@ public class Railroad : MonoBehaviour
     {        
         if (initSpawnTile != null)
             spawnPos = initSpawnTile.position;
+        
+        lastTile[0] = initSpawnTile;
     }
 
     private void OnCollisionEnter(Collision collision)

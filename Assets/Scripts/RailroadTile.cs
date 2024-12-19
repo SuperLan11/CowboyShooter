@@ -6,14 +6,20 @@ public class RailroadTile : MonoBehaviour
 {    
     [SerializeField] private int maxDecorations = 10;
     [System.NonSerialized] public Vector3 spawnPos;
-    [SerializeField] protected Transform initSpawnTile;    
+    [SerializeField] protected Transform initSpawnTile;
+    // use an array with only the last tile transform in it so you can assign the transform of the array
+    // instead of assigning the tile transform to another tile's transform
+    [System.NonSerialized] public Transform[] lastTile = new Transform[1];
 
     private void Start()
     {
         if (initSpawnTile != null)
             spawnPos = initSpawnTile.position;
-        // ideally make the railroad tiles very big to minimize the frequency of randomization
-        RandomizeDeco();     
+
+        lastTile[0] = initSpawnTile;
+
+        // ideally make the railroad tiles very big to minimize the frequency of randomization (if decorations are re-randomized)
+        RandomizeDeco();
     }
     
     private void DestroyAnyDecos()

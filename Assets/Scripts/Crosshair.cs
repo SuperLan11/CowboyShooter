@@ -32,7 +32,8 @@ public class Crosshair : MonoBehaviour
         crosshairImage = crosshair.GetComponent<Image>();
     }
 
-    private bool PointedAtObj(){
+    private bool PointedAtObj()
+    {
         return Player.player.ObjAimedAt() != null;
     }
 
@@ -59,6 +60,16 @@ public class Crosshair : MonoBehaviour
     private bool PointedAtImportantObject()
     {
         return PointedAtEnemy() || PointedAtHook() || PointedAtTornado() || PointedAtBarrel();
+    }
+
+    private bool ObjInRange(GameObject obj)
+    {
+        if (obj == null)
+            return false;
+
+        if (Vector3.Distance(Player.player.transform.position, obj.transform.position) < Player.player.maxLassoRange)
+            return true;
+        return false;
     }
 
     /*
@@ -96,7 +107,7 @@ public class Crosshair : MonoBehaviour
             return;
         }
 
-        if (!PointedAtImportantObject())
+        if (!PointedAtImportantObject() || !ObjInRange(Player.player.ObjAimedAt()))
         {
             crosshairImage.color = Color.white;
         }

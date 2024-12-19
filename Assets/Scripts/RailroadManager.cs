@@ -67,11 +67,15 @@ public class RailroadManager : MonoBehaviour
 
     private IEnumerator TunnelCooldown(float seconds)
     {
-        yield return new WaitForSecondsRealtime(seconds);
+        yield return new WaitForSecondsRealtime(seconds);                    
         
         // this can spawn tunnels on multiple railroads at once since xDiff is used instead of distance
         foreach (float railroadZ in railroadZs)
-        {
+        {          
+            // to prevent errors when tunnel countdowns finishes while on main menu
+            if (Player.player == null)
+                break;
+
             // fix this later, need z of each railroad
             Vector3 tunnelPos;
             float xDiff = Player.player.transform.position.x - transform.position.x;
@@ -82,6 +86,55 @@ public class RailroadManager : MonoBehaviour
         }
         // recursively call coroutine for every railroad
         StartCoroutine(TunnelCooldown(tunnelCooldown));
+    }
+
+    private void SetLastTile(Transform prevLastTile, Transform newLastTile)
+    {
+        // better solution would be to get all railroads and railroad tiles in start and reference that
+        // instead of finding the railroads and railroad tiles every time you call this function
+        foreach(Railroad railroad in FindObjectsOfType<Railroad>())
+        {
+            if (railroad.lastTile[0] == prevLastTile)
+                railroad.lastTile[0] = newLastTile;            
+        }
+
+        foreach (RailroadTile railroadTile in FindObjectsOfType<RailroadTile>())
+        {
+            if (railroadTile.lastTile[0] == prevLastTile)
+                railroadTile.lastTile[0] = newLastTile;
+        }
+    }
+
+    private void CycleTile(GameObject tile)
+    {
+        float lastTileLength;
+        Vector3 newTilePos;
+        Vector3 lastTilePos;
+        if (tile.GetComponent<RailroadTile>() != null)
+        {
+            lastTileLength = tile.GetComponent<RailroadTile>().lastTile[0].gameObject.GetComponent<MeshRenderer>().bounds.size.x;
+            newTilePos = tile.GetComponent<RailroadTile>().lastTile[0].gameObject.GetComponent<MeshRenderer>().bounds.center;
+            //newTilePos = tile.GetComponent<RailroadTile>().lastTile[0].transform.position;
+
+            lastTilePos = tile.GetComponent<RailroadTile>().lastTile[0].position;
+        }
+        else // tile.GetComponent<Railroad>() != null
+        {
+            lastTileLength = tile.GetComponent<Railroad>().lastTile[0].gameObject.GetComponent<MeshRenderer>().bounds.size.x;
+            newTilePos = tile.GetComponent<Railroad>().lastTile[0].gameObject.GetComponent<MeshRenderer>().bounds.center;
+            //newTilePos = tile.GetComponent<Railroad>().lastTile[0].transform.position;
+
+            lastTilePos = tile.GetComponent<Railroad>().lastTile[0].position;
+        }
+
+        Debug.Log("tile transform.pos before cycling: " + tile.transform.position);
+        float distPastEnd = (tile.transform.position.x - RailroadManager.maxX);
+        newTilePos.x -= lastTileLength;
+        //newTilePos.x += 2*distPastEnd;        
+        //Debug.Log("lastTileLength: " + lastTileLength + ", newTilePos: " + newTilePos);
+        tile.transform.position = newTilePos;
+        
+        Debug.Log("last tile length: " + lastTileLength + ", dist between: " + Vector3.Distance(tile.transform.position, lastTilePos));
     }
 
     // Update is called once per frame
@@ -97,12 +150,16 @@ public class RailroadManager : MonoBehaviour
             {
                 if (tile.GetComponent<RailroadTile>() != null)
                 {
-                    tile.transform.position = tile.GetComponent<RailroadTile>().spawnPos;      
+                    //tile.transform.position = tile.GetComponent<RailroadTile>().spawnPos;
+                    CycleTile(tile.gameObject);
+                    SetLastTile(tile.GetComponent<RailroadTile>().lastTile[0], tile.transform);
                 }
                 else if (tile.GetComponent<Railroad>() != null)
                 {
-                    tile.transform.position = tile.GetComponent<Railroad>().spawnPos;
-                }                
+                    //tile.transform.position = tile.GetComponent<Railroad>().spawnPos;
+                    CycleTile(tile.gameObject);
+                    SetLastTile(tile.GetComponent<Railroad>().lastTile[0], tile.transform);
+                }
             }            
         }
     }
