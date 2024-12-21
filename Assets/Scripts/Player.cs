@@ -656,7 +656,7 @@ public class Player : Character
     {
         yield return new WaitForSeconds(0.3f);
 
-        Debug.Log("This runs");
+        //Debug.Log("This runs");
 
         //respawn logic
 

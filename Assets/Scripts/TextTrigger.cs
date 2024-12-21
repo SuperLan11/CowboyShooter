@@ -29,7 +29,7 @@ public class TextTrigger : MonoBehaviour
             fadingText = false;            
             textObj.text = "";
             curLetterIdx = 0;
-            Debug.Log("set alpha to 1");
+            //Debug.Log("set alpha to 1");
             textObj.GetComponent<CanvasGroup>().alpha = 1;
             if (typewriterSfx != null)            
                 typewriterSfx.Play();            

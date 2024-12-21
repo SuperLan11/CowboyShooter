@@ -127,14 +127,14 @@ public class RailroadManager : MonoBehaviour
             lastTilePos = tile.GetComponent<Railroad>().lastTile[0].position;
         }
 
-        Debug.Log("tile transform.pos before cycling: " + tile.transform.position);
+        //Debug.Log("tile transform.pos before cycling: " + tile.transform.position);
         float distPastEnd = (tile.transform.position.x - RailroadManager.maxX);
         newTilePos.x -= lastTileLength;
         //newTilePos.x += 2*distPastEnd;        
         //Debug.Log("lastTileLength: " + lastTileLength + ", newTilePos: " + newTilePos);
         tile.transform.position = newTilePos;
         
-        Debug.Log("last tile length: " + lastTileLength + ", dist between: " + Vector3.Distance(tile.transform.position, lastTilePos));
+        //Debug.Log("last tile length: " + lastTileLength + ", dist between: " + Vector3.Distance(tile.transform.position, lastTilePos));
     }
 
     // Update is called once per frame
