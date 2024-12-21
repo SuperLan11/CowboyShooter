@@ -40,6 +40,8 @@ public class Player : Character
     private int maxJumpCooldown;
     private const float COYOTE_TIME = 0.2f;
     private float coyoteTimeCounter;
+    private const float JUMP_BUFFER_TIME = 0.2f;
+    private float jumpBufferCounter;
 
     [SerializeField] public float maxShootCooldown;
     [System.NonSerialized] public float shootCooldown;
@@ -984,6 +986,15 @@ public class Player : Character
             coyoteTimeCounter -= Time.fixedDeltaTime;
         }
 
+        if (tryingToJump)
+        {
+            jumpBufferCounter = JUMP_BUFFER_TIME;
+        }
+        else
+        {
+            jumpBufferCounter -= Time.fixedDeltaTime;
+        }
+
 
         if (currentMovementState == movementState.SWINGING)
         {
@@ -1115,8 +1126,9 @@ public class Player : Character
             kickLerping = true;
             timeSinceJump = 0f;
         }
-        //Coyote time REPLACES checking for isGrounded()!
-        else if (tryingToJump && coyoteTimeCounter > 0)
+        //!Jump buffer counter REPLACES checking tryingToJump!
+        //!Coyote time REPLACES checking for isGrounded()!
+        else if (jumpBufferCounter > 0 && coyoteTimeCounter > 0)
         {            
             //prevents double jumps
             if (inJumpCooldown)
@@ -1136,6 +1148,7 @@ public class Player : Character
 
             rigidbody.velocity += new Vector3(0, jumpStrength, 0);
             coyoteTimeCounter = 0;
+            jumpBufferCounter = 0;
             tryingToJump = false;
             inJumpCooldown = true;
             currentMovementState = movementState.AIR;
