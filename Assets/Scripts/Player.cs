@@ -38,6 +38,8 @@ public class Player : Character
     [SerializeField] private float gravityAccel = -13f;
     private int jumpCooldown;
     private int maxJumpCooldown;
+    private const float COYOTE_TIME = 0.2f;
+    private float coyoteTimeCounter;
 
     [SerializeField] public float maxShootCooldown;
     [System.NonSerialized] public float shootCooldown;
@@ -973,6 +975,14 @@ public class Player : Character
             }
         }
 
+        if (isGrounded())
+        {
+            coyoteTimeCounter = COYOTE_TIME;
+        }
+        else
+        {
+            coyoteTimeCounter -= Time.fixedDeltaTime;
+        }
 
 
         if (currentMovementState == movementState.SWINGING)
@@ -1105,7 +1115,8 @@ public class Player : Character
             kickLerping = true;
             timeSinceJump = 0f;
         }
-        else if (tryingToJump && isGrounded())
+        //Coyote time REPLACES checking for isGrounded()!
+        else if (tryingToJump && coyoteTimeCounter > 0)
         {            
             //prevents double jumps
             if (inJumpCooldown)
@@ -1124,6 +1135,7 @@ public class Player : Character
             }
 
             rigidbody.velocity += new Vector3(0, jumpStrength, 0);
+            coyoteTimeCounter = 0;
             tryingToJump = false;
             inJumpCooldown = true;
             currentMovementState = movementState.AIR;
