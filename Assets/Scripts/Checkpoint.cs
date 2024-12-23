@@ -56,9 +56,11 @@ public class Checkpoint : MonoBehaviour
 
             // if player touches door trigger without raising door first, don't lower again      
             if (isDoorTrigger && Door.movingUp)
-            {                
-                Door.LowerDoors();
+            {                                
                 Door.ResetDoorCounter();
+                // don't lower doors if player kills all enemies in a room before walking into the room
+                if (Enemy.enemiesInRoom > 0)
+                    Door.LowerDoors();
             }
         }
     }

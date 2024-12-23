@@ -83,6 +83,7 @@ public class Player : Character
     private float halfHeight;
     // for allowing movement correction while flying
     private float curMaxVelocity;
+    [SerializeField] private float correctionMult = 1f;
 
     private float timeSinceJump = 0f;
     [SerializeField] private float perfectJumpWindow = 0.15f;
@@ -1013,7 +1014,7 @@ public class Player : Character
             
             Vector3 newVel = new Vector3(rigidbody.velocity.x, rigidbody.velocity.y, rigidbody.velocity.z);            
             newVel += (transform.right * lastMoveInput.x +
-                       transform.forward * lastMoveInput.y) * speed * Time.deltaTime;
+                       transform.forward * lastMoveInput.y) * speed * correctionMult * Time.deltaTime;
 
             // caps velocity so player can't speed up by holding forward
             if(rigidbody.velocity.magnitude < curMaxVelocity)

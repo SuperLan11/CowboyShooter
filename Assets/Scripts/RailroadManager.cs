@@ -112,29 +112,50 @@ public class RailroadManager : MonoBehaviour
         Vector3 lastTilePos;
         if (tile.GetComponent<RailroadTile>() != null)
         {
+            //lastTileLength = tile.GetComponent<RailroadTile>().lastTile[0].gameObject.GetComponent<MeshRenderer>().bounds.size.x;
             lastTileLength = tile.GetComponent<RailroadTile>().lastTile[0].gameObject.GetComponent<MeshRenderer>().bounds.size.x;
-            newTilePos = tile.GetComponent<RailroadTile>().lastTile[0].gameObject.GetComponent<MeshRenderer>().bounds.center;
-            //newTilePos = tile.GetComponent<RailroadTile>().lastTile[0].transform.position;
+            //newTilePos = tile.GetComponent<RailroadTile>().lastTile[0].gameObject.GetComponent<MeshRenderer>().bounds.center;
+            newTilePos = tile.GetComponent<RailroadTile>().lastTile[0].transform.position;
 
             lastTilePos = tile.GetComponent<RailroadTile>().lastTile[0].position;
         }
         else // tile.GetComponent<Railroad>() != null
         {
+            //lastTileLength = tile.GetComponent<Railroad>().lastTile[0].gameObject.GetComponent<MeshRenderer>().bounds.size.x;
+            //newTilePos = tile.GetComponent<Railroad>().lastTile[0].gameObject.GetComponent<MeshRenderer>().bounds.center;
+            newTilePos = tile.GetComponent<Railroad>().lastTile[0].transform.position;
             lastTileLength = tile.GetComponent<Railroad>().lastTile[0].gameObject.GetComponent<MeshRenderer>().bounds.size.x;
-            newTilePos = tile.GetComponent<Railroad>().lastTile[0].gameObject.GetComponent<MeshRenderer>().bounds.center;
-            //newTilePos = tile.GetComponent<Railroad>().lastTile[0].transform.position;
 
             lastTilePos = tile.GetComponent<Railroad>().lastTile[0].position;
         }
 
-        Debug.Log("tile transform.pos before cycling: " + tile.transform.position);
-        float distPastEnd = (tile.transform.position.x - RailroadManager.maxX);
         newTilePos.x -= lastTileLength;
-        //newTilePos.x += 2*distPastEnd;        
-        //Debug.Log("lastTileLength: " + lastTileLength + ", newTilePos: " + newTilePos);
+
+        // get average position of children, include center?        
+        float avgTileX = tile.transform.position.x;
+        for(int i = 0; i < tile.transform.childCount; i++)
+        {
+            avgTileX += tile.transform.GetChild(i).transform.position.x;
+        }
+
+        if (avgTileX != 0)
+        {
+            avgTileX /= (float)tile.transform.childCount + 1;
+            Debug.Log("avgTileX: " + avgTileX);
+
+            float xOffset = tile.transform.position.x - avgTileX;
+            //Debug.Log("avgTileX: " + avgTileX);
+            //Debug.Log("xOffset: " + xOffset);
+
+            newTilePos.x -= xOffset;
+            //Debug.Log("moved tile " + xOffset + " to the right");
+        }        
         tile.transform.position = newTilePos;
-        
-        Debug.Log("last tile length: " + lastTileLength + ", dist between: " + Vector3.Distance(tile.transform.position, lastTilePos));
+
+        /*
+         * get difference between mesh center and new tile pos
+         * set new position to prev mesh center + meshLength + offset
+         */
     }
 
     // Update is called once per frame
