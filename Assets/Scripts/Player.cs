@@ -38,6 +38,10 @@ public class Player : Character
     [SerializeField] private float gravityAccel = -13f;
     private int jumpCooldown;
     private int maxJumpCooldown;
+    private const float COYOTE_TIME = 0.2f;
+    private float coyoteTimeCounter;
+    private const float JUMP_BUFFER_TIME = 0.2f;
+    private float jumpBufferCounter;
 
     [SerializeField] public float maxShootCooldown;
     [System.NonSerialized] public float shootCooldown;
@@ -83,7 +87,6 @@ public class Player : Character
     private float halfHeight;
     // for allowing movement correction while flying
     private float curMaxVelocity;
-    [SerializeField] private float correctionMult = 1f;
 
     private float timeSinceJump = 0f;
     [SerializeField] private float perfectJumpWindow = 0.15f;
@@ -653,7 +656,7 @@ public class Player : Character
     {
         yield return new WaitForSeconds(0.3f);
 
-        Debug.Log("This runs");
+        //Debug.Log("This runs");
 
         //respawn logic
 
@@ -954,6 +957,8 @@ public class Player : Character
             }
             else
             {
+                GameManager.currentCheckpoint = 0;
+                hasCheckpoint = false;
                 GameManager.gameManager.RestartLevel();
                 GameManager.gameManager.CleanupScene();
             }
@@ -972,6 +977,23 @@ public class Player : Character
             }
         }
 
+        if (isGrounded())
+        {
+            coyoteTimeCounter = COYOTE_TIME;
+        }
+        else
+        {
+            coyoteTimeCounter -= Time.fixedDeltaTime;
+        }
+
+        if (tryingToJump)
+        {
+            jumpBufferCounter = JUMP_BUFFER_TIME;
+        }
+        else
+        {
+            jumpBufferCounter -= Time.fixedDeltaTime;
+        }
 
 
         if (currentMovementState == movementState.SWINGING)
@@ -1011,14 +1033,30 @@ public class Player : Character
             //aim assist
             //CheckHookLock();
             //CheckEnemyLock();
-            
-            Vector3 newVel = new Vector3(rigidbody.velocity.x, rigidbody.velocity.y, rigidbody.velocity.z);            
-            newVel += (transform.right * lastMoveInput.x +
-                       transform.forward * lastMoveInput.y) * speed * correctionMult * Time.deltaTime;
 
+            float flyingAdjustmentSpeed = speed / 12f;
+            float maxAdjustmentSpeed = speed / 8f;
+            
+            Vector3 newVel = new Vector3(rigidbody.velocity.x, rigidbody.velocity.y, rigidbody.velocity.z);
+            Vector3 tempVel = transform.right * lastMoveInput.x * flyingAdjustmentSpeed;
+
+            if ((newVel + tempVel).magnitude < maxAdjustmentSpeed)
+            {
+                newVel += tempVel;
+            }
+            else
+            {
+                newVel += transform.right * lastMoveInput.x * maxAdjustmentSpeed;
+            }
+
+
+            rigidbody.velocity = Vector3.Lerp(rigidbody.velocity, newVel, moveAccel);   
+
+            /*
             // caps velocity so player can't speed up by holding forward
             if(rigidbody.velocity.magnitude < curMaxVelocity)
-                rigidbody.velocity = Vector3.Lerp(rigidbody.velocity, newVel, moveAccel);     
+                rigidbody.velocity = Vector3.Lerp(rigidbody.velocity, newVel, moveAccel);   
+            */  
         }
 
         // Input.GetAxis is the change in value since last frame                
@@ -1088,7 +1126,9 @@ public class Player : Character
             kickLerping = true;
             timeSinceJump = 0f;
         }
-        else if (tryingToJump && isGrounded())
+        //!Jump buffer counter REPLACES checking tryingToJump!
+        //!Coyote time REPLACES checking for isGrounded()!
+        else if (jumpBufferCounter > 0 && coyoteTimeCounter > 0)
         {            
             //prevents double jumps
             if (inJumpCooldown)
@@ -1107,6 +1147,8 @@ public class Player : Character
             }
 
             rigidbody.velocity += new Vector3(0, jumpStrength, 0);
+            coyoteTimeCounter = 0;
+            jumpBufferCounter = 0;
             tryingToJump = false;
             inJumpCooldown = true;
             currentMovementState = movementState.AIR;

@@ -22,7 +22,7 @@ public class TornadoTrigger : MonoBehaviour
         
         if(collider.gameObject.name == "Player")
         {
-            Debug.Log("made tornado");
+            //Debug.Log("made tornado");
             //Instantiate(tornadoPrefab, tornadoSpawn.position, Quaternion.identity);
             Instantiate(tornadoPrefab, tornadoSpawn.position, Quaternion.identity);
             tornadoPlaced = true;
