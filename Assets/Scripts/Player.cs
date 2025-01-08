@@ -87,7 +87,8 @@ public class Player : Character
     private float halfHeight;
     // for allowing movement correction while flying
     private float curMaxVelocity;
-    [SerializeField] private float correctionMult = 1f;
+    [SerializeField] private float horCorrectionMult = 1f;
+    [SerializeField] private float backCorrectionMult = 1f;
 
     private float timeSinceJump = 0f;
     [SerializeField] private float perfectJumpWindow = 0.15f;
@@ -1033,26 +1034,13 @@ public class Player : Character
         {
             //aim assist
             //CheckHookLock();
-            //CheckEnemyLock();
-
-            /*float flyingAdjustmentSpeed = speed / 12f;
-            float maxAdjustmentSpeed = speed / 8f;            
+            //CheckEnemyLock();       
 
             Vector3 newVel = new Vector3(rigidbody.velocity.x, rigidbody.velocity.y, rigidbody.velocity.z);
-            Vector3 tempVel = transform.right * lastMoveInput.x * flyingAdjustmentSpeed * Time.deltaTime;
-            if ((newVel + tempVel).magnitude < maxAdjustmentSpeed)
-            {
-                newVel += tempVel;
-            }
-            else
-            {
-                newVel += transform.right * lastMoveInput.x * maxAdjustmentSpeed;
-            }
-            rigidbody.velocity = Vector3.Lerp(rigidbody.velocity, newVel, moveAccel);*/
-
-            Vector3 newVel = new Vector3(rigidbody.velocity.x, rigidbody.velocity.y, rigidbody.velocity.z);
-            newVel += (transform.right * lastMoveInput.x +
-                       transform.forward * lastMoveInput.y) * speed * Time.deltaTime;
+            newVel += (
+                        (transform.right * lastMoveInput.x) * horCorrectionMult +
+                        (transform.forward * lastMoveInput.y) * backCorrectionMult
+                       ) * Time.deltaTime;
 
 
             // caps velocity so player can't speed up by holding forward

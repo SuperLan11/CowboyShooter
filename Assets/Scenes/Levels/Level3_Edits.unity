@@ -16527,6 +16527,18 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 2003539388}
+    - target: {fileID: 8509015516763741730, guid: 675c419c1fbc55e44bd3d2b98522cc87, type: 3}
+      propertyPath: correctionMult
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8509015516763741730, guid: 675c419c1fbc55e44bd3d2b98522cc87, type: 3}
+      propertyPath: horCorrectionMult
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8509015516763741730, guid: 675c419c1fbc55e44bd3d2b98522cc87, type: 3}
+      propertyPath: backCorrectionMult
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
