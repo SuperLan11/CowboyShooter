@@ -87,6 +87,7 @@ public class Player : Character
     private float halfHeight;
     // for allowing movement correction while flying
     private float curMaxVelocity;
+    [SerializeField] private float correctionMult = 1f;
 
     private float timeSinceJump = 0f;
     [SerializeField] private float perfectJumpWindow = 0.15f;
@@ -1034,12 +1035,11 @@ public class Player : Character
             //CheckHookLock();
             //CheckEnemyLock();
 
-            float flyingAdjustmentSpeed = speed / 12f;
-            float maxAdjustmentSpeed = speed / 8f;
-            
-            Vector3 newVel = new Vector3(rigidbody.velocity.x, rigidbody.velocity.y, rigidbody.velocity.z);
-            Vector3 tempVel = transform.right * lastMoveInput.x * flyingAdjustmentSpeed;
+            /*float flyingAdjustmentSpeed = speed / 12f;
+            float maxAdjustmentSpeed = speed / 8f;            
 
+            Vector3 newVel = new Vector3(rigidbody.velocity.x, rigidbody.velocity.y, rigidbody.velocity.z);
+            Vector3 tempVel = transform.right * lastMoveInput.x * flyingAdjustmentSpeed * Time.deltaTime;
             if ((newVel + tempVel).magnitude < maxAdjustmentSpeed)
             {
                 newVel += tempVel;
@@ -1048,15 +1048,17 @@ public class Player : Character
             {
                 newVel += transform.right * lastMoveInput.x * maxAdjustmentSpeed;
             }
+            rigidbody.velocity = Vector3.Lerp(rigidbody.velocity, newVel, moveAccel);*/
+
+            Vector3 newVel = new Vector3(rigidbody.velocity.x, rigidbody.velocity.y, rigidbody.velocity.z);
+            newVel += (transform.right * lastMoveInput.x +
+                       transform.forward * lastMoveInput.y) * speed * Time.deltaTime;
 
 
-            rigidbody.velocity = Vector3.Lerp(rigidbody.velocity, newVel, moveAccel);   
-
-            /*
             // caps velocity so player can't speed up by holding forward
-            if(rigidbody.velocity.magnitude < curMaxVelocity)
-                rigidbody.velocity = Vector3.Lerp(rigidbody.velocity, newVel, moveAccel);   
-            */  
+            if (rigidbody.velocity.magnitude < curMaxVelocity)
+                rigidbody.velocity = Vector3.Lerp(rigidbody.velocity, newVel, moveAccel);
+
         }
 
         // Input.GetAxis is the change in value since last frame                

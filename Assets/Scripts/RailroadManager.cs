@@ -129,6 +129,8 @@ public class RailroadManager : MonoBehaviour
             lastTilePos = tile.GetComponent<Railroad>().lastTile[0].position;
         }
 
+        Debug.Log("tile transform.pos before cycling: " + tile.transform.position);
+        float distPastEnd = (tile.transform.position.x - RailroadManager.maxX);
         newTilePos.x -= lastTileLength;
 
         // get average position of children, include center?        
@@ -151,11 +153,8 @@ public class RailroadManager : MonoBehaviour
             //Debug.Log("moved tile " + xOffset + " to the right");
         }        
         tile.transform.position = newTilePos;
-
-        /*
-         * get difference between mesh center and new tile pos
-         * set new position to prev mesh center + meshLength + offset
-         */
+        
+        Debug.Log("last tile length: " + lastTileLength + ", dist between: " + Vector3.Distance(tile.transform.position, lastTilePos));
     }
 
     // Update is called once per frame
