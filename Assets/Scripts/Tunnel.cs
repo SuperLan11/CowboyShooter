@@ -7,6 +7,7 @@ public class Tunnel : MonoBehaviour
     private static AudioSource bellWarningSfx;
     private float railroadSpeed;
     private float maxX;
+    private static Animator flashAnimator;    
 
     // Start is called before the first frame update
     void Start()
@@ -14,8 +15,26 @@ public class Tunnel : MonoBehaviour
         railroadSpeed = RailroadManager.railroadSpeed;
         maxX = RailroadManager.maxX;
         bellWarningSfx = GetComponent<AudioSource>();
-        if(bellWarningSfx != null && !bellWarningSfx.isPlaying)
+        if (bellWarningSfx != null && !bellWarningSfx.isPlaying)
             bellWarningSfx.Play();
+
+        if (GameObject.Find("HUD") == null)
+        {
+            Debug.LogWarning("did not find HUD");
+        }
+        else if (GameObject.Find("HUD").transform.Find("TunnelFlash") == null)
+        {
+            Debug.LogWarning("did not find tunnel flash obj");
+        }
+        else if (GameObject.Find("HUD").transform.Find("TunnelFlash").GetComponent<Animator>() == null)
+        {
+            Debug.LogWarning("did not find tunnel animator");
+        }
+        else
+        {
+            flashAnimator = GameObject.Find("HUD").transform.Find("TunnelFlash").GetComponent<Animator>();            
+            flashAnimator.Play("TunnelFlash");
+        }        
     }
 
     private void OnCollisionEnter(Collision collision)

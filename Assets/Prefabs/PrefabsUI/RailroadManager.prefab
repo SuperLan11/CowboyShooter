@@ -46,8 +46,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rrSpeed: 160
   xMax: 1000
+  topRailroadY: 0
   tunnelPrefab: {fileID: 9143646768246589184, guid: 8f28ec1af4bb0de4b860f430893534a8, type: 3}
-  tunnelCooldown: 30
+  tunnelCooldown: 5
   tunnelOffset: 500
   rockPrefab: {fileID: 7216489676564596528, guid: 3c4b8aa7cf661834696e5f41d616976a, type: 3}
   skullPrefab: {fileID: 1430866310615406873, guid: cb24018d3ae0f9a41b1e569dfbf9fc91, type: 3}

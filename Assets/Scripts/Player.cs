@@ -87,8 +87,8 @@ public class Player : Character
     private float halfHeight;
     // for allowing movement correction while flying
     private float curMaxVelocity;
-    [SerializeField] private float horCorrectionMult = 1f;
-    [SerializeField] private float backCorrectionMult = 1f;
+    [SerializeField] private float horCorrectionSpeed = 1f;
+    [SerializeField] private float backCorrectionSpeed = 1f;
 
     private float timeSinceJump = 0f;
     [SerializeField] private float perfectJumpWindow = 0.15f;
@@ -1038,8 +1038,8 @@ public class Player : Character
 
             Vector3 newVel = new Vector3(rigidbody.velocity.x, rigidbody.velocity.y, rigidbody.velocity.z);
             newVel += (
-                        (transform.right * lastMoveInput.x) * horCorrectionMult +
-                        (transform.forward * lastMoveInput.y) * backCorrectionMult
+                        (transform.right * lastMoveInput.x) * horCorrectionSpeed +
+                        (transform.forward * lastMoveInput.y) * backCorrectionSpeed
                        ) * Time.deltaTime;
 
 

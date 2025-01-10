@@ -129,7 +129,7 @@ public class RailroadManager : MonoBehaviour
             lastTilePos = tile.GetComponent<Railroad>().lastTile[0].position;
         }
 
-        Debug.Log("tile transform.pos before cycling: " + tile.transform.position);
+        //Debug.Log("tile transform.pos before cycling: " + tile.transform.position);
         float distPastEnd = (tile.transform.position.x - RailroadManager.maxX);
         newTilePos.x -= lastTileLength;
 
@@ -143,7 +143,7 @@ public class RailroadManager : MonoBehaviour
         if (avgTileX != 0)
         {
             avgTileX /= (float)tile.transform.childCount + 1;
-            Debug.Log("avgTileX: " + avgTileX);
+            //Debug.Log("avgTileX: " + avgTileX);
 
             float xOffset = tile.transform.position.x - avgTileX;
             //Debug.Log("avgTileX: " + avgTileX);
@@ -154,7 +154,7 @@ public class RailroadManager : MonoBehaviour
         }        
         tile.transform.position = newTilePos;
         
-        Debug.Log("last tile length: " + lastTileLength + ", dist between: " + Vector3.Distance(tile.transform.position, lastTilePos));
+        //Debug.Log("last tile length: " + lastTileLength + ", dist between: " + Vector3.Distance(tile.transform.position, lastTilePos));
     }
 
     // Update is called once per frame
