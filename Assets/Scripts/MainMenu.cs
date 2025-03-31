@@ -12,7 +12,7 @@ using UnityEngine.Audio;
 
 public class MainMenu : MonoBehaviour
 {
-    public GameObject mainPanel, creditsPanel, directionsPanel, optionsPanel, levelSelectPanel, invertedControlsToggle;
+    public GameObject mainPanel, creditsPanel, directionsPanel, optionsPanel, levelSelectPanel, invertedControlsToggle, tunnelFlashingToggle;
     private SceneTransfer fadeScript;
     private GameObject fadePanel;
     [SerializeField] private AudioMixer masterVolume;
@@ -82,6 +82,11 @@ public class MainMenu : MonoBehaviour
         GameManager.invertedControls = inverted;
     }
 
+    public void SetTunnelFlashing(bool tunnel)
+    {
+        GameManager.tunnelFlashing = tunnel;
+    }
+
     //I'm sure there's a better way to do this, but who cares
     public void SwitchMenus(int menuState)
     {
@@ -115,8 +120,9 @@ public class MainMenu : MonoBehaviour
                 optionsPanel.SetActive(true);
                 levelSelectPanel.SetActive(false);
 
-                //makes sure inverted controls checkbox is set to correct one
+                //makes sure boolean checkboxes are set to correctg value
                 invertedControlsToggle.GetComponent<Toggle>().isOn = GameManager.invertedControls;
+                tunnelFlashingToggle.GetComponent<Toggle>().isOn = GameManager.tunnelFlashing;
 
                 break;
             case 4:

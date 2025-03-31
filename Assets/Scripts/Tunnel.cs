@@ -9,7 +9,6 @@ public class Tunnel : MonoBehaviour
     private float maxX;
     private static Animator flashAnimator;    
 
-    // Start is called before the first frame update
     void Start()
     {
         railroadSpeed = RailroadManager.railroadSpeed;
@@ -33,7 +32,9 @@ public class Tunnel : MonoBehaviour
         else
         {
             flashAnimator = GameObject.Find("HUD").transform.Find("TunnelFlash").GetComponent<Animator>();            
-            flashAnimator.Play("TunnelFlash");
+            if (GameManager.tunnelFlashing){
+                flashAnimator.Play("TunnelFlash");
+            }
         }        
     }
 
@@ -49,7 +50,6 @@ public class Tunnel : MonoBehaviour
         }        
     }
 
-    // Update is called once per frame
     void Update()
     {
         Vector3 newPos = transform.position;

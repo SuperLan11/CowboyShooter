@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     public static float mouseSensitivity = 2f;
     public static float volume = 1f;
     public static bool invertedControls = false;
+    public static bool tunnelFlashing = true;
     public Color originalBackgroundColor;
     public Enemy[] originalEnemyList;
 
@@ -48,6 +49,7 @@ public class GameManager : MonoBehaviour
             mouseSensitivity = playerData.mouseSensitivity;
             volume = playerData.volume;
             invertedControls = playerData.invertedControls;
+            tunnelFlashing = playerData.tunnelFlashing;
         }
         
         //Debug.Log("cp on Start(): " + currentCheckpoint);
