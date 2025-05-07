@@ -5,8 +5,8 @@ The game served as our semester project and was presented at the Florida Polytec
 Our team placed 2nd while competing against 20+ other teams.
 
 ## How to Play the Game
-Click the green code button, download the ZIP, and extract the folder. 
-Then open the Game folder in the extracted folder, and open CowboyShooter.exe to start the game.
+Use this link to access the itch page and download the game from itch. https://superlan11.itch.io/lasso-up-partner.
+I recommend downloading the last zip. After extracting the folder, open CowboyShooter.exe to start the game.
 
 ## Team Contributions
 - Landon Johnson - Programmed enemies and moving background in level 3, created level 2
