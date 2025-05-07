@@ -5,7 +5,7 @@ The game served as our semester project and was presented at the Florida Polytec
 Our team placed 2nd while competing against 20+ other teams.
 
 ## How to Play the Game
-Use this link to access the itch page and download the game from itch. https://superlan11.itch.io/lasso-up-partner.
+Use this link to download the game from itch. https://superlan11.itch.io/lasso-up-partner.
 I recommend downloading the last zip. After extracting the folder, open CowboyShooter.exe to start the game.
 
 ## Team Contributions
